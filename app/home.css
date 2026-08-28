@@ -90,11 +90,13 @@
   row-gap: 6px;
   align-items: start;
   padding: 34px 0;
-  transition: padding-left .3s cubic-bezier(.16, 1, .3, 1);
+  /* Transform, not padding: animating padding forces a layout pass on every
+     frame of the hover. Same indent, none of the thrash. */
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1);
 }
 
 .home .service-card:hover > div,
-.home .service-card:focus-within > div { padding-left: 14px; }
+.home .service-card:focus-within > div { transform: translateX(14px); }
 
 .home .service-card > div > span {
   grid-column: 1;
