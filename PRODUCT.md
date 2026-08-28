@@ -96,6 +96,24 @@ een handdruk. Die vertelt de positionering in beeld en is bewust behouden.
 **Niet aanwezig:** er zijn geen cijfers over aantallen klanten, doorlooptijden,
 besparingen of marktaandeel. Verzin die niet.
 
+## Capabilities and Constraints — teksten en beeld
+
+Het bedrijf telt op dit moment vier mensen en **groeit**. De site moet daar
+tegen kunnen zonder onderhoud:
+
+- **Noem nooit een aantal medewerkers, monteurs of bussen.** Een getal is over
+  een half jaar onwaar en dwingt tot aanpassen. Op dit moment staat er nergens
+  een aantal in de teksten; houd dat zo.
+- **Beloof geen specifieke persoon.** Formuleringen als "dit zijn de mensen die
+  bij u langskomen" bij een foto van twee monteurs lezen als een garantie dat de
+  klant juist die twee krijgt. Claims horen over de **afspraak** te gaan (geen
+  onderaannemers, wie plaatst onderhoudt ook), want die blijft waar bij elke
+  teamgrootte.
+- **Niet alle monteurs willen herkenbaar op de site.** Voeg geen nieuwe
+  personen toe zonder dat de eigenaar bevestigt dat zij dat willen, en bouw geen
+  onderdeel dat een portret per monteur nodig heeft. Werkfoto's zonder gezichten
+  zijn altijd veilig.
+
 ## Product Principles
 
 1. **Drie routes, gelijkwaardig.** Storing, oriëntatie en onderhoud zijn drie

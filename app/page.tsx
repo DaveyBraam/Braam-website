@@ -81,16 +81,16 @@ export default function Home() {
         <section className="people reveal">
           <div className="shell people-grid">
             <figure className="people-photo">
-              <img src="/about/team-rob-braam.jpg" alt="Twee monteurs van Braam bij hun bedrijfsbussen" width="2560" height="1708" loading="lazy" decoding="async" />
+              <img src="/about/team-rob-braam.jpg" alt="Monteurs van Braam bij de bedrijfsbussen" width="2560" height="1708" loading="lazy" decoding="async" />
             </figure>
             <div className="people-copy">
-              <h2>Dit zijn de mensen<br />die bij u langskomen.</h2>
-              <p>Geen onderaannemers en geen wisselende gezichten. Wie uw installatie plaatst, komt hem daarna ook onderhouden &mdash; en kent uw woning dus al voordat er iets misgaat.</p>
+              <h2>U krijgt geen<br />onderaannemer over de vloer.</h2>
+              <p>Iedereen die bij u binnenkomt werkt bij Braam. Dat betekent ook dat degene die uw installatie plaatst, hem daarna blijft onderhouden &mdash; en uw woning dus al kent voordat er iets misgaat.</p>
               <blockquote className="people-quote">
                 <p>Al toch 20 jaar zeer tevreden klant.</p>
                 <cite>Han Engels<span>Onderhoud &amp; service</span></cite>
               </blockquote>
-              <Link className="text-link" href="/over-ons">Maak kennis met het team <span aria-hidden="true">&rarr;</span></Link>
+              <Link className="text-link" href="/over-ons">Meer over ons bedrijf <span aria-hidden="true">&rarr;</span></Link>
             </div>
           </div>
         </section>
