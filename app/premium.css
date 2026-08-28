@@ -552,9 +552,7 @@ h2 {
 .hero h1,
 .page-hero h1 {
   background: linear-gradient(108deg, #fff 12%, #dbe7f7 46%, #7fa8d9 92%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
   filter: drop-shadow(0 18px 45px rgba(0, 0, 0, 0.18));
 }
 
@@ -567,9 +565,7 @@ h2 {
 .hero h1 em,
 .page-hero h1 em {
   background: linear-gradient(90deg, #5cadff, #8ed7ff 48%, #3a8eff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
 
 .hero-lead {
@@ -830,22 +826,7 @@ h2 {
   will-change: transform;
 }
 
-.world-floor {
-  position: absolute;
-  inset: 12% 4% 7%;
-  border: 1px solid rgba(102, 187, 255, 0.22);
-  border-radius: 46px;
-  background:
-    linear-gradient(rgba(96, 184, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(96, 184, 255, 0.12) 1px, transparent 1px),
-    radial-gradient(circle at 50% 50%, rgba(38, 148, 255, 0.12), transparent 50%),
-    linear-gradient(145deg, rgba(4, 14, 32, 0.76), rgba(8, 34, 67, 0.48));
-  background-size: 52px 52px, 52px 52px, auto, auto;
-  box-shadow:
-    inset 0 1px rgba(255, 255, 255, 0.08),
-    0 0 80px rgba(0, 111, 255, 0.16);
-  transform: translateZ(-95px);
-}
+
 
 .world-route {
   position: absolute;
@@ -1524,17 +1505,13 @@ main {
 .home-price-row strong,
 .plan-price strong {
   background: linear-gradient(135deg, #071326, #3a6da7);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
 
 .home-price-row .featured strong,
 .price-card-featured .plan-price strong {
   background: linear-gradient(135deg, #fff, #75bdff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
 
 .price-card-featured .plan-description,
@@ -2252,9 +2229,7 @@ main {
 
 .large-phone {
   background: linear-gradient(90deg, #087dff, #005dcf);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
 
 .place-list {
@@ -2670,17 +2645,13 @@ main {
 .application-heading h1,
 .application-success h1 {
   background: linear-gradient(108deg, #fff 12%, #dbe7f7 46%, #7fa8d9 92%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
 
 .application-heading h1 em,
 .application-success h1 em {
   background: linear-gradient(90deg, #5cadff, #8ed7ff 48%, #3a8eff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
   font-style: normal;
 }
 
@@ -3196,7 +3167,7 @@ main {
 .landlord-form-note {
   margin: 15px 0 0;
   padding: 16px 18px;
-  border-left: 4px solid #1588ff;
+  border-left: 1px solid var(--line);
   border-radius: 0 15px 15px 0;
   background: #e3f1ff;
   color: #42546d;
@@ -3645,8 +3616,8 @@ label:has(input:focus-visible) {
   gap: 4px;
   margin: 14px 0 0;
   padding: 13px 15px;
-  border-left: 3px solid #1689ff;
-  border-radius: 0 12px 12px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
   background: rgba(221, 238, 255, 0.72);
   color: #53657d;
   font-size: 13px;
@@ -4153,7 +4124,7 @@ label:has(input:focus-visible) {
   gap: 5px;
   margin-top: 14px;
   padding: 17px 19px;
-  border-left: 4px solid #1688ff;
+  border-left: 1px solid var(--line);
   border-radius: 0 15px 15px 0;
   background: #e4f1ff;
   color: #4b5d76;
@@ -4253,7 +4224,7 @@ label:has(input:focus-visible) {
 .payment-security-note {
   margin: 15px 0 0;
   padding: 14px 16px;
-  border-left: 4px solid #1688ff;
+  border-left: 1px solid var(--line);
   border-radius: 0 14px 14px 0;
   background: #e4f1ff;
   color: #53667f;

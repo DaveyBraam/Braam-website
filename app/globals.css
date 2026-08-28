@@ -1,15 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #080d18;
-  --ink-soft: #445268;
-  --cream: #edf3fb;
-  --paper: #f7f9fc;
+  /* Het Handboek. Colour is a reference mark, not decoration: the blue is
+     lifted straight from the Rob Braam logo (#0c70b8) so the mark belongs to
+     the page instead of hanging in the header. Amber is reserved for urgency
+     and appears nowhere else. Names kept from the old system so the whole
+     stylesheet inherits the new world without a rename sweep. */
+  --ink: #0e1620;
+  --ink-soft: #56657b;
+  --cream: #e7edf4;
+  --paper: #f2f5f8;
   --white: #ffffff;
-  --lime: #2f7df5;
-  --lime-deep: #125edb;
-  --mint: #dceaff;
-  --line: #d8e0eb;
+  --lime: #0c70b8;
+  --lime-deep: #095a94;
+  --mint: #dbe8f4;
+  --line: #d3dbe4;
+  --rule: #c2ccd9;
+  --urgent: #c8781a;
 }
 
 * { box-sizing: border-box; }
@@ -211,7 +218,6 @@ h2 { font-size: clamp(40px, 4.6vw, 62px); }
 
 .certification-section { background: var(--ink); color: white; overflow: hidden; }
 .certification-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 95px; align-items: center; min-height: 610px; }
-.certificate-visual { position: relative; display: grid; place-items: center; height: 100%; min-height: 610px; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 44px 44px; }
 .shield { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 210px; height: 245px; background: var(--lime-deep); clip-path: polygon(50% 0, 94% 16%, 87% 73%, 50% 100%, 13% 73%, 6% 16%); filter: drop-shadow(0 25px 45px rgba(0,0,0,.3)); }
 .shield span { font-size: 64px; font-weight: 850; letter-spacing: -.07em; }
 .shield small { margin-top: 3px; font-size: 15px; font-weight: 850; letter-spacing: .27em; }
@@ -414,7 +420,6 @@ footer { padding: 35px 0; background: #060a12; color: white; }
   .price-card h3, .plan-description { min-height: auto; }
   .plan-button { margin-top: 28px; }
   .certification-grid { grid-template-columns: 1fr; gap: 0; }
-  .certificate-visual { min-height: 480px; }
   .certification-copy { padding: 30px 0 80px; }
   .reviews-grid { grid-template-columns: 1fr; gap: 55px; }
   .review-stack { max-width: 650px; width: 100%; }
@@ -455,7 +460,6 @@ footer { padding: 35px 0; background: #060a12; color: white; }
   .price-card-featured { padding: 30px 23px 23px; }
   .popular-badge { position: static; align-self: flex-start; margin-bottom: 16px; }
   .plan-price strong { font-size: 49px; }
-  .certificate-visual { min-height: 390px; }
   .shield { width: 165px; height: 195px; }
   .shield span { font-size: 51px; }
   .cert-ring-one { width: 270px; height: 270px; }
