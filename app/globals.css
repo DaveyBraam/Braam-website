@@ -663,13 +663,14 @@ footer { padding: 35px 0; background: #060a12; color: white; }
 .ventilation-strip p small { display: block; margin-bottom: 4px; color: #61738d; font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
 .ventilation-strip p strong { display: block; margin-bottom: 2px; color: var(--ink); }
 .ventilation-strip a { font-size: 11px; font-weight: 850; }
-.certificate-summary { padding: 78px 0; background: var(--ink); color: white; }
-.certificate-summary-grid { display: grid; grid-template-columns: 160px 1fr 1fr; align-items: center; gap: 55px; }
+.certificate-summary { padding: 128px 0; background: var(--ink); color: white; }
+.certificate-summary-grid { display: grid; grid-template-columns: 200px 1fr; align-items: start; gap: 30px 64px; }
 .mini-shield { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 125px; height: 145px; background: var(--lime-deep); clip-path: polygon(50% 0, 94% 16%, 87% 73%, 50% 100%, 13% 73%, 6% 16%); filter: drop-shadow(0 18px 32px rgba(0,0,0,.3)); animation: shield-float 4.5s ease-in-out infinite; }
 .mini-shield span { font-size: 36px; font-weight: 850; }
 .mini-shield small { font-size: 10px; font-weight: 850; letter-spacing: .22em; }
-.certificate-summary h2 { font-size: clamp(35px, 3.4vw, 49px); }
-.certificate-summary-grid > div:last-child > p { margin: 0 0 22px; color: #aebacd; font-size: 14px; line-height: 1.75; }
+.certificate-summary h2 { max-width: 15ch; font-size: clamp(38px, 4.4vw, 66px); line-height: 1.04; letter-spacing: -.035em; }
+.certificate-summary-grid > div:last-child { grid-column: 2; }
+.certificate-summary-grid > div:last-child > p { max-width: 62ch; margin: 0 0 26px; color: #b8c4d6; font-size: 16px; line-height: 1.72; }
 
 /* Maintenance and service pages */
 .maintenance-teaser { background: white; }

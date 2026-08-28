@@ -47,12 +47,6 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="service-ticker" aria-label="Warmtepompen, cv-ketels, airconditioning, elektra, onderhoud en service">
-          <div className="ticker-track" aria-hidden="true">
-            {[0, 1].map((copy) => <span className="ticker-set" key={copy}><b>Warmtepompen</b><i>•</i><b>Cv-ketels</b><i>•</i><b>Airconditioning</b><i>•</i><b>Elektra</b><i>•</i><b>Onderhoud</b><i>•</i><b>Service</b><i>•</i></span>)}
-          </div>
-        </div>
-
         <section className="section services-section reveal" id="diensten">
           <div className="shell">
             <div className="section-heading split-heading">
@@ -66,26 +60,44 @@ export default function Home() {
                 </article>
               ))}
             </div>
-            <div className="service-band">
-              <div><span className="band-label">Onderhoud & service</span><h3>Onderhoud en service door ons eigen team.</h3></div>
-              <p>Ons meeste onderhoud doen we in &apos;s-Hertogenbosch en omgeving. Vanuit die basis zijn we ook actief op steeds meer adressen in Noord-Brabant en aangrenzende delen van Gelderland.</p>
-              <div className="band-links"><Link className="button button-light" href="/onderhoud">Bekijk onderhoud</Link><Link href="/service">Servicevraag <span aria-hidden="true">→</span></Link><Link href="/onderhoud#verhuurders">Meerdere panden? <span aria-hidden="true">→</span></Link></div>
-            </div>
           </div>
         </section>
 
-        <section className="home-proof reveal">
-          <div className="shell proof-grid">
-            <div><strong>Ruim 1.900</strong><span>woningen met een<br />onderhoudscontract bij Braam</span></div>
-            <div><strong>Eigen team</strong><span>voor installatie,<br />elektra en service</span></div>
-            <div><strong>CO-VRIJ</strong><span>gecertificeerd bedrijf<br />en vakbekwame monteurs</span></div>
-            <div><strong>Vaste gezichten</strong><span>persoonlijk contact voor én<br />na de oplevering</span></div>
+        <section className="certificate-summary reveal">
+          <div className="shell certificate-summary-grid">
+            <div className="mini-shield" aria-hidden="true"><span>CO</span><small>VRIJ</small></div>
+            <div><h2>Aan een cv-ketel<br />mag niet iedereen werken.</h2></div>
+            <div><p>Sinds 1 april 2023 moet het bedrijf gecertificeerd zijn en moet de monteur aantoonbaar vakbekwaam zijn. Bij Braam zijn beide op orde. Op de cv-ketelpagina leggen we uit waar u als klant op kunt letten.</p><Link className="certificate-link" href="/cv-ketels">Zo herkent u veilig werk <span aria-hidden="true">→</span></Link></div>
+          </div>
+        </section>
+
+        <section className="projects-section reveal">
+          <div className="shell">
+            <div className="projects-heading"><div><h2>Echt installatiewerk<br />bij klanten in de regio.</h2></div><div><p>Geen stockbeelden, maar foto&apos;s van ons eigen werk. U ziet zowel geplaatste installaties als het vakwerk tijdens montage en inregeling.</p><Link className="text-link" href="/projecten">Bekijk alle praktijkfoto&apos;s <span aria-hidden="true">→</span></Link></div></div>
+            <ProjectGallery />
+          </div>
+        </section>
+
+        <section className="people reveal">
+          <div className="shell people-grid">
+            <figure className="people-photo">
+              <img src="/about/team-rob-braam.jpg" alt="Twee monteurs van Braam bij hun bedrijfsbussen" width="2560" height="1708" loading="lazy" decoding="async" />
+            </figure>
+            <div className="people-copy">
+              <h2>Dit zijn de mensen<br />die bij u langskomen.</h2>
+              <p>Geen onderaannemers en geen wisselende gezichten. Wie uw installatie plaatst, komt hem daarna ook onderhouden &mdash; en kent uw woning dus al voordat er iets misgaat.</p>
+              <blockquote className="people-quote">
+                <p>Al toch 20 jaar zeer tevreden klant.</p>
+                <cite>Han Engels<span>Onderhoud &amp; service</span></cite>
+              </blockquote>
+              <Link className="text-link" href="/over-ons">Maak kennis met het team <span aria-hidden="true">&rarr;</span></Link>
+            </div>
           </div>
         </section>
 
         <section className="section home-subscriptions reveal">
           <div className="shell">
-            <div className="section-heading split-heading"><div><h2>Onderhoud geregeld<br />vanaf een maandbedrag.</h2></div><p>Bekijk eerst welk toestel u heeft. Daarna vergelijkt u Comfort en Comfort Plus. De maandprijs staat voorop, de jaarprijs blijft duidelijk zichtbaar voordat u aanvraagt.</p></div>
+            <div className="section-heading split-heading"><div><h2>Wat onderhoud kost,<br />leest u hier.</h2></div><p>U hoeft geen offerte aan te vragen om een prijs te weten. Kies uw toestel, vergelijk Comfort en Comfort Plus, en zie meteen wat u per maand of per jaar betaalt.</p></div>
             <div className="subscription-proof-strip"><span aria-hidden="true">✓</span><p><strong>Jaarlijks door Braam ingepland.</strong> Een abonnement is een doorlopend servicepakket met jaarlijkse controle en afgesproken service bij storingen, niet een losse betaling per bezoek.</p><Link href="/onderhoud#abonnementen">Lees hoe het abonnement werkt →</Link></div>
             <div className="home-price-row">
               <Link href="/onderhoud">
@@ -117,28 +129,6 @@ export default function Home() {
               </Link>
             </div>
             <div className="ventilation-strip"><span aria-hidden="true">+</span><p><small>Extra bij het ketel- of combinatieabonnement</small><strong>Mechanische ventilatiebox mee laten schoonmaken?</strong> Voor € 37,50 extra per jaar nemen we deze mee tijdens het geplande onderhoud.</p><Link href="/onderhoud">Bekijk de abonnementen →</Link></div>
-          </div>
-        </section>
-
-        <section className="projects-section reveal">
-          <div className="shell">
-            <div className="projects-heading"><div><h2>Echt installatiewerk<br />bij klanten in de regio.</h2></div><div><p>Geen stockbeelden, maar foto&apos;s van ons eigen werk. U ziet zowel geplaatste installaties als het vakwerk tijdens montage en inregeling.</p><Link className="text-link" href="/projecten">Bekijk alle praktijkfoto&apos;s <span aria-hidden="true">→</span></Link></div></div>
-            <ProjectGallery />
-          </div>
-        </section>
-
-        <section className="certificate-summary reveal">
-          <div className="shell certificate-summary-grid">
-            <div className="mini-shield" aria-hidden="true"><span>CO</span><small>VRIJ</small></div>
-            <div><h2>Aan een cv-ketel<br />mag niet iedereen werken.</h2></div>
-            <div><p>Sinds 1 april 2023 moet het bedrijf gecertificeerd zijn en moet de monteur aantoonbaar vakbekwaam zijn. Bij Braam zijn beide op orde. Op de cv-ketelpagina leggen we uit waar u als klant op kunt letten.</p><Link className="certificate-link" href="/cv-ketels">Zo herkent u veilig werk <span aria-hidden="true">→</span></Link></div>
-          </div>
-        </section>
-
-        <section className="reviews-section reveal">
-          <div className="shell reviews-grid">
-            <div className="reviews-intro"><h2>Klanten die ons werk<br />al jaren kennen.</h2><p>Wij willen groeien door goed werk te leveren en bereikbaar te blijven. De ervaring van bestaande klanten zegt daarom meer dan een grote verkooppraat.</p><Link className="text-link" href="/projecten">Bekijk meer werk en ervaringen <span aria-hidden="true">→</span></Link></div>
-            <div className="review-stack"><blockquote><span className="quote-mark" aria-hidden="true">“</span><p>Vakkundig en met mooi strakke leiding gemonteerd.</p><div className="review-author"><strong>Kemme</strong><small>Warmtepomp & airco</small></div></blockquote><blockquote><span className="quote-mark" aria-hidden="true">“</span><p>Al toch 20 jaar zeer tevreden klant.</p><div className="review-author"><strong>Han Engels</strong><small>Onderhoud & service</small></div></blockquote></div>
           </div>
         </section>
 
