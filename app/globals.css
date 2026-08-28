@@ -533,8 +533,8 @@ footer { padding: 35px 0; background: #060a12; color: white; }
 .nav-dropdown summary::-webkit-details-marker { display: none; }
 .nav-dropdown summary span { margin-left: 3px; color: var(--lime-deep); }
 .dropdown-panel { position: absolute; top: 36px; left: -24px; display: grid; grid-template-columns: repeat(2, 200px); padding: 12px; background: white; border: 1px solid var(--line); box-shadow: 0 22px 55px rgba(8,13,24,.15); animation: dropdown-in .2s ease both; }
-.dropdown-panel a { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 13px; color: #29364a; font-size: 12px; font-weight: 700; transition: background .2s ease, padding .2s ease; }
-.dropdown-panel a:hover { padding-left: 17px; background: #edf4ff; color: var(--lime-deep); }
+.dropdown-panel a { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 13px; color: #29364a; font-size: 12px; font-weight: 700; transition: background .2s ease, transform .2s ease; }
+.dropdown-panel a:hover { transform: translateX(4px); background: #edf4ff; color: var(--lime-deep); }
 .dropdown-panel a span { color: var(--lime-deep); }
 .mobile-menu { display: none; position: relative; }
 .mobile-menu > summary { display: grid; place-content: center; gap: 4px; width: 45px; height: 45px; background: var(--ink); cursor: pointer; list-style: none; }
@@ -852,7 +852,7 @@ footer { padding: 35px 0; background: #060a12; color: white; }
 .privacy-purpose-grid > div { min-height: 190px; padding: 23px; border: 1px solid rgba(79,110,153,.13); border-radius: 19px; background: rgba(239,246,255,.75); }
 .privacy-purpose-grid strong { font-size: 13px; }
 .privacy-purpose-grid p { margin-top: 10px; font-size: 11px; line-height: 1.65; }
-.privacy-provider-note { margin-top: 25px; padding: 25px; border-left: 4px solid #1588ff; border-radius: 0 18px 18px 0; background: #e5f2ff; }
+.privacy-provider-note { margin-top: 25px; padding: 25px; border: 1px solid rgba(21,136,255,.28); border-radius: 19px; background: #e5f2ff; }
 .privacy-provider-note strong { font-size: 13px; }
 .privacy-provider-note p { margin-top: 10px; font-size: 12px; }
 .privacy-contact-block { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 35px 48px; background: radial-gradient(circle at 90% 10%, rgba(73,168,255,.22), transparent 15rem), #071326; color: white; }
