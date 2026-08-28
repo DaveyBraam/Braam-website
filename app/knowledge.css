@@ -514,15 +514,15 @@
   backdrop-filter: blur(12px);
 }
 
+
+
 .knowledge-card-visual-placeholder {
+  /* Plain ink surface. This used to carry a two-axis hairline grid, which is a
+     decorative pattern standing in for content; Het Handboek reserves ruled
+     fields for actual measurement. */
   display: grid;
   place-items: center;
-  background:
-    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
-    radial-gradient(circle at 70% 30%, rgba(45, 148, 255, 0.34), transparent 12rem),
-    linear-gradient(145deg, #071326, #0b2443);
-  background-size: 34px 34px, 34px 34px, auto, auto;
+  background: var(--ink);
 }
 
 .knowledge-card-visual-placeholder > span {
