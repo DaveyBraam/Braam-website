@@ -60,12 +60,15 @@ export function Experience() {
     const cleanups: Array<() => void> = [];
 
     const revealItems = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
-    revealItems.forEach((section, sectionIndex) => {
-      section.style.setProperty("--reveal-x", `${sectionIndex % 2 === 0 ? -12 : 12}px`);
+    // Sections used to slide in sideways as well as up. The horizontal offset
+    // only ever worked because an overflow-x clip on html and body hid it - and
+    // that clip is what took position:sticky off the compositor and made the
+    // pinned hero judder. With the clip gone the sideways drift becomes a real
+    // horizontal scrollbar, so the reveal now moves on one axis only.
+    revealItems.forEach((section) => {
       section.querySelectorAll<HTMLElement>(revealChildSelector).forEach((item, itemIndex) => {
         item.classList.add("reveal-item");
         item.style.setProperty("--reveal-delay", `${Math.min(itemIndex, 5) * 65}ms`);
-        item.style.setProperty("--reveal-item-x", `${itemIndex % 2 === 0 ? -8 : 8}px`);
       });
     });
 

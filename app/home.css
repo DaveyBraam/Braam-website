@@ -1,0 +1,320 @@
+/* Het Handboek, homepage.
+
+   The film set a world and the page abandoned it one screen later: dark,
+   cinematic hero, then a light corporate page with floating cards. This sheet
+   carries the film's world down the whole page instead. Everything is scoped
+   to .home so the subpages keep their current treatment until their own turn.
+
+   Rules of this world:
+   - one ground, ink; sections are separated by hairlines, never by cards
+   - nothing is enclosed: no rounded boxes, no drop shadows, no glass
+   - hierarchy comes from scale and weight only
+   - the logo's blue marks references, never decorates
+   - exactly one light panel on the page, at the close, as the only luxury */
+
+.home {
+  --hair: rgba(255, 255, 255, .13);
+  --hair-strong: rgba(255, 255, 255, .24);
+  --ink-deep: #080d14;
+  --on-ink: #eef3f9;
+  --on-ink-soft: #93a3b8;
+  background: var(--ink-deep);
+  color: var(--on-ink);
+}
+
+.home section:not(.cinema-sequence):not(.routes):not(.contact-cta) {
+  padding-block: clamp(72px, 9vh, 128px);
+  border-top: 1px solid var(--hair);
+  background: transparent;
+}
+
+.home h2 {
+  max-width: 17ch;
+  color: var(--on-ink);
+  font-size: clamp(32px, 4.6vw, 68px);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -.038em;
+  text-wrap: balance;
+}
+
+.home p { color: var(--on-ink-soft); }
+
+.home .section-heading,
+.home .projects-heading {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 30px 64px;
+  align-items: end;
+  margin-bottom: clamp(38px, 5vh, 66px);
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.home .section-heading > p,
+.home .projects-heading p {
+  max-width: 48ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.66;
+}
+
+/* Services become a ruled index, not four matching cards. Explicit row and
+   column placement: the card's div holds four children and any implicit flow
+   collapsed the tracks. */
+.home .service-grid {
+  display: block;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.home .service-card {
+  /* The card was itself a grid squeezing its content into a 62px track, and
+     carried a 320px min-height meant for a tile. A ruled row needs neither. */
+  display: block;
+  min-height: 0;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.home .service-card > div {
+  display: grid;
+  grid-template-columns: minmax(0, 24ch) minmax(0, 1fr);
+  column-gap: clamp(28px, 5vw, 72px);
+  row-gap: 6px;
+  align-items: start;
+  padding: 34px 0;
+  transition: padding-left .3s cubic-bezier(.16, 1, .3, 1);
+}
+
+.home .service-card:hover > div,
+.home .service-card:focus-within > div { padding-left: 14px; }
+
+.home .service-card > div > span {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--lime);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.home .service-card > div > h3 {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 2px 0 0;
+  color: var(--on-ink);
+  font-size: clamp(24px, 2.4vw, 36px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -.03em;
+}
+
+.home .service-card > div > p {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  max-width: 54ch;
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.62;
+}
+
+.home .service-card > div > a {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: start;
+  margin-top: 14px;
+  color: var(--on-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* The one argument no competitor can copy gets the page's largest type. */
+.home .certificate-summary {
+  padding-block: clamp(96px, 14vh, 176px);
+  background: transparent;
+}
+
+.home .certificate-summary h2 {
+  max-width: 13ch;
+  font-size: clamp(40px, 6.4vw, 96px);
+  letter-spacing: -.045em;
+}
+
+.home .mini-shield {
+  border: 1px solid var(--hair-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--lime);
+}
+
+/* The price is the strongest verifiable proof on the page, so it is set at
+   headline scale instead of hidden in a comparison table. */
+.home .home-price-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.home .home-price-row > a {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 38px 34px 34px;
+  border: 0;
+  border-left: 1px solid var(--hair);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--on-ink);
+  transition: background .25s ease;
+}
+
+.home .home-price-row > a:first-child { border-left: 0; padding-left: 0; }
+.home .home-price-row > a:hover { background: rgba(255, 255, 255, .035); }
+.home .home-price-row > a.featured { background: rgba(12, 112, 184, .1); }
+.home .home-price-row > a.featured:hover { background: rgba(12, 112, 184, .16); }
+
+.home .home-price-row > a > span {
+  color: var(--lime);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.home .home-price-row > a > strong {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin-top: 8px;
+  color: var(--on-ink);
+  font-size: clamp(46px, 5.4vw, 78px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.home .home-price-row > a > strong small {
+  font-size: .42em;
+  font-weight: 500;
+}
+
+.home .home-price-row em {
+  color: var(--on-ink-soft);
+  font-size: 13px;
+  font-style: normal;
+}
+
+.home .home-plan-description,
+.home .home-annual-price,
+.home .home-monthly-price {
+  color: var(--on-ink-soft);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.home .home-plan-benefits {
+  margin: 14px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--hair);
+  list-style: none;
+}
+
+.home .home-plan-benefits li {
+  padding: 5px 0;
+  color: var(--on-ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.home .home-price-row b {
+  margin-top: auto;
+  padding-top: 18px;
+  color: var(--lime);
+  font-size: 14px;
+}
+
+.home .subscription-proof-strip,
+.home .ventilation-strip {
+  border: 0;
+  border-top: 1px solid var(--hair);
+  border-radius: 0;
+  background: transparent;
+  padding: 24px 0;
+}
+
+.home .subscription-proof-strip p,
+.home .ventilation-strip p { color: var(--on-ink-soft); }
+
+.home .subscription-proof-strip strong,
+.home .ventilation-strip strong { color: var(--on-ink); }
+
+/* People and projects: the photography carries these, so nothing frames it. */
+.home .people {
+  padding-block: clamp(72px, 9vh, 128px);
+  background: transparent;
+}
+
+.home .people-photo {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.home .people-copy h2 { max-width: 15ch; }
+.home .people-copy > p { color: var(--on-ink-soft); }
+
+.home .people-quote {
+  border: 0;
+  border-left: 1px solid var(--lime);
+  border-radius: 0;
+  background: transparent;
+  padding: 4px 0 4px 22px;
+}
+
+.home .people-quote p { color: var(--on-ink); font-size: 21px; }
+.home .people-quote cite { color: var(--on-ink); }
+.home .people-quote cite span { color: var(--on-ink-soft); }
+
+.home .project-gallery { border-radius: 0; gap: 2px; }
+
+.home .region-map { filter: saturate(.5) brightness(.9); }
+.home .region-copy p { color: var(--on-ink-soft); }
+
+.home .text-link { color: var(--lime); }
+
+/* The single light panel: the close, and the only place the page relaxes. */
+/* Specificity note: the .home section:not(...) reset above scores higher than
+   a plain .home .contact-cta, so this one matches on the section element too. */
+.home section.contact-cta {
+  padding-block: clamp(74px, 10vh, 132px);
+  border-top: 1px solid var(--hair);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.home section.contact-cta h2 { color: var(--ink); }
+.home section.contact-cta p { color: var(--ink-soft); }
+.home section.contact-cta a { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .home .section-heading,
+  .home .projects-heading { grid-template-columns: 1fr; align-items: start; }
+  .home .service-card > div { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
+  .home .service-card:hover > div { padding-left: 0; }
+  .home .home-price-row { grid-template-columns: 1fr; }
+  .home .home-price-row > a {
+    border-left: 0;
+    border-top: 1px solid var(--hair);
+    padding: 30px 0;
+  }
+  .home .home-price-row > a:first-child { border-top: 0; padding-top: 0; }
+}

@@ -3,7 +3,7 @@
    a failed boiler is not the same decision as comparing heat pumps. They share
    a rhythm and a rule, and differ where the visitor's situation differs. */
 .routes {
-  background: #05070b;
+  background: #05080b;
   border-block: 1px solid rgba(255, 255, 255, .09);
 }
 
@@ -52,7 +52,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 6px;
-  color: #7cc0ff;
+  color: #81c7fa;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -.01em;
@@ -98,7 +98,7 @@
    evidence that says the same thing in a customer's words. */
 .people {
   padding-block: 120px;
-  background: #f1f4f9;
+  background: #f1f6f9;
 }
 
 .people-grid {
@@ -133,7 +133,7 @@
 .people-copy > p {
   max-width: 46ch;
   margin: 22px 0 0;
-  color: #4d5c73;
+  color: #4f6371;
   font-size: 16px;
   line-height: 1.68;
 }
@@ -148,7 +148,7 @@
 
 .people-quote p {
   margin: 0;
-  color: #13233a;
+  color: #152938;
   font-size: 19px;
   font-weight: 500;
   line-height: 1.4;
@@ -160,14 +160,14 @@
   flex-direction: column;
   gap: 2px;
   margin-top: 12px;
-  color: #13233a;
+  color: #152938;
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
 }
 
 .people-quote cite span {
-  color: #6b7a91;
+  color: #6d818f;
   font-size: 12px;
   font-weight: 400;
 }

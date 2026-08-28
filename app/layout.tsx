@@ -8,6 +8,7 @@ import "./premium.css";
 import "./knowledge.css";
 import "./cinematic-sequence.css";
 import "./home-routes.css";
+import "./home.css";
 
 const geist = Geist({
   variable: "--font-geist",

@@ -8,7 +8,7 @@
   --cinema-work: 0;
   position: relative;
   height: 380svh;
-  background: #03060b;
+  background: #03080b;
   color: #fff;
   isolation: isolate;
 }
@@ -19,7 +19,7 @@
   height: calc(100svh - 84px);
   min-height: 650px;
   overflow: hidden;
-  background: #03060b;
+  background: #03080b;
   isolation: isolate;
 }
 
@@ -41,7 +41,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  background: #03060b;
+  background: #03080b;
   /* The colour grade is baked into the frames by ffmpeg. A CSS filter here made
      the browser re-filter the whole canvas on every scrubbed frame, on top of
      the draw itself, which is what fought the scroll. Promoting the canvas to
@@ -191,7 +191,7 @@
 }
 
 .cinema-work-note span {
-  color: #83c4ff;
+  color: #88cafa;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: .16em;
@@ -232,8 +232,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #3b9cff;
-  box-shadow: 0 0 14px #3b9cff;
+  background: #43acf7;
+  box-shadow: 0 0 14px #43acf7;
 }
 
 .cinema-route {
@@ -253,7 +253,7 @@
   display: block;
   width: calc((var(--cinema-work) * 66.66%) + 33.33%);
   height: 100%;
-  background: linear-gradient(90deg, #1688ff, #8ed0ff);
+  background: linear-gradient(90deg, #1f9cf6, #93cffa);
   box-shadow: 0 0 15px rgba(47, 149, 255, .7);
 }
 
@@ -344,12 +344,12 @@
   .cinema-depth {
     background:
       radial-gradient(circle at 70% 28%, rgba(28, 133, 255, .14), transparent 30%),
-      linear-gradient(180deg, rgba(1, 4, 8, .05), rgba(2, 5, 10, .12) 28%, rgba(2, 5, 10, .92) 58%, #03060b 76%);
+      linear-gradient(180deg, rgba(1, 4, 8, .05), rgba(2, 5, 10, .12) 28%, rgba(2, 5, 10, .92) 58%, #03080b 76%);
   }
 
   .cinema-grade {
     background:
-      linear-gradient(180deg, rgba(1, 4, 8, .06), transparent 20%, rgba(1, 4, 8, .54) 47%, #03060b 66%),
+      linear-gradient(180deg, rgba(1, 4, 8, .06), transparent 20%, rgba(1, 4, 8, .54) 47%, #03080b 66%),
       linear-gradient(90deg, rgba(1, 4, 8, .22), transparent 70%);
     box-shadow: none;
   }
@@ -469,7 +469,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #83c4ff;
+  color: #88cafa;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: .16em;
@@ -480,8 +480,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #3b9cff;
-  box-shadow: 0 0 14px #3b9cff;
+  background: #43acf7;
+  box-shadow: 0 0 14px #43acf7;
 }
 
 .cinema-story strong {
@@ -512,7 +512,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #1688ff, #8ed0ff);
+  background: linear-gradient(90deg, #1f9cf6, #93cffa);
   box-shadow: 0 0 15px rgba(47, 149, 255, .7);
   transform-origin: left center;
 }

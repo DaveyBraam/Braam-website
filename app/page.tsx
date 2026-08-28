@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="home">
         <CinematicHero />
 
         {/* Three visitors arrive here with different urgency: a failed boiler, a
