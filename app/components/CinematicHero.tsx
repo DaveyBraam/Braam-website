@@ -5,29 +5,37 @@ import { useEffect, useRef, useState } from "react";
 
 const highlights = ["Persoonlijk advies", "STEK & CO-VRIJ gecertificeerd", "Sinds 2000 actief"];
 
-// Three photographed moments, each locked to its own clip. The camera moves,
-// the scene never changes: every frame comes from that scene's own footage.
+// Four photographed moments of one visit, each locked to its own clip. The
+// camera moves, the scene never changes: every frame comes from that scene's
+// own footage, generated from that photo as the first frame.
 const scenes = [
   {
     dir: "01",
-    frames: 60,
+    frames: 48,
     label: "Aankomst",
     title: "De monteur komt voorrijden.",
-    note: "Materiaal staat klaar achter in de bus.",
+    note: "Gereedschap en materiaal staan klaar in de bus.",
   },
   {
     dir: "02",
-    frames: 60,
+    frames: 48,
+    label: "Het werk",
+    title: "De warmtepomp wordt nagelopen.",
+    note: "Metingen, afstellen en controleren wat er nodig is.",
+  },
+  {
+    dir: "03",
+    frames: 48,
     label: "Uitleg",
     title: "Even laten zien hoe de thermostaat werkt.",
     note: "Zodat u er daarna zelf mee overweg kunt.",
   },
   {
-    dir: "03",
-    frames: 60,
-    label: "Warmtepomp",
-    title: "De warmtepomp staat op zijn plek.",
-    note: "Netjes geplaatst en bereikbaar voor onderhoud.",
+    dir: "04",
+    frames: 48,
+    label: "Afronding",
+    title: "Klaar, en u weet waar u aan toe bent.",
+    note: "Heeft u later een vraag, dan belt u gewoon.",
   },
 ];
 
@@ -72,6 +80,7 @@ export function CinematicHero() {
     let target = 0;
     let onScreen = true;
     let disposed = false;
+    let generation = 0;
     let lastKey = "";
 
     const load = (sceneIndex: number, frameIndex: number) =>
@@ -84,17 +93,26 @@ export function CinematicHero() {
           resolve();
         };
         image.onload = () => {
-          if (image.decode) image.decode().then(keep, keep);
-          else keep();
+          // The frame is usable the moment it loads, so the queue moves on here.
+          // decode() is only a warm-up to keep the first paint off the main
+          // thread — and it must never be awaited: a browser leaves it pending
+          // while the page is hidden, which stalled the whole sequence after
+          // frame one for anyone opening the site in a background tab.
+          keep();
+          if (image.decode) image.decode().catch(() => {});
         };
         image.onerror = () => resolve();
         image.src = framePath(variant + scenes[sceneIndex].dir, frameIndex);
       });
 
     const loadQueue = async (queue: Array<[number, number]>, onBatch?: () => void) => {
+      // Crossing the breakpoint starts a new run. Without this the old run keeps
+      // pulling its own frame set alongside the new one, so a visitor who
+      // rotates their phone downloads both sets for nothing.
+      const run = generation;
       let cursor = 0;
       const worker = async () => {
-        while (!disposed) {
+        while (!disposed && generation === run) {
           const next = cursor;
           cursor += 1;
           if (next >= queue.length) return;
@@ -131,11 +149,19 @@ export function CinematicHero() {
       return undefined;
     };
 
+    // The frames are only as wide as the set they come from, so a backing store
+    // wider than that upscales without adding a single pixel of detail — while
+    // costing real paint time on every frame the scroll asks for. On a 1440px
+    // retina screen that was a 2880px canvas redrawing 4.7 megapixels per frame,
+    // which is what made the sticky stage judder against the scroll.
+    const sourceWidth = () => (variant === "m" ? 860 : 1600);
+
     const resize = () => {
       const ratio = Math.min(2, window.devicePixelRatio || 1);
       const rect = canvas.getBoundingClientRect();
-      const width = Math.max(1, Math.round(rect.width * ratio));
-      const height = Math.max(1, Math.round(rect.height * ratio));
+      if (rect.width <= 0 || rect.height <= 0) return false;
+      const width = Math.max(1, Math.min(Math.round(rect.width * ratio), sourceWidth()));
+      const height = Math.max(1, Math.round((width * rect.height) / rect.width));
       if (canvas.width === width && canvas.height === height) return false;
       canvas.width = width;
       canvas.height = height;
@@ -190,27 +216,36 @@ export function CinematicHero() {
       setCopyHidden((value) => (value === hidden ? value : hidden));
     };
 
-    const step = (time: number) => {
-      frame = 0;
-      const delta = previous ? Math.min(0.064, (time - previous) / 1000) : 1 / 60;
-      previous = time;
-
-      target = readProgress();
-      // Exponential smoothing gives the camera weight, so it glides on after
-      // the wheel stops instead of tracking the scrollbar one to one.
-      eased += (target - eased) * (1 - Math.exp(-delta * 7.5));
-      if (Math.abs(target - eased) < 0.0004) eased = target;
-
+    // The weight of the camera comes from Lenis now. Smoothing the progress a
+    // second time here put the canvas on its own clock, half a beat behind the
+    // page — which is exactly what read as juddering against the sticky stage.
+    const update = () => {
+      if (!onScreen) return;
+      eased = readProgress();
+      target = eased;
       paint(eased);
+    };
 
-      if (eased !== target) frame = window.requestAnimationFrame(step);
-      else previous = 0;
+    // Lenis calls every registered updater in the same frame it moves the page.
+    // Without it (reduced motion, or the script failing) fall back to painting
+    // straight off the scroll event, which is coarser but never stale.
+    const register = () => {
+      window.__scrubUpdaters ??= [];
+      if (!window.__scrubUpdaters.includes(update)) window.__scrubUpdaters.push(update);
+    };
+    const unregister = () => {
+      const updaters = window.__scrubUpdaters;
+      if (!updaters) return;
+      const at = updaters.indexOf(update);
+      if (at >= 0) updaters.splice(at, 1);
     };
 
     const wake = () => {
       if (frame || !onScreen || reducedMotion.matches) return;
-      previous = 0;
-      frame = window.requestAnimationFrame(step);
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        update();
+      });
     };
 
     const stop = () => {
@@ -271,11 +306,14 @@ export function CinematicHero() {
       const next = narrow.matches ? "m" : "";
       if (next === variant) return;
       variant = next;
+      generation += 1;
       images = scenes.map((item) => new Array(item.frames));
       lastKey = "";
+      resize();
       void boot();
     };
 
+    register();
     window.addEventListener("scroll", wake, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
     window.addEventListener("orientationchange", onResize, { passive: true });
@@ -284,6 +322,7 @@ export function CinematicHero() {
 
     return () => {
       disposed = true;
+      unregister();
       stop();
       observer.disconnect();
       window.removeEventListener("scroll", wake);

@@ -7,7 +7,7 @@
   --cinema-bridge: 0;
   --cinema-work: 0;
   position: relative;
-  height: 320svh;
+  height: 380svh;
   background: #03060b;
   color: #fff;
   isolation: isolate;
@@ -42,7 +42,12 @@
   height: 100%;
   display: block;
   background: #03060b;
-  filter: saturate(.79) contrast(1.06) brightness(.92);
+  /* The colour grade is baked into the frames by ffmpeg. A CSS filter here made
+     the browser re-filter the whole canvas on every scrubbed frame, on top of
+     the draw itself, which is what fought the scroll. Promoting the canvas to
+     its own layer keeps a repaint from re-compositing the sticky stage. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .cinema-depth {
@@ -57,15 +62,16 @@
   z-index: -3;
   background:
     linear-gradient(180deg, rgba(1, 4, 8, .28), transparent 24%, transparent 68%, rgba(1, 4, 8, .84)),
-    linear-gradient(90deg, rgba(1, 4, 8, calc(.55 - var(--cinema-work) * .2)), transparent 54%);
-  box-shadow: inset 0 0 180px rgba(0, 0, 0, .36);
+    linear-gradient(90deg, rgba(1, 4, 8, calc(.55 - var(--cinema-work) * .2)), transparent 54%),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, .36));
 }
 
 .cinema-grain {
   z-index: -2;
-  opacity: .065;
+  opacity: .045;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-  mix-blend-mode: soft-light;
+  /* No mix-blend-mode: blending a full-stage layer forces the compositor to
+     re-blend everything beneath it on every frame the sticky stage moves. */
   pointer-events: none;
 }
 
@@ -143,7 +149,6 @@
   box-shadow: 0 18px 60px rgba(0, 0, 0, .25);
   opacity: var(--cinema-work);
   transform: translate3d(0, calc(22px - var(--cinema-work) * 22px), 0);
-  backdrop-filter: blur(14px);
   will-change: opacity, transform;
 }
 
@@ -270,7 +275,6 @@
 }
 
 @media (max-width: 960px) {
-  .cinema-canvas { filter: saturate(.8) contrast(1.05) brightness(.93); }
   .cinema-footer { grid-template-columns: 1fr; }
   .cinema-route { width: min(100%, 440px); }
   .cinema-copy { max-width: 690px; }
@@ -279,7 +283,7 @@
 
 @media (max-width: 660px) {
   .cinema-sequence {
-    height: 300svh;
+    height: 360svh;
     min-height: 0;
   }
 
@@ -296,7 +300,7 @@
   }
 
   .cinema-canvas {
-    filter: saturate(.8) contrast(1.04) brightness(.96);
+    transform: translateZ(0);
   }
 
   .cinema-depth {
@@ -413,11 +417,10 @@
   padding: 18px 20px;
   border: 1px solid rgba(255, 255, 255, .15);
   border-radius: 16px;
-  background: rgba(4, 9, 16, .5);
+  background: rgba(4, 9, 16, .78);
   box-shadow: 0 18px 60px rgba(0, 0, 0, .25);
   opacity: 0;
   transform: translate3d(0, 14px, 0);
-  backdrop-filter: blur(14px);
   transition: opacity .45s ease, transform .45s ease;
 }
 

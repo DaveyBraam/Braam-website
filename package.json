@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",
+    "lenis": "^1.3.26",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"
@@ -40,5 +41,5 @@
     "wrangler": "4.92.0"
   },
   "type": "module",
-  "displayName": "Braam Service & Montage \u2014 Premium concept"
+  "displayName": "Braam Service & Montage — Premium concept"
 }

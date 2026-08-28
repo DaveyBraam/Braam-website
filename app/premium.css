@@ -905,8 +905,10 @@ html {
   scrollbar-color: #2f8cff #090d16;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
-  overflow-x: clip;
+  /* No overflow-x guard here: an ancestor that clips takes position:sticky
+     off the compositor and onto the main thread, which made the pinned
+     hero judder against every scroll. Horizontal overflow is contained by
+     max-width on the elements themselves. */
 }
 
 body {
@@ -914,8 +916,11 @@ body {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-x: clip;
+  /* No overflow-x guard here: an ancestor that clips takes position:sticky
+     off the compositor and onto the main thread, which made the pinned
+     hero judder against every scroll. Horizontal overflow is contained by
+     max-width on the elements themselves. */
+
   background:
     radial-gradient(circle at 15% -5%, rgba(47, 140, 255, 0.13), transparent 26rem),
     linear-gradient(180deg, #f7faff 0%, #f3f7fd 100%);
@@ -2010,8 +2015,10 @@ main,
 }
 
 main {
-  overflow-x: hidden;
-  overflow-x: clip;
+  /* No overflow-x guard here: an ancestor that clips takes position:sticky
+     off the compositor and onto the main thread, which made the pinned
+     hero judder against every scroll. Horizontal overflow is contained by
+     max-width on the elements themselves. */
 }
 
 .home-subscriptions,

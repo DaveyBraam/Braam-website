@@ -14,7 +14,7 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* Lenis owns the scroll position now; native smooth scrolling fought it. */
 
 body {
   margin: 0;

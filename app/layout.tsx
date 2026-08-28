@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Experience } from "./components/Experience";
+import { SmoothScroll } from "./components/SmoothScroll";
 import { siteConfig } from "./site-config";
 import "./globals.css";
 import "./premium.css";
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nl">
       <body className={geist.variable}>
+        <SmoothScroll />
         <Experience />
         {children}
       </body>
