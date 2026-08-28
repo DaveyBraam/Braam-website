@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const highlights = ["Persoonlijk advies", "STEK & CO-VRIJ gecertificeerd", "Sinds 2000 actief"];
+// Only what can be checked. "Persoonlijk advies" was a claim standing in a
+// proof row; certification and trading years are facts a visitor can verify.
+const highlights = ["CO-gecertificeerd bedrijf", "STEK-gecertificeerde monteurs", "Sinds 2000"];
 
 // Four photographed moments of one visit, each locked to its own clip. The
 // camera moves, the scene never changes: every frame comes from that scene's
@@ -351,15 +353,17 @@ export function CinematicHero() {
 
         <div className="shell cinema-content">
           <div className="cinema-copy" inert={copyHidden || undefined}>
-            <p className="eyebrow eyebrow-light"><span /> Installatiebedrijf uit &apos;s-Hertogenbosch</p>
             <h1 id="home-cinematic-title">
-              <span className="cinema-line"><span>Installatie en onderhoud.</span></span>
-              <span className="cinema-line"><em>Persoonlijk geregeld.</em></span>
+              <span className="cinema-line">Dezelfde mensen die het installeren,</span>
+              <span className="cinema-line">onderhouden het ook.</span>
             </h1>
-            <p className="cinema-lead">Bij Braam krijgt u advies, installatie, onderhoud en service van hetzelfde team. Vanuit &apos;s-Hertogenbosch werken we in Noord-Brabant en aangrenzende delen van Gelderland.</p>
+            <p className="cinema-lead">Warmtepompen, cv-ketels, airco en elektra. Vanuit &apos;s-Hertogenbosch, in Noord-Brabant en aangrenzend Gelderland.</p>
             <div className="cinema-actions">
-              <Link className="button button-primary" href="/contact#contact-keuze">Offerte aanvragen <span aria-hidden="true">↗</span></Link>
-              <a className="phone-link" href="tel:+31736222199"><span className="phone-icon" aria-hidden="true">↗</span><span><small>Even overleggen?</small><strong>073 622 2199</strong></span></a>
+              <a className="cinema-call" href="tel:+31736222199">
+                <small>Storing of een vraag?</small>
+                <strong>073 622 2199</strong>
+              </a>
+              <Link className="button button-primary" href="/offerte-aanvragen">Offerte aanvragen</Link>
             </div>
           </div>
 

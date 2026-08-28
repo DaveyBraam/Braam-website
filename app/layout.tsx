@@ -7,6 +7,7 @@ import "./globals.css";
 import "./premium.css";
 import "./knowledge.css";
 import "./cinematic-sequence.css";
+import "./home-routes.css";
 
 const geist = Geist({
   variable: "--font-geist",

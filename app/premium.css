@@ -3219,41 +3219,38 @@ main {
 
 /* Entrance and ambient motion */
 .experience-ready .reveal {
+  /* Restrained on purpose. This entrance repeats on seven sections, so it has
+     to recede: the scrubbed hero is the page's authored moment and anything
+     competing with it flattens both. The blur and 3D rotation that used to be
+     here also cost a full-section repaint every time one scrolled into view. */
   opacity: 0;
-  filter: blur(10px) saturate(0.88);
-  transform: perspective(1200px) translate3d(var(--reveal-x, 0), 58px, 0) scale(0.982) rotateX(1.6deg);
-  transform-origin: 50% 0;
+  transform: translate3d(var(--reveal-x, 0), 18px, 0);
   animation: none !important;
   transition:
-    opacity 0.82s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 1.05s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.08s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity .55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform .62s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .experience-ready .reveal.is-visible {
   opacity: 1;
-  filter: blur(0);
-  transform: perspective(1200px) translate3d(0, 0, 0) scale(1) rotateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .experience-ready .reveal .reveal-item {
   animation: none !important;
   transition:
-    opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.82s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.86s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity .48s cubic-bezier(0.16, 1, 0.3, 1),
+    transform .52s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .experience-ready .reveal:not(.is-visible) .reveal-item {
   opacity: 0;
-  filter: blur(5px) saturate(0.9);
-  transform: perspective(900px) translate3d(var(--reveal-item-x, 0), 28px, 0) scale(0.968) rotateX(2deg);
+  transform: translate3d(var(--reveal-item-x, 0), 12px, 0);
 }
 
 .experience-ready .reveal.is-visible .reveal-item {
   opacity: 1;
-  filter: none;
-  transition-delay: calc(0.08s + var(--reveal-delay, 0ms));
+  transition-delay: calc(0.05s + var(--reveal-delay, 0ms));
 }
 
 .experience-ready .reveal.is-visible :is(.section-heading, .projects-heading, .page-hero-copy) {

@@ -22,6 +22,31 @@ export default function Home() {
       <main>
         <CinematicHero />
 
+        {/* Three visitors arrive here with different urgency: a failed boiler, a
+            purchase being considered, and maintenance to arrange. Each states the
+            situation in the visitor's own words and offers one action. */}
+        <section className="routes" aria-label="Waarvoor komt u?">
+          <div className="shell routes-grid">
+            <a className="route route-urgent" href="tel:+31736222199">
+              <h2>Mijn verwarming doet het niet</h2>
+              <p>Bel ons, dan weet u meteen waar u aan toe bent.</p>
+              <strong>073 622 2199</strong>
+            </a>
+
+            <Link className="route" href="/offerte-aanvragen">
+              <h2>Ik denk aan een warmtepomp of nieuwe ketel</h2>
+              <p>Vertel wat u heeft en wat u wilt. U hoort wat er mogelijk is en wat het kost.</p>
+              <strong>Offerte aanvragen<span aria-hidden="true">→</span></strong>
+            </Link>
+
+            <Link className="route" href="/onderhoud">
+              <h2>Ik wil onderhoud regelen</h2>
+              <p>Eenmalig of met een abonnement, vanaf €&nbsp;139 per jaar.</p>
+              <strong>Bekijk onderhoud<span aria-hidden="true">→</span></strong>
+            </Link>
+          </div>
+        </section>
+
         <div className="service-ticker" aria-label="Warmtepompen, cv-ketels, airconditioning, elektra, onderhoud en service">
           <div className="ticker-track" aria-hidden="true">
             {[0, 1].map((copy) => <span className="ticker-set" key={copy}><b>Warmtepompen</b><i>•</i><b>Cv-ketels</b><i>•</i><b>Airconditioning</b><i>•</i><b>Elektra</b><i>•</i><b>Onderhoud</b><i>•</i><b>Service</b><i>•</i></span>)}
@@ -31,13 +56,12 @@ export default function Home() {
         <section className="section services-section reveal" id="diensten">
           <div className="shell">
             <div className="section-heading split-heading">
-              <div><p className="eyebrow"><span /> Waar kunnen we mee helpen?</p><h2>Van eerste advies<br />tot onderhoud daarna.</h2></div>
+              <div><h2>Van eerste advies<br />tot onderhoud daarna.</h2></div>
               <p>U hoeft niet voor ieder onderdeel een ander bedrijf te zoeken. Ons eigen team verzorgt verwarming, koeling, elektra en het onderhoud daarna.</p>
             </div>
             <div className="service-grid">
               {services.map((service) => (
                 <article className="service-card" key={service.title}>
-                  <div className="service-number">{service.number}</div>
                   <div><span className="service-tag">{service.tag}</span><h3>{service.title}</h3><p>{service.text}</p><Link href={service.href}>Bekijk {service.title.toLowerCase()} <span aria-hidden="true">→</span></Link></div>
                 </article>
               ))}
@@ -52,7 +76,7 @@ export default function Home() {
 
         <section className="home-proof reveal">
           <div className="shell proof-grid">
-            <div><strong>1.900</strong><span>vaste onderhoudscontracten<br />door Braam beheerd</span></div>
+            <div><strong>Ruim 1.900</strong><span>woningen met een<br />onderhoudscontract bij Braam</span></div>
             <div><strong>Eigen team</strong><span>voor installatie,<br />elektra en service</span></div>
             <div><strong>CO-VRIJ</strong><span>gecertificeerd bedrijf<br />en vakbekwame monteurs</span></div>
             <div><strong>Vaste gezichten</strong><span>persoonlijk contact voor én<br />na de oplevering</span></div>
@@ -61,7 +85,7 @@ export default function Home() {
 
         <section className="section home-subscriptions reveal">
           <div className="shell">
-            <div className="section-heading split-heading"><div><p className="eyebrow"><span /> 1.900 vaste onderhoudscontracten</p><h2>Onderhoud geregeld<br />vanaf een maandbedrag.</h2></div><p>Bekijk eerst welk toestel u heeft. Daarna vergelijkt u Comfort en Comfort Plus. De maandprijs staat voorop, de jaarprijs blijft duidelijk zichtbaar voordat u aanvraagt.</p></div>
+            <div className="section-heading split-heading"><div><h2>Onderhoud geregeld<br />vanaf een maandbedrag.</h2></div><p>Bekijk eerst welk toestel u heeft. Daarna vergelijkt u Comfort en Comfort Plus. De maandprijs staat voorop, de jaarprijs blijft duidelijk zichtbaar voordat u aanvraagt.</p></div>
             <div className="subscription-proof-strip"><span aria-hidden="true">✓</span><p><strong>Jaarlijks door Braam ingepland.</strong> Een abonnement is een doorlopend servicepakket met jaarlijkse controle en afgesproken service bij storingen, niet een losse betaling per bezoek.</p><Link href="/onderhoud#abonnementen">Lees hoe het abonnement werkt →</Link></div>
             <div className="home-price-row">
               <Link href="/onderhoud">
@@ -98,7 +122,7 @@ export default function Home() {
 
         <section className="projects-section reveal">
           <div className="shell">
-            <div className="projects-heading"><div><p className="eyebrow"><span /> Zo werken wij</p><h2>Echt installatiewerk<br />bij klanten in de regio.</h2></div><div><p>Geen stockbeelden, maar foto&apos;s van ons eigen werk. U ziet zowel geplaatste installaties als het vakwerk tijdens montage en inregeling.</p><Link className="text-link" href="/projecten">Bekijk alle praktijkfoto&apos;s <span aria-hidden="true">→</span></Link></div></div>
+            <div className="projects-heading"><div><h2>Echt installatiewerk<br />bij klanten in de regio.</h2></div><div><p>Geen stockbeelden, maar foto&apos;s van ons eigen werk. U ziet zowel geplaatste installaties als het vakwerk tijdens montage en inregeling.</p><Link className="text-link" href="/projecten">Bekijk alle praktijkfoto&apos;s <span aria-hidden="true">→</span></Link></div></div>
             <ProjectGallery />
           </div>
         </section>
@@ -106,14 +130,14 @@ export default function Home() {
         <section className="certificate-summary reveal">
           <div className="shell certificate-summary-grid">
             <div className="mini-shield" aria-hidden="true"><span>CO</span><small>VRIJ</small></div>
-            <div><p className="eyebrow eyebrow-light"><span /> De Gasketelwet</p><h2>Aan een cv-ketel<br />mag niet iedereen werken.</h2></div>
+            <div><h2>Aan een cv-ketel<br />mag niet iedereen werken.</h2></div>
             <div><p>Sinds 1 april 2023 moet het bedrijf gecertificeerd zijn en moet de monteur aantoonbaar vakbekwaam zijn. Bij Braam zijn beide op orde. Op de cv-ketelpagina leggen we uit waar u als klant op kunt letten.</p><Link className="certificate-link" href="/cv-ketels">Zo herkent u veilig werk <span aria-hidden="true">→</span></Link></div>
           </div>
         </section>
 
         <section className="reviews-section reveal">
           <div className="shell reviews-grid">
-            <div className="reviews-intro"><p className="eyebrow"><span /> Ervaringen van klanten</p><h2>Klanten die ons werk<br />al jaren kennen.</h2><p>Wij willen groeien door goed werk te leveren en bereikbaar te blijven. De ervaring van bestaande klanten zegt daarom meer dan een grote verkooppraat.</p><Link className="text-link" href="/projecten">Bekijk meer werk en ervaringen <span aria-hidden="true">→</span></Link></div>
+            <div className="reviews-intro"><h2>Klanten die ons werk<br />al jaren kennen.</h2><p>Wij willen groeien door goed werk te leveren en bereikbaar te blijven. De ervaring van bestaande klanten zegt daarom meer dan een grote verkooppraat.</p><Link className="text-link" href="/projecten">Bekijk meer werk en ervaringen <span aria-hidden="true">→</span></Link></div>
             <div className="review-stack"><blockquote><span className="quote-mark" aria-hidden="true">“</span><p>Vakkundig en met mooi strakke leiding gemonteerd.</p><div className="review-author"><strong>Kemme</strong><small>Warmtepomp & airco</small></div></blockquote><blockquote><span className="quote-mark" aria-hidden="true">“</span><p>Al toch 20 jaar zeer tevreden klant.</p><div className="review-author"><strong>Han Engels</strong><small>Onderhoud & service</small></div></blockquote></div>
           </div>
         </section>
@@ -121,7 +145,7 @@ export default function Home() {
         <section className="region-section reveal">
           <div className="shell region-grid">
             <div className="region-map" aria-hidden="true"><div className="map-ring ring-a" /><div className="map-ring ring-b" /><div className="map-pin pin-one"><i /><span>&apos;s-Hertogenbosch</span></div><div className="map-pin pin-two"><i /><span>Rosmalen</span></div><div className="map-pin pin-three"><i /><span>Vught</span></div><div className="map-pin pin-four"><i /><span>Hedel</span></div></div>
-            <div className="region-copy"><p className="eyebrow"><span /> Werkgebied</p><h2>Vanuit &apos;s-Hertogenbosch<br />actief in een brede regio.</h2><p>Het grootste deel van ons onderhoud doen we in &apos;s-Hertogenbosch en de directe omgeving. Daarnaast werken we op veel adressen in Noord-Brabant en in aangrenzende delen van Gelderland. Plaatsnamen zijn daarom geen harde grens: geef uw postcode en het soort werkzaamheden door, dan laten we weten wat op uw adres mogelijk is.</p><Link className="text-link" href="/contact">Vraag naar uw postcode <span aria-hidden="true">→</span></Link></div>
+            <div className="region-copy"><h2>Vanuit &apos;s-Hertogenbosch<br />actief in een brede regio.</h2><p>Het grootste deel van ons onderhoud doen we in &apos;s-Hertogenbosch en de directe omgeving. Daarnaast werken we op veel adressen in Noord-Brabant en in aangrenzende delen van Gelderland. Plaatsnamen zijn daarom geen harde grens: geef uw postcode en het soort werkzaamheden door, dan laten we weten wat op uw adres mogelijk is.</p><Link className="text-link" href="/contact">Vraag naar uw postcode <span aria-hidden="true">→</span></Link></div>
           </div>
         </section>
 

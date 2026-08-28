@@ -1,0 +1,92 @@
+/* The three-route band.
+   Not three matching cards: the urgent route carries different weight because
+   a failed boiler is not the same decision as comparing heat pumps. They share
+   a rhythm and a rule, and differ where the visitor's situation differs. */
+.routes {
+  background: #05070b;
+  border-block: 1px solid rgba(255, 255, 255, .09);
+}
+
+.routes-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1fr;
+}
+
+.route {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: 10px;
+  padding: 42px 34px 40px;
+  border-left: 1px solid rgba(255, 255, 255, .09);
+  color: #fff;
+  text-decoration: none;
+  transition: background .22s ease;
+}
+
+.route:first-child { border-left: 0; }
+
+.route:hover,
+.route:focus-visible { background: rgba(255, 255, 255, .04); }
+
+.route h2 {
+  max-width: 18ch;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.route p {
+  max-width: 40ch;
+  flex: 1;
+  margin: 0;
+  color: rgba(219, 229, 243, .74);
+  font-size: 14.5px;
+  line-height: 1.58;
+}
+
+.route strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  color: #7cc0ff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.route strong span {
+  transition: transform .22s ease;
+}
+
+.route:hover strong span,
+.route:focus-visible strong span { transform: translateX(4px); }
+
+/* The one route where speed is the whole point reads as a number, not a link. */
+.route-urgent {
+  background: rgba(38, 126, 232, .1);
+}
+
+.route-urgent:hover,
+.route-urgent:focus-visible { background: rgba(38, 126, 232, .16); }
+
+.route-urgent strong {
+  color: #fff;
+  font-size: 25px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.02em;
+}
+
+@media (max-width: 900px) {
+  .routes-grid { grid-template-columns: 1fr; }
+  .route {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, .09);
+    padding: 28px 0 26px;
+  }
+  .route:first-child { border-top: 0; padding-top: 30px; }
+  .route h2 { max-width: none; font-size: 19px; }
+}
