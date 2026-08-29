@@ -15,6 +15,30 @@
   --line: rgba(64, 88, 120, 0.18);
   --rule: #c3cfd8;
   --urgent: #c8781a;
+
+  /* The scale. The four home sheets between them held twenty-six font sizes,
+     including 14.5px, 15.5px, 13.5px and 8.5px: values that exist because
+     someone nudged, not because a role needed them. These ten cover every role
+     on the page. */
+  --t-monument: clamp(2.75rem, 5.6vw, 5.5rem);  /* 44 -> 88 */
+  --t-figure:   clamp(2.5rem, 5vw, 4.5rem);     /* 40 -> 72 */
+  --t-display:  clamp(2rem, 4.4vw, 4rem);       /* 32 -> 64 */
+  --t-title:    clamp(1.5rem, 2.3vw, 2.125rem); /* 24 -> 34 */
+  --t-subhead:  1.3125rem;                      /* 21 */
+  --t-lead:     1.0625rem;                      /* 17 */
+  --t-body:     1rem;                           /* 16 */
+  --t-small:    .9375rem;                       /* 15 */
+  --t-meta:     .875rem;                        /* 14 */
+  --t-label:    .75rem;                         /* 12 */
+
+  /* Fira is wider and rounder than the grotesque it replaced, so tracking cut
+     for that face now jams this one. Every negative value is roughly halved,
+     and none passes -.022em -- which also clears the -.04em floor the old
+     sheet breached at four places. */
+  --track-display: -.022em;
+  --track-title: -.015em;
+  --track-label: .1em;
+
   --glass: rgba(255, 255, 255, 0.64);
   --glass-strong: rgba(255, 255, 255, 0.82);
   --glass-dark: rgba(10, 18, 28, 0.62);
@@ -556,14 +580,10 @@ h2 {
 }
 
 .hero .eyebrow,
-.page-hero .eyebrow {
-  color: #8fa9bb;
-}
-
 .hero h1,
 .page-hero h1 {
-  color: var(--ink);
-  filter: drop-shadow(0 18px 45px rgba(0, 0, 0, 0.18));
+  font-size: var(--t-display);
+  color: #eef3f9;
 }
 
 .conversion-hero h1 {
@@ -574,13 +594,13 @@ h2 {
 
 .hero h1 em,
 .page-hero h1 em {
-  color: var(--ink);
+  color: rgba(233, 241, 250, .72);
 }
 
 .hero-lead {
   max-width: 610px;
-  color: #adbeca;
-  font-size: 18px;
+  color: #b6c6d2;
+  font-size: var(--t-lead);
 }
 
 .conversion-hero .hero-lead {
@@ -1894,19 +1914,13 @@ main {
   color: #fff;
 }
 
-.page-hero::before {
-  width: 700px;
-  height: 700px;
-  left: -360px;
-  bottom: -390px;
-  border-color: rgba(78, 166, 255, 0.2);
-  box-shadow: inset 0 0 90px rgba(0, 104, 232, 0.05);
-  animation: premium-ring-breathe 9s ease-in-out infinite;
-}
-
 .breadcrumb {
   padding-top: 28px;
-  color: #738d9f;
+  color: #8ba3b4;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
 }
 
 .breadcrumb strong {
@@ -1920,10 +1934,10 @@ main {
 
 .page-hero-image {
   height: 500px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 42px;
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 46px 100px rgba(0, 0, 0, 0.46), 0 0 80px rgba(0, 104, 232, 0.16), inset 0 1px rgba(255, 255, 255, 0.18);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .page-hero-image img {
@@ -1941,19 +1955,16 @@ main {
 
 .page-hero-image figcaption,
 .contact-details figure figcaption {
-  border: 1px solid rgba(255, 255, 255, 0.62);
-  border-radius: 999px;
-  background: rgba(250, 252, 255, 0.78);
-  box-shadow: 0 17px 46px rgba(0, 10, 30, 0.3), inset 0 1px #fff;
-  color: #11202a;
-  backdrop-filter: blur(20px) saturate(170%);
-}
-
-.image-scan {
-  width: 1px;
-  background: rgba(155, 215, 255, 0.86);
-  box-shadow: 0 0 30px 8px rgba(65, 164, 255, 0.24);
-  animation-duration: 6.5s;
+  border: 0;
+  border-radius: 0;
+  background: rgba(4, 9, 16, .72);
+  box-shadow: none;
+  backdrop-filter: none;
+  color: #eef3f9;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
 }
 
 /* Content pages */

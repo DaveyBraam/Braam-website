@@ -18,7 +18,6 @@ export function PageHero({ eyebrow, title, accent, intro, image, imageAlt, prima
       <div className="shell breadcrumb"><Link href="/">Home</Link><span>/</span><strong>{eyebrow}</strong></div>
       <div className="shell page-hero-grid">
         <div className="page-hero-copy">
-          <p className="eyebrow"><span /> {eyebrow}</p>
           <h1>{title}<br /><em>{accent}</em></h1>
           <p className="hero-lead">{intro}</p>
           <div className="hero-actions">
@@ -28,7 +27,6 @@ export function PageHero({ eyebrow, title, accent, intro, image, imageAlt, prima
         </div>
         <figure className="page-hero-image">
           <img src={image} alt={imageAlt} />
-          <div className="image-scan" aria-hidden="true" />
           {badge && <figcaption><i />{badge}</figcaption>}
         </figure>
       </div>

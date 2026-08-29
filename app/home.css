@@ -36,28 +36,6 @@
   --lime: #7cc0f7;
   --focus: #7cc0f7;
 
-  /* The scale. The four home sheets between them held twenty-six font sizes,
-     including 14.5px, 15.5px, 13.5px and 8.5px: values that exist because
-     someone nudged, not because a role needed them. These ten cover every role
-     on the page. */
-  --t-monument: clamp(2.75rem, 5.6vw, 5.5rem);  /* 44 -> 88 */
-  --t-figure:   clamp(2.5rem, 5vw, 4.5rem);     /* 40 -> 72 */
-  --t-display:  clamp(2rem, 4.4vw, 4rem);       /* 32 -> 64 */
-  --t-title:    clamp(1.5rem, 2.3vw, 2.125rem); /* 24 -> 34 */
-  --t-subhead:  1.3125rem;                      /* 21 */
-  --t-lead:     1.0625rem;                      /* 17 */
-  --t-body:     1rem;                           /* 16 */
-  --t-small:    .9375rem;                       /* 15 */
-  --t-meta:     .875rem;                        /* 14 */
-  --t-label:    .75rem;                         /* 12 */
-
-  /* Fira is wider and rounder than the grotesque it replaced, so tracking cut
-     for that face now jams this one. Every negative value is roughly halved,
-     and none passes -.022em -- which also clears the -.04em floor the old
-     sheet breached at four places. */
-  --track-display: -.022em;
-  --track-title: -.015em;
-  --track-label: .1em;
 
   background: var(--ink-deep);
   color: var(--on-ink);
