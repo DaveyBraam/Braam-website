@@ -263,10 +263,15 @@ h3,
   text-wrap: balance;
 }
 
+/* Cut for the narrow geometric grotesque the site used to run on. Fira is
+   wider and rounder and -0.065em jams it into a single mass; it also passed
+   the -0.04em floor on every page. Matched to the value globals.css now sets,
+   which this rule was overriding. The tighter component-level values further
+   down this sheet belong to the subpage pass, not to this one. */
 h1,
 h2 {
-  letter-spacing: -0.065em;
-  font-weight: 610;
+  letter-spacing: -0.022em;
+  font-weight: 600;
 }
 
 h1 {
@@ -3180,11 +3185,15 @@ body {
   line-height: 1.55;
 }
 
+/* #5cb7f8 was gekozen voor een donkere pagina en haalt op een lichte grond nog
+   maar 1,97:1 -- een focusindicator hoort minimaal 3:1 te halen. Deze blauw zit
+   bewust in het midden: 4,0:1 op papier en 4,3:1 op inkt, dus hij werkt op beide
+   gronden. Waar een sjabloon een eigen grond kent, zet dat --focus zelf. */
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
 label:has(input:focus-visible) {
-  outline: 3px solid #5cb7f8;
+  outline: 3px solid var(--focus, #1f7ac4);
   outline-offset: 4px;
 }
 

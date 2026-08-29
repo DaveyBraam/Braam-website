@@ -10,7 +10,21 @@
    - nothing is enclosed: no rounded boxes, no drop shadows, no glass
    - hierarchy comes from scale and weight only
    - the logo's blue marks references, never decorates
-   - exactly one light panel on the page, at the close, as the only luxury */
+   - the page reads as chapters: the film and the route band open dark, the
+     reading chapters are printed on paper, projects and region go dark again
+     because the photograph and the map carry them, and the close is paper.
+     Every rule below takes its colour from four tokens, so a chapter changes
+     ground by redefining those four rather than by restating itself.
+
+   Set in Fira Sans (chosen in layout.tsx). The rules of the setting:
+   - ten steps, no more, every one named for the job it does
+   - every size in rem, so a reader who has enlarged type in the browser gets it
+   - four weights: 400 reads, 500 softens, 600 leads, 700 labels
+   - three display steps, three jobs: --t-monument is the argument no competitor
+     can copy, --t-figure is the one number that matters, --t-display is every
+     other heading. Nothing else is allowed to be big.
+   - nothing below --t-label. The old sheets set apparatus at 8.5 and 9px on
+     weight 800; that is unreadable to half of the people this page is for. */
 
 .home {
   --hair: rgba(255, 255, 255, .13);
@@ -18,27 +32,96 @@
   --ink-deep: #080d14;
   --on-ink: #eef3f9;
   --on-ink-soft: #93a3b8;
+  --wash: rgba(255, 255, 255, .035);
+  --lime: #7cc0f7;
+  --focus: #7cc0f7;
+
+  /* The scale. The four home sheets between them held twenty-six font sizes,
+     including 14.5px, 15.5px, 13.5px and 8.5px: values that exist because
+     someone nudged, not because a role needed them. These ten cover every role
+     on the page. */
+  --t-monument: clamp(2.75rem, 5.6vw, 5.5rem);  /* 44 -> 88 */
+  --t-figure:   clamp(2.5rem, 5vw, 4.5rem);     /* 40 -> 72 */
+  --t-display:  clamp(2rem, 4.4vw, 4rem);       /* 32 -> 64 */
+  --t-title:    clamp(1.5rem, 2.3vw, 2.125rem); /* 24 -> 34 */
+  --t-subhead:  1.3125rem;                      /* 21 */
+  --t-lead:     1.0625rem;                      /* 17 */
+  --t-body:     1rem;                           /* 16 */
+  --t-small:    .9375rem;                       /* 15 */
+  --t-meta:     .875rem;                        /* 14 */
+  --t-label:    .75rem;                         /* 12 */
+
+  /* Fira is wider and rounder than the grotesque it replaced, so tracking cut
+     for that face now jams this one. Every negative value is roughly halved,
+     and none passes -.022em -- which also clears the -.04em floor the old
+     sheet breached at four places. */
+  --track-display: -.022em;
+  --track-title: -.015em;
+  --track-label: .1em;
+
   background: var(--ink-deep);
   color: var(--on-ink);
 }
 
-.home section:not(.cinema-sequence):not(.routes):not(.contact-cta) {
+/* Light on ink makes the same weight look thinner than it does on paper. The
+   compensation is leading and tracking rather than a heavier weight: Fira's
+   500 is a visible step and would read as emphasis where none is meant. */
+.home p,
+.home li {
+  letter-spacing: .005em;
+}
+
+.home section:not(.cinema-sequence):not(.routes):not(.contact-cta):not(.chapter-paper) {
   padding-block: clamp(72px, 9vh, 128px);
-  border-top: 1px solid var(--hair);
   background: transparent;
 }
 
-.home h2 {
-  max-width: 17ch;
+/* The paper chapters. Same measure, same rules, inverted ground. Note the
+   :not(.chapter-paper) above: the reset outscores a plain .home .klasse by
+   three :not() classes, the same trap this sheet already hit with contact. */
+.home section.chapter-paper,
+.home section.contact-cta {
+  --hair: rgba(12, 26, 38, .16);
+  --hair-strong: rgba(12, 26, 38, .32);
+  --on-ink: #0f181f;
+  --on-ink-soft: #52697c;
+  --wash: rgba(12, 26, 38, .045);
+  --lime: #095a94;
+  --focus: #095a94;
+}
+
+.home section.chapter-paper {
+  padding-block: clamp(72px, 9vh, 128px);
+  background: var(--paper);
   color: var(--on-ink);
-  font-size: clamp(32px, 4.6vw, 68px);
+}
+
+.home h2 {
+  max-width: 22ch;
+  color: var(--on-ink);
+  font-size: var(--t-display);
   font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -.038em;
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
   text-wrap: balance;
 }
 
 .home p { color: var(--on-ink-soft); }
+
+/* .route h2 lives in home-routes.css at the same specificity as .home h2 and
+   loses on load order, so the route band was rendering three display-scale
+   headings where it wants three subheads. Reclaimed here rather than in the
+   other sheet, so the rule sits next to the one that was beating it. */
+.home .route h2 {
+  max-width: 18ch;
+  font-size: var(--t-subhead);
+  line-height: 1.28;
+  letter-spacing: var(--track-title);
+}
+
+@media (max-width: 900px) {
+  .home .route h2 { max-width: none; }
+}
 
 .home .section-heading,
 .home .projects-heading {
@@ -51,12 +134,18 @@
   border-bottom: 1px solid var(--hair);
 }
 
+/* premium.css scopes this one as .projects-section .projects-heading p, which
+   outscores a plain .home .projects-heading p, so the projects lead kept the
+   light-ground grey and sat at 3.52:1 on ink. */
+.home .projects-section .projects-heading p { color: var(--on-ink-soft); }
+
 .home .section-heading > p,
 .home .projects-heading p {
   max-width: 48ch;
   margin: 0;
-  font-size: 16px;
-  line-height: 1.66;
+  color: var(--on-ink-soft);
+  font-size: var(--t-lead);
+  line-height: 1.62;
 }
 
 /* Services become a ruled index, not four matching cards. Explicit row and
@@ -102,9 +191,9 @@
   grid-column: 1;
   grid-row: 1;
   color: var(--lime);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .1em;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
 }
 
@@ -113,10 +202,10 @@
   grid-row: 2;
   margin: 2px 0 0;
   color: var(--on-ink);
-  font-size: clamp(24px, 2.4vw, 36px);
+  font-size: var(--t-title);
   font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -.03em;
+  line-height: 1.1;
+  letter-spacing: var(--track-title);
 }
 
 .home .service-card > div > p {
@@ -124,8 +213,8 @@
   grid-row: 1 / 3;
   max-width: 54ch;
   margin: 0;
-  font-size: 15.5px;
-  line-height: 1.62;
+  font-size: var(--t-body);
+  line-height: 1.66;
 }
 
 .home .service-card > div > a {
@@ -134,7 +223,7 @@
   justify-self: start;
   margin-top: 14px;
   color: var(--on-ink);
-  font-size: 14px;
+  font-size: var(--t-meta);
   font-weight: 600;
 }
 
@@ -145,16 +234,20 @@
 }
 
 .home .certificate-summary h2 {
-  max-width: 13ch;
-  font-size: clamp(40px, 6.4vw, 96px);
-  letter-spacing: -.045em;
+  max-width: 20ch;
+  font-size: var(--t-monument);
+  letter-spacing: var(--track-display);
 }
 
-.home .mini-shield {
-  border: 1px solid var(--hair-strong);
-  border-radius: 0;
-  background: transparent;
-  color: var(--lime);
+/* The real CO-Keur mark, replacing a drawn pentagon that read "CO / VRIJ" --
+   a certification that does not exist under that name. It is the one place on
+   this page where colour arrives from outside the palette, which is exactly
+   what a certification mark is for. */
+.home .cert-mark {
+  display: block;
+  width: 100%;
+  max-width: 190px;
+  height: auto;
 }
 
 /* The price is the strongest verifiable proof on the page, so it is set at
@@ -180,15 +273,15 @@
 }
 
 .home .home-price-row > a:first-child { border-left: 0; padding-left: 0; }
-.home .home-price-row > a:hover { background: rgba(255, 255, 255, .035); }
+.home .home-price-row > a:hover { background: var(--wash); }
 .home .home-price-row > a.featured { background: rgba(12, 112, 184, .1); }
 .home .home-price-row > a.featured:hover { background: rgba(12, 112, 184, .16); }
 
 .home .home-price-row > a > span {
   color: var(--lime);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .09em;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
 }
 
@@ -198,10 +291,10 @@
   gap: 3px;
   margin-top: 8px;
   color: var(--on-ink);
-  font-size: clamp(46px, 5.4vw, 78px);
+  font-size: var(--t-figure);
   font-weight: 600;
   line-height: 1;
-  letter-spacing: -.05em;
+  letter-spacing: var(--track-display);
   font-variant-numeric: tabular-nums;
 }
 
@@ -212,7 +305,7 @@
 
 .home .home-price-row em {
   color: var(--on-ink-soft);
-  font-size: 13px;
+  font-size: var(--t-meta);
   font-style: normal;
 }
 
@@ -220,8 +313,8 @@
 .home .home-annual-price,
 .home .home-monthly-price {
   color: var(--on-ink-soft);
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: var(--t-small);
+  line-height: 1.6;
 }
 
 .home .home-plan-benefits {
@@ -231,18 +324,37 @@
   list-style: none;
 }
 
-.home .home-plan-benefits li {
-  padding: 5px 0;
+/* premium.css positions the mark absolutely at left 0 and pays for it with a
+   24px padding-left. The padding shorthand here was wiping that out, so every
+   mark sat underneath the first word of its own line. */
+.home .home-plan-benefits li,
+.home .featured .home-plan-benefits li {
+  padding: 5px 0 5px 23px;
   color: var(--on-ink-soft);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: var(--t-meta);
+  line-height: 1.55;
+}
+
+/* The badge goes with it: a filled circle behind a tick is an enclosure, and
+   this world does not enclose. The mark alone, in the reference blue. */
+.home .home-plan-benefits li::before,
+.home .featured .home-plan-benefits li::before {
+  top: 4px;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  color: var(--lime);
+  font-size: var(--t-meta);
+  font-weight: 700;
 }
 
 .home .home-price-row b {
   margin-top: auto;
   padding-top: 18px;
   color: var(--lime);
-  font-size: 14px;
+  font-size: var(--t-meta);
+  font-weight: 600;
 }
 
 .home .subscription-proof-strip,
@@ -251,11 +363,31 @@
   border-top: 1px solid var(--hair);
   border-radius: 0;
   background: transparent;
+  /* The fill and the border were already gone; the soft shadow underneath was
+     not, and on paper that halo is the whole reason these two still read as
+     boxes rather than as ruled bands. */
+  box-shadow: none;
+  backdrop-filter: none;
   padding: 24px 0;
 }
 
+/* A 150px ring in the corner of the featured column, and frosted glass on all
+   three. Both are enclosures, and the ring prints as a blue arc on paper. */
+.home .home-price-row > a::after { display: none; }
+.home .home-price-row > a { backdrop-filter: none; }
+
+/* Both strips run the full 1180px shell, which put their explanatory copy at
+   91 and 99 characters a line -- the hardest reading on the page, and the two
+   paragraphs that explain what a subscription actually is. Capped to a measure
+   a person can track back from; the link stays out at the right edge where the
+   grid puts it. */
 .home .subscription-proof-strip p,
-.home .ventilation-strip p { color: var(--on-ink-soft); }
+.home .ventilation-strip p {
+  max-width: 68ch;
+  color: var(--on-ink-soft);
+  font-size: var(--t-small);
+  line-height: 1.6;
+}
 
 .home .subscription-proof-strip strong,
 .home .ventilation-strip strong { color: var(--on-ink); }
@@ -271,7 +403,21 @@
   box-shadow: none;
 }
 
-.home .people-copy h2 { max-width: 15ch; }
+/* These two headings sit in half-width columns, and a step sized against the
+   viewport does not know that: at 1440 the column is 547px and the display
+   step is 63px, which turned a two-line heading into four. Sized against the
+   column instead, so the type answers the space it is actually in. The other
+   headings keep the viewport-based step, because their columns grow with it. */
+.home .people-copy,
+.home .region-copy {
+  container-type: inline-size;
+}
+
+.home .people-copy h2,
+.home .region-copy h2 {
+  max-width: none;
+  font-size: clamp(2rem, 7.3cqw, 4rem);
+}
 .home .people-copy > p { color: var(--on-ink-soft); }
 
 .home .people-quote {
@@ -282,7 +428,7 @@
   padding: 4px 0 4px 22px;
 }
 
-.home .people-quote p { color: var(--on-ink); font-size: 21px; }
+.home .people-quote p { color: var(--on-ink); font-size: var(--t-subhead); }
 .home .people-quote cite { color: var(--on-ink); }
 .home .people-quote cite span { color: var(--on-ink-soft); }
 
@@ -293,19 +439,256 @@
 
 .home .text-link { color: var(--lime); }
 
+/* ---------------------------------------------------------------------------
+   Motion: the page sets itself.
+
+   The scrubbed film is this page's one authored moment. What follows it should
+   read as typesetting, not as seven blocks taking turns sliding upward -- which
+   is what premium.css gives every .reveal, and why the entrances read as
+   nothing happening at all. So: the rules draw themselves from the left, and
+   the rows arrive under the rule that was just drawn. Nothing floats, nothing
+   blurs, nothing scales. A handbook is printed, not animated.
+   --------------------------------------------------------------------------- */
+
+/* The section itself stops travelling; it only fades. The movement belongs to
+   the rules and the rows now. */
+.home .reveal {
+  transform: none;
+  transition: opacity .7s cubic-bezier(.16, 1, .3, 1);
+}
+
+.home section.reveal { position: relative; }
+
+/* The chapter rule. This also claims the ::before that premium.css was using
+   for a 450px blurred blue orb behind the services and subscriptions sections
+   -- glass decoration in a world whose first rule is that nothing is enclosed,
+   and a smudge once those chapters print on paper. Every orb property is reset
+   explicitly, because the rule that set them still matches. */
+.home section.reveal::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto 0;
+  width: auto;
+  height: 1px;
+  border-radius: 0;
+  background: var(--hair);
+  filter: none;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .9s cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+
+.home section.reveal.is-visible::before { transform: scaleX(1); }
+
+/* The rule under a section heading, a beat after the chapter rule above it. */
+.home .section-heading,
+.home .projects-heading {
+  position: relative;
+  border-bottom: 0;
+}
+
+.home .section-heading::after,
+.home .projects-heading::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .95s cubic-bezier(.16, 1, .3, 1) .12s;
+}
+
+.home .is-visible .section-heading::after,
+.home .is-visible .projects-heading::after { transform: scaleX(1); }
+
+/* The services index rules in sequence: Experience.tsx already stamps a 65ms
+   stagger on .service-grid > *, so each row's rule inherits its own row's
+   delay and the index sets itself top to bottom. */
+.home .service-card {
+  position: relative;
+  border-bottom: 0;
+}
+
+.home .service-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .85s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.home .is-visible .service-card::after { transform: scaleX(1); }
+
+/* The rows travel a little further than premium's 12px, because they are now
+   the only thing that travels. */
+.home .reveal:not(.is-visible) .reveal-item { transform: translate3d(0, 22px, 0); }
+
+/* Three inherited pieces of glass, all from the sheets that still serve the
+   subpages: an infinite glare sweeping across the price columns for ever, and
+   a 933px white radial glow behind every services row. On ink they read as a
+   faint sheen; on paper the row glow prints as a grey band and the index stops
+   being ruled rows. The section orbs are already handled by the chapter rule
+   claiming ::before above. */
+.home .home-price-row > a::before,
+.home .service-card::before {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home section.reveal::before,
+  .home .section-heading::after,
+  .home .projects-heading::after,
+  .home .service-card::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .home .reveal:not(.is-visible) .reveal-item { transform: none; }
+}
+
+/* Six roles reach this page from globals.css and premium.css, where they were
+   set for the sheets that still serve the subpages: 9px, 10px and 11px on
+   weights 800 to 850. That is smaller than the smallest thing this scale
+   allows, and PRODUCT.md names readable sizes the practical floor for an
+   audience of homeowners of every age. Lifted onto the scale here, scoped to
+   .home, so the subpages keep their current treatment until their own turn. */
+.home .mini-shield small,
+.home .project-shot > span,
+.home .project-shot figcaption span {
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+}
+
+.home .region-map .map-pin span {
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.home .ventilation-strip p small,
+.home .ventilation-strip > a {
+  font-size: var(--t-meta);
+  font-weight: 600;
+}
+
+.home .ventilation-strip p small { color: var(--on-ink-soft); }
+.home .ventilation-strip > a { color: var(--lime); }
+
+/* Actions arrive from the shared sheets at weights 750, 800 and 850, cut for a
+   variable face that could render them. Fira ships four weights, so all of them
+   collapse to 700 anyway -- and 700 on a 15px link reads as shouting. Every
+   action on this page is 600: the emphasis comes from the blue and the rule
+   under it, which is what this world uses references for. */
+.home .button,
+.home .text-link,
+.home .certificate-link,
+.home .subscription-proof-strip > a,
+.home .ventilation-strip > a,
+.home .home-price-row b {
+  font-weight: 600;
+}
+
+.home .button { font-size: var(--t-body); }
+
+/* .button-light is nowrap, which is safe for an English label and not for a
+   Dutch one: "Vraag advies of een offerte aan" is thirty-one characters and
+   ran 8px past its panel on a phone. The label wraps instead of the type
+   shrinking -- this site is Dutch by commitment, so long labels are the
+   normal case, not the exception. */
+.home section.contact-cta .button {
+  white-space: normal;
+  text-wrap: balance;
+  padding-block: 13px;
+}
+
+.home .text-link,
+.home .certificate-link,
+.home .subscription-proof-strip > a {
+  color: var(--lime);
+  font-size: var(--t-meta);
+}
+
+.home .home-monthly-price { font-weight: 400; }
+
 /* The single light panel: the close, and the only place the page relaxes. */
 /* Specificity note: the .home section:not(...) reset above scores higher than
    a plain .home .contact-cta, so this one matches on the section element too. */
 .home section.contact-cta {
   padding-block: clamp(74px, 10vh, 132px);
-  border-top: 1px solid var(--hair);
   background: var(--paper);
   color: var(--ink);
 }
 
+/* The one light panel was rendering as a rounded, blurred, shadowed card with
+   a breathing ring inside it -- every single thing this world's second rule
+   forbids, and the reason the close read as a different page. Now it is simply
+   the last chapter, printed. */
+.home section.contact-cta .contact-cta-inner {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.home section.contact-cta .contact-cta-inner::after { display: none; }
+
+/* The featured column carried its own light-on-dark palette from premium.css:
+   three greys and a pale blue drawn for a near-black card. On paper they sat
+   between 1.19:1 and 1.44:1 -- effectively blank. */
+.home .featured .home-plan-description,
+.home .featured .home-annual-price,
+.home .featured .home-monthly-price {
+  color: var(--on-ink-soft);
+}
+
+/* Two more filled circles, same reasoning as the benefit ticks: the mark does
+   the work, the badge is an enclosure. */
+.home .subscription-proof-strip > span,
+.home .ventilation-strip > span {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--lime);
+  font-size: var(--t-subhead);
+  font-weight: 700;
+}
+
+/* globals.css and premium.css set these for a dark certificate section, at a
+   specificity that outscores .home p. On paper they were invisible. */
+.home .certificate-summary-grid > div:last-child > p { color: var(--on-ink-soft); }
+.home .certificate-link { color: var(--lime); }
+
 .home section.contact-cta h2 { color: var(--ink); }
-.home section.contact-cta p { color: var(--ink-soft); }
 .home section.contact-cta a { color: var(--ink); }
+
+/* The closing paragraph came in at metadata size. It is the last thing read
+   before the visitor acts, so it is set as body. */
+.home section.contact-cta p {
+  color: var(--ink-soft);
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+/* Reaching this number is the site's most important function, and on the one
+   panel built to close the visit it was set at 13px next to a button. */
+.home section.contact-cta .cta-actions > a:not(.button) {
+  font-size: var(--t-subhead);
+  font-weight: 600;
+  letter-spacing: var(--track-title);
+  font-variant-numeric: tabular-nums;
+}
 
 @media (max-width: 900px) {
   .home .section-heading,

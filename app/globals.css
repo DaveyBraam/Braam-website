@@ -27,7 +27,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-geist), Arial, Helvetica, sans-serif;
+  font-family: var(--font-fira), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -103,9 +103,9 @@ nav a:hover::after, nav a:focus-visible::after { right: 0; }
 .eyebrow span { display: inline-block; width: 26px; height: 2px; background: var(--lime-deep); }
 .eyebrow-light { color: #beceda; }
 
-h1, h2 { margin: 0; letter-spacing: -.055em; font-weight: 660; line-height: .98; }
+h1, h2 { margin: 0; letter-spacing: -.022em; font-weight: 600; line-height: 1.02; }
 h1 { max-width: 650px; font-size: clamp(52px, 6vw, 82px); }
-h1 em { color: #6a808f; font-style: normal; font-weight: 480; }
+h1 em { color: #6a808f; font-style: normal; font-weight: 400; }
 h2 { font-size: clamp(40px, 4.6vw, 62px); }
 
 .hero-lead { max-width: 590px; margin: 28px 0 30px; color: var(--ink-soft); font-size: 17px; line-height: 1.7; }

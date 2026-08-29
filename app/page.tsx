@@ -27,19 +27,19 @@ export default function Home() {
             situation in the visitor's own words and offers one action. */}
         <section className="routes" aria-label="Waarvoor komt u?">
           <div className="shell routes-grid">
-            <a className="route route-urgent" href="tel:+31736222199">
+            <a className="route route-urgent" href="tel:+31736222199" aria-label="Mijn verwarming doet het niet — bel 073 622 2199">
               <h2>Mijn verwarming doet het niet</h2>
               <p>Bel ons, dan weet u meteen waar u aan toe bent.</p>
               <strong>073 622 2199</strong>
             </a>
 
-            <Link className="route" href="/offerte-aanvragen">
+            <Link className="route" href="/offerte-aanvragen" aria-label="Ik denk aan een warmtepomp of nieuwe ketel — offerte aanvragen">
               <h2>Ik denk aan een warmtepomp of nieuwe ketel</h2>
               <p>Vertel wat u heeft en wat u wilt. U hoort wat er mogelijk is en wat het kost.</p>
               <strong>Offerte aanvragen<span aria-hidden="true">→</span></strong>
             </Link>
 
-            <Link className="route" href="/onderhoud">
+            <Link className="route" href="/onderhoud" aria-label="Ik wil onderhoud regelen — bekijk onderhoud en abonnementen">
               <h2>Ik wil onderhoud regelen</h2>
               <p>Eenmalig of met een abonnement, vanaf €&nbsp;139 per jaar.</p>
               <strong>Bekijk onderhoud<span aria-hidden="true">→</span></strong>
@@ -47,7 +47,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section services-section reveal" id="diensten">
+        <section className="section services-section chapter-paper reveal" id="diensten">
           <div className="shell">
             <div className="section-heading split-heading">
               <div><h2>Van eerste advies<br />tot onderhoud daarna.</h2></div>
@@ -63,9 +63,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="certificate-summary reveal">
+        <section className="certificate-summary chapter-paper reveal">
           <div className="shell certificate-summary-grid">
-            <div className="mini-shield" aria-hidden="true"><span>CO</span><small>VRIJ</small></div>
+            <img className="cert-mark" src="/certifications/co-keur.png" alt="CO-keur.nl Nederland" width="640" height="305" loading="lazy" decoding="async" />
             <div><h2>Aan een cv-ketel<br />mag niet iedereen werken.</h2></div>
             <div><p>Sinds 1 april 2023 moet het bedrijf gecertificeerd zijn en moet de monteur aantoonbaar vakbekwaam zijn. Bij Braam zijn beide op orde. Op de cv-ketelpagina leggen we uit waar u als klant op kunt letten.</p><Link className="certificate-link" href="/cv-ketels">Zo herkent u veilig werk <span aria-hidden="true">→</span></Link></div>
           </div>
@@ -78,7 +78,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="people reveal">
+        <section className="people chapter-paper reveal">
           <div className="shell people-grid">
             <figure className="people-photo">
               <img src="/about/team-rob-braam.jpg" alt="Monteurs van Braam bij de bedrijfsbussen" width="2560" height="1708" loading="lazy" decoding="async" />
@@ -95,12 +95,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section home-subscriptions reveal">
+        <section className="section home-subscriptions chapter-paper reveal">
           <div className="shell">
             <div className="section-heading split-heading"><div><h2>Wat onderhoud kost,<br />leest u hier.</h2></div><p>U hoeft geen offerte aan te vragen om een prijs te weten. Kies uw toestel, vergelijk Comfort en Comfort Plus, en zie meteen wat u per maand of per jaar betaalt.</p></div>
             <div className="subscription-proof-strip"><span aria-hidden="true">✓</span><p><strong>Jaarlijks door Braam ingepland.</strong> Een abonnement is een doorlopend servicepakket met jaarlijkse controle en afgesproken service bij storingen, niet een losse betaling per bezoek.</p><Link href="/onderhoud#abonnementen">Lees hoe het abonnement werkt →</Link></div>
             <div className="home-price-row">
-              <Link href="/onderhoud">
+              <Link href="/onderhoud" aria-label="Cv-ketel: onderhoudsabonnement vanaf € 11,58 per maand — vergelijk Comfort en Comfort Plus">
                 <span>Cv-ketel</span>
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor jaarlijks onderhoud aan uw cv-ketel.</p>
                 <strong><small>€</small>11,58</strong><em>Comfort vanaf, per maand</em>
@@ -109,7 +109,7 @@ export default function Home() {
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk cv-ketelabonnementen →</b>
               </Link>
-              <Link className="featured" href="/onderhoud">
+              <Link className="featured" href="/onderhoud" aria-label="Hybride warmtepomp met cv-ketel: onderhoudsabonnement vanaf € 24,08 per maand — vergelijk Comfort en Comfort Plus">
                 <span>Hybride warmtepomp + cv-ketel</span>
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor beide toestellen.</p>
                 <strong><small>€</small>24,08</strong><em>Comfort vanaf, per maand</em>
@@ -118,7 +118,7 @@ export default function Home() {
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk hybride abonnementen →</b>
               </Link>
-              <Link href="/onderhoud">
+              <Link href="/onderhoud" aria-label="All-electric warmtepomp: onderhoudsabonnement vanaf € 19,92 per maand — vergelijk Comfort en Comfort Plus">
                 <span>All-electric warmtepomp</span>
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor uw warmtepomp zonder cv-ketel.</p>
                 <strong><small>€</small>19,92</strong><em>Comfort vanaf, per maand</em>

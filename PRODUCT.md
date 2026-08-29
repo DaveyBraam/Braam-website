@@ -89,9 +89,17 @@ een handdruk. Die vertelt de positionering in beeld en is bewust behouden.
 - Certificering: het bedrijf is CO-gecertificeerd en heeft STEK-gecertificeerde
   monteurs.
 
-**Niet bevestigd — niet als bewijs gebruiken:**
-- De reviews op de site zijn niet geverifieerd. Behandel ze als voorlopig en
-  bouw er geen vertrouwensargument op tot de eigenaar ze heeft nagekeken.
+**Deels bevestigd:**
+- De review van Han Engels op de homepage ("Al toch 20 jaar zeer tevreden
+  klant.") is door de eigenaar bevestigd als echt. Hij komt van de oude website
+  en is niet opnieuw bij de klant nagevraagd, dus behandel hem als een citaat
+  met herkomst, niet als een verse referentie.
+- De overige reviews op de site zijn nog niet nagekeken. Behandel die als
+  voorlopig en bouw er geen vertrouwensargument op.
+
+**Openstaand:** de eigenaar overweegt de losse citaten te vervangen door
+Google-reviews die zichzelf bijhouden. Zolang dat niet is besloten blijft het
+bestaande citaat staan.
 
 **Niet aanwezig:** er zijn geen cijfers over aantallen klanten, doorlooptijden,
 besparingen of marktaandeel. Verzin die niet.

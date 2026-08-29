@@ -31,10 +31,10 @@
 
 .route h2 {
   max-width: 18ch;
-  font-size: 21px;
+  font-size: var(--t-subhead);
   font-weight: 600;
-  line-height: 1.22;
-  letter-spacing: -.02em;
+  line-height: 1.28;
+  letter-spacing: var(--track-title);
   text-wrap: balance;
 }
 
@@ -43,8 +43,8 @@
   flex: 1;
   margin: 0;
   color: rgba(219, 229, 243, .74);
-  font-size: 14.5px;
-  line-height: 1.58;
+  font-size: var(--t-small);
+  line-height: 1.62;
 }
 
 .route strong {
@@ -53,9 +53,8 @@
   gap: 8px;
   margin-top: 6px;
   color: #81c7fa;
-  font-size: 15px;
+  font-size: var(--t-body);
   font-weight: 600;
-  letter-spacing: -.01em;
 }
 
 .route strong span {
@@ -75,9 +74,9 @@
 
 .route-urgent strong {
   color: #fff;
-  font-size: 25px;
+  font-size: var(--t-title);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -.02em;
+  letter-spacing: var(--track-title);
 }
 
 @media (max-width: 900px) {
@@ -88,7 +87,7 @@
     padding: 28px 0 26px;
   }
   .route:first-child { border-top: 0; padding-top: 30px; }
-  .route h2 { max-width: none; font-size: 19px; }
+  .route h2 { max-width: none; }
 }
 
 /* The people section.
@@ -124,9 +123,6 @@
 }
 
 .people-copy h2 {
-  font-size: clamp(30px, 3.1vw, 44px);
-  line-height: 1.08;
-  letter-spacing: -.03em;
   text-wrap: balance;
 }
 
@@ -134,7 +130,7 @@
   max-width: 46ch;
   margin: 22px 0 0;
   color: #4f6371;
-  font-size: 16px;
+  font-size: var(--t-body);
   line-height: 1.68;
 }
 
@@ -149,10 +145,10 @@
 .people-quote p {
   margin: 0;
   color: #152938;
-  font-size: 19px;
+  font-size: var(--t-subhead);
   font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -.015em;
+  line-height: 1.42;
+  letter-spacing: var(--track-title);
 }
 
 .people-quote cite {
@@ -161,19 +157,18 @@
   gap: 2px;
   margin-top: 12px;
   color: #152938;
-  font-size: 13px;
+  font-size: var(--t-meta);
   font-style: normal;
   font-weight: 600;
 }
 
 .people-quote cite span {
   color: #6d818f;
-  font-size: 12px;
+  font-size: var(--t-meta);
   font-weight: 400;
 }
 
 @media (max-width: 900px) {
   .people { padding-block: 74px; }
   .people-grid { grid-template-columns: 1fr; gap: 32px; }
-  .people-copy h2 { font-size: clamp(26px, 6.4vw, 34px); }
 }
