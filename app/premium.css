@@ -5055,3 +5055,13 @@ label:has(input:focus-visible) {
     white-space: normal;
   }
 }
+
+/* De mobiele actiebalk staat fixed op bottom: 10px en is 64px hoog, maar er was
+   nergens ruimte voor gereserveerd. Onderaan de pagina lag hij daardoor over de
+   laatste footerregel heen -- KvK, btw-id en de privacyverklaring verdwenen
+   erachter. Alleen pagina's die de balk werkelijk tonen reserveren de ruimte. */
+@media (max-width: 660px) {
+  body:has(.mobile-action-bar) .site-footer {
+    padding-bottom: calc(86px + env(safe-area-inset-bottom));
+  }
+}

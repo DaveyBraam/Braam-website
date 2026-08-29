@@ -451,9 +451,15 @@
    --------------------------------------------------------------------------- */
 
 /* The section itself stops travelling; it only fades. The movement belongs to
-   the rules and the rows now. */
+   the rules and the rows now.
+
+   filter: none is not tidying. Under 660px premium.css blurs every .reveal by
+   4px, and its .is-visible rule restores opacity and transform but never the
+   filter -- so on a phone the whole page below the film stayed blurred, for
+   good. Nothing in this world blurs anyway. */
 .home .reveal {
   transform: none;
+  filter: none;
   transition: opacity .7s cubic-bezier(.16, 1, .3, 1);
 }
 
@@ -527,8 +533,12 @@
 .home .is-visible .service-card::after { transform: scaleX(1); }
 
 /* The rows travel a little further than premium's 12px, because they are now
-   the only thing that travels. */
-.home .reveal:not(.is-visible) .reveal-item { transform: translate3d(0, 22px, 0); }
+   the only thing that travels. The 2px blur that came with them goes for the
+   same reason as the one above. */
+.home .reveal:not(.is-visible) .reveal-item {
+  transform: translate3d(0, 22px, 0);
+  filter: none;
+}
 
 /* Three inherited pieces of glass, all from the sheets that still serve the
    subpages: an infinite glare sweeping across the price columns for ever, and

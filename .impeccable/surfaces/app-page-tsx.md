@@ -114,6 +114,10 @@ onderhoudspagina wordt gebruikt. Dat is meteen de juiste naam: CO-Keur.
 - **Het hoofdstukrailtje toont vier scènes in drie kolommen.** `.cinema-route ol`
   staat op `repeat(3, 1fr)`, dus "04 AFRONDING" valt op een tweede regel. Viel
   eerder minder op toen de labels 9px waren.
+- **Reviews worden met de hand bijgehouden** (besluit van de eigenaar, zie
+  PRODUCT.md). Het citaat van Han Engels is bevestigd echt en komt van de oude
+  site. Overweeg nog een link naar het Google-profiel onder het citaat, zodat
+  een bezoeker de rest zelf kan lezen zonder dat de site ze hoeft op te halen.
 - **Vinkje en plus zijn unicode-tekens, geen iconen** (`✓` en `+` in `page.tsx`,
   en een `\2713` als `::before` op de abonnementsvoordelen). Ze erven gewicht 700
   uit de letter in plaats van een consistente lijndikte. De ronde badges eromheen
@@ -148,6 +152,15 @@ onderhoudspagina wordt gebruikt. Dat is meteen de juiste naam: CO-Keur.
 - `.tilt-surface { transform: none !important }` staat in `@media (max-width: 660px)`
   en haalt daar de reveal-verplaatsing van de prijskolommen weg. Op telefoons
   bedoeld, dus gelaten.
+- **`premium.css` blurt onder 660px elke `.reveal` met `filter: blur(4px)`, en
+  de `is-visible`-regel herstelt alleen `opacity` en `transform` -- nooit
+  `filter`. Op een telefoon stond daardoor de hele pagina onder de film
+  permanent wazig. `home.css` zet nu expliciet `filter: none`. Let hierop bij de
+  subpagina-ronde: daar staat dezelfde blur nog.
+- **De mobiele actiebalk staat `fixed` en reserveerde nergens ruimte**, dus hij
+  lag onderaan over de laatste footerregel (KvK, btw-id, privacyverklaring).
+  Opgelost met `body:has(.mobile-action-bar) .site-footer`, zodat alleen
+  pagina's die de balk tonen die ruimte vrijhouden.
 - `.button-light` staat op `white-space: nowrap`. Veilig voor een Engels label,
   niet voor een Nederlands: het slot-CTA-label liep 8px buiten zijn paneel.
 - `overflow-x: clip` op html/body/main is weggehaald en moet weg blijven: het
