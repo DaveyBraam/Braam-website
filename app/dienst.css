@@ -491,9 +491,14 @@
   border-color: var(--hair);
 }
 
-.dienst .knowledge-related-grid :is(span, small, time, p) {
+/* Niet binnen .knowledge-card-visual: daar is de grond de foto met een
+   donkere scrim, en dan is de papierkleur juist verkeerd. */
+.dienst .knowledge-related-grid :is(span, small, time, p):not(.knowledge-card-visual *) {
   color: var(--on-ink-soft);
 }
+
+/* knowledge.css zet deze link op #107ecd; dat haalt 4,25:1 op papier. */
+.dienst .knowledge-related-grid a { color: var(--lime); }
 
 .dienst .knowledge-related-grid :is(h3, strong) { color: var(--on-ink); }
 
@@ -794,8 +799,11 @@
 .dienst .subscription-selector-heading > span,
 .dienst .subscription-compare-heading > span { color: #095a94; }
 .dienst .subscription-addon-copy > span { color: #52697c; }
-.dienst .knowledge-card-visual-label { color: #0f181f; }
-.dienst .knowledge-card-visual-placeholder > span { color: #0f181f; }
+/* Deze twee staan op een dónkere grond -- de placeholder is #0f181f en het
+   label ligt op een scrim over de foto. Ik had hier eerst papier aangenomen
+   en ze donker gemaakt; dat viel terug naar 1,24:1. */
+.dienst .knowledge-card-visual-label { color: #eef3f9; }
+.dienst .knowledge-card-visual-placeholder > span { color: #eef3f9; }
 
 
 /* Het keurmerkregister: vier echte logo's op dezelfde plaat, met eronder in
@@ -1011,4 +1019,202 @@
   .dienst .onderhoud-prijzen-rij { grid-template-columns: 1fr; }
   .dienst .onderhoud-prijzen-rij > a:not(.text-link) { padding: 24px 0; border-left: 0 !important; border-top: 1px solid var(--hair); }
   .dienst .onderhoud-prijzen-rij > a:first-child { border-top: 0; padding-top: 0; }
+}
+
+/* ---- Abonnementskeuze --------------------------------------------------- */
+
+/* Stap 1: welke installatie. Echte interactie, dus de knoppen mogen zich als
+   knoppen gedragen -- maar zonder pillen, glas of schaduw. */
+.dienst .abo-keuzeblok {
+  margin-top: clamp(48px, 7vh, 84px);
+  padding-top: clamp(28px, 4vh, 44px);
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .abo-keuzeblok > h3,
+.dienst .abo-gedeeld > h3,
+.dienst .abo-verschil > h3 {
+  margin: 0 0 6px;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.dienst .abo-keuzeblok > p {
+  max-width: 56ch;
+  margin: 0 0 24px;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+.dienst .abo-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .abo-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 18px clamp(16px, 2vw, 28px) 18px 0;
+  border: 0;
+  border-right: 1px solid var(--hair);
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--on-ink-soft);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.dienst .abo-tab:last-child { border-right: 0; }
+
+.dienst .abo-tab strong {
+  color: var(--on-ink);
+  font-size: var(--t-body);
+  font-weight: 600;
+}
+
+.dienst .abo-tab small { font-size: var(--t-meta); line-height: 1.45; }
+
+.dienst .abo-tab:hover strong { color: var(--lime); }
+
+/* De actieve keuze wordt gemarkeerd door de regel eronder, niet door een vlak
+   eromheen: dezelfde taal als de rails elders op de site. */
+.dienst .abo-tab.is-active {
+  border-bottom-color: var(--lime);
+}
+
+.dienst .abo-tab.is-active strong { color: var(--lime); }
+
+/* Wat gedeeld is, één keer. */
+.dienst .abo-gedeeld,
+.dienst .abo-verschil {
+  margin-top: clamp(38px, 5vh, 60px);
+  padding-top: clamp(24px, 3.5vh, 38px);
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .abo-gedeeld-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 20px;
+}
+
+.dienst .abo-gedeeld-grid > div { padding: 0 clamp(24px, 3vw, 44px); }
+.dienst .abo-gedeeld-grid > div:first-child { padding-left: 0; }
+.dienst .abo-gedeeld-grid > div:last-child { padding-right: 0; border-left: 1px solid var(--hair); }
+
+.dienst .abo-gedeeld h4,
+.dienst .abo-verschil h4 {
+  margin: 0;
+  color: var(--on-ink-soft);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .abo-gedeeld .check-list { margin-top: 10px; }
+
+/* Het verschil: twee kolommen, de prijs monumentaal, en eronder de ene regel
+   die de keuze werkelijk bepaalt. */
+.dienst .abo-verschil-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 20px;
+}
+
+.dienst .abo-verschil-grid > article {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 clamp(24px, 3vw, 44px);
+}
+
+.dienst .abo-verschil-grid > article:first-child { padding-left: 0; }
+
+.dienst .abo-verschil-grid > article:last-child {
+  padding-right: 0;
+  border-left: 1px solid var(--hair);
+}
+
+.dienst .abo-verschil-grid > article > span {
+  color: var(--lime);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .abo-verschil-grid > article > strong {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  color: var(--on-ink);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--track-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.dienst .abo-verschil-grid > article > strong small {
+  font-size: .42em;
+  font-weight: 500;
+}
+
+.dienst .abo-verschil-grid em {
+  color: var(--on-ink-soft);
+  font-size: var(--t-meta);
+  font-style: normal;
+}
+
+.dienst .abo-verschil-grid .check-list { margin: 12px 0 0; }
+
+.dienst .abo-verschil-grid .text-link { margin-top: auto; padding-top: 18px; }
+
+.dienst .abo-extra {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin-top: clamp(30px, 4vh, 46px);
+  padding-top: 22px;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .abo-extra p {
+  flex: 1 1 34ch;
+  max-width: 76ch;
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+.dienst .abo-extra strong {
+  color: var(--on-ink);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .dienst .abo-tabs { grid-template-columns: 1fr; border-top: 1px solid var(--hair); }
+  .dienst .abo-tab { border-right: 0; border-bottom: 1px solid var(--hair); padding-right: 0; }
+  .dienst .abo-tab.is-active { border-bottom: 2px solid var(--lime); }
+
+  .dienst .abo-gedeeld-grid,
+  .dienst .abo-verschil-grid { grid-template-columns: 1fr; }
+  .dienst .abo-gedeeld-grid > div,
+  .dienst .abo-verschil-grid > article { padding: 0 0 24px; }
+  .dienst .abo-gedeeld-grid > div:last-child,
+  .dienst .abo-verschil-grid > article:last-child {
+    padding: 24px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--hair);
+  }
 }
