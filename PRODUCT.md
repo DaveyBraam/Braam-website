@@ -155,6 +155,11 @@ als een aantal medewerkers. Er kwam een derde bij en de tekst klopte niet meer.
 
 Voor cv-ketelonderhoud: Intergas, Remeha, Nefit en Vaillant, tot en met 40 kW.
 
+**Bevestigd door de eigenaar:** een hybride opstelling die Braam plaatst kan
+later worden omgebouwd naar volledig elektrisch. Dat mag als belofte in de
+teksten staan. Let op dat het een toezegging is waar een klant jaren later op
+terugkomt; wijzig hem niet zonder de eigenaar.
+
 ## Product Principles
 
 1. **Drie routes, gelijkwaardig.** Storing, oriëntatie en onderhoud zijn drie
