@@ -30,7 +30,9 @@
 }
 
 .dienst h2 {
-  max-width: 17ch;
+  /* 17ch liet koppen van deze lengte in vier regels vallen met een los woord
+     onderaan. 20ch is dezelfde maat als de kop in de film. */
+  max-width: 20ch;
   color: var(--on-ink);
   font-size: var(--t-display);
   font-weight: 600;
@@ -45,6 +47,12 @@
 }
 
 .dienst p { color: var(--on-ink-soft); }
+
+/* Gedeelde componenten zetten hier en daar nog een eyebrow boven hun kop --
+   RelatedKnowledge doet dat bijvoorbeeld. De kop draagt zichzelf; het label
+   herhaalt hem alleen. Weg binnen deze wereld, zonder het component aan te
+   raken, want dat dient ook pagina's die nog niet aan de beurt zijn. */
+.dienst .eyebrow { display: none; }
 
 /* De kop en zijn inleiding staan op één regel, gescheiden door een haarlijn
    die zichzelf tekent -- dezelfde beweging als op de homepage. */
@@ -207,7 +215,7 @@
 
 .dienst .werkwijze-lijst {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 0;
   margin: 0;
   padding: 0;
@@ -461,6 +469,36 @@
 .dienst section.contact-cta h2 { color: var(--ink); }
 .dienst section.contact-cta p { color: var(--ink-soft); }
 
+/* Het telefoonnummer naast de knop stond wit: die afsluiting was donker
+   voordat hij papier werd. */
+.dienst section.contact-cta .cta-actions > a {
+  color: var(--ink);
+  font-size: var(--t-subhead);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Verwante kennis --------------------------------------------------- */
+
+/* Het component is gebouwd voor een donkere sectie; op papier zakten de
+   labels en de leestijd naar 3,2:1. */
+.dienst .related-knowledge-section {
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .knowledge-related-grid a,
+.dienst .knowledge-related-grid article {
+  border-color: var(--hair);
+}
+
+.dienst .knowledge-related-grid :is(span, small, time, p) {
+  color: var(--on-ink-soft);
+}
+
+.dienst .knowledge-related-grid :is(h3, strong) { color: var(--on-ink); }
+
+.dienst .related-knowledge-section .text-link { color: var(--lime); }
+
 .dienst .text-link {
   color: var(--lime);
   font-size: var(--t-meta);
@@ -497,4 +535,245 @@
   .dienst .faq-lijst { grid-template-columns: 1fr; }
   .dienst .faq-lijst > article,
   .dienst .faq-lijst > article:nth-child(2n) { padding: 22px 0; border-left: 0; }
+}
+
+/* ---- Gedeeld over de vier dienstenpagina's ----------------------------- */
+
+/* De opsomming onder een inleiding. Geen rondjes met vinkjes: een geregelde
+   lijst met de mark ervoor, zoals de rest van dit blad. */
+.dienst .check-list {
+  display: grid;
+  gap: 0;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .check-list li {
+  position: relative;
+  padding: 12px 0 12px 23px;
+  border-bottom: 1px solid var(--hair);
+  color: var(--on-ink-soft);
+  /* globals.css zet deze items op 700; dat maakt van een opsomming een rij
+     koppen. Hier is het gewoon tekst. */
+  font-weight: 400;
+  font-size: var(--t-meta);
+  line-height: 1.55;
+}
+
+/* Het vinkje zat in een rond vak van 20px. Geen omhulsel, alleen de mark. */
+.dienst .check-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  color: var(--lime);
+  font-size: var(--t-meta);
+  font-weight: 700;
+}
+
+/* Beeld naast tekst. De foto draagt het blok, dus niets omkadert hem. */
+.dienst .beeldblok {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(34px, 5vw, 72px);
+  align-items: center;
+}
+
+.dienst .beeldblok.omgekeerd > figure { order: 2; }
+
+.dienst .beeldblok figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+}
+
+.dienst .beeldblok img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.dienst .beeldblok figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  background: rgba(4, 9, 16, .78);
+  color: #eef3f9;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .beeldblok h2 { max-width: 20ch; }
+
+.dienst .beeldblok > div > p {
+  max-width: 54ch;
+  margin: 22px 0 0;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+/* De merklogo's. Echte merken, dus echte logo's -- maar op één rij, op één
+   hoogte en op dezelfde plaat, zodat het een register is en geen verzameling
+   plaatjes. De plaat is er niet als versiering: het Intergas-logo is wit en
+   verdween op papier. Eén merk een eigen kleurvlak geven (zoals de oude opmaak
+   deed, met een oranje verloop) maakt het een uitzondering; ze allemaal
+   hetzelfde geven maakt het een register. */
+.dienst .merk-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+
+.dienst .merk-logos figure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0;
+  padding: 26px clamp(18px, 2.4vw, 34px) 26px 0;
+  border-right: 1px solid var(--hair);
+}
+
+.dienst .merk-logos figure > div {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 74px;
+  padding: 16px 18px;
+  /* Wit, want drie van de vier logo's dragen zelf al een witte grond: de twee
+     PNG's hebben geen alpha en Remeha is donker getekend. Intergas was als
+     enige wit; daarvan staat nu een donkere variant naast het origineel. */
+  background: #fff;
+  border: 1px solid var(--hair);
+}
+
+.dienst .merk-logos figure:last-child { border-right: 0; }
+
+.dienst .merk-logos img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 26px;
+  object-fit: contain;
+}
+
+.dienst .merk-logos figcaption {
+  color: var(--on-ink-soft);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+/* De afbakening: wat wél en wat niet. Hoort bij het register erboven. */
+.dienst .afbakening {
+  max-width: 78ch;
+  margin: clamp(30px, 4vh, 48px) 0 0;
+}
+
+.dienst .afbakening strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--on-ink);
+  font-size: var(--t-subhead);
+  font-weight: 600;
+  letter-spacing: var(--track-title);
+  font-variant-numeric: tabular-nums;
+}
+
+.dienst .afbakening p {
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+/* Het certificeringshoofdstuk: inkt, want het is een claim en geen uitleg. */
+.dienst section.cert-blok {
+  --hair: rgba(255, 255, 255, .13);
+  --hair-strong: rgba(255, 255, 255, .24);
+  --on-ink: #eef3f9;
+  --on-ink-soft: #93a3b8;
+  --wash: rgba(255, 255, 255, .035);
+  --lime: #7cc0f7;
+  --focus: #7cc0f7;
+  background: #080d14;
+  color: var(--on-ink);
+}
+
+.dienst .cert-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 30px clamp(38px, 5vw, 72px);
+  align-items: start;
+}
+
+.dienst .cert-mark {
+  display: block;
+  width: 100%;
+  max-width: 190px;
+  height: auto;
+  background: #fff;
+  padding: 14px 16px;
+}
+
+.dienst .cert-grid h2 { max-width: 20ch; }
+
+.dienst .cert-grid > div:last-child > p {
+  max-width: 68ch;
+  margin: 0 0 22px;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+.dienst .cert-bewijs {
+  margin: 0 0 22px;
+  padding: 20px 0;
+  border-block: 1px solid var(--hair);
+}
+
+.dienst .cert-bewijs strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--on-ink);
+  font-size: var(--t-lead);
+  font-weight: 600;
+}
+
+.dienst .cert-bewijs p {
+  max-width: 62ch;
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+.dienst .cert-datum {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--lime);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .dienst .beeldblok { grid-template-columns: 1fr; }
+  .dienst .beeldblok.omgekeerd > figure { order: 0; }
+  .dienst .merk-logos { grid-template-columns: 1fr 1fr; }
+  .dienst .merk-logos figure:nth-child(2n) { border-right: 0; }
+  .dienst .merk-logos figure { border-bottom: 1px solid var(--hair); }
+  .dienst .cert-grid { grid-template-columns: 1fr; }
 }

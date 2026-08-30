@@ -5076,3 +5076,20 @@ label:has(input:focus-visible) {
     padding-bottom: calc(86px + env(safe-area-inset-bottom));
   }
 }
+
+/* .button-light staat op white-space: nowrap. Bij een wat langer label -- en
+   die staan er, "Vraag advies over uw cv-ketel" is er een -- wordt de knop
+   breder dan de kolom en steekt hij op een telefoon buiten beeld. In de
+   afsluiting mag hij over twee regels; hij is daar het enige element op die
+   rij, dus er is niets om tegenaan te lopen. */
+@media (max-width: 660px) {
+  .contact-cta .cta-actions {
+    flex-wrap: wrap;
+  }
+
+  .contact-cta .cta-actions .button {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+}
