@@ -191,10 +191,9 @@ export function WarmtepompStudio() {
     };
 
     /* De tekst is de hoofdrol, dus het toestel wijkt. De gemeten vakken van
-       de tekstblokken (bijgehouden in `vakken`) zijn harde grenzen: zodra een
-       tekst aan het woord is wordt het toestel eronder of ernaast geklemd en
-       krimpt het als het niet past. Zo kan een kop die een regel meer omslaat
-       nooit over het toestel vallen, op geen enkele maat. */
+       de tekstblokken zijn harde grenzen; per beat wordt daaruit één maat en
+       plek opgelost (zie `legPadVast`), zodat een kop die een regel meer
+       omslaat nooit over het toestel valt, op geen enkele maat. */
     let vakken: Record<string, { top: number; bottom: number; left: number; right: number; width: number }> = {};
     let stageBreedte = 1;
     let stageHoogte = 1;
@@ -235,11 +234,102 @@ export function WarmtepompStudio() {
       if (meta && getComputedStyle(meta).display !== "none") {
         metaTop = meta.getBoundingClientRect().top - basis.top;
       }
+      legPadVast();
     };
 
     /* Verhouding breedte/hoogte van het toestelblok in de frames; frontaal
        gemeten aan de referentie en het ruimst, dus veilig voor elke stand. */
     const UNIT_AR = 1.45;
+
+    /* Eén rustig pad in plaats van een reactieve klem. Per beat wordt één
+       botsingsvrije maat en plek opgelost; die staat vast zolang de tekst
+       spreekt, en de overgang naar de volgende beat is uitgesmeerd over de
+       hele draai ertussen. Zo verandert het toestel nooit snel van formaat:
+       geen groot-klein-groot per tekst, maar één doorlopende beweging. */
+    type Anker = { van: number; tot: number; cy: number; h: number };
+    let ankers: Anker[] = [];
+
+    const BEATS: Array<{ venster: string; vak: string[] }> = [
+      { venster: "b1", vak: ["b1"] },
+      { venster: "b2", vak: ["b2a", "b2b"] },
+      { venster: "kw", vak: ["kw"] },
+      { venster: "b3", vak: ["b3"] },
+      { venster: "b4", vak: ["b4"] },
+      { venster: "b5", vak: ["b5"] },
+      { venster: "b6", vak: ["b6"] },
+    ];
+
+    const los = (namen: string[], pMid: number) => {
+      const MARGE = 26;
+      let boven = 0;
+      let onder = Math.min(metaTop - 10, stageHoogte - (variant ? 98 : 8));
+      let baanHalf = Infinity;
+      for (const naam of namen) {
+        const r = vakken[naam];
+        if (!r) continue;
+        const breed = r.width > 0.6 * stageBreedte;
+        if (r.top < 0.42 * stageHoogte || (breed && r.top < 0.6 * stageHoogte)) {
+          boven = Math.max(boven, r.bottom + MARGE);
+        } else if (breed) {
+          onder = Math.min(onder, r.top - MARGE);
+        } else {
+          const binnenkant = r.left + r.width / 2 < stageBreedte / 2 ? r.right : r.left;
+          baanHalf = Math.min(baanHalf, Math.abs(stageBreedte / 2 - binnenkant) - MARGE);
+        }
+      }
+      let h = variant ? 0.34 * stageHoogte : Math.min(0.56 * stageHoogte, 0.32 * stageBreedte);
+      if (baanHalf < Infinity) {
+        h = Math.min(h, Math.max(48, (2 * Math.max(0, baanHalf)) / UNIT_AR));
+      }
+      onder = Math.max(boven + 48, onder);
+      h = Math.min(h, onder - boven);
+      const wens = sample(RISE, pMid) * stageHoogte;
+      const cy = Math.min(Math.max(wens, boven + h / 2), Math.max(boven + h / 2, onder - h / 2));
+      return { cy, h, boven, onder, wens };
+    };
+
+    const legPadVast = () => {
+      const ruw = BEATS.map(({ venster, vak }) => {
+        const [, vol, uit] = WINDOWS[venster];
+        const van = Math.max(0, vol);
+        const tot = Math.min(1, uit);
+        return { van, tot, ...los(vak, (van + tot) / 2) };
+      });
+      /* Geen bulten in het pad: een anker middenin de reis mag niet boven
+         zijn beide buren uitsteken (de vermogensregel gaf op korte schermen
+         anders een korte opzwelling tussen twee kleine standen in).
+         Wegzakken mag wél — terugtreden is rust, opzwellen is drukte. */
+      for (let i = 1; i < ruw.length - 1; i += 1) {
+        const plafond = Math.max(ruw[i - 1].h, ruw[i + 1].h);
+        if (ruw[i].h > plafond) {
+          const a = ruw[i];
+          a.h = plafond;
+          a.cy = Math.min(
+            Math.max(a.wens, a.boven + a.h / 2),
+            Math.max(a.boven + a.h / 2, a.onder - a.h / 2),
+          );
+        }
+      }
+      ankers = ruw.map(({ van, tot, cy, h }) => ({ van, tot, cy, h }));
+    };
+
+    const pad = (p: number) => {
+      if (!ankers.length) {
+        const h = variant ? 0.34 * stageHoogte : Math.min(0.56 * stageHoogte, 0.32 * stageBreedte);
+        return { cy: sample(RISE, p) * stageHoogte, h };
+      }
+      if (p <= ankers[0].tot) return ankers[0];
+      for (let i = 1; i < ankers.length; i += 1) {
+        const vorig = ankers[i - 1];
+        const nu = ankers[i];
+        if (p <= nu.van) {
+          const t = smoothstep((p - vorig.tot) / Math.max(0.0001, nu.van - vorig.tot));
+          return { cy: vorig.cy + (nu.cy - vorig.cy) * t, h: vorig.h + (nu.h - vorig.h) * t };
+        }
+        if (p <= nu.tot) return nu;
+      }
+      return ankers[ankers.length - 1];
+    };
 
     const paint = (force = false) => {
       const p = progress;
@@ -267,70 +357,17 @@ export function WarmtepompStudio() {
         win[naam] = window01(naam, p);
       }
 
-      /* Wat eisen de sprekende teksten op, in css-maat van de stage? Teksten
-         bovenin duwen het toestel omlaag, een blok onderin (telefoon) duwt
-         het omhoog, kolommen ernaast begrenzen de breedte. De klem grijpt op
-         volle kracht zodra een tekst leesbaar wordt, en lost vloeiend. */
-      const MARGE = 26;
-      let vrijBoven = 0;
-      let vrijOnder = Math.min(metaTop - 10, stageHoogte - (variant ? 98 : 8));
-      let baanHalf = Infinity;
-      let klem = 0;
-      const eisers: Array<[string, string]> = [
-        ["b1", "b1"],
-        ["b2a", "b2"],
-        ["b2b", "b2"],
-        ["kw", "kw"],
-        ["b3", "b3"],
-        ["b4", "b4"],
-        ["b5", "b5"],
-        ["b6", "b6"],
-      ];
-      for (const [vak, venster] of eisers) {
-        const kracht = win[venster];
-        const r = vakken[vak];
-        if (!r || kracht < 0.02) continue;
-        const breed = r.width > 0.6 * stageBreedte;
-        if (r.top < 0.42 * stageHoogte || (breed && r.top < 0.6 * stageHoogte)) {
-          vrijBoven = Math.max(vrijBoven, r.bottom + MARGE);
-        } else if (breed) {
-          vrijOnder = Math.min(vrijOnder, r.top - MARGE);
-        } else {
-          const binnenkant = r.left + r.width / 2 < stageBreedte / 2 ? r.right : r.left;
-          baanHalf = Math.min(baanHalf, Math.abs(stageBreedte / 2 - binnenkant) - MARGE);
-        }
-        klem = Math.max(klem, kracht);
-      }
-      klem = smoothstep(Math.min(1, klem / 0.5));
-
       const scale = 1 - 0.07 * depth;
       const veil = 0.1 + 0.34 * depth;
 
-      /* Alles hieronder in canvaspixels; ratio zet css-maat om. */
+      /* Maat en plek komen uit het vooruitberekende pad; alleen de milde
+         diepteschaal van de draai komt er per frame overheen. */
       const width = canvas.width;
       const height = canvas.height;
       const ratio = width / stageBreedte;
-
-      let doelH = variant ? 0.34 * height : Math.min(0.56 * height, 0.32 * width);
-      if (baanHalf < Infinity) {
-        const baanH = Math.max(48 * ratio, (2 * Math.max(0, baanHalf) * ratio) / UNIT_AR);
-        doelH += (Math.min(doelH, baanH) - doelH) * klem;
-      }
-      let effH = doelH * scale;
-
-      /* Past het niet tussen tekst en maatlijn, dan krimpt het toestel tot
-         het wél past — desnoods tot een postzegel. Decor mag klein zijn;
-         over de tekst heen mag het nooit. */
-      const boven = vrijBoven * ratio;
-      const onder = Math.max(boven + 48 * ratio, vrijOnder * ratio);
-      const past = onder - boven;
-      if (effH > past) effH += (past - effH) * klem;
-
-      let cyPx = sample(RISE, p) * height;
-      const minCy = boven + effH / 2;
-      const maxCy = Math.max(minCy, onder - effH / 2);
-      const gewenst = Math.min(Math.max(cyPx, minCy), maxCy);
-      cyPx += (gewenst - cyPx) * klem;
+      const geo = pad(p);
+      const effH = geo.h * ratio * scale;
+      const cyPx = geo.cy * ratio;
 
       const key = `${bucket === intro ? "i" : "d"}:${index}:${theta.toFixed(2)}:${Math.round(cyPx)}:${Math.round(effH)}:${width}`;
       if (!force && key === lastKey) return;
