@@ -183,6 +183,10 @@
 .dienst .studio[data-live] .studio-beats {
   position: absolute;
   inset: 0;
+  /* Echt perspectief: de tekst komt naar je toe in plaats van alleen groter
+     te worden. Dat is het verschil tussen een dia en een vlucht. */
+  perspective: 1150px;
+  perspective-origin: 50% 46%;
   width: min(1240px, calc(100% - 64px));
   margin-inline: auto;
   padding: 0;
@@ -200,8 +204,6 @@
    aanvliegen: de vensters overlappen, dus het is een doorlopende stroom en
    geen reeks losse verschijningen. Niets spawnt in het midden. */
 .dienst .studio[data-live] .studio-beat {
-  --t: -1;
-  --o: 0;
   --bias: 0vw;
   --ybias: 0vh;
   position: absolute;
@@ -209,13 +211,31 @@
   left: 50%;
   width: min(100%, 62ch);
   margin: 0;
+  transform: translate3d(calc(-50% + var(--bias)), calc(-50% + var(--ybias)), 0);
+  transform-style: preserve-3d;
+}
+
+/* De vlucht.
+
+   Elk onderdeel reist zelf, zodat de kop eerder aankomt dan de regel eronder.
+   --t is de positie op de baan (-1 aankomst, 0 geland, +1 vertrokken).
+
+   De baan is niet recht. De zijwaartse sweep is lineair, maar de hoogte krijgt
+   een derde macht mee: daardoor komt de tekst hoog binnen, duikt hij naar het
+   midden en gaat hij laag weer weg. Daar bovenop draait hij licht en komt hij
+   met perspectief naar je toe. In het midden staat alles op nul -- vlak,
+   recht, stil -- en dat is wat het gevoel van landen geeft. */
+.dienst .studio[data-live] .studio-vlucht {
+  --t: -1;
+  --o: 0;
   transform:
     translate3d(
-      calc(-50% + var(--bias) + var(--t) * -46vw),
-      calc(-50% + var(--ybias) + var(--t) * 10vh),
-      0
+      calc(var(--t) * -34vw),
+      calc(var(--t) * 7vh + var(--t) * var(--t) * var(--t) * 9vh),
+      calc(var(--t) * 300px)
     )
-    scale(calc(1 + var(--t) * 0.42));
+    rotateY(calc(var(--t) * -13deg))
+    rotateZ(calc(var(--t) * 1.6deg));
   transform-origin: 50% 50%;
   opacity: var(--o);
   will-change: transform, opacity;
@@ -371,5 +391,12 @@
     --bias: 0vw;
     --ybias: 13vh;
     width: min(100%, 30ch);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dienst .studio[data-live] .studio-vlucht {
+    transform: none;
+    opacity: 1;
   }
 }

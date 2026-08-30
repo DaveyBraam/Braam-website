@@ -85,6 +85,9 @@ const WINDOWS: Record<string, [number, number, number, number]> = {
 };
 
 const clamp01 = (value: number) => (value < 0 ? 0 : value > 1 ? 1 : value);
+const clamp = (v: number, lo: number, hi: number) => (v < lo ? lo : v > hi ? hi : v);
+const uitLoop = (x: number) => 1 - Math.pow(1 - x, 3);
+const inLoop = (x: number) => x * x * x;
 const smoothstep = (value: number) => {
   const t = clamp01(value);
   return t * t * (3 - 2 * t);
@@ -117,9 +120,12 @@ const sample = (keys: Array<[number, number]>, p: number) => {
 const travel = (key: string, p: number) => {
   const [in_, vol, uit, weg] = WINDOWS[key];
   if (p <= in_) return -1;
-  if (p < vol) return -1 + smoothstep((p - in_) / (vol - in_));
+  /* Aankomst remt af: snel de eerste helft van de reis, dan zachtjes op zijn
+     plek. Vertrek doet het omgekeerde en versnelt weg. Samen geeft dat het
+     gevoel van landen in plaats van langsvliegen. */
+  if (p < vol) return -1 + uitLoop(clamp01((p - in_) / (vol - in_)));
   if (p <= uit) return 0;
-  if (p < weg) return smoothstep((p - uit) / (weg - uit));
+  if (p < weg) return inLoop(clamp01((p - uit) / (weg - uit)));
   return 1;
 };
 
@@ -238,6 +244,24 @@ export function WarmtepompStudio() {
         .filter((el): el is HTMLElement => el !== null);
     }
 
+    /* Wat er werkelijk vliegt. Een beat met onderdelen laat die na elkaar
+       aankomen -- eerst de kop, dan de tekst eronder -- dus dan reizen de
+       kinderen en niet het blok. Een beat die zelf de tekst is (de
+       vermogensregel) vliegt als geheel. */
+    const vluchten: Record<string, HTMLElement[]> = {};
+    for (const naam of Object.keys(beatEls)) {
+      vluchten[naam] = [];
+      for (const beat of beatEls[naam]) {
+        const kinderen = Array.from(beat.children) as HTMLElement[];
+        const eenheden = kinderen.length ? kinderen : [beat];
+        eenheden.forEach((el, i) => {
+          el.classList.add("studio-vlucht");
+          el.style.setProperty("--d", String(i));
+          vluchten[naam].push(el);
+        });
+      }
+    }
+
     const paint = (force = false) => {
       const p = progress;
       const theta = sample(THETA, p);
@@ -295,9 +319,16 @@ export function WarmtepompStudio() {
       for (const naam of ["b1", "b2", "kw", "b3", "b4", "b5", "b6"]) {
         const t = travel(naam, p);
         const o = zicht(t);
-        for (const el of beatEls[naam]) {
-          el.style.setProperty("--t", t.toFixed(4));
-          el.style.setProperty("--o", o.toFixed(3));
+        for (const el of vluchten[naam]) {
+          /* Elke rang vertrekt iets later: de kop is er eerder dan de regel
+             eronder, en verlaat ook eerder. Dat doen we door de reis van die
+             rang op een vroeger punt in de scroll uit te lezen, zodat de
+             vertraging over de hele baan geldt en niet alleen bij aankomst.
+             Op het leesplateau staan ze allemaal op nul en landen ze samen. */
+          const rang = Number(el.style.getPropertyValue("--d")) || 0;
+          const tc = travel(naam, p - rang * 0.014);
+          el.style.setProperty("--t", tc.toFixed(4));
+          el.style.setProperty("--o", zicht(tc).toFixed(3));
         }
         section.style.setProperty(`--studio-${naam}`, o.toFixed(3));
         if (o > hoogst) {
