@@ -1,0 +1,417 @@
+/* De warmtepompstudio.
+
+   Een witte plaat bovenaan de warmtepompenpagina: het toestel vrijgesteld op
+   het papier van het handboek, zes teksten eromheen die op scroll aan het
+   woord komen. De tekst is de hoofdrol; het toestel is decor en wordt door
+   het canvas al ontkleurd en gedoofd naarmate het wegdraait.
+
+   Twee toestanden, één markup. Zonder [data-live] — dus zonder JavaScript,
+   of met prefers-reduced-motion — staat hier gewoon een plaat met de beats
+   als blokken onder elkaar: dezelfde woorden, geen beweging. Met [data-live]
+   wordt de stage sticky en legt de curve in WarmtepompStudio.tsx het ritme
+   over de draai. */
+
+.dienst .studio {
+  position: relative;
+  background: var(--white);
+  /* De studio is de hero. De topline en de sticky header staan gewoon in de
+     flow, dus dit blok begint vanzelf onder de header — geen eigen
+     topruimte nodig. */
+  padding-block: 0;
+}
+
+/* ---- De plaat ----------------------------------------------------------- */
+
+.dienst .studio-plaat {
+  position: relative;
+  margin: 0;
+}
+
+.dienst .studio-grond {
+  display: block;
+  width: min(920px, 86%);
+  height: auto;
+  margin-inline: auto;
+}
+
+.dienst .studio-canvas {
+  display: none;
+}
+
+/* ---- De beats, als document --------------------------------------------- */
+
+.dienst .studio-beats {
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+  padding-block: clamp(48px, 7vh, 88px) clamp(64px, 9vh, 120px);
+}
+
+.dienst .studio-beat + .studio-beat {
+  margin-top: clamp(44px, 7vh, 84px);
+}
+
+.dienst .studio-beat-1 h1 {
+  max-width: 24ch;
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .studio-beat h2 {
+  max-width: 26ch;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: var(--track-title);
+  text-wrap: balance;
+}
+
+.dienst .studio-beat p {
+  max-width: 52ch;
+  margin-top: 12px;
+  font-size: var(--t-body);
+  line-height: 1.62;
+}
+
+.dienst .studio-beat-1 p {
+  font-size: var(--t-lead);
+}
+
+/* De vermogensregel vliegt in de film voorbij; in het document is het een
+   maatregel tussen de beats. */
+.dienst .studio-kw {
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+}
+
+.dienst .studio-kw span {
+  margin-left: 0.08em;
+  font-size: 0.44em;
+  font-weight: 500;
+  color: var(--on-ink-soft);
+}
+
+/* De zwaarste regel van de hele pagina. Groter dan de koppen elders: dit is
+   het argument dat geen concurrent maakt. De selector is bewust zwaarder dan
+   die van .studio-beat p hierboven, anders erft hij de bodymaat. */
+.dienst .studio-beat .studio-oordeel {
+  max-width: 18ch;
+  margin-top: clamp(18px, 3.2vh, 34px);
+  font-size: var(--t-monument);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .studio-beat-6 .button {
+  margin-top: clamp(20px, 3vh, 32px);
+}
+
+/* Bijschrift en maatverdeling: wat er van de plaat een handboekplaat maakt
+   in plaats van een render. */
+.dienst .studio-meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(20px, 4vh, 40px);
+  display: none;
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.dienst .studio-maat {
+  height: 8px;
+  border-bottom: 1px solid var(--hair);
+  background: repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 64px) bottom / 100% 8px no-repeat;
+}
+
+.dienst .studio-bijschrift {
+  margin-top: 10px;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+}
+
+/* ---- Live: de sticky studio --------------------------------------------- */
+
+.dienst .studio[data-live] {
+  /* De reis. Zes leesmomenten met draai ertussen; op smal korter, want zeven
+     bewegingen op een telefoon is zwaar. */
+  height: 640svh;
+}
+
+.dienst .studio[data-live] .studio-stage {
+  position: sticky;
+  top: 84px;
+  height: calc(100svh - 84px);
+  min-height: 520px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.dienst .studio[data-live] .studio-plaat {
+  position: absolute;
+  inset: 0;
+}
+
+.dienst .studio[data-live] .studio-grond {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 56%;
+  margin: 0;
+}
+
+.dienst .studio[data-live] .studio-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Geen CSS-filters hier: die lieten op de homepage de compositor het hele
+     canvas per frame opnieuw filteren. De sluier zit in de tekening zelf. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.dienst .studio[data-live] .studio-meta {
+  display: block;
+}
+
+.dienst .studio[data-live] .studio-beats {
+  position: absolute;
+  inset: 0;
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+  padding: 0;
+  pointer-events: none;
+}
+
+.dienst .studio[data-live] .studio-beat {
+  position: absolute;
+  margin: 0;
+}
+
+/* Elke beat leest zijn eigen voortgang; de kinderen komen er getrapt uit.
+   Eerst de kop, dan de tekst eronder, het oordeel en de knop als laatste —
+   alles afgeleid van dezelfde scrollwaarde, dus terugscrollen speelt de
+   entree gewoon achterstevoren af. */
+.dienst .studio[data-live] .studio-beat-1 { --bv: var(--studio-b1, 1); }
+.dienst .studio[data-live] .studio-beat-2a,
+.dienst .studio[data-live] .studio-beat-2b { --bv: var(--studio-b2, 0); }
+.dienst .studio[data-live] .studio-beat-3 { --bv: var(--studio-b3, 0); }
+.dienst .studio[data-live] .studio-beat-4 { --bv: var(--studio-b4, 0); }
+.dienst .studio[data-live] .studio-beat-5 { --bv: var(--studio-b5, 0); }
+.dienst .studio[data-live] .studio-beat-6 { --bv: var(--studio-b6, 0); }
+
+.dienst .studio[data-live] .studio-beat h1,
+.dienst .studio[data-live] .studio-beat h2 {
+  --kop: min(1, calc(var(--bv) * 1.7));
+  opacity: var(--kop);
+  transform: translateY(calc((1 - var(--kop)) * 16px));
+}
+
+.dienst .studio[data-live] .studio-beat p,
+.dienst .studio[data-live] .studio-beat .button {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.3) * 1.9)));
+  opacity: var(--tekst);
+  transform: translateY(calc((1 - var(--tekst)) * 20px));
+}
+
+.dienst .studio[data-live] .studio-beat .studio-oordeel {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.5) * 2.4)));
+}
+
+.dienst .studio[data-live] .studio-beat-6 .button {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.55) * 2.6)));
+}
+
+/* Alleen de tekst die aan het woord is, is aanraakbaar — voor selecteren en
+   voor de knop. De rest ligt onzichtbaar te wachten. */
+.dienst .studio[data-live][data-actief="b1"] .studio-beat-1,
+.dienst .studio[data-live][data-actief="b2"] .studio-beat-2a,
+.dienst .studio[data-live][data-actief="b2"] .studio-beat-2b,
+.dienst .studio[data-live][data-actief="kw"] .studio-kw,
+.dienst .studio[data-live][data-actief="b3"] .studio-beat-3,
+.dienst .studio[data-live][data-actief="b4"] .studio-beat-4,
+.dienst .studio[data-live][data-actief="b5"] .studio-beat-5,
+.dienst .studio[data-live][data-actief="b6"] .studio-beat-6 {
+  pointer-events: auto;
+}
+
+.dienst .studio[data-live] .studio-beat-1 {
+  top: clamp(40px, 8vh, 88px);
+  left: 50%;
+  width: min(100%, 66ch);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.dienst .studio[data-live] .studio-beat-1 h1,
+.dienst .studio[data-live] .studio-beat-1 p {
+  margin-inline: auto;
+}
+
+.dienst .studio[data-live] .studio-beat-2a,
+.dienst .studio[data-live] .studio-beat-2b {
+  top: 50%;
+  width: min(26%, 30ch);
+  transform: translateY(-50%);
+}
+
+.dienst .studio[data-live] .studio-beat-2a {
+  left: 0;
+}
+
+.dienst .studio[data-live] .studio-beat-2b {
+  right: 0;
+}
+
+.dienst .studio[data-live] .studio-kw {
+  top: clamp(48px, 11vh, 120px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: var(--studio-kw, 0);
+}
+
+.dienst .studio[data-live] .studio-beat-3 {
+  top: clamp(36px, 7vh, 76px);
+  left: 50%;
+  width: min(100%, 72ch);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.dienst .studio[data-live] .studio-beat-3 h2,
+.dienst .studio[data-live] .studio-beat-3 p {
+  margin-inline: auto;
+}
+
+.dienst .studio[data-live] .studio-beat-4 {
+  left: 0;
+  top: 50%;
+  width: min(26%, 32ch);
+  transform: translateY(-50%);
+}
+
+.dienst .studio[data-live] .studio-beat-5 {
+  right: 0;
+  top: 50%;
+  width: min(26%, 32ch);
+  transform: translateY(-50%);
+}
+
+.dienst .studio[data-live] .studio-beat-6 {
+  top: clamp(40px, 8vh, 88px);
+  left: 50%;
+  width: min(100%, 60ch);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.dienst .studio[data-live] .studio-beat-6 h2 {
+  max-width: 24ch;
+  margin-inline: auto;
+  font-size: var(--t-display);
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+}
+
+.dienst .studio[data-live] .studio-beat-6 p {
+  margin-inline: auto;
+  font-size: var(--t-lead);
+}
+
+/* ---- De naad naar beneden ------------------------------------------------
+
+   De studio is wit, de keuze eronder is papier. Een haarlijn over de volle
+   breedte maakt van die overgang een besluit in plaats van een toevallige
+   kleurwissel: de plaat is af, het handboek gaat verder. */
+.dienst .studio::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ---- Smal ---------------------------------------------------------------- */
+
+@media (max-width: 660px) {
+  .dienst .studio[data-live] {
+    height: 480svh;
+  }
+
+  .dienst .studio[data-live] .studio-stage {
+    top: 64px;
+    height: calc(100svh - 64px);
+    min-height: 480px;
+  }
+
+  /* Op een telefoon staat elke tekst boven het toestel, over de volle
+     breedte. Het toestel staat in de onderste helft van de plaat. */
+  .dienst .studio[data-live] .studio-beat-1,
+  .dienst .studio[data-live] .studio-beat-2a,
+  .dienst .studio[data-live] .studio-beat-3,
+  .dienst .studio[data-live] .studio-beat-4,
+  .dienst .studio[data-live] .studio-beat-5,
+  .dienst .studio[data-live] .studio-beat-6 {
+    top: clamp(20px, 4vh, 40px);
+    left: 0;
+    width: 100%;
+    transform: none;
+    text-align: left;
+  }
+
+  .dienst .studio[data-live] .studio-beat-1,
+  .dienst .studio[data-live] .studio-beat-3,
+  .dienst .studio[data-live] .studio-beat-6 {
+    text-align: left;
+  }
+
+  .dienst .studio[data-live] .studio-beat-1 h1,
+  .dienst .studio[data-live] .studio-beat-1 p,
+  .dienst .studio[data-live] .studio-beat-3 h2,
+  .dienst .studio[data-live] .studio-beat-3 p,
+  .dienst .studio[data-live] .studio-beat-6 h2,
+  .dienst .studio[data-live] .studio-beat-6 p {
+    margin-inline: 0;
+  }
+
+  /* De tweede helft van de splitsing komt onderin te staan, boven de
+     actiebalk — twee stemmen aan weerszijden van het toestel. */
+  .dienst .studio[data-live] .studio-beat-2b {
+    top: auto;
+    bottom: calc(96px + env(safe-area-inset-bottom));
+    right: 0;
+    width: 100%;
+    transform: none;
+  }
+
+  .dienst .studio[data-live] .studio-kw {
+    top: clamp(24px, 6vh, 56px);
+    left: 0;
+    transform: none;
+  }
+
+  .dienst .studio[data-live] .studio-oordeel {
+    max-width: 12ch;
+  }
+
+  .dienst .studio-meta {
+    bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}
