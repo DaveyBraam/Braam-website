@@ -152,7 +152,7 @@ export function SubscriptionApplicationForm() {
           })}
         </div></>}
         {!isLandlord && installation === "onbekend" && <p className="landlord-form-note"><strong>Geen probleem:</strong> vul merk en model in voor zover bekend. We bepalen eerst welk pakket bij uw installatie past en bespreken de prijs voordat het abonnement ingaat.</p>}
-        {!isLandlord && <div className="installation-scope-note"><strong>Dit onderhouden wij:</strong><span>Cv-ketels van Intergas, Remeha, Nefit en Vaillant. Voor warmtepompen werken we standaard met LG en Vaillant; andere merken beoordelen we op aanvraag.</span></div>}
+        {!isLandlord && <div className="installation-scope-note"><strong>Dit onderhouden wij:</strong><span>Cv-ketels van Intergas, Remeha, Nefit en Vaillant. Voor warmtepompen werken we standaard met LG, Bosch en Vaillant; andere merken beoordelen we op aanvraag.</span></div>}
         {canAddVentilation && <label className="ventilation-choice">
           <input type="checkbox" name="Ventilatiebox" checked={ventilation} onChange={(event) => setVentilation(event.target.checked)} />
           <span className="ventilation-check" aria-hidden="true">+</span><span><strong>Mechanische ventilatiebox mee laten schoonmaken</strong><small>€ 37,50 extra per jaar bij het ketel- of combinatieabonnement.</small></span>
@@ -181,7 +181,7 @@ export function SubscriptionApplicationForm() {
             <label className="field"><span>Aantal panden <b>*</b></span><input type="number" name="Aantal panden" min="2" inputMode="numeric" placeholder="Bijvoorbeeld 8" required /></label>
             <label className="field"><span>Totaal aantal installaties <b>*</b></span><input type="number" name="Totaal aantal installaties" min="2" inputMode="numeric" placeholder="Bijvoorbeeld 12" required /></label>
             <label className="field field-wide"><span>Installaties per adres <b>*</b></span><textarea name="Installaties per adres" rows={8} placeholder={"Noteer per woning of pand:\n1. volledig adres en postcode\n2. cv-ketel, hybride of volledig elektrische warmtepomp\n3. merk en model\n4. vermogen, indien bekend\n5. datum laatste onderhoud, indien bekend"} required /></label>
-            <div className="field-wide landlord-scope-warning"><strong>Welke installaties nemen we aan?</strong><p>Wij onderhouden individuele cv-ketels en warmtepompen in woningen. Voor warmtepompen werken we standaard met LG en Vaillant; andere merken beoordelen we op aanvraag. Collectieve ketelhuizen, cascadeopstellingen en grote bedrijfsinstallaties vallen buiten onze werkzaamheden.</p></div>
+            <div className="field-wide landlord-scope-warning"><strong>Welke installaties nemen we aan?</strong><p>Wij onderhouden individuele cv-ketels en warmtepompen in woningen. Voor warmtepompen werken we standaard met LG, Bosch en Vaillant; andere merken beoordelen we op aanvraag. Collectieve ketelhuizen, cascadeopstellingen en grote bedrijfsinstallaties vallen buiten onze werkzaamheden.</p></div>
           </>}
           {!isLandlord && <label className="field field-wide"><span>Wanneer wilt u het abonnement laten ingaan? <b>*</b></span><select name="Gewenst startmoment" defaultValue="Zo spoedig mogelijk" required><option>Zo spoedig mogelijk</option><option>Binnen één maand</option><option>Over één tot drie maanden</option><option>Later of in overleg</option></select><small className="field-hint">Dit is uw voorkeur. De definitieve ingangsdatum staat in onze bevestiging.</small></label>}
           {!isLandlord && plan !== "onbekend" ? <>

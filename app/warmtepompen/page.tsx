@@ -6,7 +6,7 @@ import { PageHero } from "../components/PageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
-export const metadata: Metadata = { title: "Warmtepomp voor uw woning | Rob Braam", description: "Advies, installatie en onderhoud van warmtepompen van 7, 9 en 11 kW voor woningen, met vaste merken en onderhoud door hetzelfde team." };
+export const metadata: Metadata = { title: "Warmtepomp voor uw woning | Rob Braam", description: "Advies, installatie en onderhoud van warmtepompen van 5, 7, 9 en 11 kW voor woningen, met vaste merken en onderhoud door hetzelfde team." };
 
 /* Wat er in het abonnement zit. Zelfde lijst als op de homepage en de
    onderhoudspagina: één bron, zodat een wijziging niet op drie plaatsen
@@ -28,7 +28,7 @@ const werkwijze = [
 
 export default function WarmtepompenPage() {
   return <><SiteHeader /><main className="dienst">
-    <PageHero eyebrow="Warmtepompen voor woningen" title="Een warmtepomp die bij uw woning past." accent="Begint met een goede beoordeling." intro="Wij werken met warmtepompen van 7, 9 en 11 kW. Welk vermogen geschikt is, bepalen we vooral aan de hand van het warmteverlies, de isolatie en de warmteafgifte via radiatoren of vloerverwarming. Na uw aanvraag laten we weten welke vervolgstap nodig is." image="/projects/warmtepomp-berlicum.jpg" imageAlt="Vaillant warmtepomp geplaatst door Rob Braam in Berlicum" primaryLabel="Vraag naar de mogelijkheden" primaryHref="/offerte-aanvragen?dienst=warmtepomp" badge="Door ons geplaatst" />
+    <PageHero eyebrow="Warmtepompen voor woningen" title="Een warmtepomp die bij uw woning past." accent="Begint met een goede beoordeling." intro="Wij werken met warmtepompen van 5, 7, 9 en 11 kW. Welk vermogen geschikt is, bepalen we vooral aan de hand van het warmteverlies, de isolatie en de warmteafgifte via radiatoren of vloerverwarming. Na uw aanvraag laten we weten welke vervolgstap nodig is." image="/projects/warmtepomp-berlicum.jpg" imageAlt="Vaillant warmtepomp geplaatst door Rob Braam in Berlicum" primaryLabel="Vraag naar de mogelijkheden" primaryHref="/offerte-aanvragen?dienst=warmtepomp" badge="Door ons geplaatst" />
 
     {/* De tweesprong. Dit is de plek waar later de film komt: dezelfde
         techniekwand in twee toestanden. Tot die tijd doen twee eigen foto's
@@ -80,7 +80,7 @@ export default function WarmtepompenPage() {
           </article>
         </div>
 
-        <p className="keuze-afbakening"><strong>7, 9 en 11 kW.</strong> Wij werken met warmtepompen in deze vermogens voor woningen. Grote bedrijfsunits, cascadeopstellingen en collectieve systemen vallen buiten onze werkzaamheden.</p>
+        <p className="keuze-afbakening"><strong>5, 7, 9 en 11 kW.</strong> Wij werken met warmtepompen in deze vermogens voor woningen. Grote bedrijfsunits, cascadeopstellingen en collectieve systemen vallen buiten onze werkzaamheden.</p>
       </div>
     </section>
 
@@ -134,7 +134,7 @@ export default function WarmtepompenPage() {
       <div className="shell">
         <div className="section-heading split-heading">
           <div><h2>Vaste merken.<br />Verschillende opstellingen.</h2></div>
-          <p>Voor installatie en onderhoud werken we met een vaste set merken. Heeft u al een warmtepomp van een ander merk? Stuur merk en model mee; onderhoud aan andere merken beoordelen we op aanvraag.</p>
+          <p>We kiezen onze merken zelf, en we kiezen op kwaliteit en levensduur — niet op de laagste inkoopprijs. Een warmtepomp moet jaren mee, en wij zijn degenen die hem daarna onderhouden. Dat maakt ons kieskeurig. Deze drie zijn voor ons gelijkwaardig: welke bij uw woning past, hangt af van de opstelling en niet van een voorkeur van ons. Heeft u al een warmtepomp van een ander merk? Stuur merk en model mee; onderhoud aan andere merken beoordelen we op aanvraag.</p>
         </div>
         <div className="merken-lijst">
           <article>

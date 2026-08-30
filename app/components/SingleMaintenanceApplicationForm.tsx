@@ -84,7 +84,7 @@ export function SingleMaintenanceApplicationForm() {
             </label>
           ))}
         </div>
-        <div className="installation-scope-note"><strong>Goed om te weten:</strong><span>Voor cv-ketels werken we met Intergas, Remeha, Nefit en Vaillant. Warmtepompen onderhouden we standaard van LG en Vaillant; andere merken beoordelen we op aanvraag.</span></div>
+        <div className="installation-scope-note"><strong>Goed om te weten:</strong><span>Voor cv-ketels werken we met Intergas, Remeha, Nefit en Vaillant. Warmtepompen onderhouden we standaard van LG, Bosch en Vaillant; andere merken beoordelen we op aanvraag.</span></div>
       </section>
 
       <section className="form-section">

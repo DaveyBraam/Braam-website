@@ -36,11 +36,11 @@ const faqGroups = [
     items: [
       {
         question: "Kies ik een hybride of full-electric warmtepomp?",
-        answer: "Een hybride warmtepomp werkt samen met uw cv-ketel. Een volledig elektrische, ook wel full-electric, warmtepomp verwarmt de woning zonder cv-ketel. Wij werken met warmtepompen van 7, 9 en 11 kW. Welk vermogen en welke opstelling geschikt zijn, bepalen we aan de hand van onder meer het warmteverlies, de isolatie en de warmteafgifte.",
+        answer: "Een hybride warmtepomp werkt samen met uw cv-ketel. Een volledig elektrische, ook wel full-electric, warmtepomp verwarmt de woning zonder cv-ketel. Wij werken met warmtepompen van 5, 7, 9 en 11 kW. Welk vermogen en welke opstelling geschikt zijn, bepalen we aan de hand van onder meer het warmteverlies, de isolatie en de warmteafgifte.",
       },
       {
         question: "Met welke merken en vermogens werkt Braam?",
-        answer: "Voor cv-ketelonderhoud werken we uitsluitend met Intergas, Remeha, Nefit en Vaillant, tot en met 40 kW. Voor warmtepompen werken we standaard met LG en Vaillant en met vermogens van 7, 9 en 11 kW. Onderhoud aan andere warmtepompmerken beoordelen we op aanvraag. Grote bedrijfsunits, cascades en collectieve systemen vallen buiten onze werkzaamheden.",
+        answer: "Voor cv-ketelonderhoud werken we uitsluitend met Intergas, Remeha, Nefit en Vaillant, tot en met 40 kW. Voor warmtepompen werken we standaard met LG, Bosch en Vaillant en met vermogens van 5, 7, 9 en 11 kW. Onderhoud aan andere warmtepompmerken beoordelen we op aanvraag. Grote bedrijfsunits, cascades en collectieve systemen vallen buiten onze werkzaamheden.",
       },
       {
         question: "Kunnen LG- en Vaillant-warmtepompen verwarmen, warm water maken en koelen?",

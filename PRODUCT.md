@@ -117,9 +117,12 @@ besparingen of marktaandeel. Verzin die niet.
 Het bedrijf telt op dit moment vier mensen en **groeit**. De site moet daar
 tegen kunnen zonder onderhoud:
 
-- **Noem nooit een aantal medewerkers, monteurs of bussen.** Een getal is over
-  een half jaar onwaar en dwingt tot aanpassen. Op dit moment staat er nergens
-  een aantal in de teksten; houd dat zo.
+- **Noem nooit een aantal medewerkers, monteurs, bussen of contracten.** Een
+  getal is over een half jaar onwaar en dwingt tot aanpassen. Dit gold al voor
+  personeel en geldt net zo goed voor klantaantallen: op de onderhoudspagina
+  stond "1.900 vaste contracten" als kop en als bijschrift. Dat getal klopt,
+  maar het bedrijf groeit, dus het mag nergens vast staan. Het is vervangen
+  door "Vaste contracten. Persoonlijk contact." Houd het zo.
 - **Beloof geen specifieke persoon.** Formuleringen als "dit zijn de mensen die
   bij u langskomen" bij een foto van twee monteurs lezen als een garantie dat de
   klant juist die twee krijgt. Claims horen over de **afspraak** te gaan (geen
@@ -129,6 +132,28 @@ tegen kunnen zonder onderhoud:
   personen toe zonder dat de eigenaar bevestigt dat zij dat willen, en bouw geen
   onderdeel dat een portret per monteur nodig heeft. Werkfoto's zonder gezichten
   zijn altijd veilig.
+
+## Warmtepompen: merken en vermogens
+
+Vermogens: **5, 7, 9 en 11 kW** voor woningen. Grote bedrijfsunits,
+cascadeopstellingen en collectieve systemen vallen buiten de werkzaamheden.
+
+Drie vaste merken, **gelijkwaardig**:
+
+- LG THERMA V R290 Monobloc
+- Bosch Compress 5800i AW
+- Vaillant aroTHERM plus
+
+De reden dat het deze drie zijn, is een verkoopargument en hoort in de teksten
+terug te komen: **er wordt gekozen op kwaliteit en levensduur, niet op de
+laagste inkoopprijs.** Het toestel moet jaren mee, en Braam onderhoudt hem
+daarna zelf — dat is precies waarom er kieskeurig wordt ingekocht. Welk merk
+bij een woning past hangt af van de opstelling, niet van een voorkeur.
+
+Noem geen aantal merken in de tekst ("twee vaste merken"): dat is dezelfde val
+als een aantal medewerkers. Er kwam een derde bij en de tekst klopte niet meer.
+
+Voor cv-ketelonderhoud: Intergas, Remeha, Nefit en Vaillant, tot en met 40 kW.
 
 ## Product Principles
 
