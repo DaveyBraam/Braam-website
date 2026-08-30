@@ -112,7 +112,7 @@ export function WarmtepompStudio() {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
     if (!section || !canvas) return;
-    const context = canvas.getContext("2d", { alpha: false });
+    const context = canvas.getContext("2d");
     if (!context) return;
 
     /* Zonder JavaScript is dit blok een document; [data-live] komt er pas op
@@ -223,15 +223,16 @@ export function WarmtepompStudio() {
 
       const key = `${bucket === intro ? "i" : "d"}:${index}:${theta.toFixed(2)}:${cy.toFixed(3)}:${canvas.width}`;
       if (!force && key === lastKey) return;
-      lastKey = key;
 
-      const width = canvas.width;
-      const height = canvas.height;
-      context.fillStyle = "#ffffff";
-      context.fillRect(0, 0, width, height);
-
+      /* Zolang er geen enkel frame binnen is, blijft het canvas doorzichtig
+         en is de poster eronder de stilstaande grond. Nooit tekst op leeg. */
       const image = nearest(bucket, index);
       if (image) {
+        lastKey = key;
+        const width = canvas.width;
+        const height = canvas.height;
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, width, height);
         /* Tekenen op toestelmaat, niet op beeldmaat: buiten het frame is de
            studio hetzelfde wit als het canvas, dus het kader is onzichtbaar. */
         const box = unitBox();

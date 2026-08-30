@@ -335,6 +335,30 @@
   font-size: var(--t-lead);
 }
 
+/* ---- Tussenmaat: 661 tot 1023 --------------------------------------------
+
+   Te smal voor kolommen naast het toestel, te breed voor de telefoonreis.
+   De zijteksten wijken uit naar de bovenhoeken, boven het toestel langs. */
+@media (min-width: 661px) and (max-width: 1023px) {
+  .dienst .studio[data-live] .studio-beat-2a,
+  .dienst .studio[data-live] .studio-beat-4 {
+    top: clamp(28px, 5vh, 56px);
+    left: 0;
+    right: auto;
+    width: min(44%, 30ch);
+    transform: none;
+  }
+
+  .dienst .studio[data-live] .studio-beat-2b,
+  .dienst .studio[data-live] .studio-beat-5 {
+    top: clamp(28px, 5vh, 56px);
+    right: 0;
+    left: auto;
+    width: min(44%, 30ch);
+    transform: none;
+  }
+}
+
 /* ---- De naad naar beneden ------------------------------------------------
 
    De studio is wit, de keuze eronder is papier. Een haarlijn over de volle
@@ -411,7 +435,9 @@
     max-width: 12ch;
   }
 
-  .dienst .studio-meta {
-    bottom: calc(76px + env(safe-area-inset-bottom));
+  /* Onderin staat de actiebalk al; de maatverdeling zou er doorheen lopen.
+     De plaat is op een telefoon compleet zonder bijschrift. */
+  .dienst .studio[data-live] .studio-meta {
+    display: none;
   }
 }
