@@ -777,3 +777,238 @@
   .dienst .merk-logos figure { border-bottom: 1px solid var(--hair); }
   .dienst .cert-grid { grid-template-columns: 1fr; }
 }
+
+/* ---- Onderhoudspagina --------------------------------------------------- */
+
+/* SubscriptionCards is de ene echte vergelijking met interactie op de site en
+   houdt zijn eigen vorm. Maar .dienst h3 zet koppen op inkt-op-papier, en in
+   de donkere Comfort Plus-kaart maakte dat de titel onleesbaar. De kaart
+   bepaalt daar zelf zijn kleuren. */
+.dienst .price-card-featured :is(h3, h4) { color: inherit; }
+
+/* Leesbaarheidsreparaties in de bewaarde componenten, alleen binnen deze
+   wereld: de hulptekst in de keuzetabs stond op 3,9:1, de stap-etiketten op
+   3,9:1 en het ventilatielabel op 4,0:1. Kleur alleen; de vorm blijft van het
+   component. */
+.dienst .installation-tab small { color: #52697c; }
+.dienst .subscription-selector-heading > span,
+.dienst .subscription-compare-heading > span { color: #095a94; }
+.dienst .subscription-addon-copy > span { color: #52697c; }
+.dienst .knowledge-card-visual-label { color: #0f181f; }
+.dienst .knowledge-card-visual-placeholder > span { color: #0f181f; }
+
+
+/* Het keurmerkregister: vier echte logo's op dezelfde plaat, met eronder in
+   gewone taal wat elk merk betekent. Dit is het sterkste bewijsblok van de
+   site; de vorm is dezelfde als de ketelmerken op cv-ketels. */
+.dienst .cert-register {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .cert-register > article {
+  padding: 26px clamp(18px, 2.4vw, 34px) 26px 0;
+  border-right: 1px solid var(--hair);
+}
+
+.dienst .cert-register > article:last-child { border-right: 0; }
+
+.dienst .cert-register-logo {
+  display: grid;
+  place-items: center;
+  min-height: 84px;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--hair);
+}
+
+.dienst .cert-register-logo img {
+  display: block;
+  max-width: 100%;
+  height: 40px;
+  object-fit: contain;
+}
+
+.dienst .cert-register h3 {
+  margin: 0 0 8px;
+  font-size: var(--t-lead);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.dienst .cert-register p {
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+/* De jaarcontrole: het ene getal dat het abonnement concreet maakt, op de
+   maat van de prijzen. */
+.dienst .jaarcontrole {
+  display: grid;
+  grid-template-columns: minmax(150px, .55fr) 1.6fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+  margin: clamp(48px, 7vh, 84px) 0;
+  padding-top: clamp(28px, 4vh, 44px);
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .jaarcontrole-cijfer strong {
+  display: block;
+  color: var(--on-ink);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--track-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.dienst .jaarcontrole-cijfer span {
+  display: block;
+  margin-top: 8px;
+  color: var(--lime);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .jaarcontrole h3 {
+  max-width: 30ch;
+  margin: 0 0 14px;
+  font-size: var(--t-subhead);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.dienst .jaarcontrole > div > p {
+  max-width: 58ch;
+  margin: 0 0 12px;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+.dienst .jaarcontrole aside {
+  padding-left: clamp(20px, 2.5vw, 36px);
+  border-left: 1px solid var(--hair);
+}
+
+.dienst .jaarcontrole aside strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--on-ink);
+  font-size: var(--t-body);
+  font-weight: 600;
+}
+
+.dienst .jaarcontrole aside p {
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+/* Betalen en contractgrenzen: twee kolommen, gescheiden door een haarlijn. */
+.dienst .afspraken-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: clamp(48px, 7vh, 84px);
+  padding-top: clamp(28px, 4vh, 44px);
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .afspraken-grid > article {
+  padding: 0 clamp(24px, 3vw, 44px);
+}
+
+.dienst .afspraken-grid > article:first-child { padding-left: 0; }
+
+.dienst .afspraken-grid > article:last-child {
+  padding-right: 0;
+  border-left: 1px solid var(--hair);
+}
+
+.dienst .afspraken-grid h3 {
+  margin: 0 0 12px;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.dienst .afspraken-grid > article > p {
+  max-width: 50ch;
+  margin: 0 0 6px;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+.dienst .afspraken-grid .keuze-feiten { margin-top: 14px; }
+.dienst .afspraken-grid .check-list { margin-top: 14px; }
+
+/* De prijsrij naar het formulier: drie kolommen, zelfde taal als het
+   onderhoudsblok op warmtepompen maar op papier. */
+.dienst .onderhoud-prijzen-rij {
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 0;
+}
+
+.dienst .onderhoud-prijzen-rij > a:not(.text-link) {
+  padding: 0 clamp(24px, 3vw, 40px);
+  border-bottom: 0;
+}
+
+.dienst .onderhoud-prijzen-rij > a:first-child { padding-left: 0; }
+
+.dienst .onderhoud-prijzen-rij > a:last-child { padding-right: 0; }
+
+.dienst .onderhoud-prijzen-rij > a + a { border-left: 1px solid var(--hair); }
+
+.dienst .onderhoud-prijzen-rij > a > p {
+  margin: 4px 0 0;
+  font-size: var(--t-meta);
+  line-height: 1.55;
+}
+
+.dienst .onderhoud-prijzen-rij > a > b {
+  margin-top: 16px;
+  color: var(--lime);
+  font-size: var(--t-meta);
+  font-weight: 600;
+}
+
+/* Verhuurders: knop en telefoonnummer naast elkaar in de afsluiting. */
+.dienst .werkwijze-noot:has(.button) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 26px;
+  max-width: none;
+}
+
+.dienst .onderhoud-bel {
+  color: var(--on-ink);
+  font-size: var(--t-body);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .dienst .cert-register { grid-template-columns: 1fr 1fr; }
+  .dienst .cert-register > article { border-bottom: 1px solid var(--hair); }
+  .dienst .cert-register > article:nth-child(2n) { border-right: 0; }
+
+  .dienst .jaarcontrole { grid-template-columns: 1fr; gap: 26px; }
+  .dienst .jaarcontrole aside { padding-left: 0; border-left: 0; padding-top: 20px; border-top: 1px solid var(--hair); }
+
+  .dienst .afspraken-grid { grid-template-columns: 1fr; }
+  .dienst .afspraken-grid > article { padding: 0 0 26px; }
+  .dienst .afspraken-grid > article:last-child { padding: 26px 0 0; border-left: 0; border-top: 1px solid var(--hair); }
+
+  .dienst .onderhoud-prijzen-rij { grid-template-columns: 1fr; }
+  .dienst .onderhoud-prijzen-rij > a:not(.text-link) { padding: 24px 0; border-left: 0 !important; border-top: 1px solid var(--hair); }
+  .dienst .onderhoud-prijzen-rij > a:first-child { border-top: 0; padding-top: 0; }
+}
