@@ -338,6 +338,23 @@ export function WarmtepompStudio() {
       return ankers[ankers.length - 1];
     };
 
+    /* Per venster de blokken die erbij horen, zodat een uitgewerkte tekst
+       ook echt uit het schilderwerk gehaald kan worden. */
+    const blokken: Record<string, HTMLElement[]> = {};
+    for (const [naam, sels] of Object.entries({
+      b1: [".studio-beat-1"],
+      b2: [".studio-beat-2a", ".studio-beat-2b"],
+      kw: [".studio-kw"],
+      b3: [".studio-beat-3"],
+      b4: [".studio-beat-4"],
+      b5: [".studio-beat-5"],
+      b6: [".studio-beat-6"],
+    })) {
+      blokken[naam] = sels
+        .map((sel) => section.querySelector<HTMLElement>(sel))
+        .filter((el): el is HTMLElement => el !== null);
+    }
+
     const paint = (force = false) => {
       const p = progress;
       const theta = sample(THETA, p);
@@ -424,6 +441,22 @@ export function WarmtepompStudio() {
       for (const naam of ["b1", "b2", "kw", "b3", "b4", "b5", "b6"]) {
         const waarde = win[naam];
         section.style.setProperty(`--studio-${naam}`, waarde.toFixed(3));
+
+        /* Alleen op doorzichtig zetten is niet genoeg. Een blok met opacity 0
+           blijft een laag die de browser bijhoudt, en Safari schildert die
+           laag niet altijd opnieuw -- dan zie je bij terugscrollen de oude
+           tekst nog staan terwijl de waarde allang nul is. Gemeten: heen en
+           terug leveren identieke waarden op, dus de logica klopt; het is het
+           schilderwerk dat achterblijft. Verborgen blokken worden helemaal
+           niet geschilderd, dus daar kan niets van blijven hangen.
+
+           Alleen schrijven als de toestand omslaat, niet elk frame. */
+        const zichtbaar = waarde > 0.004 ? "1" : "0";
+        for (const blok of blokken[naam]) {
+          if (blok.dataset.zicht === zichtbaar) continue;
+          blok.dataset.zicht = zichtbaar;
+          blok.style.visibility = zichtbaar === "1" ? "" : "hidden";
+        }
         if (waarde > hoogst) {
           actief = naam;
           hoogst = waarde;
@@ -532,6 +565,12 @@ export function WarmtepompStudio() {
     const stopLive = () => {
       delete section.dataset.live;
       delete section.dataset.actief;
+      /* Bij opruimen alles weer zichtbaar: zonder JavaScript is dit een
+         gewoon document met de beats onder elkaar. */
+      section.querySelectorAll<HTMLElement>(".studio-beat").forEach((blok) => {
+        delete blok.dataset.zicht;
+        blok.style.visibility = "";
+      });
       unregister();
       stop();
       introState = "klaar";
