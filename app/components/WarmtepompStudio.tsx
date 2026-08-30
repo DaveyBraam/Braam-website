@@ -151,9 +151,16 @@ export function WarmtepompStudio() {
         const image = new Image();
         image.decoding = "async";
         image.onload = () => {
-          bucket[index] = image;
-          resolve();
-          if (image.decode) image.decode().catch(() => {});
+          /* Pas in de emmer als hij ook echt gedecodeerd is. Stond hij er al
+             bij onload, dan moest de hoofddraad bij de eerste drawImage een
+             nog niet gedecodeerde JPEG van 1600x900 ter plekke decoderen --
+             tijdens het scrollen bij elk nieuw frame opnieuw. */
+          const klaar = () => {
+            bucket[index] = image;
+            resolve();
+          };
+          if (image.decode) image.decode().then(klaar, klaar);
+          else klaar();
         };
         image.onerror = () => resolve();
         image.src = framePath(dir, index);
@@ -369,7 +376,16 @@ export function WarmtepompStudio() {
       const effH = geo.h * ratio * scale;
       const cyPx = geo.cy * ratio;
 
-      const key = `${bucket === intro ? "i" : "d"}:${index}:${theta.toFixed(2)}:${Math.round(cyPx)}:${Math.round(effH)}:${width}`;
+      /* De sleutel bepaalt of er opnieuw getekend wordt. Hier stond theta op
+         twee decimalen, en dat verandert bij vrijwel elke scrollstap -- ook
+         als er precies hetzelfde beeld uit komt. Daardoor werd het canvas van
+         1600x900 telkens opnieuw geschilderd zonder zichtbaar verschil.
+
+         Wat het beeld werkelijk bepaalt is het frame, waar het staat, hoe
+         groot het is en hoe zwaar de sluier is. De sluier op 8 bits, want
+         fijner dan dat kan een scherm het niet tonen. Tijdens de leesmomenten,
+         waar het toestel bijna stilstaat, slaat de tekening nu over. */
+      const key = `${bucket === intro ? "i" : "d"}:${index}:${Math.round(veil * 255)}:${Math.round(cyPx)}:${Math.round(effH)}:${width}`;
       if (!force && key === lastKey) return;
 
       /* Zolang er geen enkel frame binnen is, blijft het canvas doorzichtig
