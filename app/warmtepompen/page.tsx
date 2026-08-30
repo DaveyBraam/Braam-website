@@ -5,6 +5,7 @@ import { MobileActionBar } from "../components/MobileActionBar";
 import { PageHero } from "../components/PageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { WarmtepompStudio } from "../components/WarmtepompStudio";
 
 export const metadata: Metadata = { title: "Warmtepomp voor uw woning | Rob Braam", description: "Advies, installatie en onderhoud van warmtepompen van 5, 7, 9 en 11 kW voor woningen, met vaste merken en onderhoud door hetzelfde team." };
 
@@ -30,9 +31,12 @@ export default function WarmtepompenPage() {
   return <><SiteHeader /><main className="dienst">
     <PageHero eyebrow="Warmtepompen voor woningen" title="Een warmtepomp die bij uw woning past." accent="Begint met een goede beoordeling." intro="Wij werken met warmtepompen van 5, 7, 9 en 11 kW. Welk vermogen geschikt is, bepalen we vooral aan de hand van het warmteverlies, de isolatie en de warmteafgifte via radiatoren of vloerverwarming. Na uw aanvraag laten we weten welke vervolgstap nodig is." image="/projects/warmtepomp-berlicum.jpg" imageAlt="Vaillant warmtepomp geplaatst door Rob Braam in Berlicum" primaryLabel="Vraag naar de mogelijkheden" primaryHref="/offerte-aanvragen?dienst=warmtepomp" badge="Door ons geplaatst" />
 
-    {/* De tweesprong. Dit is de plek waar later de film komt: dezelfde
-        techniekwand in twee toestanden. Tot die tijd doen twee eigen foto's
-        het werk, en de vergelijking staat er volwaardig. */}
+    {/* De studio: de film van deze pagina. Of een warmtepomp iets voor u is,
+        vóór de vraag welke van de twee het wordt. */}
+    <WarmtepompStudio />
+
+    {/* De tweesprong. De film is hierboven geland; dit blok blijft wat het
+        was: twee eigen foto's en de vergelijking, volwaardig. */}
     <section className="section keuze reveal" id="keuze">
       <div className="shell">
         <div className="section-heading split-heading">

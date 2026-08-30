@@ -142,6 +142,43 @@ achterkant recht naar voren staat. Nooit frontaal op de achterkant, wel steeds
 vooruit. Géén heen-en-weer beweging: een ding dat wiegt leest als
 besluiteloos.
 
+## 4b. De baan van de teksten — dit is het hart van de opdracht
+
+Dit is het onderdeel dat bij de eerste poging misging. Lees het letterlijk.
+
+**De teksten spawnen nooit in het midden van het beeld.** Elke tekst heeft een
+zichtbare aankomst en een zichtbaar vertrek. Uit het niets verschijnen midden
+in beeld is precies wat er niet moet gebeuren.
+
+**De unit blijft continu in beeld.** Hij verdwijnt nooit, hij is de constante
+waar de teksten langs reizen.
+
+### De baan
+
+Het gezichtspunt van de lezer staat stil. De teksten reizen over een vaste baan
+door de ruimte, diagonaal, van ver naar dichtbij:
+
+| fase | positie | grootte |
+|---|---|---|
+| aankomst | rechterhoek, ver weg, buiten beeld | klein |
+| nadering | schuift naar het midden | groeit |
+| **lezen** | **midden van het scherm** | **volle grootte, bijna stil** |
+| vertrek | zweeft door naar links | groeit door en vervaagt |
+
+Terwijl een tekst naar links wegzweeft, **komt de volgende al van rechtsboven
+aanvliegen**. Er is dus altijd overlap: de baan is een doorlopende stroom, geen
+reeks losse verschijningen.
+
+Denk aan een rivier van tekst die schuin door het beeld loopt: rechtsachter
+naar linksvoor, met de unit als vast punt in het midden waar alles langs komt.
+
+### Wat dat betekent voor het scrubben
+
+De positie op de baan hangt aan de scrollpositie. Bij het middenpunt — waar de
+tekst gelezen moet worden — hoort veel scrollafstand bij weinig verplaatsing,
+zodat de tekst daar bijna stilstaat. Datzelfde ritme als het afremmen van de
+unit uit paragraaf 4: dezelfde curve, dezelfde rustpunten.
+
 ## 5. Wat er gegenereerd moet worden
 
 Twee clips.
