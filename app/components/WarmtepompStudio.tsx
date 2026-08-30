@@ -261,57 +261,31 @@ export function WarmtepompStudio() {
 
     const los = (namen: string[], pMid: number) => {
       const MARGE = 26;
-      const basisH = variant ? 0.34 * stageHoogte : Math.min(0.56 * stageHoogte, 0.32 * stageBreedte);
       let boven = 0;
       let onder = Math.min(metaTop - 10, stageHoogte - (variant ? 98 : 8));
-      const smal: Array<{ top: number; bottom: number; left: number; right: number; width: number }> = [];
+      let baanHalf = Infinity;
       for (const naam of namen) {
         const r = vakken[naam];
         if (!r) continue;
-        if (r.width > 0.6 * stageBreedte) {
-          if (r.top < 0.6 * stageHoogte) boven = Math.max(boven, r.bottom + MARGE);
-          else onder = Math.min(onder, r.top - MARGE);
+        const breed = r.width > 0.6 * stageBreedte;
+        if (r.top < 0.42 * stageHoogte || (breed && r.top < 0.6 * stageHoogte)) {
+          boven = Math.max(boven, r.bottom + MARGE);
+        } else if (breed) {
+          onder = Math.min(onder, r.top - MARGE);
         } else {
-          smal.push(r);
-        }
-      }
-
-      /* Smalle blokken kunnen op twee manieren worden ontweken: het toestel
-         versmallen tot de baan ertussen, of het onder de blokken zetten.
-         Kies wat het grootste toestel overlaat — op een breed scherm wint
-         de baan (het toestel als scharnier tussen de twee stemmen), op een
-         smal scherm de vrijstelling eronder. */
-      const kandidaten: Array<{ boven: number; onder: number; h: number }> = [];
-      {
-        let baanHalf = Infinity;
-        for (const r of smal) {
           const binnenkant = r.left + r.width / 2 < stageBreedte / 2 ? r.right : r.left;
           baanHalf = Math.min(baanHalf, Math.abs(stageBreedte / 2 - binnenkant) - MARGE);
         }
-        let h = basisH;
-        if (baanHalf < Infinity) h = Math.min(h, Math.max(48, (2 * Math.max(0, baanHalf)) / UNIT_AR));
-        const o = Math.max(boven + 48, onder);
-        kandidaten.push({ boven, onder: o, h: Math.min(h, o - boven) });
       }
-      if (smal.length) {
-        let b = boven;
-        let o = onder;
-        for (const r of smal) {
-          if ((r.top + r.bottom) / 2 < 0.5 * stageHoogte) b = Math.max(b, r.bottom + MARGE);
-          else o = Math.min(o, r.top - MARGE);
-        }
-        o = Math.max(b + 48, o);
-        kandidaten.push({ boven: b, onder: o, h: Math.min(basisH, o - b) });
+      let h = variant ? 0.34 * stageHoogte : Math.min(0.56 * stageHoogte, 0.32 * stageBreedte);
+      if (baanHalf < Infinity) {
+        h = Math.min(h, Math.max(48, (2 * Math.max(0, baanHalf)) / UNIT_AR));
       }
-      const beste = kandidaten.reduce((a, k) => (k.h > a.h ? k : a));
-
+      onder = Math.max(boven + 48, onder);
+      h = Math.min(h, onder - boven);
       const wens = sample(RISE, pMid) * stageHoogte;
-      const h = beste.h;
-      const cy = Math.min(
-        Math.max(wens, beste.boven + h / 2),
-        Math.max(beste.boven + h / 2, beste.onder - h / 2),
-      );
-      return { cy, h, boven: beste.boven, onder: beste.onder, wens };
+      const cy = Math.min(Math.max(wens, boven + h / 2), Math.max(boven + h / 2, onder - h / 2));
+      return { cy, h, boven, onder, wens };
     };
 
     const legPadVast = () => {
