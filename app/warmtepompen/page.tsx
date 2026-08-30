@@ -147,6 +147,15 @@ export default function WarmtepompenPage() {
             </div>
           </article>
           <article>
+            <span>Bosch Compress 5800i AW</span>
+            <h3>Stil, en met keuze in de binnenopstelling.</h3>
+            <div>
+              <p>Bosch beschrijft de Compress 5800i AW als een all-electric monoblock lucht-waterwarmtepomp. Het systeem werkt met het natuurlijke koudemiddel R290, waarvoor Bosch een GWP-waarde van 0,02 noemt, en levert een aanvoertemperatuur tot 75 °C.</p>
+              <p>De buitenunit kan volgens Bosch met twee verschillende binnenunits worden gecombineerd: een staande Tower-variant en een compacte wandhangende variant. Voor het geluid noemt Bosch een geluidsdruk van 26,5 dB(A) op drie meter afstand. Wat dat bij u betekent, hangt af van de opstelplaats en de afstand tot de erfgrens; dat beoordelen we bij de opname.</p>
+              <a href="https://www.nefit-bosch.nl/ocs/compress-5800i-aw-21076799-p/" target="_blank" rel="noreferrer">Bekijk de units van Bosch <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article>
             <span>Vaillant aroTHERM plus</span>
             <h3>Verwarming, warm water en koeling in één systeem.</h3>
             <div>
