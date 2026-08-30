@@ -386,11 +386,20 @@ export function WarmtepompStudio() {
          fijner dan dat kan een scherm het niet tonen. Tijdens de leesmomenten,
          waar het toestel bijna stilstaat, slaat de tekening nu over. */
       const key = `${bucket === intro ? "i" : "d"}:${index}:${Math.round(veil * 255)}:${Math.round(cyPx)}:${Math.round(effH)}:${width}`;
-      if (!force && key === lastKey) return;
+
+      /* De overslag beschermt alleen het tekenen, niet de teksten.
+
+         Hier stond een `return` op deze plek, waardoor bij een onveranderd
+         beeld ook de tekstwaarden hieronder werden overgeslagen -- en dan
+         bevroren de teksten. Dat viel niet op zolang de sleutel bij elke
+         scrollstap veranderde, maar zodra de overslag werkelijk ging werken
+         kwam het tevoorschijn. De teksten volgen de scroll altijd; alleen het
+         canvas mag stil blijven als er niets te tekenen valt. */
+      const opnieuwTekenen = force || key !== lastKey;
 
       /* Zolang er geen enkel frame binnen is, blijft het canvas doorzichtig
          en is de poster eronder de stilstaande grond. Nooit tekst op leeg. */
-      const image = nearest(bucket, index);
+      const image = opnieuwTekenen ? nearest(bucket, index) : undefined;
       if (image) {
         lastKey = key;
         context.fillStyle = "#ffffff";
