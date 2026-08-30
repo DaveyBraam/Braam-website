@@ -266,17 +266,20 @@
 
 .dienst .studio[data-live] .studio-beat-2a,
 .dienst .studio[data-live] .studio-beat-2b {
-  top: 50%;
+  /* Iets boven het midden en iets naar binnen: twee stemmen die bij het
+     toestel horen, niet twee kantlijnen. De koppen liggen op één hoogte —
+     vandaar geen verticale centrering. De tekening meet deze vakken en
+     zet het toestel eronder of ertussen, wat het meeste ruimte laat. */
+  top: 30%;
   width: min(26%, 30ch);
-  transform: translateY(-50%);
 }
 
 .dienst .studio[data-live] .studio-beat-2a {
-  left: 0;
+  left: 7%;
 }
 
 .dienst .studio[data-live] .studio-beat-2b {
-  right: 0;
+  right: 7%;
 }
 
 .dienst .studio[data-live] .studio-kw {
