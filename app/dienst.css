@@ -1,0 +1,500 @@
+/* Het Handboek, dienstenpagina's.
+
+   Zelfde opzet als home.css: alles onder .dienst, zodat de pagina's die nog
+   niet aan de beurt zijn hun huidige behandeling houden. De hero komt uit
+   PageHero en staat al in deze wereld; dit blad doet alles daaronder.
+
+   De hoofdstukken lopen hier andersom dan op de homepage. Daar opent een film
+   op inkt en wordt de pagina papier. Hier opent de hero op inkt, wordt de
+   pagina papier om te lezen en te vergelijken, en gaat alleen het onderhoud
+   terug naar inkt -- want dat is de belofte, niet de uitleg.
+
+   Op de plek van de keuze komt later de film: dezelfde techniekwand in twee
+   toestanden. Het blok is nu al volwaardig met eigen foto's, zodat de pagina
+   af is en de film hem later overneemt in plaats van repareert. */
+
+.dienst {
+  --hair: rgba(12, 26, 38, .16);
+  --hair-strong: rgba(12, 26, 38, .32);
+  --on-ink: #0f181f;
+  --on-ink-soft: #52697c;
+  --wash: rgba(12, 26, 38, .045);
+  background: var(--paper);
+  color: var(--on-ink);
+}
+
+.dienst section {
+  padding-block: clamp(72px, 9vh, 128px);
+  border: 0;
+  background: transparent;
+}
+
+.dienst h2 {
+  max-width: 17ch;
+  color: var(--on-ink);
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.dienst h3 {
+  color: var(--on-ink);
+  letter-spacing: var(--track-title);
+}
+
+.dienst p { color: var(--on-ink-soft); }
+
+/* De kop en zijn inleiding staan op één regel, gescheiden door een haarlijn
+   die zichzelf tekent -- dezelfde beweging als op de homepage. */
+.dienst .section-heading {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 30px 64px;
+  align-items: end;
+  margin-bottom: clamp(38px, 5vh, 66px);
+  padding-bottom: 26px;
+  border-bottom: 0;
+}
+
+.dienst .section-heading::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .95s cubic-bezier(.16, 1, .3, 1) .1s;
+}
+
+.dienst .is-visible .section-heading::after,
+.dienst .section-heading.is-visible::after { transform: scaleX(1); }
+
+.dienst .section-heading > p {
+  max-width: 52ch;
+  margin: 0;
+  font-size: var(--t-lead);
+  line-height: 1.62;
+}
+
+/* ---- De keuze: twee opstellingen, niets eromheen ------------------------ */
+
+.dienst .keuze-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+
+/* Geen kaarten. De twee staan naast elkaar omdat ze vergeleken worden, en de
+   symmetrie is de boodschap: dezelfde ruimte, twee uitkomsten. Een haarlijn
+   scheidt ze, verder niets. */
+.dienst .keuze-grid > article {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0 clamp(24px, 3vw, 44px);
+}
+
+.dienst .keuze-grid > article:first-child { padding-left: 0; }
+
+.dienst .keuze-grid > article:last-child {
+  padding-right: 0;
+  border-left: 1px solid var(--hair);
+}
+
+.dienst .keuze-grid figure {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.dienst .keuze-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.dienst .keuze-grid figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  background: rgba(4, 9, 16, .78);
+  color: #eef3f9;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .keuze-grid h3 {
+  margin: 0;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.dienst .keuze-grid > article > p {
+  max-width: 44ch;
+  margin: 0;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+/* De feiten staan als een specificatietabel, want dat is wat ze zijn. */
+.dienst .keuze-feiten {
+  margin: 4px 0 0;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .keuze-feiten > div {
+  display: grid;
+  grid-template-columns: minmax(0, 13ch) minmax(0, 1fr);
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.dienst .keuze-feiten dt {
+  color: var(--on-ink-soft);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  align-self: center;
+}
+
+.dienst .keuze-feiten dd {
+  margin: 0;
+  color: var(--on-ink);
+  font-size: var(--t-meta);
+  line-height: 1.45;
+}
+
+.dienst .keuze-feiten dd strong {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.dienst .keuze-acties {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.dienst .keuze-afbakening {
+  max-width: 76ch;
+  margin: clamp(38px, 5vh, 62px) 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--hair);
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+.dienst .keuze-afbakening strong {
+  color: var(--on-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Werkwijze: een genummerde reeks, want de volgorde is de informatie -- */
+
+.dienst .werkwijze-lijst {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .werkwijze-lijst li {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px clamp(18px, 2.4vw, 34px) 0 0;
+  border-right: 1px solid var(--hair);
+}
+
+.dienst .werkwijze-lijst li:last-child { border-right: 0; }
+
+.dienst .werkwijze-lijst li > span {
+  color: var(--lime);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  font-variant-numeric: tabular-nums;
+}
+
+.dienst .werkwijze-lijst li > p {
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.55;
+}
+
+.dienst .werkwijze-noot {
+  max-width: 68ch;
+  margin: 30px 0 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+/* ---- Onderhoud: het enige inkt-hoofdstuk op deze pagina ----------------- */
+
+.dienst section.onderhoud-blok {
+  --hair: rgba(255, 255, 255, .13);
+  --hair-strong: rgba(255, 255, 255, .24);
+  --on-ink: #eef3f9;
+  --on-ink-soft: #93a3b8;
+  --wash: rgba(255, 255, 255, .035);
+  --lime: #7cc0f7;
+  --focus: #7cc0f7;
+  background: #080d14;
+  color: var(--on-ink);
+}
+
+.dienst .onderhoud-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(38px, 5vw, 78px);
+  align-items: start;
+}
+
+.dienst .onderhoud-inhoud {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .onderhoud-inhoud li {
+  position: relative;
+  padding: 13px 0 13px 23px;
+  border-bottom: 1px solid var(--hair);
+  color: var(--on-ink-soft);
+  font-size: var(--t-meta);
+  line-height: 1.55;
+  letter-spacing: .005em;
+}
+
+.dienst .onderhoud-inhoud li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 13px;
+  color: var(--lime);
+  font-weight: 700;
+}
+
+.dienst .onderhoud-prijzen {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .onderhoud-prijzen > a:not(.text-link) {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--hair);
+  color: var(--on-ink);
+  transition: background .25s ease;
+}
+
+.dienst .onderhoud-prijzen > a:not(.text-link):hover { background: var(--wash); }
+
+.dienst .onderhoud-prijzen > a > span {
+  color: var(--lime);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .onderhoud-prijzen > a > strong {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  color: var(--on-ink);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--track-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.dienst .onderhoud-prijzen > a > strong small {
+  font-size: .42em;
+  font-weight: 500;
+}
+
+.dienst .onderhoud-prijzen em {
+  color: var(--on-ink-soft);
+  font-size: var(--t-meta);
+  font-style: normal;
+}
+
+.dienst .onderhoud-prijzen .text-link { margin-top: 20px; }
+
+/* ---- Merken: een geregelde index, geen kaarten -------------------------- */
+
+.dienst .merken-lijst { border-top: 1px solid var(--hair); }
+
+.dienst .merken-lijst > article {
+  display: grid;
+  grid-template-columns: minmax(0, 26ch) minmax(0, 1fr);
+  column-gap: clamp(28px, 5vw, 72px);
+  row-gap: 8px;
+  align-items: start;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.dienst .merken-lijst > article > span {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--lime);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.dienst .merken-lijst > article > h3 {
+  grid-column: 1;
+  grid-row: 2;
+  max-width: 22ch;
+  margin: 0;
+  font-size: var(--t-subhead);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.dienst .merken-lijst > article > div {
+  grid-column: 2;
+  grid-row: 1 / 4;
+}
+
+.dienst .merken-lijst p {
+  max-width: 68ch;
+  margin: 0 0 14px;
+  font-size: var(--t-body);
+  line-height: 1.66;
+}
+
+.dienst .merken-lijst a {
+  display: inline-flex;
+  gap: 10px;
+  color: var(--lime);
+  font-size: var(--t-meta);
+  font-weight: 600;
+}
+
+.dienst .merken-noot {
+  max-width: 76ch;
+  margin: 26px 0 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+/* ---- Veelgestelde vragen: twee kolommen, ruiten van haarlijnen ---------- */
+
+.dienst .faq-lijst {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .faq-lijst > article {
+  padding: 26px clamp(24px, 3vw, 48px) 26px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.dienst .faq-lijst > article:nth-child(2n) {
+  padding-right: 0;
+  padding-left: clamp(24px, 3vw, 48px);
+  border-left: 1px solid var(--hair);
+}
+
+.dienst .faq-lijst h3 {
+  max-width: 30ch;
+  margin: 0 0 10px;
+  font-size: var(--t-subhead);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.dienst .faq-lijst p {
+  max-width: 56ch;
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+}
+
+/* ---- Het slot ---------------------------------------------------------- */
+
+.dienst section.contact-cta {
+  border-top: 1px solid var(--hair);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.dienst section.contact-cta .contact-cta-inner {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.dienst section.contact-cta .contact-cta-inner::after { display: none; }
+.dienst section.contact-cta h2 { color: var(--ink); }
+.dienst section.contact-cta p { color: var(--ink-soft); }
+
+.dienst .text-link {
+  color: var(--lime);
+  font-size: var(--t-meta);
+  font-weight: 600;
+}
+
+/* ---- Beweging: dezelfde grammatica als de homepage --------------------- */
+
+.dienst .reveal { transform: none; filter: none; }
+.dienst .reveal:not(.is-visible) .reveal-item { transform: translate3d(0, 22px, 0); filter: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dienst .section-heading::after { transform: scaleX(1); transition: none; }
+  .dienst .reveal:not(.is-visible) .reveal-item { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .dienst .section-heading { grid-template-columns: 1fr; align-items: start; }
+
+  .dienst .keuze-grid { grid-template-columns: 1fr; }
+  .dienst .keuze-grid > article { padding: 30px 0; border-left: 0; border-top: 1px solid var(--hair); }
+  .dienst .keuze-grid > article:first-child { padding-top: 0; border-top: 0; }
+  .dienst .keuze-grid > article:last-child { border-left: 0; }
+
+  .dienst .werkwijze-lijst { grid-template-columns: 1fr 1fr; }
+  .dienst .werkwijze-lijst li { padding-bottom: 20px; border-bottom: 1px solid var(--hair); }
+  .dienst .werkwijze-lijst li:nth-child(2n) { padding-right: 0; border-right: 0; }
+
+  .dienst .onderhoud-grid { grid-template-columns: 1fr; }
+
+  .dienst .merken-lijst > article { grid-template-columns: 1fr; }
+  .dienst .merken-lijst > article > div { grid-column: 1; grid-row: auto; }
+
+  .dienst .faq-lijst { grid-template-columns: 1fr; }
+  .dienst .faq-lijst > article,
+  .dienst .faq-lijst > article:nth-child(2n) { padding: 22px 0; border-left: 0; }
+}

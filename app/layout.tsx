@@ -9,6 +9,7 @@ import "./knowledge.css";
 import "./cinematic-sequence.css";
 import "./home-routes.css";
 import "./home.css";
+import "./dienst.css";
 
 /*
   Het Handboek is set in Fira Sans. The page had been running on the framework's
