@@ -443,4 +443,13 @@
   .dienst .studio[data-live] .studio-meta {
     display: none;
   }
+
+  /* Om dezelfde reden verdwijnt de knop van de laatste beat. De actiebalk
+     staat op een telefoon permanent in beeld en wijst naar hetzelfde adres,
+     dus stonden er twee blauwe pillen op één scherm met verschillende
+     woorden erop -- "Vraag naar de mogelijkheden" boven, "Vraag advies aan"
+     onder. Eén vraag, één knop; de balk is de knop. */
+  body:has(.mobile-action-bar) .dienst .studio[data-live] .studio-beat-6 .button {
+    display: none;
+  }
 }

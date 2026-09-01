@@ -285,6 +285,12 @@ export function WarmtepompStudio() {
         }
       }
       let h = variant ? 0.34 * stageHoogte : Math.min(0.56 * stageHoogte, 0.32 * stageBreedte);
+      /* Nooit breder dan de plaat. Op 375px kwam 0,34 van de stagehoogte neer
+         op een toestel van 368px breed in een plaat van 375, dus liep de
+         rechterkant het beeld uit -- geen scrollbalk, want de stage klipt,
+         maar wel een afgesneden toestel. UNIT_AR is breedte/hoogte, dus dit
+         is de hoogte waarbij hij met marge binnen de plaat past. */
+      h = Math.min(h, (stageBreedte - 2 * MARGE) / UNIT_AR);
       if (baanHalf < Infinity) {
         h = Math.min(h, Math.max(48, (2 * Math.max(0, baanHalf)) / UNIT_AR));
       }

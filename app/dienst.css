@@ -23,6 +23,56 @@
   color: var(--on-ink);
 }
 
+/* Het erfglas dat over álles heen lag.
+
+   `Experience.tsx` hangt een `.experience-layer` op `position: fixed` met
+   `z-index: 80` over de hele pagina: twee blauwe orbs van 480px met 90px
+   blur, een gloed van 360px die de muis volgt op `mix-blend-mode: screen`,
+   en een korrelraster. Die laag ligt bóven elk hoofdstuk, dus de sectie kan
+   zich er niet tegen verweren met een eigen grond -- gemeten op de witte
+   studio: wit in het midden, maar 235,244,255 aan de randen. Het papier van
+   het handboek was een blauwe lucht.
+
+   Ze stonden alleen onder 660px en onder prefers-reduced-motion uit; op elk
+   ander scherm dus altijd aan. Hier gaan ze uit voor de hele wereld, want de
+   regel is niet onderhandelbaar: niets is omsloten, en glas is glas.
+
+   De voortgangsbalk blijft -- die zegt iets -- maar zonder de halo van 20px
+   eromheen. Een haarlijn in het verwijsblauw is genoeg. */
+body:has(main.dienst) .ambient-orb,
+body:has(main.dienst) .pointer-aura,
+body:has(main.dienst) .page-grain {
+  display: none;
+}
+
+body:has(main.dienst) .scroll-progress {
+  height: 2px;
+  background: var(--lime);
+  box-shadow: none;
+}
+
+/* Dezelfde regel, nu op de knop. `.button-primary` is een verloop met een
+   blauwe slagschaduw van 40px, een witte binnenlijn en een glans die bij
+   hover overheen veegt. Op de witte studio was dat het luidste ding van de
+   pagina en precies wat deze wereld verbiedt.
+
+   De vorm blijft -- een knop is een bedieningselement, geen omhulsel, en de
+   pil is de vorm die de site overal gebruikt. Alleen het glas gaat eraf:
+   effen verwijsblauw, geen verloop, geen halo, geen veeg. Wit op #0c70b8
+   haalt 5,2:1. */
+.dienst .button-primary {
+  background: var(--lime);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.dienst .button-primary:hover {
+  background: #095a94;
+  box-shadow: none;
+}
+
+.dienst .button::before { display: none; }
+
 .dienst section {
   padding-block: clamp(72px, 9vh, 128px);
   border: 0;
