@@ -1,0 +1,489 @@
+/* De doorsnede: de plaat bovenaan de cv-ketelpagina.
+
+   Zelfde opzet als studio.css, ander instrument. Waar de warmtepompstudio een
+   gegenereerd toestel ronddraait, staat hier een getekende doorsnede: lijnwerk
+   in de inkt van het handboek op het papier van het handboek. Dat is geen
+   compromis maar de juistere vorm — een plaat kan een gasleiding aanwijzen,
+   een foto van een dichte ketel niet.
+
+   Twee toestanden, één markup. Zonder [data-live] — dus zonder JavaScript, of
+   met prefers-reduced-motion — is dit een gewoon document: de tekening staat
+   stil met alle lagen even zwaar, de beats staan als blokken eronder,
+   dezelfde woorden. Met [data-live] wordt de plaat sticky, valt per tekst
+   alles terug naar haarlijn behalve het onderdeel dat aan het woord is, en
+   schuift de camera ernaartoe.
+
+   De regels van deze wereld gelden onverkort: één grond, haarlijnen, niets
+   omsloten. Een technische tekening is de zuiverste vorm die dit handboek
+   kent, dus er komt hier geen enkel vlak, geen schaduw en geen glas bij. */
+
+.dienst .doorsnede {
+  position: relative;
+  background: var(--white);
+  /* De plaat is de hero. De topline en de sticky header staan in de flow, dus
+     dit blok begint vanzelf onder de header — geen eigen topruimte nodig. */
+  padding-block: 0;
+}
+
+/* ---- De tekening --------------------------------------------------------- */
+
+.dienst .doorsnede-plaat {
+  position: relative;
+  width: min(1100px, 92%);
+  margin-inline: auto;
+}
+
+.dienst .doorsnede-plaat svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* De lijndikte hangt niet aan de zoom: een handboek tekent zijn lijnen in één
+   dikte, of je nu ver weg staat of erbovenop. Vandaar non-scaling-stroke op
+   alles; de camera vergroot dan wel het beeld, maar niet de pen. */
+.dienst .doorsnede-plaat svg {
+  fill: none;
+  stroke: var(--on-ink);
+  stroke-width: 1.25;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  vector-effect: non-scaling-stroke;
+}
+
+.dienst .doorsnede-plaat .lijn { stroke-width: 1.35; }
+.dienst .doorsnede-plaat .dik { stroke-width: 1.7; }
+.dienst .doorsnede-plaat .dun { stroke-width: 0.9; stroke: var(--on-ink-soft); }
+.dienst .doorsnede-plaat .lijn.dun { stroke: var(--on-ink); stroke-width: 1; }
+
+/* Arcering waar het snijvlak door de bouw loopt: wand, vloer, dakdoorvoer.
+   Dat is wat een doorsnede een doorsnede maakt in plaats van een aanzicht. */
+.dienst .doorsnede-plaat .poche {
+  fill: url(#cv-arcering);
+  stroke: none;
+}
+
+.dienst .doorsnede-plaat #cv-arcering line {
+  stroke: var(--on-ink-soft);
+  stroke-width: 0.7;
+  vector-effect: none;
+}
+
+.dienst .doorsnede-plaat .golf { fill: none; stroke-linecap: round; }
+.dienst .doorsnede-plaat .pijl { stroke-linecap: butt; }
+.dienst .doorsnede-plaat .kraan path { stroke: var(--on-ink); fill: var(--on-ink); }
+.dienst .doorsnede-plaat .kraan path.dun { fill: none; stroke: var(--on-ink-soft); }
+
+.dienst .doorsnede-plaat .leider {
+  stroke: var(--on-ink-soft);
+  stroke-width: 0.9;
+}
+
+.dienst .doorsnede-plaat text {
+  stroke: none;
+  font-family: inherit;
+}
+
+/* De bijschriften schalen mee met de plaat, en de plaat is in de sticky
+   toestand ongeveer 900px breed terwijl de viewBox er 1200 telt. Op 15px kwam
+   dat neer op 11px op het scherm -- onder de ondergrens van dit handboek. Deze
+   twee maten landen op ongeveer 14 en 12px, en op 19px als de camera inzoomt. */
+.dienst .doorsnede-plaat .kop {
+  fill: var(--on-ink);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+.dienst .doorsnede-plaat .sub {
+  fill: var(--on-ink-soft);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ---- De beats, als document ---------------------------------------------- */
+
+.dienst .doorsnede-beats {
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+  padding-block: clamp(48px, 7vh, 88px) clamp(64px, 9vh, 120px);
+}
+
+.dienst .doorsnede-beat + .doorsnede-beat {
+  margin-top: clamp(44px, 7vh, 84px);
+}
+
+.dienst .doorsnede-beat-1 h1 {
+  max-width: 28ch;
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .doorsnede-beat h2 {
+  max-width: 24ch;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: var(--track-title);
+  text-wrap: balance;
+}
+
+.dienst .doorsnede-beat p {
+  max-width: 52ch;
+  margin-top: 12px;
+  font-size: var(--t-body);
+  line-height: 1.62;
+}
+
+.dienst .doorsnede-beat-1 p { font-size: var(--t-lead); }
+
+/* De zwaarste regel van de pagina. Groter dan de koppen elders: dit is het
+   argument achter de certificering, en het is het enige dat een installateur
+   die alleen het toestel hangt niet kan meemaken. De selector is bewust
+   zwaarder dan die van .doorsnede-beat p hierboven, anders erft hij de
+   bodymaat. */
+.dienst .doorsnede-beat .doorsnede-oordeel {
+  max-width: 22ch;
+  margin-top: clamp(16px, 2.6vh, 28px);
+  font-size: var(--t-monument);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .doorsnede-beat-4 .doorsnede-oordeel + p {
+  margin-top: clamp(16px, 2.6vh, 28px);
+}
+
+.dienst .doorsnede-beat-5 .button { margin-top: clamp(20px, 3vh, 32px); }
+
+/* Bijschrift en maatverdeling, net als bij de studio: dit is wat er een
+   handboekplaat van maakt in plaats van een plaatje. */
+.dienst .doorsnede-meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(20px, 4vh, 40px);
+  display: none;
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.dienst .doorsnede-maat {
+  height: 8px;
+  border-bottom: 1px solid var(--hair);
+  background: repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 64px) bottom / 100% 8px no-repeat;
+}
+
+.dienst .doorsnede-bijschrift {
+  margin-top: 10px;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+}
+
+/* ---- Live: de sticky plaat ----------------------------------------------- */
+
+.dienst .doorsnede[data-live] {
+  /* Vijf leesmomenten met een camerabeweging ertussen. Korter dan de studio:
+     daar draait een toestel rond en is de reis zelf het beeld, hier wijst een
+     plaat vier dingen aan en is elke tel eromheen verloren tijd. */
+  height: 560svh;
+}
+
+.dienst .doorsnede[data-live] .doorsnede-stage {
+  position: sticky;
+  top: 84px;
+  height: calc(100svh - 84px);
+  min-height: 520px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.dienst .doorsnede[data-live] .doorsnede-plaat {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: min(1080px, 88%);
+  margin-inline: auto;
+  /* De plaat hangt onderaan: de teksten wonen in de bovenband en de vloer van
+     de tekening hoort op de vloer van het beeld. */
+  bottom: clamp(56px, 9vh, 88px);
+  will-change: transform;
+}
+
+/* Op hoogte gezet, niet op breedte: de bovenband moet de kop kwijt kunnen en
+   wat overblijft is voor de plaat. Eerder stond hier alleen een max-height,
+   waardoor de plaat zijn volle breedte pakte en de nok van het dak dwars door
+   de kop liep. */
+.dienst .doorsnede[data-live] .doorsnede-plaat svg {
+  height: min(44svh, 400px);
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.dienst .doorsnede[data-live] .doorsnede-meta {
+  display: block;
+  opacity: calc(1 - var(--camera, 0));
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beats {
+  position: absolute;
+  inset: 0;
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+  padding: 0;
+  pointer-events: none;
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat {
+  position: absolute;
+  margin: 0;
+}
+
+/* De lagen. De waarde komt per frame uit de component en is meteen de dekking:
+   1 is inkt, 0,2 is haarlijn, 0,1 is bijna weg. Zo hoeft een laag niet te
+   weten wélke beat er speelt — alleen hoe hard hij meedoet. */
+.dienst .doorsnede[data-live] .laag-huis { opacity: var(--laag-huis, 1); }
+.dienst .doorsnede[data-live] .laag-ketel { opacity: var(--laag-ketel, 1); }
+.dienst .doorsnede[data-live] .laag-afvoer { opacity: var(--laag-afvoer, 1); }
+.dienst .doorsnede[data-live] .laag-gas { opacity: var(--laag-gas, 1); }
+.dienst .doorsnede[data-live] .laag-afgifte { opacity: var(--laag-afgifte, 1); }
+
+/* De plaat tekent zichzelf, één keer, als hij in beeld komt. Eerst de
+   omtrekken (die dragen de dasharray), dan het binnenwerk, dan de
+   bijschriften — de volgorde waarin iemand een plaat ook echt zou tekenen. */
+.dienst .doorsnede[data-live] .doorsnede-plaat path[pathLength] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--teken, 1));
+}
+
+.dienst .doorsnede[data-live] .doorsnede-plaat .fijn {
+  opacity: clamp(0, calc((var(--teken, 1) - 0.5) * 2.4), 1);
+}
+
+.dienst .doorsnede[data-live] .doorsnede-plaat .poche {
+  opacity: clamp(0, calc((var(--teken, 1) - 0.55) * 2.6), 1);
+}
+
+.dienst .doorsnede[data-live] .doorsnede-plaat .bijschrift {
+  opacity: clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1);
+}
+
+/* Een gedoofde lijn leest als achtergrond; gedoofde tekst leest als een fout.
+   Daarom volgt een bijschrift zijn laag niet evenredig maar met een drempel:
+   zodra het onderdeel niet meer aan het woord is, is het bijschrift weg. De
+   laagste van de twee waarden wint, zodat het tekenen nog steeds voorgaat. */
+.dienst .doorsnede[data-live] .laag-huis .bijschrift {
+  opacity: min(clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1), clamp(0, calc((var(--laag-huis, 1) - 0.55) * 2.4), 1));
+}
+.dienst .doorsnede[data-live] .laag-ketel .bijschrift {
+  opacity: min(clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1), clamp(0, calc((var(--laag-ketel, 1) - 0.55) * 2.4), 1));
+}
+.dienst .doorsnede[data-live] .laag-afvoer .bijschrift {
+  opacity: min(clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1), clamp(0, calc((var(--laag-afvoer, 1) - 0.55) * 2.4), 1));
+}
+.dienst .doorsnede[data-live] .laag-gas .bijschrift {
+  opacity: min(clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1), clamp(0, calc((var(--laag-gas, 1) - 0.55) * 2.4), 1));
+}
+.dienst .doorsnede[data-live] .laag-afgifte .bijschrift {
+  opacity: min(clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1), clamp(0, calc((var(--laag-afgifte, 1) - 0.55) * 2.4), 1));
+}
+
+/* Elke beat leest zijn eigen voortgang; de kinderen komen er getrapt uit.
+   Eerst de kop, dan de tekst eronder, het oordeel en de knop als laatste —
+   alles afgeleid van dezelfde scrollwaarde, dus terugscrollen speelt de
+   entree gewoon achterstevoren af. */
+.dienst .doorsnede[data-live] .doorsnede-beat-1 { --bv: var(--cv-b1, 1); }
+.dienst .doorsnede[data-live] .doorsnede-beat-2 { --bv: var(--cv-b2, 0); }
+.dienst .doorsnede[data-live] .doorsnede-beat-3 { --bv: var(--cv-b3, 0); }
+.dienst .doorsnede[data-live] .doorsnede-beat-4 { --bv: var(--cv-b4, 0); }
+.dienst .doorsnede[data-live] .doorsnede-beat-5 { --bv: var(--cv-b5, 0); }
+
+.dienst .doorsnede[data-live] .doorsnede-beat h1,
+.dienst .doorsnede[data-live] .doorsnede-beat h2 {
+  --kop: min(1, calc(var(--bv) * 1.7));
+  opacity: var(--kop);
+  transform: translateY(calc((1 - var(--kop)) * 16px));
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat p,
+.dienst .doorsnede[data-live] .doorsnede-beat .button {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.3) * 1.9)));
+  opacity: var(--tekst);
+  transform: translateY(calc((1 - var(--tekst)) * 20px));
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat .doorsnede-oordeel {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.5) * 2.4)));
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat-4 .doorsnede-oordeel + p {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.62) * 2.6)));
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat-5 .button {
+  --tekst: max(0, min(1, calc((var(--bv) - 0.55) * 2.6)));
+}
+
+/* Alleen de tekst die aan het woord is, is aanraakbaar — voor selecteren en
+   voor de knop. De rest ligt onzichtbaar te wachten. */
+.dienst .doorsnede[data-live][data-actief="b1"] .doorsnede-beat-1,
+.dienst .doorsnede[data-live][data-actief="b2"] .doorsnede-beat-2,
+.dienst .doorsnede[data-live][data-actief="b3"] .doorsnede-beat-3,
+.dienst .doorsnede[data-live][data-actief="b4"] .doorsnede-beat-4,
+.dienst .doorsnede[data-live][data-actief="b5"] .doorsnede-beat-5 {
+  pointer-events: auto;
+}
+
+/* De plaatsing. Twee teksten staan midden boven de plaat, twee in een kolom
+   ernaast — aan de kant waar het aangewezen onderdeel níet zit, zodat de
+   camera vrij spel heeft. De afvoer staat midden-boven, dus die tekst gaat
+   links; de gasleiding ligt linksonder, dus die tekst gaat rechts. */
+.dienst .doorsnede[data-live] .doorsnede-beat-1,
+.dienst .doorsnede[data-live] .doorsnede-beat-4,
+.dienst .doorsnede[data-live] .doorsnede-beat-5 {
+  top: clamp(36px, 7vh, 80px);
+  left: 50%;
+  width: min(100%, 68ch);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat-1 h1,
+.dienst .doorsnede[data-live] .doorsnede-beat-1 p,
+.dienst .doorsnede[data-live] .doorsnede-beat-4 h2,
+.dienst .doorsnede[data-live] .doorsnede-beat-4 p,
+.dienst .doorsnede[data-live] .doorsnede-beat-5 h2,
+.dienst .doorsnede[data-live] .doorsnede-beat-5 p {
+  margin-inline: auto;
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat-2 {
+  top: 26%;
+  left: 0;
+  width: min(27%, 30ch);
+}
+
+.dienst .doorsnede[data-live] .doorsnede-beat-3 {
+  top: 26%;
+  right: 0;
+  width: min(27%, 30ch);
+}
+
+/* De laatste beat draagt ook nog een knop, dus die is het krapst behuisd van
+   allemaal. Hij stond eerst op displaymaat en duwde daarmee de knop tot over de
+   tekening heen. Titelmaat is hier ook het juiste: het monument staat één beat
+   eerder, en twee monumenten achter elkaar is geen van beide. */
+.dienst .doorsnede[data-live] .doorsnede-beat-5 h2 {
+  max-width: 24ch;
+}
+
+/* ---- Tussenmaat: 661 tot 1023 --------------------------------------------
+
+   Te smal voor kolommen naast de plaat. De twee zijteksten wijken uit naar de
+   bovenband, over de volle breedte, en de camera blijft staan waar hij staat. */
+@media (min-width: 661px) and (max-width: 1023px) {
+  .dienst .doorsnede[data-live] .doorsnede-beat-2,
+  .dienst .doorsnede[data-live] .doorsnede-beat-3 {
+    top: clamp(28px, 5vh, 56px);
+    left: 0;
+    right: auto;
+    width: min(62%, 34ch);
+  }
+
+  .dienst .doorsnede[data-live] .doorsnede-plaat {
+    bottom: clamp(48px, 8vh, 84px);
+  }
+}
+
+/* ---- De naad naar beneden ------------------------------------------------
+
+   De plaat is wit, de sectie eronder is papier. Een haarlijn over de volle
+   breedte maakt van die overgang een besluit in plaats van een toevallige
+   kleurwissel: de plaat is af, het handboek gaat verder. */
+.dienst .doorsnede::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ---- Smal ---------------------------------------------------------------- */
+
+@media (max-width: 660px) {
+  .dienst .doorsnede[data-live] {
+    height: 420svh;
+  }
+
+  .dienst .doorsnede[data-live] .doorsnede-stage {
+    top: 64px;
+    height: calc(100svh - 64px);
+    min-height: 480px;
+  }
+
+  /* Elke tekst staat boven de plaat, over de volle breedte, links uitgelijnd.
+     De camera staat stil: een tekening die op een telefoon ook nog inzoomt
+     laat te weinig over om te herkennen. */
+  .dienst .doorsnede[data-live] .doorsnede-beat-1,
+  .dienst .doorsnede[data-live] .doorsnede-beat-2,
+  .dienst .doorsnede[data-live] .doorsnede-beat-3,
+  .dienst .doorsnede[data-live] .doorsnede-beat-4,
+  .dienst .doorsnede[data-live] .doorsnede-beat-5 {
+    top: clamp(20px, 4vh, 40px);
+    left: 0;
+    right: auto;
+    width: 100%;
+    transform: none;
+    text-align: left;
+  }
+
+  .dienst .doorsnede[data-live] .doorsnede-beat h1,
+  .dienst .doorsnede[data-live] .doorsnede-beat h2,
+  .dienst .doorsnede[data-live] .doorsnede-beat p {
+    margin-inline: 0;
+  }
+
+  .dienst .doorsnede[data-live] .doorsnede-oordeel { max-width: 12ch; }
+
+  /* De actiebalk staat onderaan permanent in beeld; de plaat houdt daar
+     afstand van in plaats van eronder door te lopen. */
+  .dienst .doorsnede[data-live] .doorsnede-plaat {
+    bottom: calc(96px + env(safe-area-inset-bottom));
+    width: 100%;
+  }
+
+  .dienst .doorsnede[data-live] .doorsnede-plaat svg {
+    height: min(38svh, 300px);
+    width: auto;
+    max-width: 100%;
+  }
+
+  /* De bijschriften staan op 19px in een plaat die hier op een derde van zijn
+     maat staat: onleesbaar, en dus ruis. Het fijne lijnwerk blijft juist wél
+     staan — de camera zit hier bovenop het toestel, en de wisselaar en de
+     brander zijn precies wat er een cv-ketel van maakt in plaats van een
+     leeg blokje. */
+  .dienst .doorsnede .bijschrift {
+    display: none;
+  }
+
+  /* Onderin staat de actiebalk al; de maatverdeling zou erdoorheen lopen. */
+  .dienst .doorsnede[data-live] .doorsnede-meta { display: none; }
+
+  /* En om dezelfde reden verdwijnt de knop uit de laatste beat: de actiebalk
+     wijst naar hetzelfde adres. Eén vraag, één knop. */
+  body:has(.mobile-action-bar) .dienst .doorsnede[data-live] .doorsnede-beat-5 .button {
+    display: none;
+  }
+}

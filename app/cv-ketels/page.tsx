@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactCTA } from "../components/ContactCTA";
+import { CvDoorsnede } from "../components/CvDoorsnede";
 import { MobileActionBar } from "../components/MobileActionBar";
-import { PageHero } from "../components/PageHero";
 import { RelatedKnowledge } from "../components/RelatedKnowledge";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -33,12 +33,12 @@ const abonnementInhoud = [
 
 export default function CvKetelsPage() {
   return <><SiteHeader /><main className="dienst">
-    <PageHero eyebrow="Cv-ketels" title="Is uw cv-ketel aan vervanging toe?" accent="Wij regelen toestel én veilige aansluiting." intro="Bij het vervangen van een cv-ketel kijken we niet alleen naar het nieuwe toestel. Ook de rookgasafvoer, luchttoevoer, gasleiding en bestaande installatie moeten veilig en goed op elkaar aansluiten. Ons gecertificeerde team verzorgt de plaatsing, controles en oplevering." image="/brand/vaillant-banner.jpg" imageAlt="Vaillant, comfort voor thuis" primaryLabel="Bespreek ketelvervanging" primaryHref="/offerte-aanvragen?dienst=cv-ketel" badge="Door ons geplaatst" />
+    <CvDoorsnede />
 
     <section className="section reveal">
       <div className="shell">
         <div className="section-heading split-heading">
-          <div><h2>Een nieuwe ketel<br />staat nooit op zichzelf.</h2></div>
+          <div><h2>Eerst kijken we<br />wat er nu staat.</h2></div>
           <p>We bepalen welk vermogen en warmwatercomfort bij uw huishouden passen en controleren hoe de bestaande installatie is opgebouwd. In de offerte maken we duidelijk welk toestel wordt geplaatst en welke aanpassingen aan rookgasafvoer, leidingwerk of regeling nodig zijn.</p>
         </div>
         <ul className="check-list">
