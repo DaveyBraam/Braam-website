@@ -1,0 +1,93 @@
+/* De kijkdoos: model links, maten rechts. Geen sierwerk, dit is gereedschap. */
+
+.dienst .kijker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  height: 100svh;
+  background: var(--white);
+}
+
+.dienst .kijker-doek {
+  position: relative;
+  background: #fbfbfa;
+  border-right: 1px solid var(--hair);
+}
+
+.dienst .kijker-doek canvas { display: block; }
+
+.dienst .kijker-blad {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 40px);
+  overflow-y: auto;
+}
+
+.dienst .kijker-blad h1 {
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: var(--track-title);
+  color: var(--on-ink);
+}
+
+.dienst .kijker-hulp {
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--on-ink-soft);
+}
+
+.dienst .kijker-hulp code {
+  font-size: 0.92em;
+  color: var(--on-ink);
+}
+
+.dienst .kijker-standen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dienst .kijker-standen button {
+  padding: 7px 14px;
+  border: 1px solid var(--hair-strong);
+  background: none;
+  color: var(--on-ink-soft);
+  font: inherit;
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .25s ease, border-color .25s ease;
+}
+
+.dienst .kijker-standen button:hover { color: var(--on-ink); border-color: var(--on-ink-soft); }
+
+.dienst .kijker-standen button[aria-current="true"] {
+  color: var(--white);
+  background: var(--on-ink);
+  border-color: var(--on-ink);
+}
+
+.dienst .kijker-maten { margin: 0; }
+
+.dienst .kijker-maten > div {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--hair);
+  font-size: var(--t-body);
+}
+
+.dienst .kijker-maten dt { color: var(--on-ink-soft); }
+.dienst .kijker-maten dd { margin: 0; color: var(--on-ink); }
+
+@media (max-width: 860px) {
+  .dienst .kijker {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 58svh auto;
+    height: auto;
+  }
+  .dienst .kijker-doek { border-right: 0; border-bottom: 1px solid var(--hair); }
+}

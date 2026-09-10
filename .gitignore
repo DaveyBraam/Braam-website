@@ -42,3 +42,11 @@ npm-debug.log*
 tsconfig.tsbuildinfo
 yarn-debug.log*
 yarn-error.log*
+
+# Zware modellen en bronbestanden die de site niet laadt. Ze blijven lokaal
+# staan; alleen public/models/cv-woning/ wordt door de cv-ketelpagina gebruikt.
+/public/huis3d/
+/public/draco/
+/public/models/cv-fotoreferentie/
+/model-bronnen/
+/scripts/blender/

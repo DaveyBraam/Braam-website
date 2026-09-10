@@ -11,8 +11,10 @@ const serviceItems = [
   ["Elektra", "/elektra"],
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ hideOnScroll = false }: { hideOnScroll?: boolean }) {
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+  const toplineRef = useRef<HTMLDivElement>(null);
   const desktopMenuRef = useRef<HTMLDetailsElement>(null);
   const mobileMenuRef = useRef<HTMLDetailsElement>(null);
 
@@ -26,15 +28,49 @@ export function SiteHeader() {
     if (mobileMenuRef.current) mobileMenuRef.current.open = false;
   }, [pathname]);
 
+  useEffect(() => {
+    if (!hideOnScroll) return;
+    const elements = [headerRef.current, toplineRef.current];
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const hidden = window.scrollY > 12;
+      for (const element of elements) {
+        if (!element) continue;
+        element.dataset.scrollHidden = String(hidden);
+        element.inert = hidden;
+        if (hidden) element.setAttribute("aria-hidden", "true");
+        else element.removeAttribute("aria-hidden");
+      }
+      if (hidden) {
+        if (desktopMenuRef.current) desktopMenuRef.current.open = false;
+        if (mobileMenuRef.current) mobileMenuRef.current.open = false;
+      }
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+      for (const element of elements) {
+        if (!element) continue;
+        delete element.dataset.scrollHidden;
+        element.inert = false;
+        element.removeAttribute("aria-hidden");
+      }
+    };
+  }, [hideOnScroll, pathname]);
+
   return (
     <>
-      <div className="topline">
+      <div className="topline" ref={toplineRef}>
         <div className="shell topline-inner">
           <span>Persoonlijk installatiebedrijf uit &apos;s-Hertogenbosch</span>
           <div><a href="mailto:service@robbraam.com">service@robbraam.com</a><i>·</i><a href="tel:+31736222199">073 622 2199</a></div>
         </div>
       </div>
-      <header className="site-header">
+      <header className="site-header" ref={headerRef}>
         <div className="shell header-inner">
           <Link className="brand brand-image" href="/" aria-label="Rob Braam, naar de homepage">
             <img src="/brand/rob-braam-logo.png" alt="Service & Montagebedrijf Rob Braam" />

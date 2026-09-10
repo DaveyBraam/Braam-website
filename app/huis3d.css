@@ -1,0 +1,192 @@
+/* Het huis in 3D.
+
+   Een echte scene op een sticky doek, met de tekst ernaast. De wereld blijft
+   Het Handboek: wit papier, inkt, haarlijnen, niets omsloten. De scene levert
+   het beeld, dit blad regelt alleen waar het staat en wanneer welke tekst aan
+   het woord is.
+
+   De lengte van de reis staat in twee plekken die bij elkaar horen: REIS_SVH
+   in CvHuis3D.tsx en de hoogte hieronder. Verander je de een, verander dan de
+   ander -- de voortgang wordt uit de hoogte van deze sectie gelezen. */
+
+.dienst .huis3d {
+  position: relative;
+  height: 800svh;
+  background: var(--white);
+  padding-block: 0;
+}
+
+.dienst .huis3d-stage {
+  position: sticky;
+  top: 84px;
+  height: calc(100svh - 84px);
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.dienst .huis3d-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.dienst .huis3d-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ---- De tekst ------------------------------------------------------------
+
+   Links een kolom, want de scene staat rechts van het midden en het huis
+   loopt naar rechts weg. Alle beats liggen op elkaar; alleen die aan het
+   woord is, is zichtbaar. */
+
+.dienst .huis3d-woord {
+  position: absolute;
+  top: 50%;
+  left: clamp(24px, 6vw, 96px);
+  width: min(34ch, 38%);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.dienst .huis3d-beat {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(calc(-50% + 14px));
+  opacity: 0;
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2, .7, .3, 1);
+}
+
+.dienst .huis3d-beat[data-actief="1"] {
+  opacity: 1;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+
+.dienst .huis3d-beat h1 {
+  max-width: 20ch;
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .huis3d-beat h2 {
+  max-width: 18ch;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: var(--track-title);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .huis3d-beat p {
+  max-width: 34ch;
+  margin-top: 14px;
+  font-size: var(--t-body);
+  line-height: 1.62;
+}
+
+/* ---- De stand van de reis -------------------------------------------------
+
+   Acht streepjes onderaan de kolom: waar je bent en hoeveel er nog komt. Geen
+   versiering -- het is dezelfde maatverdeling als op de andere platen, alleen
+   dan als teller. */
+
+.dienst .huis3d-index {
+  position: absolute;
+  bottom: clamp(28px, 5vh, 56px);
+  left: clamp(24px, 6vw, 96px);
+  display: flex;
+  gap: 8px;
+}
+
+.dienst .huis3d-index span {
+  width: 22px;
+  height: 2px;
+  background: var(--hair-strong);
+  transition: background .4s ease;
+}
+
+.dienst .huis3d-index span[data-actief="1"] {
+  background: var(--on-ink);
+}
+
+/* Het nummer van de stap, om op te sturen tijdens het bijstellen. */
+.dienst .huis3d-stand {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 90;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+  pointer-events: none;
+}
+
+.dienst .huis3d-document > div + div {
+  margin-top: 32px;
+}
+
+/* ---- De naad naar beneden ------------------------------------------------ */
+
+.dienst .huis3d::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ---- Smal ---------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* Geen kolom naast de scene meer: de tekst gaat naar boven en het huis
+     krijgt de onderste twee derde. */
+  .dienst .huis3d-woord {
+    top: clamp(20px, 4vh, 40px);
+    left: 0;
+    width: 100%;
+    padding-inline: clamp(20px, 5vw, 40px);
+    transform: none;
+  }
+
+  .dienst .huis3d-beat {
+    position: absolute;
+    top: 0;
+    transform: translateY(14px);
+  }
+
+  .dienst .huis3d-beat[data-actief="1"] {
+    transform: none;
+  }
+
+  .dienst .huis3d-canvas {
+    top: 34%;
+  }
+
+  .dienst .huis3d-index {
+    left: clamp(20px, 5vw, 40px);
+    bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 660px) {
+  .dienst .huis3d {
+    height: 640svh;
+  }
+
+  .dienst .huis3d-stage {
+    top: 64px;
+    height: calc(100svh - 64px);
+  }
+}

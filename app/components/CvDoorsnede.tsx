@@ -25,117 +25,146 @@ import { useEffect, useRef } from "react";
    document: de plaat als stilstaande tekening met alles even zwaar, en de
    teksten als blokken eronder. Dezelfde woorden. */
 
-/* Wanneer welke tekst leesbaar is: [begin fade-in, vol, begin fade-uit, weg]. */
+/* Wanneer welke tekst leesbaar is: [begin fade-in, vol, begin fade-uit, weg].
+
+   Acht momenten. Dit blok is niet de hero van de pagina maar het beginstuk:
+   de tekening draagt de hele uitleg, en pas daarna gaat het handboek verder
+   met de merken en de certificering. De vier punten die hier langskomen --
+   vermogen en warm water, de afvoer, de gasleiding, en de oplevering met
+   metingen -- stonden eerder als een afvinklijst in de sectie eronder. Ze
+   zeggen meer als ze aanwijzen waar ze over gaan. */
 const WINDOWS: Record<string, [number, number, number, number]> = {
-  b1: [-1, 0, 0.13, 0.19],
-  b2: [0.2, 0.26, 0.36, 0.42],
-  b3: [0.43, 0.49, 0.59, 0.65],
-  b4: [0.66, 0.72, 0.82, 0.88],
-  b5: [0.89, 0.95, 2, 3],
+  b1: [-1, 0, 0.075, 0.105],
+  b2: [0.115, 0.145, 0.2, 0.23],
+  b3: [0.245, 0.275, 0.33, 0.36],
+  b4: [0.375, 0.405, 0.46, 0.49],
+  b5: [0.505, 0.535, 0.59, 0.62],
+  b6: [0.635, 0.665, 0.72, 0.75],
+  b7: [0.765, 0.8, 0.87, 0.9],
+  b8: [0.915, 0.95, 2, 3],
 };
 
-/* De camera: schaal en het punt van de plaat dat naar het midden moet. De
-   fracties zijn posities in de tekening zelf (0..1 van de viewBox), dus ze
-   blijven kloppen als de plaat van maat verandert. */
+/* De camera: schaal, het punt van de tekening dat aan het woord is, en waar
+   dat in het beeld moet landen. De doelplek wijkt om en om naar links en
+   rechts, want de tekst staat bij die beats in een zijkolom. */
 const SCHAAL: Array<[number, number]> = [
-  [0, 1],
-  [0.13, 1],
-  [0.26, 1.34],
-  [0.36, 1.34],
-  [0.49, 1.3],
-  [0.59, 1.3],
-  [0.72, 1],
-  [1, 1],
+  [0, 1], [0.105, 1], [0.145, 1], [0.2, 1],
+  [0.275, 1.5], [0.33, 1.5],
+  [0.405, 1.34], [0.46, 1.34],
+  [0.535, 1.3], [0.59, 1.3],
+  [0.665, 1.5], [0.72, 1.5],
+  [0.8, 1], [1, 1],
 ];
 const FOCUS_X: Array<[number, number]> = [
-  [0, 0.5],
-  [0.13, 0.5],
-  [0.26, 0.435],
-  [0.36, 0.435],
-  [0.49, 0.25],
-  [0.59, 0.25],
-  [0.72, 0.5],
-  [1, 0.5],
+  [0, 0.5], [0.2, 0.5],
+  [0.275, 0.428], [0.33, 0.428],
+  [0.405, 0.435], [0.46, 0.435],
+  [0.535, 0.25], [0.59, 0.25],
+  [0.665, 0.451], [0.72, 0.451],
+  [0.8, 0.5], [1, 0.5],
 ];
 const FOCUS_Y: Array<[number, number]> = [
-  [0, 0.5],
-  [0.13, 0.5],
-  [0.26, 0.175],
-  [0.36, 0.175],
-  [0.49, 0.79],
-  [0.59, 0.79],
-  [0.72, 0.5],
-  [1, 0.5],
+  [0, 0.5], [0.2, 0.5],
+  [0.275, 0.5], [0.33, 0.5],
+  [0.405, 0.175], [0.46, 0.175],
+  [0.535, 0.79], [0.59, 0.79],
+  [0.665, 0.319], [0.72, 0.319],
+  [0.8, 0.5], [1, 0.5],
 ];
-
-/* Waar dat brandpunt in het beeld moet landen, als fractie van de stage — niet
-   van de plaat. De plaat hangt onderaan, dus "naar het midden van de plaat"
-   duwde de tekening het beeld uit. En het doel wijkt voor de tekst: bij de
-   afvoer staat die links, dus gaat het detail naar rechts; bij de gasleiding
-   andersom. */
 const DOEL_X: Array<[number, number]> = [
-  [0, 0.5], [0.13, 0.5], [0.26, 0.58], [0.36, 0.58],
-  [0.49, 0.41], [0.59, 0.41], [0.72, 0.5], [1, 0.5],
+  [0, 0.5], [0.2, 0.5],
+  [0.275, 0.38], [0.33, 0.38],
+  [0.405, 0.58], [0.46, 0.58],
+  [0.535, 0.4], [0.59, 0.4],
+  [0.665, 0.6], [0.72, 0.6],
+  [0.8, 0.5], [1, 0.5],
 ];
 const DOEL_Y: Array<[number, number]> = [
-  [0, 0.5], [0.13, 0.5], [0.26, 0.46], [0.36, 0.46],
-  [0.49, 0.56], [0.59, 0.56], [0.72, 0.5], [1, 0.5],
+  [0, 0.5], [0.2, 0.5],
+  [0.275, 0.52], [0.33, 0.52],
+  [0.405, 0.46], [0.46, 0.46],
+  [0.535, 0.56], [0.59, 0.56],
+  [0.665, 0.5], [0.72, 0.5],
+  [0.8, 0.5], [1, 0.5],
 ];
 
 /* Dezelfde reis op een telefoon, maar dichterbij. Op 375px is de hele
    doorsnede een vaag huisje van een paar centimeter: de ketel wordt een leeg
-   blokje en de leidingen verdwijnen. Daar staat de camera dus altíjd aan, op
-   het toestel, en de details gaan nog een stap dichterbij. Wat er buiten het
-   beeld valt, valt buiten het beeld -- de plaat klipt. */
+   blokje en de leidingen verdwijnen. Daar staat de camera dus altijd aan, op
+   het onderdeel dat aan het woord is. Wat er buiten het beeld valt, valt
+   buiten het beeld -- de plaat klipt. */
 const SCHAAL_M: Array<[number, number]> = [
-  [0, 1.7], [0.13, 1.7], [0.26, 2.5], [0.36, 2.5],
-  [0.49, 2.4], [0.59, 2.4], [0.72, 1.7], [1, 1.7],
+  [0, 1.7], [0.2, 1.7],
+  [0.275, 2.4], [0.33, 2.4],
+  [0.405, 2.5], [0.46, 2.5],
+  [0.535, 2.4], [0.59, 2.4],
+  [0.665, 2.5], [0.72, 2.5],
+  [0.8, 1.7], [1, 1.7],
 ];
 const FOCUS_X_M: Array<[number, number]> = [
-  [0, 0.44], [0.13, 0.44], [0.26, 0.435], [0.36, 0.435],
-  [0.49, 0.25], [0.59, 0.25], [0.72, 0.44], [1, 0.44],
+  [0, 0.44], [0.2, 0.44],
+  [0.275, 0.428], [0.33, 0.428],
+  [0.405, 0.435], [0.46, 0.435],
+  [0.535, 0.25], [0.59, 0.25],
+  [0.665, 0.451], [0.72, 0.451],
+  [0.8, 0.44], [1, 0.44],
 ];
 const FOCUS_Y_M: Array<[number, number]> = [
-  [0, 0.42], [0.13, 0.42], [0.26, 0.19], [0.36, 0.19],
-  [0.49, 0.78], [0.59, 0.78], [0.72, 0.42], [1, 0.42],
+  [0, 0.42], [0.2, 0.42],
+  [0.275, 0.5], [0.33, 0.5],
+  [0.405, 0.19], [0.46, 0.19],
+  [0.535, 0.78], [0.59, 0.78],
+  [0.665, 0.31], [0.72, 0.31],
+  [0.8, 0.42], [1, 0.42],
 ];
-
 const DOEL_Y_M: Array<[number, number]> = [
-  [0, 0.68], [0.13, 0.68], [0.26, 0.72], [0.36, 0.72],
-  [0.49, 0.74], [0.59, 0.74], [0.72, 0.68], [1, 0.68],
+  [0, 0.68], [0.2, 0.68],
+  [0.275, 0.72], [0.33, 0.72],
+  [0.405, 0.72], [0.46, 0.72],
+  [0.535, 0.74], [0.59, 0.74],
+  [0.665, 0.72], [0.72, 0.72],
+  [0.8, 0.68], [1, 0.68],
 ];
 
 /* Hoeveel de camera zich met die plek bemoeit. Op nul staat de plaat precies
-   waar de opmaak hem zet en telt alleen de schaal; op één wordt het brandpunt
+   waar de opmaak hem zet en telt alleen de schaal; op een wordt het brandpunt
    naar zijn plek gebracht. Zo hoeft het overzicht geen doelwaarden te kennen
    die toevallig kloppen. */
 const CAMERA: Array<[number, number]> = [
-  [0, 0], [0.13, 0], [0.26, 1], [0.36, 1],
-  [0.49, 1], [0.59, 1], [0.72, 0], [1, 0],
+  [0, 0], [0.2, 0],
+  [0.275, 1], [0.72, 1],
+  [0.8, 0], [1, 0],
 ];
 
-/* Per laag: hoe hard hij meedoet. 1 is inkt, 0 is haarlijn. Bij de vierde
-   beat vallen ze allemaal terug -- daar staat de tekst alleen. */
+/* Per laag: hoe hard hij meedoet. 1 is inkt, 0,2 is haarlijn, 0,1 is bijna
+   weg. Bij het oordeel valt alles terug -- daar staat de tekst alleen. Het
+   meetpunt is er alleen op zijn eigen moment: een meetsonde hoort niet bij de
+   installatie, hij komt op bezoek. */
 const LAGEN: Record<string, Array<[number, number]>> = {
   huis: [
-    [0, 1], [0.19, 1], [0.26, 0.42], [0.59, 0.42], [0.66, 0.42],
-    [0.72, 0.1], [0.82, 0.1], [0.9, 1], [1, 1],
+    [0, 1], [0.23, 1], [0.275, 0.42], [0.72, 0.42],
+    [0.8, 0.1], [0.87, 0.1], [0.93, 1], [1, 1],
   ],
   ketel: [
-    [0, 1], [0.19, 1], [0.26, 0.26], [0.59, 0.26], [0.66, 0.26],
-    [0.72, 0.1], [0.82, 0.1], [0.9, 1], [1, 1],
+    [0, 1], [0.23, 1], [0.275, 1], [0.33, 1], [0.405, 0.24], [0.72, 0.24],
+    [0.8, 0.1], [0.87, 0.1], [0.93, 1], [1, 1],
   ],
   afvoer: [
-    [0, 1], [0.19, 1], [0.26, 1], [0.36, 1], [0.43, 0.2], [0.59, 0.2],
-    [0.72, 0.1], [0.82, 0.1], [0.9, 1], [1, 1],
+    [0, 1], [0.23, 1], [0.275, 0.24], [0.33, 0.24], [0.405, 1], [0.46, 1],
+    [0.535, 0.24], [0.59, 0.24], [0.665, 1], [0.72, 1],
+    [0.8, 0.1], [0.87, 0.1], [0.93, 1], [1, 1],
   ],
   gas: [
-    [0, 1], [0.19, 1], [0.26, 0.2], [0.36, 0.2], [0.49, 1], [0.59, 1],
-    [0.72, 0.1], [0.82, 0.1], [0.9, 1], [1, 1],
+    [0, 1], [0.23, 1], [0.275, 0.22], [0.46, 0.22], [0.535, 1], [0.59, 1],
+    [0.665, 0.22], [0.72, 0.22],
+    [0.8, 0.1], [0.87, 0.1], [0.93, 1], [1, 1],
   ],
   afgifte: [
-    [0, 1], [0.19, 1], [0.26, 0.2], [0.59, 0.2], [0.66, 0.2],
-    [0.72, 0.1], [0.82, 0.1], [0.9, 1], [1, 1],
+    [0, 1], [0.23, 1], [0.275, 0.22], [0.72, 0.22],
+    [0.8, 0.1], [0.87, 0.1], [0.93, 1], [1, 1],
+  ],
+  meten: [
+    [0, 0], [0.59, 0], [0.665, 1], [0.72, 1], [0.78, 0], [1, 0],
   ],
 };
 
@@ -195,6 +224,9 @@ export function CvDoorsnede() {
       b3: [".doorsnede-beat-3"],
       b4: [".doorsnede-beat-4"],
       b5: [".doorsnede-beat-5"],
+      b6: [".doorsnede-beat-6"],
+      b7: [".doorsnede-beat-7"],
+      b8: [".doorsnede-beat-8"],
     })) {
       blokken[naam] = sels
         .map((sel) => section.querySelector<HTMLElement>(sel))
@@ -299,7 +331,7 @@ export function CvDoorsnede() {
         }
       }
       if (section.dataset.actief !== actief) section.dataset.actief = actief;
-      if (ctaRef.current) ctaRef.current.tabIndex = actief === "b5" ? 0 : -1;
+      if (ctaRef.current) ctaRef.current.tabIndex = actief === "b8" ? 0 : -1;
     };
 
     const update = () => {
@@ -570,6 +602,22 @@ export function CvDoorsnede() {
                 <text className="sub" x="674" y="320">wandhangend, tot 40 kW</text>
               </g>
             </g>
+
+            {/* ---- Het meetpunt. Alleen op zijn eigen moment in beeld: een
+                   meetsonde hoort niet bij de installatie, hij komt op bezoek.
+                   Bewust zonder waarden in het instrument -- er staan geen
+                   verzonnen meetuitkomsten op deze site. */}
+            <g className="laag laag-meten">
+              <path className="lijn" d="M534,266 L548,266 L548,278 L534,278" />
+              <path className="lijn" d="M548,272 L610,242" />
+              <path className="lijn" d="M610,228 L652,228 L652,256 L610,256 Z" />
+              <path className="dun" d="M616,237 L646,237 M616,247 L638,247" />
+              <g className="bijschrift">
+                <path className="leider" d="M652,242 L700,242" />
+                <text className="kop" x="710" y="238">Meetpunt</text>
+                <text className="sub" x="710" y="260">CO, O₂ en rookgastemperatuur</text>
+              </g>
+            </g>
           </svg>
         </div>
 
@@ -585,22 +633,37 @@ export function CvDoorsnede() {
           </header>
 
           <div className="doorsnede-beat doorsnede-beat-2">
+            <h2>Eerst kijken we wat er nu staat.</h2>
+            <p>Hoe de bestaande installatie is opgebouwd bepaalt wat er kan. Daar begint het, niet bij het toestel.</p>
+          </div>
+
+          <div className="doorsnede-beat doorsnede-beat-3">
+            <h2>Welk vermogen, en hoeveel warm water?</h2>
+            <p>Dat hangt af van uw huishouden, niet van wat er nu hangt. We bepalen welk vermogen en welk warmwatercomfort bij u passen.</p>
+          </div>
+
+          <div className="doorsnede-beat doorsnede-beat-4">
             <h2>De afvoer is geen bijzaak.</h2>
             <p>Rookgasafvoer en luchttoevoer moeten passen bij het toestel én bij het kanaal dat er al ligt. Dat bepaalt vaak wat er wel en niet kan.</p>
           </div>
 
-          <div className="doorsnede-beat doorsnede-beat-3">
+          <div className="doorsnede-beat doorsnede-beat-5">
             <h2>De gasleiding wordt beproefd, niet aangenomen.</h2>
             <p>Na plaatsing beproeven we de leiding op lekdichtheid, stellen we het toestel af en leggen we de metingen vast.</p>
           </div>
 
-          <div className="doorsnede-beat doorsnede-beat-4">
+          <div className="doorsnede-beat doorsnede-beat-6">
+            <h2>En dan wordt het nagemeten.</h2>
+            <p>Werking, afstelling en rookgassen. U krijgt een oplevering met de metingen en een rapport, zodat u weet wat er gemeten is.</p>
+          </div>
+
+          <div className="doorsnede-beat doorsnede-beat-7">
             <h2>De ketel is het makkelijke deel.</h2>
             <p className="doorsnede-oordeel">Wat eromheen zit bepaalt of het veilig is.</p>
             <p>Daarom zijn we CO-gecertificeerd. We meten, we leveren op met een rapport, en u krijgt te horen wat er gemeten is.</p>
           </div>
 
-          <div className="doorsnede-beat doorsnede-beat-5">
+          <div className="doorsnede-beat doorsnede-beat-8">
             <h2>Wie hem plaatst, onderhoudt hem daarna.</h2>
             <p>Dezelfde mensen, van de offerte tot de jaarlijkse beurt. Voor Intergas, Remeha, Nefit en Vaillant tot en met 40 kW.</p>
             <Link className="button button-primary" href="/offerte-aanvragen?dienst=cv-ketel" ref={ctaRef}>

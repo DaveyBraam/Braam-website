@@ -158,11 +158,11 @@
   text-wrap: balance;
 }
 
-.dienst .doorsnede-beat-4 .doorsnede-oordeel + p {
+.dienst .doorsnede-beat-7 .doorsnede-oordeel + p {
   margin-top: clamp(16px, 2.6vh, 28px);
 }
 
-.dienst .doorsnede-beat-5 .button { margin-top: clamp(20px, 3vh, 32px); }
+.dienst .doorsnede-beat-8 .button { margin-top: clamp(20px, 3vh, 32px); }
 
 /* Bijschrift en maatverdeling, net als bij de studio: dit is wat er een
    handboekplaat van maakt in plaats van een plaatje. */
@@ -194,10 +194,10 @@
 /* ---- Live: de sticky plaat ----------------------------------------------- */
 
 .dienst .doorsnede[data-live] {
-  /* Vijf leesmomenten met een camerabeweging ertussen. Korter dan de studio:
-     daar draait een toestel rond en is de reis zelf het beeld, hier wijst een
-     plaat vier dingen aan en is elke tel eromheen verloren tijd. */
-  height: 560svh;
+  /* Acht leesmomenten met een camerabeweging ertussen. Dit blok is niet de
+     hero maar het beginstuk van de pagina: de tekening draagt de uitleg die
+     eronder als afvinklijst stond, en pas daarna gaat het handboek verder. */
+  height: 880svh;
 }
 
 .dienst .doorsnede[data-live] .doorsnede-stage {
@@ -258,6 +258,7 @@
 .dienst .doorsnede[data-live] .laag-afvoer { opacity: var(--laag-afvoer, 1); }
 .dienst .doorsnede[data-live] .laag-gas { opacity: var(--laag-gas, 1); }
 .dienst .doorsnede[data-live] .laag-afgifte { opacity: var(--laag-afgifte, 1); }
+.dienst .doorsnede[data-live] .laag-meten { opacity: var(--laag-meten, 0); }
 
 /* De plaat tekent zichzelf, één keer, als hij in beeld komt. Eerst de
    omtrekken (die dragen de dasharray), dan het binnenwerk, dan de
@@ -298,6 +299,11 @@
 .dienst .doorsnede[data-live] .laag-afgifte .bijschrift {
   opacity: min(clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1), clamp(0, calc((var(--laag-afgifte, 1) - 0.55) * 2.4), 1));
 }
+/* Het meetpunt komt in zijn geheel op en af, bijschrift en al: de laag staat
+   buiten zijn moment op nul en heeft dus geen eigen drempel nodig. */
+.dienst .doorsnede[data-live] .laag-meten .bijschrift {
+  opacity: clamp(0, calc((var(--teken, 1) - 0.72) * 3.4), 1);
+}
 
 /* Elke beat leest zijn eigen voortgang; de kinderen komen er getrapt uit.
    Eerst de kop, dan de tekst eronder, het oordeel en de knop als laatste —
@@ -308,6 +314,9 @@
 .dienst .doorsnede[data-live] .doorsnede-beat-3 { --bv: var(--cv-b3, 0); }
 .dienst .doorsnede[data-live] .doorsnede-beat-4 { --bv: var(--cv-b4, 0); }
 .dienst .doorsnede[data-live] .doorsnede-beat-5 { --bv: var(--cv-b5, 0); }
+.dienst .doorsnede[data-live] .doorsnede-beat-6 { --bv: var(--cv-b6, 0); }
+.dienst .doorsnede[data-live] .doorsnede-beat-7 { --bv: var(--cv-b7, 0); }
+.dienst .doorsnede[data-live] .doorsnede-beat-8 { --bv: var(--cv-b8, 0); }
 
 .dienst .doorsnede[data-live] .doorsnede-beat h1,
 .dienst .doorsnede[data-live] .doorsnede-beat h2 {
@@ -327,11 +336,11 @@
   --tekst: max(0, min(1, calc((var(--bv) - 0.5) * 2.4)));
 }
 
-.dienst .doorsnede[data-live] .doorsnede-beat-4 .doorsnede-oordeel + p {
+.dienst .doorsnede[data-live] .doorsnede-beat-7 .doorsnede-oordeel + p {
   --tekst: max(0, min(1, calc((var(--bv) - 0.62) * 2.6)));
 }
 
-.dienst .doorsnede[data-live] .doorsnede-beat-5 .button {
+.dienst .doorsnede[data-live] .doorsnede-beat-8 .button {
   --tekst: max(0, min(1, calc((var(--bv) - 0.55) * 2.6)));
 }
 
@@ -341,7 +350,10 @@
 .dienst .doorsnede[data-live][data-actief="b2"] .doorsnede-beat-2,
 .dienst .doorsnede[data-live][data-actief="b3"] .doorsnede-beat-3,
 .dienst .doorsnede[data-live][data-actief="b4"] .doorsnede-beat-4,
-.dienst .doorsnede[data-live][data-actief="b5"] .doorsnede-beat-5 {
+.dienst .doorsnede[data-live][data-actief="b5"] .doorsnede-beat-5,
+.dienst .doorsnede[data-live][data-actief="b6"] .doorsnede-beat-6,
+.dienst .doorsnede[data-live][data-actief="b7"] .doorsnede-beat-7,
+.dienst .doorsnede[data-live][data-actief="b8"] .doorsnede-beat-8 {
   pointer-events: auto;
 }
 
@@ -350,8 +362,9 @@
    camera vrij spel heeft. De afvoer staat midden-boven, dus die tekst gaat
    links; de gasleiding ligt linksonder, dus die tekst gaat rechts. */
 .dienst .doorsnede[data-live] .doorsnede-beat-1,
-.dienst .doorsnede[data-live] .doorsnede-beat-4,
-.dienst .doorsnede[data-live] .doorsnede-beat-5 {
+.dienst .doorsnede[data-live] .doorsnede-beat-2,
+.dienst .doorsnede[data-live] .doorsnede-beat-7,
+.dienst .doorsnede[data-live] .doorsnede-beat-8 {
   top: clamp(36px, 7vh, 80px);
   left: 50%;
   width: min(100%, 68ch);
@@ -361,20 +374,28 @@
 
 .dienst .doorsnede[data-live] .doorsnede-beat-1 h1,
 .dienst .doorsnede[data-live] .doorsnede-beat-1 p,
-.dienst .doorsnede[data-live] .doorsnede-beat-4 h2,
-.dienst .doorsnede[data-live] .doorsnede-beat-4 p,
-.dienst .doorsnede[data-live] .doorsnede-beat-5 h2,
-.dienst .doorsnede[data-live] .doorsnede-beat-5 p {
+.dienst .doorsnede[data-live] .doorsnede-beat-2 h2,
+.dienst .doorsnede[data-live] .doorsnede-beat-2 p,
+.dienst .doorsnede[data-live] .doorsnede-beat-7 h2,
+.dienst .doorsnede[data-live] .doorsnede-beat-7 p,
+.dienst .doorsnede[data-live] .doorsnede-beat-8 h2,
+.dienst .doorsnede[data-live] .doorsnede-beat-8 p {
   margin-inline: auto;
 }
 
-.dienst .doorsnede[data-live] .doorsnede-beat-2 {
+/* De vier aanwijzende teksten staan om en om links en rechts, aan de kant
+   waar het aangewezen onderdeel niet zit. De camera brengt het onderdeel naar
+   de andere helft; samen is dat een blik die heen en weer gaat in plaats van
+   vier keer dezelfde kant op. */
+.dienst .doorsnede[data-live] .doorsnede-beat-4,
+.dienst .doorsnede[data-live] .doorsnede-beat-6 {
   top: 26%;
   left: 0;
   width: min(27%, 30ch);
 }
 
-.dienst .doorsnede[data-live] .doorsnede-beat-3 {
+.dienst .doorsnede[data-live] .doorsnede-beat-3,
+.dienst .doorsnede[data-live] .doorsnede-beat-5 {
   top: 26%;
   right: 0;
   width: min(27%, 30ch);
@@ -384,7 +405,7 @@
    allemaal. Hij stond eerst op displaymaat en duwde daarmee de knop tot over de
    tekening heen. Titelmaat is hier ook het juiste: het monument staat één beat
    eerder, en twee monumenten achter elkaar is geen van beide. */
-.dienst .doorsnede[data-live] .doorsnede-beat-5 h2 {
+.dienst .doorsnede[data-live] .doorsnede-beat-8 h2 {
   max-width: 24ch;
 }
 
@@ -393,8 +414,10 @@
    Te smal voor kolommen naast de plaat. De twee zijteksten wijken uit naar de
    bovenband, over de volle breedte, en de camera blijft staan waar hij staat. */
 @media (min-width: 661px) and (max-width: 1023px) {
-  .dienst .doorsnede[data-live] .doorsnede-beat-2,
-  .dienst .doorsnede[data-live] .doorsnede-beat-3 {
+  .dienst .doorsnede[data-live] .doorsnede-beat-3,
+  .dienst .doorsnede[data-live] .doorsnede-beat-4,
+  .dienst .doorsnede[data-live] .doorsnede-beat-5,
+  .dienst .doorsnede[data-live] .doorsnede-beat-6 {
     top: clamp(28px, 5vh, 56px);
     left: 0;
     right: auto;
@@ -423,7 +446,7 @@
 
 @media (max-width: 660px) {
   .dienst .doorsnede[data-live] {
-    height: 420svh;
+    height: 660svh;
   }
 
   .dienst .doorsnede[data-live] .doorsnede-stage {
@@ -435,11 +458,7 @@
   /* Elke tekst staat boven de plaat, over de volle breedte, links uitgelijnd.
      De camera staat stil: een tekening die op een telefoon ook nog inzoomt
      laat te weinig over om te herkennen. */
-  .dienst .doorsnede[data-live] .doorsnede-beat-1,
-  .dienst .doorsnede[data-live] .doorsnede-beat-2,
-  .dienst .doorsnede[data-live] .doorsnede-beat-3,
-  .dienst .doorsnede[data-live] .doorsnede-beat-4,
-  .dienst .doorsnede[data-live] .doorsnede-beat-5 {
+  .dienst .doorsnede[data-live] .doorsnede-beat {
     top: clamp(20px, 4vh, 40px);
     left: 0;
     right: auto;
@@ -483,7 +502,7 @@
 
   /* En om dezelfde reden verdwijnt de knop uit de laatste beat: de actiebalk
      wijst naar hetzelfde adres. Eén vraag, één knop. */
-  body:has(.mobile-action-bar) .dienst .doorsnede[data-live] .doorsnede-beat-5 .button {
+  body:has(.mobile-action-bar) .dienst .doorsnede[data-live] .doorsnede-beat-8 .button {
     display: none;
   }
 }

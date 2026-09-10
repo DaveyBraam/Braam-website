@@ -12,6 +12,10 @@ import "./home.css";
 import "./dienst.css";
 import "./studio.css";
 import "./doorsnede.css";
+import "./huis3d.css";
+import "./route-warmte.css";
+import "./kijker.css";
+import "./cv-opening-previz.css";
 
 /*
   Het Handboek is set in Fira Sans. The page had been running on the framework's

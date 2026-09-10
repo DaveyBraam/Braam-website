@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactCTA } from "../components/ContactCTA";
-import { CvDoorsnede } from "../components/CvDoorsnede";
+import { CvWoningJourney } from "../components/CvWoningJourney";
+import "../cv-woning.css";
 import { MobileActionBar } from "../components/MobileActionBar";
 import { RelatedKnowledge } from "../components/RelatedKnowledge";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
-export const metadata: Metadata = { title: "Cv-ketel installeren en onderhouden | Rob Braam", description: "Veilige plaatsing, vervanging en onderhoud van cv-ketels door een CO-gecertificeerd installatiebedrijf vanuit 's-Hertogenbosch, actief in Noord-Brabant en aangrenzende delen van Gelderland." };
+export const metadata: Metadata = { title: "Nieuwe cv-ketel plaatsen of vervangen | Rob Braam", description: "Veilige plaatsing, vervanging en onderhoud van cv-ketels door een CO-gecertificeerd installatiebedrijf vanuit 's-Hertogenbosch, actief in Noord-Brabant en aangrenzende delen van Gelderland." };
 
 const ketelmerken = [
   { naam: "Intergas", logo: "/brand/intergas-logo-dark.svg" },
@@ -32,10 +33,11 @@ const abonnementInhoud = [
 ];
 
 export default function CvKetelsPage() {
-  return <><SiteHeader /><main className="dienst">
-    <CvDoorsnede />
+  return <><SiteHeader hideOnScroll /><main className="dienst cv-installatie-page">
+    <CvWoningJourney />
+    <div id="cv-vervolg">
 
-    <section className="section reveal">
+    <section className="section reveal" id="cv-informatie">
       <div className="shell">
         <div className="section-heading split-heading">
           <div><h2>Eerst kijken we<br />wat er nu staat.</h2></div>
@@ -85,7 +87,7 @@ export default function CvKetelsPage() {
           <p>Sinds 1 april 2023 mogen alleen gecertificeerde bedrijven werkzaamheden uitvoeren aan gasverbrandingsinstallaties. Dat gaat niet alleen om de cv-ketel, maar ook om de bijbehorende verbrandingsluchttoevoer en rookgasafvoer. De monteur moet aantoonbaar vakbekwaam zijn en zich kunnen legitimeren.</p>
           <div className="cert-bewijs">
             <strong>Bij Braam zijn certificering en vakbekwaamheid geregeld.</strong>
-            <p>De CO-certificering en registraties lopen via CO-Keur. Onze monteurs hebben hun Vakmanschap CO via Installatiewerk Nederland behaald.</p>
+            <p>De CO-certificering en registraties lopen via CO-Keur, volgens het toegelaten certificatieschema BRL 6000-25. Onze monteurs hebben hun Vakmanschap CO via Installatiewerk Nederland behaald.</p>
           </div>
           <a className="text-link" href="https://www.volkshuisvestingnederland.nl/onderwerpen/verduurzamen-en-verbeteren/koolmonoxide-voorkomen" target="_blank" rel="noreferrer">Lees de officiële uitleg over het CO-stelsel <span aria-hidden="true">↗</span></a>
           <span className="cert-datum">Verplicht sinds 01.04.2023</span>
@@ -168,5 +170,6 @@ export default function CvKetelsPage() {
 
     <RelatedKnowledge service="cv-ketels" eyebrow="Handige tips over uw cv-ketel" title="Praktische uitleg voor thuis." intro="Lees wat u zelf veilig kunt controleren, zoals waterdruk, en wanneer terugkerende klachten door een monteur moeten worden onderzocht." />
     <ContactCTA title="Wilt u uw cv-ketel vervangen of onderhouden?" text="Vertel ons welk toestel u heeft en waar u hulp bij zoekt. Dan kijkt iemand uit ons team persoonlijk met u mee." primaryLabel="Vraag advies over uw cv-ketel" primaryHref="/offerte-aanvragen?dienst=cv-ketel" />
+    </div>
   </main><MobileActionBar href="/offerte-aanvragen?dienst=cv-ketel" label="Bespreek uw cv-ketel" /><SiteFooter /></>;
 }

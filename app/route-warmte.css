@@ -1,0 +1,321 @@
+/* De route van warmte: de opmaak rond de doorsnede.
+
+   Het beeld staat rechts en blijft staan; de tekst staat links en wisselt per
+   hoofdstuk. Alles wat gelezen of bediend moet worden is gewone HTML buiten
+   het canvas, dus het is te selecteren, te vergroten en met het toetsenbord te
+   bedienen.
+
+   De wereld blijft Het Handboek: papier, inkt, haarlijnen, niets omsloten. */
+
+.dienst .route {
+  position: relative;
+  /* Zes hoofdstukken, elk één scherm hoog: één stop, één verhaal. */
+  height: 600svh;
+  background: var(--white);
+  padding-block: 0;
+}
+
+.dienst .route-stage {
+  position: sticky;
+  top: 84px;
+  display: grid;
+  grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+  align-items: stretch;
+  height: calc(100svh - 84px);
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.dienst .route-canvas {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+}
+
+.dienst .route-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ---- De tekst ------------------------------------------------------------ */
+
+.dienst .route-woord {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: clamp(76px, 9.5vh, 116px) clamp(24px, 3vw, 48px) clamp(24px, 3vw, 40px) clamp(28px, 5vw, 88px);
+}
+
+.dienst .route-reeks {
+  position: absolute;
+  top: clamp(18px, 2.6vh, 32px);
+  left: clamp(28px, 5vw, 88px);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+}
+
+/* De hoofdstukken liggen op elkaar; alleen dat van dit moment staat er. Ze
+   blijven in de opmaak staan zodat de kolom niet van hoogte springt. */
+/* De hoofdstukken liggen los van de opmaak op elkaar. Lieten ze hun hoogte
+   staan, dan werd de rij zo hoog als het langste hoofdstuk -- dat met het
+   rapport -- en werd de navigatie de kolom uit geduwd. */
+.dienst .route-verhaal {
+  position: relative;
+  min-height: 0;
+}
+
+.dienst .route-hoofdstuk {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.2, .7, .3, 1);
+  pointer-events: none;
+}
+
+.dienst .route-hoofdstuk[data-actief="1"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.dienst .route-nummer {
+  margin-bottom: 14px;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+}
+
+.dienst .route-hoofdstuk h2 {
+  max-width: 18ch;
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+  color: var(--on-ink);
+  text-wrap: balance;
+}
+
+.dienst .route-hoofdstuk p {
+  max-width: 46ch;
+  margin-top: 16px;
+  font-size: var(--t-body);
+  line-height: 1.62;
+}
+
+/* ---- Het opleverrapport ---------------------------------------------------
+
+   Nadrukkelijk een voorbeeld en geen echt document: het toont wélke dingen
+   worden vastgelegd, met de meetwaarden er bewust uit. */
+
+.dienst .route-rapport {
+  margin-top: clamp(20px, 3vh, 32px);
+  padding-top: 18px;
+  border-top: 1px solid var(--hair-strong);
+}
+
+.dienst .route-rapport-kop {
+  margin: 0 0 12px;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink);
+}
+
+.dienst .route-rapport-kop span {
+  margin-left: 8px;
+  padding: 2px 7px;
+  border: 1px solid var(--hair-strong);
+  font-weight: 500;
+  color: var(--on-ink-soft);
+}
+
+.dienst .route-rapport dl {
+  margin: 0;
+  font-size: var(--t-small, 0.9rem);
+}
+
+.dienst .route-rapport dl > div {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 12px;
+  padding: 7px 0;
+  border-top: 1px solid var(--hair);
+}
+
+.dienst .route-rapport dt {
+  color: var(--on-ink-soft);
+}
+
+.dienst .route-rapport dd {
+  margin: 0;
+  color: var(--on-ink);
+}
+
+.dienst .route-rapport-voet {
+  margin-top: 12px;
+  font-size: var(--t-label);
+  line-height: 1.5;
+  color: var(--on-ink-soft);
+}
+
+/* ---- De navigatie -------------------------------------------------------- */
+
+.dienst .route-nav {
+  align-self: end;
+  margin-top: clamp(20px, 4vh, 40px);
+}
+
+.dienst .route-nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dienst .route-nav li {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.dienst .route-nav button {
+  display: block;
+  width: 100%;
+  padding: 10px 10px 0 0;
+  border: 0;
+  border-top: 2px solid var(--hair-strong);
+  background: none;
+  color: var(--on-ink-soft);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color .3s ease, border-color .3s ease;
+}
+
+.dienst .route-nav button:hover {
+  color: var(--on-ink);
+  border-top-color: var(--on-ink-soft);
+}
+
+.dienst .route-nav button[aria-current="true"] {
+  color: var(--on-ink);
+  border-top-color: var(--on-ink);
+}
+
+.dienst .route-nav-nummer {
+  display: block;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+}
+
+/* De naam van het hoofdstuk staat er alleen als er ruimte voor is; op smallere
+   schermen dragen de nummers de navigatie. */
+.dienst .route-nav-naam {
+  display: none;
+}
+
+.dienst .route-stand {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 90;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+  pointer-events: none;
+}
+
+/* ---- De naad naar beneden ------------------------------------------------ */
+
+.dienst .route::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ---- Breed --------------------------------------------------------------- */
+
+.dienst .route-nav-naam {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--t-label);
+  line-height: 1.3;
+  color: var(--on-ink);
+}
+
+/* ---- Smal ---------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* Geen kolom naast het beeld meer: de tekst gaat naar boven en de
+     doorsnede krijgt de onderste helft. */
+  .dienst .route-stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .dienst .route-canvas {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .dienst .route-woord {
+    grid-column: 1;
+    grid-row: 1;
+    padding: clamp(52px, 9vh, 78px) clamp(20px, 5vw, 40px) clamp(12px, 2vh, 20px);
+  }
+
+  .dienst .route-reeks {
+    left: clamp(20px, 5vw, 40px);
+    top: clamp(18px, 3vh, 30px);
+  }
+
+  .dienst .route-hoofdstuk h2 {
+    max-width: 20ch;
+    font-size: var(--t-title);
+  }
+
+  .dienst .route-hoofdstuk p {
+    max-width: 52ch;
+  }
+
+  .dienst .route-rapport dl > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .dienst .route-nav {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 660px) {
+  .dienst .route {
+    height: 560svh;
+  }
+
+  .dienst .route-stage {
+    top: 64px;
+    height: calc(100svh - 64px);
+  }
+}
