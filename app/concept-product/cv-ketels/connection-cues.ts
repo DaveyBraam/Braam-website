@@ -10,10 +10,10 @@ export function connectionCues({ height, readingTop, radiatorTop, gasTop, gasBot
 }) {
   const readingHeight = Math.max(160, height - readingTop);
   const focus = readingTop + readingHeight * .4;
-  const ramp = readingHeight * .26;
-  const arrive = ease((focus + readingHeight * .14 - radiatorTop) / ramp);
+  const ramp = Math.max(240, readingHeight * .26);
+  const arrive = ease((focus - readingHeight * .12 + ramp - radiatorTop) / ramp);
   // Return before the gas text reaches the reading position. Its label starts later.
-  const returnToBoiler = ease((focus + readingHeight * .3 - gasTop) / ramp);
+  const returnToBoiler = ease((focus + readingHeight * .3 - gasTop) / (readingHeight * .26));
   const gas = ease((focus - gasTop) / (readingHeight * .14))
     * ease((gasBottom - readingTop) / (readingHeight * .18));
   const exit = ease((readingTop - gasBottom) / Math.max(1, nextTop - gasBottom));

@@ -25,3 +25,17 @@ for (const [name, height, readingTop] of [['desktop',720,91],['mobile',844,391]]
     }
   });
 }
+
+for (const [name,height,readingTop] of [['large phone portrait',932,455],['iPad portrait',1180,91]]) {
+  test(`${name}: radiator enters over at least 240px before the reading hold`, () => {
+    const readingHeight=height-readingTop;
+    const end=readingTop+readingHeight*.28;
+    const ramp=Math.max(240,readingHeight*.26);
+    const at = top => connectionCues({height,readingTop,radiatorTop:top,gasTop:2000,gasBottom:2400,nextTop:2800});
+    assert.equal(at(end+ramp).radiator,0);
+    assert.ok(Math.abs(at(end+ramp/2).radiator-.5)<1e-10);
+    assert.equal(at(end).radiator,1);
+    assert.equal(at(readingTop).radiator,1);
+    assert.equal(at(readingTop).gas,0);
+  });
+}

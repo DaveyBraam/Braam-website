@@ -51,6 +51,7 @@ export function createProductScene(host:HTMLElement, ready:()=>void, fail:()=>vo
   const floor=new T.Mesh(new T.PlaneGeometry(40,40),stageMat);floor.rotation.x=-Math.PI/2;floor.position.y=2.90;floor.receiveShadow=true;scene.add(floor);
   let target=0,current=0,raf=0,last=0,loaded=false,visible=true,disposed=false;
   let heatingTarget=0,heatingCurrent=0,gasTarget=0,radiator:T.Group|undefined;
+  const radiatorMaterials=new Map<T.Material,number>();
   const radiatorPoint=new T.Vector3(2.25,3.68,-.16);
   const radiatorCamera=new T.Vector3(2.65,3.98,-3.75);
   const radiatorView=new T.Vector3();
@@ -68,7 +69,11 @@ export function createProductScene(host:HTMLElement, ready:()=>void, fail:()=>vo
     current+=(target-current)*(1-Math.exp(-dt/145));if(Math.abs(current-target)<.0001)current=target;
     const heat=radiator?heatingTarget:0;
     heatingCurrent+=(heat-heatingCurrent)*(1-Math.exp(-dt/190));if(Math.abs(heatingCurrent-heat)<.0001)heatingCurrent=heat;
-    if(radiator)radiator.visible=heatingCurrent>.001;
+    // Wide portrait framing can already include the radiator before the camera
+    // reaches it. Reveal it continuously instead of switching a full model on.
+    const radiatorOpacity=T.MathUtils.smoothstep(heatingCurrent,0,.32);
+    if(radiator)radiator.visible=radiatorOpacity>0;
+    for(const [material,opacity] of radiatorMaterials)material.opacity=opacity*radiatorOpacity;
     const step=current*(track.length-1),index=Math.min(track.length-2,Math.floor(step)),t=step-index;
     const a=track[index],b=track[index+1];
     const w=host.clientWidth,h=host.clientHeight,mobile=w<700;
@@ -157,7 +162,14 @@ export function createProductScene(host:HTMLElement, ready:()=>void, fail:()=>vo
         r.scene.position.sub(center);
         radiator=new T.Group();radiator.add(r.scene);radiator.rotation.y=Math.PI;
         radiator.position.copy(radiatorPoint);radiator.visible=false;
-        radiator.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});
+        radiator.traverse(o=>{if(o instanceof T.Mesh){
+          // Avoid an opaque shadow appearing before the fading product.
+          o.castShadow=false;o.receiveShadow=true;
+          for(const material of Array.isArray(o.material)?o.material:[o.material]){
+            if(!radiatorMaterials.has(material))radiatorMaterials.set(material,material.opacity);
+            material.transparent=true;material.opacity=0;
+          }
+        }});
         scene.add(radiator);wake();
       }).catch(()=>{/* Keep the original connection camera if this extra asset fails. */});
   }).catch(e=>{if(!disposed&&e.name!=='AbortError')fail();});
