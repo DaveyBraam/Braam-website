@@ -20,50 +20,52 @@ export default function ProductStoryPage() {
     <main className="cv-product service-story">
       <div className="ps-productnav"><span><strong>Cv-ketels</strong><span>Een gids voor uw installatie</span></span><a href="tel:+31736222199">073 622 2199 <span aria-hidden="true">↗</span></a></div>
       <Story>
-        <section className="ps-chapter ps-hero" id="ps-scene-1" aria-labelledby="ps-title-1"><div className="ps-panel">
+        <section className="ps-chapter ps-hero" id="ps-scene-1" aria-labelledby="ps-title-1"><div className="ps-panel ps-reading-beat"><div className="ps-reading-content">
           <Index number="01 / 04">Afgestemd op uw woning</Index>
           <h1 id="ps-title-1">Comfort.<br /><em>Tot in detail.</em></h1>
           <p className="ps-intro">Een warm huis. Een fijne douche.<br />Het begint met een ketel die bij u past.</p>
           <div className="ps-actions"><Link className="ps-button" href="/offerte-aanvragen?dienst=cv-ketel">Bespreek uw cv-ketel <Arrow /></Link><a className="ps-textlink" href="#ps-scene-2">Ontdek de details <span aria-hidden="true">↓</span></a></div>
           <details className="ps-detail ps-hero-detail"><summary>Waarom uw woning het uitgangspunt is <Plus /></summary><div><p>Uw radiatoren, vloerverwarming en de ruimtes die u gebruikt bepalen welk vermogen nodig is. Uw warmwatergebruik bepaalt het gewenste douche- en kraancomfort. We nemen beide mee in het advies.</p><p>Ook kijken we naar de bestaande installatie, de bereikbaarheid van het toestel en de afwerking. In de offerte staat welk toestel past en welke aanpassingen nodig zijn.</p></div></details>
-        </div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/installation-overview.webp" alt="De complete cv-installatie" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 01 — De complete cv-installatie</figcaption></figure></section>
+        </div></div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/installation-overview.webp" alt="De complete cv-installatie" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 01 — De complete cv-installatie</figcaption></figure></section>
 
-        <section className="ps-chapter" id="ps-scene-2" aria-labelledby="ps-title-2"><div className="ps-panel">
+        <section className="ps-chapter" id="ps-scene-2" aria-labelledby="ps-title-2"><div className="ps-panel"><div className="ps-reading-beat"><div className="ps-reading-content">
           <Index number="02 / 04">De aansluitingen</Index>
           <h2 id="ps-title-2">Elk detail.<br /><em>Een functie.</em></h2>
           <p className="ps-body">Wat onder de ketel zit, telt net zo hard. Verwarming, water en gas: we controleren het leidingwerk stuk voor stuk.</p>
           <div className="ps-pipe-reading"><dl className="ps-connections"><div><dt><span>01</span> Cv-aanvoer & retour</dt><dd>Warmte naar uw radiatoren. Water terug naar de ketel.</dd></div><div><dt><span>02</span> Warm & koud water</dt><dd>De verbinding met uw douche en kranen.</dd></div></dl></div>
-          <article className="ps-radiator-copy" data-heating-detail aria-labelledby="ps-radiator-title">
+        </div></div><div className="ps-reading-beat">
+          <article className="ps-radiator-copy ps-reading-content" data-heating-detail aria-labelledby="ps-radiator-title">
             <p className="ps-gas-index">02.1 / Uw huidige installatie</p>
             <h3 id="ps-radiator-title">Afgestemd op<br />uw woning.</h3>
             <p>We kijken naar uw huidige radiatoren, eventuele vloerverwarming en de regeling. Daar stemmen we uw cv-ketel op af.</p>
             <p>We stellen het verwarmingsvermogen en de aanvoertemperatuur passend in en controleren hoe uw installatie daarop reageert.</p>
           </article>
-          <article className="ps-gas-focus" aria-labelledby="ps-gas-title">
+        </div><div className="ps-reading-beat">
+          <article className="ps-gas-focus ps-reading-content" aria-labelledby="ps-gas-title">
             <p className="ps-gas-index">02.2 / Belangrijk controlepunt</p>
             <h3 id="ps-gas-title">De gasleiding.<br />Apart gecontroleerd.</h3>
             <dl><div><dt>Bij onderhoud</dt><dd>We meten de gasdruk.</dd></div><div><dt>Bij installatie</dt><dd>We beproeven de bestaande gasleiding op lekdichtheid.</dd></div></dl>
             <p className="ps-gas-condition"><strong>Eerst herstellen. Dan in gebruik.</strong> Een vastgesteld gaslek moet vóór ingebruikname en oplevering zijn hersteld en opnieuw gecontroleerd.</p>
           </article>
-        </div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/connection-detail.webp" alt="Het leidingwerk onder de cv-ketel" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 02 — Het leidingwerk onder de cv-ketel</figcaption></figure></section>
+        </div></div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/connection-detail.webp" alt="Het leidingwerk onder de cv-ketel" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 02 — Het leidingwerk onder de cv-ketel</figcaption></figure></section>
 
-        <section className="ps-chapter" id="ps-scene-3" aria-labelledby="ps-title-3"><div className="ps-panel">
+        <section className="ps-chapter" id="ps-scene-3" aria-labelledby="ps-title-3"><div className="ps-panel ps-reading-beat"><div className="ps-reading-content">
           <Index number="03 / 04">Luchttoevoer & rookgasafvoer</Index>
           <h2 id="ps-title-3">Veiligheid.<br /><em>In samenhang.</em></h2>
           <p className="ps-body">De ketel, luchttoevoer en rookgasafvoer vormen één installatie. Daarom kijken we verder dan het toestel.</p>
           <div className="ps-margin-note"><span>Controlepunt / 03.1</span><p>Van de verbinding aan de ketel tot de doorvoer door het dak of de gevel.</p></div>
           <details className="ps-detail"><summary>Wat verandert er bij vervanging? <Plus /></summary><div><p>Bij vervanging van een afvoergebonden cv-ketel vervangen we ook de bijbehorende individuele rookgasafvoer en zorgen we voor passende luchttoevoer.</p><p>Bij onderhoud controleren we beugeling, afschot, verbindingen en lekkage. Niet iedere afwijking betekent dat de complete afvoer direct vervangen moet worden. Als de veiligheid niet vaststaat, is nader onderzoek of herstel nodig. Een onveilige installatie stellen we niet in bedrijf.</p></div></details>
           <div className="ps-cert"><img src="/certifications/co-keur.png" width="128" height="61" alt="CO-keur.nl Nederland" /><p>CO-gecertificeerd<span>BRL 6000-25 · Vakmanschap CO</span></p></div>
-        </div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/installation-overview.webp" alt="Ketel, luchttoevoer en rookgasafvoer" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 03 — Ketel, luchttoevoer en rookgasafvoer</figcaption></figure></section>
+        </div></div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/installation-overview.webp" alt="Ketel, luchttoevoer en rookgasafvoer" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 03 — Ketel, luchttoevoer en rookgasafvoer</figcaption></figure></section>
 
-        <section className="ps-chapter" id="ps-scene-4" aria-labelledby="ps-title-4"><div className="ps-panel">
+        <section className="ps-chapter" id="ps-scene-4" aria-labelledby="ps-title-4"><div className="ps-panel ps-reading-beat"><div className="ps-reading-content">
           <Index number="04 / 04">Controle & oplevering</Index>
           <h2 id="ps-title-4">Goed werk.<br /><em>Vastgelegd.</em></h2>
           <p className="ps-body">We controleren de werking, stellen de ketel af en meten de verbranding. U ontvangt een rapport met de resultaten, afwijkingen en ons advies.</p>
           <div className="ps-measurements" aria-label="Onder meer deze metingen voeren wij uit"><div><strong>CO</strong><span>Koolmonoxide</span></div><div><strong>O₂</strong><span>Zuurstof</span></div><div><strong>°C</strong><span>Rookgastemperatuur</span></div></div>
           <div className="ps-margin-note"><span>Voor ingebruikname</span><p>Werking, afstelling en rookgassen gecontroleerd. Metingen vastgelegd in het opleverings- en beproevingsrapport.</p></div>
           <details className="ps-detail"><summary>Certificering en vakbekwaamheid <Plus /></summary><div><p>Onze CO-certificering en registraties lopen via CO-Keur, volgens BRL 6000-25. Onze monteurs hebben hun Vakmanschap CO via Installatiewerk Nederland behaald.</p><a href="https://www.volkshuisvestingnederland.nl/onderwerpen/verduurzamen-en-verbeteren/koolmonoxide-voorkomen" target="_blank" rel="noreferrer">Lees de officiële uitleg <Arrow /></a></div></details>
-        </div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/installation-overview.webp" alt="De installatie die we controleren" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 04 — De installatie die we controleren</figcaption></figure></section>
+        </div></div><figure className="ps-mobile-figure"><img src="/concept-3d/cv-ketels/installation-overview.webp" alt="De installatie die we controleren" width="1000" height="1100" loading="lazy" /><figcaption>FIG. 04 — De installatie die we controleren</figcaption></figure></section>
 
       </Story>
 

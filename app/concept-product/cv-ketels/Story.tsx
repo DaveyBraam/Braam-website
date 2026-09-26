@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { ProductScene } from './scene';
 import { connectionCues } from './connection-cues';
+import { readingTravel } from './reading-travel';
 
 const subscribe = (cb: () => void) => {
   const queries = [matchMedia('(prefers-reduced-motion: reduce)'), matchMedia('(max-width: 699px)')];
@@ -51,6 +52,7 @@ export function Story({ children }: { children: ReactNode }) {
     const el = root.current;
     if (!el) return;
     const sections = Array.from(el.querySelectorAll<HTMLElement>('.ps-chapter'));
+    const readingBlocks = Array.from(el.querySelectorAll<HTMLElement>('.ps-reading-content'));
     const heatingText = el.querySelector<HTMLElement>('[data-heating-detail]');
     const gasText = el.querySelector<HTMLElement>('.ps-gas-focus');
     let raf = 0;
@@ -58,6 +60,17 @@ export function Story({ children }: { children: ReactNode }) {
       raf = 0;
       const { top, bottom } = el.getBoundingClientRect();
       const height = window.innerHeight;
+      const mobile = window.innerWidth < 700;
+      const stageHeight = el.querySelector<HTMLElement>('.ps-stage')?.offsetHeight ?? 0;
+      const readingTop = mobile ? stageHeight + 92 : Math.max(120, height * .14);
+      // Tall text remains freely readable before its final lines settle into place.
+      for (const block of readingBlocks) {
+        const stickyTop = Math.min(readingTop, height - block.offsetHeight - 28);
+        const hold = active ? Math.max(180, Math.min(380, (height - readingTop) * .6)) : 0;
+        block.style.setProperty('--ps-reading-top', `${stickyTop}px`);
+        block.parentElement?.style.setProperty('--ps-reading-hold', `${hold}px`);
+        block.parentElement?.style.setProperty('--ps-reading-size', `${block.offsetHeight}px`);
+      }
       const ease = (value: number) => {
         const t = Math.max(0, Math.min(1, value));
         return t * t * (3 - 2 * t);
@@ -77,11 +90,15 @@ export function Story({ children }: { children: ReactNode }) {
       const y = -top + readingLine;
       let index = 0;
       while (index < sections.length - 1 && y >= offsets[index + 1]) index++;
-      const distance = index < sections.length - 1 ? offsets[index + 1] - offsets[index] : sections[index].offsetHeight;
-      const part = Math.max(0, Math.min(1, (y - offsets[index]) / Math.max(1, distance)));
-      // A continuous ease with zero acceleration at chapter boundaries.
-      // The same curve works when the visitor scrolls backwards.
-      const smooth = (n: number) => n * n * n * (n * (n * 6 - 15) + 10);
+      const block = sections[index].querySelector<HTMLElement>('.ps-reading-content');
+      const beat = block?.parentElement;
+      const nextTop = index < sections.length - 1
+        ? sections[index + 1].getBoundingClientRect().top : sections[index].getBoundingClientRect().bottom;
+      const chapterTravel = block && beat ? readingTravel({
+        holdEnd: beat.getBoundingClientRect().bottom - block.offsetHeight,
+        stickyTop: Math.min(readingTop, height - block.offsetHeight - 28),
+        nextTop, readingLine,
+      }) : 0;
       const textBox = heatingText?.getBoundingClientRect();
       const gasBox = gasText?.getBoundingClientRect();
       const cues = index === 1 && textBox && gasBox ? connectionCues({
@@ -89,7 +106,7 @@ export function Story({ children }: { children: ReactNode }) {
         gasTop: gasBox.top, gasBottom: gasBox.bottom,
         nextTop: sections[2].getBoundingClientRect().top,
       }) : { radiator: 0, gas: 0, exit: 0 };
-      const travel = index === 1 ? cues.exit : smooth(part);
+      const travel = index === 1 ? cues.exit : chapterTravel;
       // Four reading chapters still complete all four original camera transitions.
       progress.current = Math.min(4, index + travel) / 4;
       heating.current = cues.radiator; gas.current = cues.gas;
@@ -100,6 +117,7 @@ export function Story({ children }: { children: ReactNode }) {
     const wake = () => { if (!raf) raf = requestAnimationFrame(update); };
     const resize = new ResizeObserver(wake);
     sections.forEach(section => resize.observe(section));
+    readingBlocks.forEach(block => resize.observe(block));
     window.addEventListener('scroll', wake, { passive: true });
     window.addEventListener('resize', wake);
     wake();

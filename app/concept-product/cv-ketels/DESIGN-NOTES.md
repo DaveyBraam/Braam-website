@@ -169,3 +169,20 @@ Beide modellen en de terugvalafbeeldingen zijn opgenomen in Git en de build.
 Productiebuild, artifact-validator, vier tijdlijntests en drie controles van
 gebouwde routes/assets slagen. De publieke route is ook lokaal in de browser
 gecontroleerd. De rest van de GitHub-hoofdtak blijft ongewijzigd.
+
+## Leesmomenten in de scroll — 26 september 2026
+
+Zes afzonderlijke leesblokken houden hun tekst vast tijdens extra scrollafstand:
+introductie, aansluitingen, radiator, gasleiding, veiligheid en oplevering.
+De extra afstand schaalt met het beschikbare leesvlak (180–380px). Bij lange
+teksten mogen eerst alle regels voorbij komen, waarna de laatste regels even
+blijven staan; dit voorkomt onbereikbare tekst onder de mobiele productweergave.
+De reguliere cameratransitie begint pas wanneer het leesblok zijn vaste positie
+verlaat. Aansluitingen behouden de bestaande radiator-/gasvolgorde. Er is geen
+scrollvergrendeling, tijdgestuurde vertraging of verandering aan de camera-assets.
+Pauze/reduced motion schakelt de extra leesafstand uit.
+
+Desktop: tekst bleef op y=120 bij scrollposities 288 en 432. Mobiel: gasblok
+bleef op zijn berekende leespositie y=383; geen horizontale overflow. Zes nieuwe
+tests controleren camerastilstand, vloeiende aansluiting en exact terugscrollen
+voor desktop en korte/lange mobiele tekst.

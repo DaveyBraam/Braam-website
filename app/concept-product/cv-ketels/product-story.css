@@ -374,3 +374,11 @@ html.lenis .cv-product .ps-aftercare { scroll-margin-top: 0; }
 .cv-product .ps-aftercare .ps-button { background: #81bee9; color: #102b46; }
 .cv-product .ps-aftercare .ps-button:hover { background: #a4d3f2; }
 .cv-product .ps-aftercare .ps-textlink { color: var(--story-accent); }
+
+/* Extra scroll distance gives each explanation a quiet reading position. */
+.ps-reading-beat { display: flow-root; }
+.cv-product .ps-story[data-motion=on] .ps-panel { position: relative; top: auto!important; }
+.cv-product .ps-story[data-motion=on] .ps-reading-beat { min-height: calc(var(--ps-reading-size,0px) + var(--ps-reading-hold,0px)); padding-bottom: 0; }
+.cv-product .ps-story[data-motion=on] .ps-reading-content { position: sticky; top: var(--ps-reading-top,120px); }
+.cv-product .ps-story[data-motion=on] .ps-pipe-reading { padding-bottom: 0; }
+.cv-product .ps-story[data-motion=on] .ps-radiator-copy { min-height: 0; padding-bottom: 36px; }
