@@ -1,0 +1,37 @@
+/* Opt-in theme for future service stories. Uses the existing site's Fira
+   type scale, reference blue, buttons, header and footer; no global override. */
+.service-story {
+  --story-background: #0c1e32;
+  --story-text: #eef3f9;
+  --story-muted: #b4c9de;
+  --story-accent: #7cc0f7;
+  --story-rule: #36516b;
+  --story-floor: #9eafc3;
+  --focus: var(--story-accent);
+  color: var(--story-text);
+  background: var(--story-background);
+  font-family: var(--font-fira), Arial, sans-serif;
+  font-variant-numeric: lining-nums;
+  accent-color: var(--story-accent);
+  caret-color: var(--story-accent);
+}
+
+.service-story ::selection {
+  background: var(--story-accent);
+  color: var(--story-background);
+}
+
+.service-story .button-primary {
+  background: var(--lime);
+  color: var(--white);
+  box-shadow: none;
+  font-size: var(--t-meta);
+  font-weight: 600;
+}
+
+.service-story .button-primary:hover {
+  background: var(--lime-deep);
+  box-shadow: none;
+}
+
+.service-story .button::before { display: none; }
