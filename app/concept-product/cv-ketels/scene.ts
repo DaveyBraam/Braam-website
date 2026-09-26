@@ -158,7 +158,13 @@ export function createProductScene(host:HTMLElement, ready:()=>void, fail:()=>vo
       .then(b=>new GLTFLoader().parseAsync(b,''))
       .then(r=>{
         if(disposed){clean(r.scene);return;}
-        const center=new T.Box3().setFromObject(r.scene).getCenter(new T.Vector3());
+        const bounds=new T.Box3().setFromObject(r.scene);
+        const center=bounds.getCenter(new T.Vector3());
+        // The model includes floor rosettes at its lowest point. Seat those on
+        // the actual floor, while retaining the radiator camera's relative view.
+        const mountedCenterY=floor.position.y+center.y-bounds.min.y;
+        radiatorCamera.y+=mountedCenterY-radiatorPoint.y;
+        radiatorPoint.y=mountedCenterY;
         r.scene.position.sub(center);
         radiator=new T.Group();radiator.add(r.scene);radiator.rotation.y=Math.PI;
         radiator.position.copy(radiatorPoint);radiator.visible=false;
