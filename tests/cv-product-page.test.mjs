@@ -19,7 +19,7 @@ test('public cv route renders approved story, metadata and contact routes', asyn
   assert.match(html, /class="ps-aftercare"/);
   assert.doesNotMatch(html, /id="cv-woning"|class="cvw-|id="cv-doorsnede"/);
   assert.match(html, /name="robots"[^>]*content="index, follow"/);
-  assert.match(html, /rel="canonical"[^>]*href="[^\"]*\/cv-ketels"/);
+  assert.match(html, /rel="canonical"[^>]*href="https:\/\/braam-premium-concept\.braam-site-installatie\.workers\.dev\/cv-ketels"/);
   for (const href of ['/offerte-aanvragen?dienst=cv-ketel', '/abonnement-aanvragen?abonnement=cv-comfort', 'tel:+31736222199']) {
     assert.ok(html.includes(`href="${href}"`), href);
   }
