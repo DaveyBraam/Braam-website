@@ -77,9 +77,7 @@ export function CinematicHero() {
 
     let images: Loaded = scenes.map((item) => new Array(item.frames));
     let frame = 0;
-    let previous = 0;
     let eased = 0;
-    let target = 0;
     let onScreen = true;
     let disposed = false;
     let generation = 0;
@@ -193,7 +191,10 @@ export function CinematicHero() {
       lastKey = key;
 
       const base = nearest(index, current);
-      if (base) paintImage(base, 1);
+      if (base) {
+        paintImage(base, 1);
+        canvas.dataset.ready = "true";
+      }
       if (dissolve > 0) {
         const incoming = nearest(index + 1, 0);
         if (incoming) paintImage(incoming, dissolve);
@@ -214,7 +215,7 @@ export function CinematicHero() {
 
       const active = dissolve > 0.5 ? Math.min(TOTAL_SCENES - 1, index + 1) : index;
       setScene((value) => (value === active ? value : active));
-      const hidden = copy < 0.3;
+      const hidden = !narrow.matches && !reducedMotion.matches && copy < 0.3;
       setCopyHidden((value) => (value === hidden ? value : hidden));
     };
 
@@ -222,9 +223,8 @@ export function CinematicHero() {
     // second time here put the canvas on its own clock, half a beat behind the
     // page — which is exactly what read as juddering against the sticky stage.
     const update = () => {
-      if (!onScreen) return;
+      if (!onScreen || reducedMotion.matches) return;
       eased = readProgress();
-      target = eased;
       paint(eased);
     };
 
@@ -253,7 +253,6 @@ export function CinematicHero() {
     const stop = () => {
       if (frame) window.cancelAnimationFrame(frame);
       frame = 0;
-      previous = 0;
     };
 
     const onResize = () => {
@@ -266,8 +265,7 @@ export function CinematicHero() {
       // First frame first: the hero is painted before the rest streams in.
       await load(0, 0);
       if (disposed) return;
-      eased = readProgress();
-      target = eased;
+      eased = reducedMotion.matches ? 0 : readProgress();
       paint(eased, true);
 
       const queue: Array<[number, number]> = [];
@@ -297,7 +295,6 @@ export function CinematicHero() {
       stop();
       if (reducedMotion.matches) {
         eased = 0;
-        target = 0;
         paint(0, true);
       } else {
         wake();
@@ -345,6 +342,10 @@ export function CinematicHero() {
     >
       <div className="cinema-stage">
         <div className="cinema-camera" aria-hidden="true">
+          <picture className="cinema-poster">
+            <source media="(max-width: 660px)" srcSet={framePath("m01", 0)} />
+            <img src={framePath("01", 0)} alt="" fetchPriority="high" />
+          </picture>
           <canvas className="cinema-canvas" ref={canvasRef} />
         </div>
         <div className="cinema-depth" aria-hidden="true" />
@@ -370,7 +371,7 @@ export function CinematicHero() {
           <div className="cinema-story" aria-hidden="true">
             {scenes.map((item, index) => (
               <figure className={index === scene ? "is-active" : ""} key={item.label}>
-                <figcaption><i />0{index + 1} — {item.label}</figcaption>
+                <figcaption>0{index + 1} / {item.label}</figcaption>
                 <strong>{item.title}</strong>
                 <p>{item.note}</p>
               </figure>
@@ -379,7 +380,7 @@ export function CinematicHero() {
 
           <div className="cinema-footer">
             <div className="cinema-proofs" aria-label="Zekerheden">
-              {highlights.map((item) => <span className="cinema-proof" key={item}><i aria-hidden="true" />{item}</span>)}
+              {highlights.map((item) => <span className="cinema-proof" key={item}>{item}</span>)}
             </div>
 
             <div className="cinema-route" aria-label={`Scène ${scene + 1} van ${scenes.length}: ${scenes[scene].label}`}>
@@ -393,7 +394,6 @@ export function CinematicHero() {
               </ol>
             </div>
 
-            <span className="cinema-scroll-cue">Scroll om mee te bewegen <span aria-hidden="true">↓</span></span>
           </div>
         </div>
       </div>

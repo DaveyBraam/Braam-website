@@ -1,15 +1,15 @@
-/* One continuous, scroll-aware homepage scene. The background never crossfades. */
+/* The existing four-scene film, with the quiet typography of the homepage. */
 .cinema-sequence {
-  --cinema-x: 0%;
-  --cinema-scale: 1.055;
   --cinema-copy-opacity: 1;
   --cinema-copy-y: 0px;
-  --cinema-bridge: 0;
   --cinema-work: 0;
+  --cinema-bridge: 0;
+  --cinema-rule: rgba(238, 243, 249, .28);
+  --cinema-muted: #c3ced8;
   position: relative;
   height: 380svh;
   background: #03080b;
-  color: #fff;
+  color: #eef3f9;
   isolation: isolate;
 }
 
@@ -17,7 +17,7 @@
   position: sticky;
   top: 84px;
   height: calc(100svh - 84px);
-  min-height: 650px;
+  min-height: 560px;
   overflow: hidden;
   background: #03080b;
   isolation: isolate;
@@ -25,6 +25,7 @@
 
 .cinema-camera,
 .cinema-canvas,
+.cinema-poster,
 .cinema-depth,
 .cinema-grade,
 .cinema-grain {
@@ -32,46 +33,42 @@
   inset: 0;
 }
 
-.cinema-camera {
-  z-index: -6;
-  overflow: hidden;
+.cinema-camera { z-index: -6; overflow: hidden; }
+
+.cinema-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cinema-canvas {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
-  background: #03080b;
-  /* The colour grade is baked into the frames by ffmpeg. A CSS filter here made
-     the browser re-filter the whole canvas on every scrubbed frame, on top of
-     the draw itself, which is what fought the scroll. Promoting the canvas to
-     its own layer keeps a repaint from re-compositing the sticky stage. */
+  opacity: 0;
+  /* No per-frame CSS filter: the footage already carries its colour grade. */
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
+.cinema-canvas[data-ready="true"] { opacity: 1; }
+
+/* Light is shaped around the text; the picture itself keeps its natural colour. */
 .cinema-depth {
   z-index: -5;
-  background:
-    radial-gradient(circle at 56% 52%, rgba(33, 132, 247, calc(.02 + var(--cinema-bridge) * .17)), transparent 25%),
-    radial-gradient(circle at calc(72% - (var(--cinema-work) * 18%)) 43%, rgba(28, 133, 255, calc(.08 + var(--cinema-work) * .16)), transparent 25%),
-    linear-gradient(90deg, rgba(1, 4, 8, .91) 0%, rgba(2, 5, 10, .58) 29%, rgba(2, 5, 10, .08) 62%, rgba(2, 5, 10, .2) 100%);
+  background: linear-gradient(90deg, rgba(3, 8, 11, .9), rgba(3, 8, 11, .58) 35%, rgba(3, 8, 11, .08) 72%);
 }
 
 .cinema-grade {
   z-index: -3;
-  background:
-    linear-gradient(180deg, rgba(1, 4, 8, .28), transparent 24%, transparent 68%, rgba(1, 4, 8, .84)),
-    linear-gradient(90deg, rgba(1, 4, 8, calc(.55 - var(--cinema-work) * .2)), transparent 54%),
-    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, .36));
+  background: linear-gradient(180deg, rgba(3, 8, 11, .12), transparent 32%, rgba(3, 8, 11, .2) 55%, rgba(3, 8, 11, .94));
 }
 
 .cinema-grain {
   z-index: -2;
-  opacity: .045;
+  opacity: .025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-  /* No mix-blend-mode: blending a full-stage layer forces the compositor to
-     re-blend everything beneath it on every frame the sticky stage moves. */
   pointer-events: none;
 }
 
@@ -82,323 +79,107 @@
   height: 100%;
   grid-template-rows: 1fr auto;
   align-items: center;
-  padding: clamp(42px, 7vh, 82px) 0 28px;
+  /* Allow for the topline still being visible on first arrival. */
+  padding: clamp(32px, 5vh, 64px) 0 54px;
 }
 
 .cinema-copy {
-  max-width: 760px;
+  max-width: 740px;
   opacity: var(--cinema-copy-opacity);
   transform: translate3d(0, var(--cinema-copy-y), 0);
   will-change: opacity, transform;
 }
 
-
 .cinema-copy h1 {
   max-width: 20ch;
-  font-size: var(--t-display);
-  line-height: 1.08;
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 4.25rem);
+  line-height: 1.06;
   letter-spacing: var(--track-display);
-  font-weight: 600;
+  font-weight: 500;
   text-wrap: balance;
 }
 
-.cinema-copy h1 .cinema-line {
-  display: block;
+.cinema-line { display: block; }
+.cinema-line + .cinema-line { margin-top: .14em; color: #c3ced8; font-weight: 400; }
+
+/* Scope above .home p, which otherwise turns the lead into dim metadata. */
+.home .cinema-lead {
+  max-width: 49ch;
+  margin: 26px 0 30px;
+  color: var(--cinema-muted);
+  font-size: var(--t-body);
+  line-height: 1.65;
 }
 
-/* The second line is the promise; weight carries it, not a gradient. */
-.cinema-copy h1 .cinema-line + .cinema-line {
-  color: rgba(233, 241, 250, .72);
-  font-weight: 400;
-}
+.cinema-actions { display: flex; align-items: stretch; flex-wrap: wrap; gap: 14px; }
 
-
-.cinema-lead {
-  max-width: 56ch;
-  margin: 22px 0 34px;
-  color: rgba(228, 237, 248, .9);
-  font-size: var(--t-lead);
-  line-height: 1.62;
-}
-
-.cinema-actions {
-  display: flex;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-/* Calling is the lowest-friction route for the visitor whose heating just
-   failed, so it carries the same visual weight as the quote button. */
 .cinema-call {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
-  padding: 13px 24px;
-  border: 1px solid rgba(255, 255, 255, .26);
-  border-radius: 999px;
-  background: rgba(8, 14, 22, .5);
-  color: #fff;
+  gap: 3px;
+  padding: 12px 22px;
+  border: 1px solid var(--cinema-rule);
+  border-radius: 4px;
+  background: rgba(3, 8, 11, .6);
+  color: #eef3f9;
   text-decoration: none;
-  transition: border-color .18s ease, background .18s ease;
+  transition: border-color .2s ease, background .2s ease;
 }
 
-.cinema-call:hover,
-.cinema-call:focus-visible {
-  border-color: rgba(255, 255, 255, .5);
-  background: rgba(8, 14, 22, .72);
+.cinema-call:hover { border-color: #c3ced8; background: #14212b; }
+.cinema-call small { color: var(--cinema-muted); font-size: var(--t-meta); }
+.cinema-call strong { font-size: var(--t-subhead); font-weight: 500; letter-spacing: var(--track-title); font-variant-numeric: tabular-nums; }
+
+.cinema-actions .button {
+  min-height: 68px;
+  padding-inline: 26px;
+  border: 1px solid #eef3f9;
+  border-radius: 4px;
+  background: #eef3f9;
+  color: #0f181f;
+  box-shadow: none;
+  transform: none;
 }
-
-.cinema-call small {
-  color: rgba(225, 235, 249, .8);
-  font-size: var(--t-meta);
-}
-
-.cinema-call strong {
-  font-size: var(--t-subhead);
-  font-weight: 600;
-  letter-spacing: var(--track-title);
-  font-variant-numeric: tabular-nums;
-}
-
-.cinema-actions .phone-link { color: #fff; }
-.cinema-actions .phone-icon { border-color: rgba(255, 255, 255, .32); }
-.cinema-actions .phone-link small { color: rgba(220, 230, 244, .64); }
-
+.cinema-actions .button::before { display: none; }
+.cinema-actions .button:hover { background: #d9e6ef; border-color: #d9e6ef; }
 
 .cinema-footer {
   display: grid;
-  grid-template-columns: 1fr minmax(310px, 440px) auto;
-  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+  gap: 36px;
   align-items: end;
-  padding-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, .17);
+  padding-top: 20px;
+  border-top: 1px solid var(--cinema-rule);
 }
 
-.cinema-proofs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 28px;
-}
-
-.cinema-proof {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: rgba(236, 242, 250, .72);
-  font-size: var(--t-meta);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.cinema-proof i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #43acf7;
-  box-shadow: 0 0 14px #43acf7;
-}
-
-.cinema-route {
-  display: grid;
-  gap: 12px;
-}
-
-.cinema-route-line {
-  position: relative;
-  display: block;
-  height: 1px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, .2);
-}
-
-.cinema-route-line i {
-  display: block;
-  width: calc((var(--cinema-work) * 66.66%) + 33.33%);
-  height: 100%;
-  background: linear-gradient(90deg, #1f9cf6, #93cffa);
-  box-shadow: 0 0 15px rgba(47, 149, 255, .7);
-}
+.cinema-proofs { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.cinema-proof { color: var(--cinema-muted); font-size: var(--t-meta); font-weight: 400; line-height: 1.4; }
 
 .cinema-route ol {
   display: grid;
-  /* Vier scenes in drie kolommen liet "04 Afronding" als wees op een tweede
-     regel achter. Vier kolommen passen zolang de rail 440px mag zijn; daaronder
-     is 2x2 de enige vorm die nooit een wees oplevert. */
-  grid-template-columns: repeat(4, 1fr);
-  gap: 13px 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
-.cinema-route li {
-  display: flex;
-  gap: 7px;
-  color: rgba(255, 255, 255, .4);
-  font-size: var(--t-label);
-  font-weight: 700;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
-  transition: color .3s ease;
-}
-
-.cinema-route li span { color: rgba(140, 200, 255, .82); }
+.cinema-route li { display: grid; gap: 10px; font-size: var(--t-label); font-weight: 400; color: var(--cinema-muted); }
 .cinema-route li.is-active { color: #fff; }
+.cinema-route-bar { display: block; height: 2px; overflow: hidden; background: var(--cinema-rule); }
+.cinema-route-bar i { display: block; width: 100%; height: 100%; background: #c3def2; transform-origin: left center; }
+.cinema-route-label { display: flex; gap: 7px; }
+.cinema-route-label b { font-weight: 500; font-variant-numeric: tabular-nums; }
 
-.cinema-scroll-cue {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: rgba(255, 255, 255, .54);
-  font-size: var(--t-label);
-  font-weight: 700;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.cinema-scroll-cue > span {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid rgba(255, 255, 255, .23);
-  border-radius: 50%;
-  animation: cinema-scroll-pulse 2s ease-in-out infinite;
-}
-
-@keyframes cinema-scroll-pulse {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
-}
-
-@media (max-width: 1100px) {
-  .cinema-footer { grid-template-columns: 1fr minmax(280px, 370px); }
-  .cinema-scroll-cue { display: none; }
-  .cinema-route ol { grid-template-columns: repeat(2, 1fr); gap: 13px 18px; }
-}
-
-@media (max-width: 960px) {
-  .cinema-footer { grid-template-columns: 1fr; }
-  .cinema-route { width: min(100%, 440px); }
-  .cinema-copy { max-width: 690px; }
-}
-
-@media (max-width: 660px) {
-  .cinema-sequence {
-    height: 360svh;
-    min-height: 0;
-  }
-
-  .cinema-stage {
-    position: sticky;
-    top: 56px;
-    height: calc(100svh - 56px);
-    min-height: max(calc(100svh - 56px), 640px);
-  }
-
-  .cinema-camera {
-    inset: 0 0 auto 0;
-    height: 54%;
-  }
-
-  .cinema-canvas {
-    transform: translateZ(0);
-  }
-
-  .cinema-depth {
-    background:
-      radial-gradient(circle at 70% 28%, rgba(28, 133, 255, .14), transparent 30%),
-      linear-gradient(180deg, rgba(1, 4, 8, .05), rgba(2, 5, 10, .12) 28%, rgba(2, 5, 10, .92) 58%, #03080b 76%);
-  }
-
-  .cinema-grade {
-    background:
-      linear-gradient(180deg, rgba(1, 4, 8, .06), transparent 20%, rgba(1, 4, 8, .54) 47%, #03080b 66%),
-      linear-gradient(90deg, rgba(1, 4, 8, .22), transparent 70%);
-    box-shadow: none;
-  }
-
-  .cinema-content {
-    display: flex;
-    min-height: 0;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 0 84px;
-  }
-
-  .cinema-copy {
-    width: 100%;
-    opacity: 1;
-    transform: none;
-  }
-
-
-  .cinema-copy h1 {
-    line-height: 1.12;
-  }
-
-  .cinema-lead {
-    margin: 18px 0 19px;
-    font-size: var(--t-body);
-    line-height: 1.56;
-  }
-
-  /* .mobile-action-bar already pins both routes at thumb height below 660px,
-     so repeating them here made four controls for two actions. */
-  .cinema-actions { display: none; }
-
-  .cinema-actions .button { min-height: 52px; }
-
-  .cinema-actions .phone-link {
-    justify-content: center;
-    min-height: 43px;
-  }
-
-  .cinema-footer {
-    width: 100%;
-    grid-template-columns: 1fr;
-    gap: 13px;
-    margin-top: 18px;
-    padding-top: 15px;
-  }
-
-  .cinema-proofs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 12px;
-  }
-
-  .cinema-proof {
-    align-items: flex-start;
-    font-size: var(--t-meta);
-    line-height: 1.35;
-    white-space: normal;
-  }
-
-  .cinema-proof:last-child { grid-column: 1 / 3; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cinema-sequence { height: auto; }
-  .cinema-stage { position: relative; top: auto; min-height: max(calc(100svh - 84px), 720px); }
-  .cinema-copy { opacity: 1; transform: none; }
-  .cinema-scroll-cue > span { animation: none; }
-}
-
-/* Scene captions and chapter rail for the scrubbed sequence. */
+/* The caption belongs to the footage, without a floating card around it. */
 .cinema-story {
   position: absolute;
-  z-index: 3;
   right: 0;
-  bottom: 116px;
-  width: min(370px, 35vw);
+  bottom: 170px;
+  width: min(310px, 27vw);
   pointer-events: none;
 }
-
 .cinema-story figure {
   position: absolute;
   right: 0;
@@ -406,106 +187,63 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   margin: 0;
-  padding: 18px 20px;
-  border: 1px solid rgba(255, 255, 255, .15);
-  border-radius: 16px;
-  background: rgba(4, 9, 16, .78);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, .25);
+  padding-top: 16px;
+  border-top: 1px solid var(--cinema-rule);
   opacity: 0;
-  transform: translate3d(0, 14px, 0);
-  transition: opacity .45s ease, transform .45s ease;
+  transform: translate3d(0, 8px, 0);
+  transition: opacity .35s ease, transform .35s ease;
 }
+.cinema-story figure.is-active { opacity: 1; transform: none; }
+.cinema-story figcaption { order: 3; margin-top: 4px; color: var(--cinema-muted); font-size: var(--t-label); font-variant-numeric: tabular-nums; }
+.cinema-story strong { font-size: var(--t-lead); font-weight: 500; line-height: 1.3; letter-spacing: var(--track-title); }
+.home .cinema-story p { margin: 0; color: var(--cinema-muted); font-size: var(--t-meta); line-height: 1.5; }
 
-.cinema-story figure.is-active {
-  opacity: 1;
-  transform: none;
-}
-
-.cinema-story figcaption {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #88cafa;
-  font-size: var(--t-label);
-  font-weight: 700;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
-}
-
-.cinema-story figcaption i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #43acf7;
-  box-shadow: 0 0 14px #43acf7;
-}
-
-.cinema-story strong {
-  font-size: var(--t-lead);
-  font-weight: 600;
-  letter-spacing: var(--track-title);
-}
-
-.cinema-story p {
-  margin: 0;
-  color: rgba(220, 230, 244, .72);
-  font-size: var(--t-meta);
-  line-height: 1.5;
-}
-
-.cinema-route li {
-  display: grid;
-  gap: 7px;
-}
-
-.cinema-route-bar {
-  display: block;
-  height: 1px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, .2);
-}
-
-.cinema-route-bar i {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #1f9cf6, #93cffa);
-  box-shadow: 0 0 15px rgba(47, 149, 255, .7);
-  transform-origin: left center;
-}
-
-.cinema-route-label {
-  display: flex;
-  gap: 7px;
-}
-
-.cinema-route-label b {
-  color: rgba(140, 200, 255, .82);
-  font-weight: 700;
+@media (max-width: 1100px) {
+  .cinema-footer { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .cinema-story { width: 250px; }
 }
 
 @media (max-width: 960px) {
-  .cinema-story { bottom: 190px; }
+  .cinema-stage { top: 72px; height: calc(100svh - 72px); }
+  .cinema-copy { max-width: 580px; }
+  .cinema-story { display: none; }
+  .cinema-footer { grid-template-columns: 1fr; gap: 20px; }
+  .cinema-route { max-width: 430px; }
 }
 
 @media (max-width: 660px) {
-  .cinema-story { display: none; }
+  .cinema-sequence { height: 360svh; }
+  .cinema-stage { min-height: 540px; }
+  .cinema-camera { inset: 0 0 auto; height: 58%; }
+  .cinema-depth { background: linear-gradient(180deg, transparent 15%, rgba(3, 8, 11, .15) 30%, #03080b 65%); }
+  .cinema-grade { background: linear-gradient(180deg, transparent 25%, rgba(3, 8, 11, .4) 46%, #03080b 68%); }
+  .cinema-content { display: flex; flex-direction: column; justify-content: flex-end; padding: 0 0 calc(112px + env(safe-area-inset-bottom)); }
+  .cinema-copy { width: 100%; opacity: 1; transform: none; }
+  .cinema-copy h1 { font-size: clamp(2rem, 7.6vw, 2.65rem); line-height: 1.12; }
+  .home .cinema-lead { margin: 20px 0 0; font-size: var(--t-body); line-height: 1.55; }
+  /* Contact remains available in the fixed mobile action bar. */
+  .cinema-actions { display: none; }
+  .cinema-footer { width: 100%; gap: 18px; margin-top: 24px; padding-top: 16px; }
+  .cinema-proofs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+  .cinema-proof { font-size: var(--t-label); }
+  .cinema-proof:last-child { grid-column: 1 / -1; }
+  .cinema-route { width: 100%; }
+  .cinema-route ol { gap: 8px; }
+  .cinema-route-label { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cinema-story { display: none; }
+  .cinema-sequence { height: auto; }
+  .cinema-stage { position: relative; top: auto; }
+  .cinema-copy { opacity: 1; transform: none; }
+  .cinema-story, .cinema-route { display: none; }
 }
 
-@media (max-width: 660px) {
-  /* Four labelled chapters do not fit a phone. The bars still show where the
-     story is; the names stay on the wider layout. This block sits after the
-     base .cinema-route-label rule on purpose - equal specificity, last wins. */
-  .cinema-route-label { display: none; }
-
-  .cinema-route ol {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-  }
+/* On a shorter phone the copy moves up; fade the photograph earlier with it. */
+@media (max-width: 660px) and (max-height: 740px) {
+  .cinema-camera { height: 45%; }
+  .cinema-depth { background: linear-gradient(180deg, transparent 5%, rgba(3, 8, 11, .55) 24%, #03080b 43%); }
+  .cinema-grade { background: none; }
 }

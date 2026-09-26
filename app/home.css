@@ -691,3 +691,148 @@
   }
   .home .home-price-row > a:first-child { border-top: 0; padding-top: 0; }
 }
+
+/* A consistent, matte finish from the opening through to contact. */
+.home section.contact-cta .button {
+  border-radius: 4px;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: none;
+  transform: none;
+}
+.home section.contact-cta .button::before { display: none; }
+.home section.contact-cta .button:hover { background: #243b4d; }
+
+.home + .mobile-action-bar {
+  border-radius: 6px;
+  background: #0e1620;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+  backdrop-filter: none;
+}
+.home + .mobile-action-bar a { border-radius: 3px; font-weight: 600; }
+.home + .mobile-action-bar a:first-child { background: #eef3f9; color: #0f181f; }
+.home + .mobile-action-bar a:first-child:hover { background: #d9e6ef; }
+.home + .mobile-action-bar a:last-child:hover { background: #243b4d; }
+
+/* Keep the handbook's ruled rows flat when the shared tilt script runs. */
+.home .service-card.tilt-surface,
+.home .home-price-row > .tilt-surface { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .home .service-card > div { transition: none; }
+  .home .service-card:hover > div,
+  .home .service-card:focus-within > div { transform: none; }
+}
+
+/* Exact heading treatments from the cv-ketel product story: the paper
+   gradient and its existing light-blue variant for dark sections. */
+.home {
+  --heading-blue: linear-gradient(115deg, #64a6d8 3%, #81bee9 55%, #b0ddf7 100%);
+  --heading-fallback: #81bee9;
+  --heading-stroke: transparent;
+}
+.home section.chapter-paper,
+.home section.contact-cta {
+  --heading-blue: linear-gradient(115deg, #071d38 3%, #154a7b 34%, #0c70b8 64%, #438ab8 100%);
+  --heading-fallback: #153b61;
+  --heading-stroke: rgb(18 51 84 / .16);
+}
+.home h1,
+.home h2,
+.home h3 { color: var(--heading-fallback); }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .home h1,
+  .home h2,
+  .home h3 {
+    width: fit-content;
+    background-image: var(--heading-blue);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: .3px var(--heading-stroke);
+  }
+  .home .cinema-line { color: inherit; }
+}
+@media (forced-colors: active) {
+  .home h1,
+  .home h2,
+  .home h3 { background: none; color: CanvasText; -webkit-text-fill-color: CanvasText; -webkit-text-stroke: 0; }
+}
+
+/* A photographic portfolio: two generous opening images, then three details.
+   Captions sit on the page, without cards, badges or a tint over the work. */
+.home .project-gallery.project-gallery-featured {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: none;
+  grid-auto-rows: auto;
+  gap: 48px 28px;
+  align-items: start;
+}
+.home .project-gallery .project-shot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-column: span 2;
+  grid-row: auto;
+  gap: 16px 12px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.home .project-gallery .project-shot:nth-child(-n+2) { grid-column: span 3; }
+.home .project-gallery .project-shot::after { display: none; }
+.home .project-gallery .project-shot img {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  object-fit: cover;
+  filter: none;
+  transform: none;
+  transition: none;
+}
+.home .project-gallery .project-shot figcaption {
+  position: static;
+  display: flex;
+  grid-column: 1;
+  grid-row: 2;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0;
+  color: var(--on-ink);
+}
+.home .project-gallery .project-shot figcaption span { color: var(--on-ink-soft); font-weight: 400; letter-spacing: .03em; }
+.home .project-gallery .project-shot figcaption strong { max-width: none; font-size: var(--t-body); font-weight: 500; text-align: left; text-wrap: pretty; line-height: 1.4; }
+.home .project-gallery .project-stage {
+  position: static;
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 17ch;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--on-ink-soft);
+  font-size: var(--t-label);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-align: right;
+  text-transform: none;
+  backdrop-filter: none;
+}
+@media (max-width: 960px) {
+  .home .project-gallery.project-gallery-featured { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 24px; }
+  .home .project-gallery .project-shot,
+  .home .project-gallery .project-shot:nth-child(-n+2) { grid-column: span 1; }
+  .home .project-gallery .project-shot:last-child { grid-column: 1 / -1; max-width: calc(50% - 12px); }
+}
+@media (max-width: 660px) {
+  .home .project-gallery.project-gallery-featured { grid-template-columns: 1fr; gap: 36px; }
+  .home .project-gallery .project-shot:nth-child(5) { display: grid; }
+  .home .project-gallery .project-shot:last-child { max-width: none; }
+}
