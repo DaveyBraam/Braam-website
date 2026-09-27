@@ -6,6 +6,7 @@ import { siteConfig } from "./site-config";
 import "./globals.css";
 import "./premium.css";
 import "./mobile-menu.css";
+import "./desktop-menu.css";
 import "./knowledge.css";
 import "./cinematic-sequence.css";
 import "./home-routes.css";

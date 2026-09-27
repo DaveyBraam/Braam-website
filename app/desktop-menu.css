@@ -1,0 +1,79 @@
+/* The visible desktop navigation uses the same paper-and-ink index as mobile. */
+@media (min-width: 961px) {
+  .site-header .desktop-nav {
+    --focus: #095a94;
+    gap: clamp(16px, 1.8vw, 28px);
+    margin-right: 24px;
+  }
+  .site-header .desktop-nav > a,
+  .site-header .nav-dropdown > summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: #102b46;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .site-header .desktop-nav > a::after,
+  .site-header .nav-dropdown > summary::after {
+    bottom: 4px;
+    height: 1px;
+    background: #095a94;
+    box-shadow: none;
+  }
+  .site-header .desktop-nav > a:hover,
+  .site-header .nav-dropdown > summary:hover { color: #095a94; }
+  .site-header .nav-dropdown > summary span { margin-left: 8px; color: #095a94; }
+  .site-header .dropdown-panel {
+    top: calc(100% + 18px);
+    left: -24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 440px;
+    gap: 0 28px;
+    padding: 12px 24px 20px;
+    border: 1px solid #c8d4df;
+    border-radius: 0;
+    background: #f2f5f8;
+    box-shadow: 0 18px 30px rgba(8, 29, 50, .12);
+    backdrop-filter: none;
+    animation: none;
+  }
+  .site-header .dropdown-panel a {
+    min-height: 56px;
+    padding: 12px 0;
+    border-bottom: 1px solid #c8d4df;
+    border-radius: 0;
+    background: none;
+    color: #102b46;
+    font-size: 1rem;
+    font-weight: 400;
+    box-shadow: none;
+    transform: none;
+    transition: color .18s ease;
+  }
+  .site-header .dropdown-panel a::after { display: none; }
+  .site-header .dropdown-panel a:hover { background: none; color: #095a94; text-decoration: underline; text-underline-offset: 5px; }
+  .site-header .dropdown-panel a span { color: #095a94; }
+  .site-header .header-cta {
+    min-height: 46px;
+    padding-inline: 20px;
+    border: 1px solid #102b46;
+    border-radius: 3px;
+    background: #102b46;
+    color: #f2f5f8;
+    font-size: .875rem;
+    font-weight: 500;
+    box-shadow: none;
+    transform: none;
+  }
+  .site-header .header-cta::before { display: none; }
+  .site-header .header-cta:hover { background: #234863; }
+  .site-header :is(.desktop-nav a, .nav-dropdown > summary, .header-cta):focus-visible { outline: 2px solid #095a94; outline-offset: 3px; }
+}
+@media (min-width: 961px) and (max-width: 1100px) {
+  .site-header .desktop-nav { gap: 16px; margin-right: 16px; }
+  .site-header .desktop-nav > a,
+  .site-header .nav-dropdown > summary { font-size: .8125rem; }
+  .site-header .header-cta { padding-inline: 14px; }
+}
