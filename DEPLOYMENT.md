@@ -37,3 +37,11 @@ Controle: productiebuild, 16 warmtepomp- en cv-tests, artifactvalidatie,
 HTTP-render van beide warmtepomproutes en het offerteformulier, plus aanwezigheid
 van alle zes modellen, zeven stilstaande scènes en drie merklogo's. Ontvangst
 van formuliermails blijft het bestaande open punt uit PRODUCT.md.
+
+## Warmtepomppagina — 3 oktober 2026
+
+`/warmtepompen` is vervangen door het scrollverhaal van testversie 5 (zie
+`app/warmtepompen/README.md`): één doorlopende reis langs de woning, de garage en de
+woonkamer, met de producten als echte foto's in plaats van live 3D. Beelden in
+`public/warmtepompen/reis/` (±3 MB, geen WebGL). De vorige pagina blijft als
+noindex-preview op `/warmtepompen-test`.

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { WarmtepompPage } from "../warmtepompen-test/WarmtepompPage";
+import { SiteHeader } from "../components/SiteHeader";
+import { SiteFooter } from "../components/SiteFooter";
+import { Journey } from "./Journey";
+import { Content } from "./Content";
+import "./warmtepompen.css";
 
 export const metadata: Metadata = {
   title: "Warmtepomp voor uw woning | Rob Braam",
@@ -8,4 +12,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default WarmtepompPage;
+export default function WarmtepompenPage() {
+  return <>
+    <SiteHeader />
+    <main className="w5">
+      <Journey />
+      <Content />
+    </main>
+    <SiteFooter />
+  </>;
+}

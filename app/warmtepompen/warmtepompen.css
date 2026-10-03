@@ -1,0 +1,197 @@
+/* /warmtepompen. Het scrollverhaal (testversie 5): de woning op een wintermorgen, met de producten als echte foto's.
+
+   Rules of this page:
+   - one sticky stage like version 2, but daylight: the house on a sunny winter morning
+   - the copy reads in dark ink on a soft paper wash at the left, never on a dark scrim
+   - camera moves are small and every change of room is a soft crossfade
+   - the logo's blue for emphasis and buttons; the site header stays where it always is
+   - the only dark moment is the last one: the same house in the evening, lights on */
+
+.w5 {
+  --paper: #f2f5f8;
+  --paper-2: #e8eef3;
+  --ink: #0e1620;
+  --ink-soft: #46576a;
+  --blue: #0c70b8;
+  --blue-ink: #095c97;
+  --rule: rgba(14, 22, 32, .14);
+  --g: clamp(20px, 5.5vw, 88px);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-fira), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.w5 :is(h1, h2, h3, p, dl, dd, ol, ul, figure) { margin: 0; }
+.w5 :is(ol, ul) { padding: 0; list-style: none; }
+.w5 :is(h1, h2) { font-weight: 600; letter-spacing: -.02em; text-wrap: balance; }
+.w5 h1 { font-size: clamp(2.75rem, 5vw, 4.75rem); line-height: 1.03; }
+.w5 h2 { font-size: clamp(2.1rem, 3.4vw, 3.25rem); line-height: 1.07; }
+.w5 h3 { font-size: 1.1875rem; font-weight: 600; line-height: 1.3; }
+.w5 :is(h1, h2) em { font-style: normal; color: var(--blue); }
+.w5 p { text-wrap: pretty; }
+.w5 a { color: inherit; }
+.w5 :is(a, button):focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+/* The site header normally blurs whatever passes under it. Over a moving stage that
+   blur is recomputed every frame; here it gets a plain, nearly opaque ground. */
+body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(245, 248, 251, .97); }
+
+/* ---------- controls ---------- */
+.w5-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 28px; }
+.w5-button { display: inline-flex; align-items: center; gap: 16px; min-height: 56px; padding: 0 26px; border-radius: 6px; background: var(--blue); color: #fff !important; font-size: 1.0625rem; font-weight: 600; text-decoration: none; transition: background-color .2s; }
+.w5-button:hover { background: var(--blue-ink); }
+.w5-phone { display: inline-flex; align-items: center; min-height: 56px; font-size: 1.25rem; font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; }
+.w5-phone::before { content: "Bel ons"; margin-right: 10px; font-size: .9375rem; font-weight: 500; color: var(--ink-soft); }
+.w5-phone:hover { border-bottom-color: currentColor; }
+.w5-link { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.w5-link:hover { color: var(--blue); }
+
+/* ---------- the journey ---------- */
+.w5-track { position: relative; height: calc(var(--w5-track, 11) * 100svh); }
+.w5-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--paper-2); }
+.w5-plate { position: absolute; left: 0; top: 0; width: var(--w5-base-w, 100vw); height: var(--w5-base-h, 100svh); transform-origin: 0 0; will-change: transform, opacity; }
+.w5-plate > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: fill; }
+/* The house: blue hour underneath, the evening deepening over it (multiply), and
+   every light as its own layer added on top (plus-lighter); the morning photo
+   covers it all until the day turns. The plate is its own group for blending. */
+.w5-house { isolation: isolate; }
+.w5-evening { position: absolute; inset: 0; }
+.w5-evening > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: fill; }
+.w5-dark { mix-blend-mode: multiply; opacity: 0; }
+.w5-light { mix-blend-mode: plus-lighter; opacity: 0; }
+@supports not (mix-blend-mode: plus-lighter) { .w5-light { mix-blend-mode: screen; } }
+.w5-letterbox { -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%); }
+.w5-morning { position: absolute; inset: 0; }
+.w5-morning > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: fill; }
+/* A photographed product patch, feathered into its plate at a fixed place on the frame. */
+.w5-plate .w5-patch { inset: auto; }
+.w5-swap { opacity: 0; }
+/* Paper where the copy sits: a soft wash from the left, the photo keeps its right side. */
+.w5-paper { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(242, 245, 248, .97) 0%, rgba(242, 245, 248, .93) 27%, rgba(242, 245, 248, .55) 40%, rgba(242, 245, 248, 0) 52%); }
+
+.w5-copy { position: absolute; z-index: 3; left: var(--g); top: max(150px, 24svh); width: min(33rem, 36vw); pointer-events: none; }
+.w5-copy[data-active="true"] { pointer-events: auto; }
+.w5-hero { top: max(140px, 19svh); width: min(36rem, 40vw); }
+.w5-kicker { margin-bottom: 22px !important; font-size: .875rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.w5-intro { margin-top: 22px !important; max-width: 32ch; font-size: clamp(1.2rem, 1.45vw, 1.375rem); line-height: 1.55; color: var(--ink-soft); }
+.w5-route { display: flex; margin-top: 34px !important; max-width: 27rem; border-top: 1px solid var(--rule); }
+.w5-route li { flex: 1; position: relative; padding-top: 14px; font-size: 1rem; font-weight: 500; }
+.w5-route li::before { content: ""; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
+.w5-small { margin-top: 14px !important; font-size: 1rem; color: var(--ink-soft); }
+.w5-body { margin-top: 20px !important; max-width: 38ch; font-size: 1.1875rem; line-height: 1.65; color: var(--ink-soft); }
+.w5-keyline { margin-top: 20px !important; padding-top: 14px; max-width: 34ch; border-top: 1px solid var(--rule); font-size: 1.0625rem; font-weight: 500; line-height: 1.5; }
+.w5-vessels { display: grid; margin-top: 22px !important; max-width: 32rem; }
+.w5-vessels > div { display: grid; grid-template-columns: 8rem 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--rule); font-size: 1.125rem; }
+.w5-vessels dt { font-weight: 600; }
+.w5-vessels dd { color: var(--ink-soft); line-height: 1.5; }
+.w5-status { position: absolute; right: var(--g); bottom: 18px; z-index: 3; font-size: .875rem; color: var(--ink-soft); }
+
+/* ---------- the content ---------- */
+.w5-content > section { padding: clamp(72px, 12vh, 140px) var(--g); border-top: 1px solid var(--rule); }
+.w5-content p { line-height: 1.65; }
+.w5-benefits { display: grid; grid-template-columns: 5fr 7fr; gap: 48px clamp(32px, 6vw, 96px); background: #fff; }
+.w5-benefit-list article { display: grid; grid-template-columns: minmax(0, 15rem) 1fr; gap: 24px; padding: 26px 0; border-top: 1px solid var(--rule); }
+.w5-benefit-list p, .w5-installations-heading p, .w5-quote-intro p, .w5-process-intro p, .w5-brands-heading p, .w5-answer-list p, .w5-photo figcaption p, .w5-steps p, .w5-signals dd, .w5-care-intro p { color: var(--ink-soft); font-size: 1.125rem; }
+.w5-benefit-next { grid-column: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding-top: 26px; border-top: 2px solid var(--blue); }
+.w5-benefit-next p { max-width: 54ch; font-size: 1.125rem; }
+
+.w5-installations { display: grid; grid-template-columns: 4fr 4fr 3fr; gap: clamp(20px, 3vw, 40px); align-items: start; }
+.w5-installations-heading { grid-column: 3; grid-row: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+.w5-photo { grid-row: 1; }
+.w5-photo-a { grid-column: 1; }
+.w5-photo-b { grid-column: 2; }
+.w5-photo img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; display: block; border-radius: 4px; }
+.w5-photo figcaption { padding-top: 16px; }
+.w5-photo figcaption p { margin-top: 6px; }
+
+.w5-quote { display: grid; grid-template-columns: 5fr 7fr; gap: 40px clamp(32px, 6vw, 96px); background: var(--paper-2); }
+.w5-quote-intro p { margin-top: 24px; max-width: 40ch; }
+.w5-signals { display: grid; grid-template-columns: repeat(3, 1fr); align-self: start; border-top: 2px solid var(--blue); }
+.w5-signals > div { padding: 22px 22px 0 0; }
+.w5-signals > div + div { padding-left: 22px; border-left: 1px solid var(--rule); }
+.w5-signals dt { font-size: 1.3rem; font-weight: 600; }
+.w5-signals dd { margin-top: 10px; line-height: 1.55; }
+.w5-quote-followup { grid-column: 2; max-width: 60ch; color: var(--ink-soft); font-size: 1.0625rem; }
+.w5-quote-followup a { color: var(--blue-ink); }
+
+.w5-process { display: grid; gap: 56px; background: #fff; }
+.w5-process-intro { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 96px); align-items: end; }
+.w5-process-intro p { max-width: 46ch; }
+.w5-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); }
+.w5-steps::before { content: ""; position: absolute; top: 6px; left: 0; right: 0; height: 2px; background: var(--blue); }
+.w5-steps li { position: relative; padding: 36px 28px 0 0; }
+.w5-steps li::before { content: ""; position: absolute; top: 0; left: 0; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--blue); }
+.w5-steps p { margin-top: 10px; }
+
+.w5-care { display: grid; grid-template-columns: 5fr 7fr; gap: 48px clamp(32px, 6vw, 96px); }
+.w5-care-intro p { margin-top: 22px; max-width: 42ch; }
+.w5-care-intro .w5-fine { font-size: 1rem; }
+.w5-care-plans { display: grid; grid-template-columns: 1fr 1fr; align-content: start; }
+.w5-care-kind { grid-column: 1 / -1; padding-bottom: 14px; border-bottom: 1px solid var(--rule); font-size: .9375rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.w5-plan { display: flex; flex-direction: column; gap: 6px; padding: 28px 28px 28px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.w5-plan + .w5-plan { padding-left: 28px; border-left: 1px solid var(--rule); }
+.w5-plan h3 { margin-bottom: 16px; font-size: 1.4rem; }
+.w5-plan-from, .w5-plan-period { font-size: 1rem; color: var(--ink-soft); }
+.w5-plan strong { font-size: clamp(2.6rem, 4vw, 3.6rem); font-weight: 600; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.w5-plan strong small { font-size: .5em; vertical-align: .55em; margin-right: 2px; }
+.w5-plan-link { margin-top: 18px; font-weight: 600; color: var(--blue-ink); }
+.w5-plan:hover .w5-plan-link { text-decoration: underline; text-underline-offset: 5px; }
+.w5-care-terms { grid-column: 1 / -1; padding-top: 18px; font-size: 1rem; color: var(--ink-soft); }
+.w5-care-terms a { color: var(--blue-ink); }
+
+.w5-brands { display: grid; grid-template-columns: 5fr 7fr; gap: 40px clamp(32px, 6vw, 96px); background: #fff; }
+.w5-brands-heading p { margin-top: 22px; max-width: 42ch; }
+.w5-brand-list li { display: grid; grid-template-columns: 10rem 1fr auto; align-items: center; gap: 24px; padding: 22px 0; border-top: 1px solid var(--rule); font-size: 1.0625rem; }
+.w5-brand-list li:last-child { border-bottom: 1px solid var(--rule); }
+.w5-brand-logo img { width: 100%; max-width: 130px; height: 44px; object-fit: contain; object-position: left center; }
+.w5-brand-list a { text-decoration: none; border-bottom: 1px solid currentColor; }
+.w5-brand-list a:hover { color: var(--blue); }
+
+.w5-answers { display: grid; grid-template-columns: 5fr 7fr; gap: 40px clamp(32px, 6vw, 96px); }
+.w5-answer-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+.w5-answer-list article { padding: 22px 0 30px; border-top: 1px solid var(--rule); }
+.w5-answer-list h3 { font-size: 1.3rem; }
+.w5-answer-list p { margin-top: 10px; }
+
+.w5-closing { display: grid; grid-template-columns: 5fr 6fr; gap: 32px clamp(32px, 6vw, 96px); align-items: end; background: #fff; border-top: 2px solid var(--blue) !important; }
+.w5-closing h2 { font-size: clamp(2.6rem, 5vw, 4.5rem); max-width: 12ch; }
+.w5-closing p { max-width: 44ch; font-size: 1.25rem; color: var(--ink-soft); }
+.w5-contact { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 30px !important; font-size: 1rem !important; }
+
+
+/* ---------- phones ---------- */
+@media (max-width: 759px) {
+  .w5 h1 { font-size: clamp(2.3rem, 10.5vw, 2.9rem); }
+  .w5 h2 { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+  /* The house in the upper part, the copy on paper below it. */
+  .w5-paper { background: linear-gradient(to top, rgba(242, 245, 248, .98) 0%, rgba(242, 245, 248, .95) 40%, rgba(242, 245, 248, .6) 50%, rgba(242, 245, 248, 0) 58%); }
+  .w5-copy, .w5-hero { left: 0; right: 0; top: auto; bottom: 0; width: auto; padding: 0 20px calc(22px + env(safe-area-inset-bottom)); }
+  .w5-kicker { margin-bottom: 10px !important; font-size: .75rem; }
+  .w5-intro { margin-top: 12px !important; font-size: 1.0625rem; }
+  .w5-body { margin-top: 12px !important; font-size: 1.0625rem; }
+  .w5-keyline { margin-top: 12px !important; padding-top: 10px; font-size: 1rem; }
+  .w5-route, .w5-small { display: none; }
+  .w5-actions { margin-top: 16px; }
+  .w5-button { width: 100%; justify-content: center; }
+  .w5-vessels { margin-top: 12px !important; }
+  .w5-vessels > div { grid-template-columns: 6.5rem 1fr; padding: 8px 0; font-size: 1rem; }
+  .w5-content > section { padding: 64px 20px; }
+  .w5-benefits, .w5-quote, .w5-process-intro, .w5-care, .w5-brands, .w5-answers, .w5-closing { grid-template-columns: 1fr; }
+  .w5-benefit-list article { grid-template-columns: 1fr; gap: 8px; }
+  .w5-benefit-next, .w5-quote-followup { grid-column: 1; }
+  .w5-installations { grid-template-columns: 1fr; }
+  .w5-installations-heading, .w5-photo-a, .w5-photo-b { grid-column: 1; grid-row: auto; }
+  .w5-signals { grid-template-columns: 1fr; }
+  .w5-signals > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+  .w5-signals > div { padding-bottom: 18px; }
+  .w5-steps { grid-template-columns: 1fr; padding-left: 30px; }
+  .w5-steps::before { top: 0; bottom: 0; left: 6px; right: auto; width: 2px; height: auto; }
+  .w5-steps li { padding: 0 0 30px; }
+  .w5-steps li::before { left: -30px; top: 4px; }
+  .w5-care-plans { grid-template-columns: 1fr; }
+  .w5-plan + .w5-plan { padding-left: 0; border-left: 0; }
+  .w5-brand-list li { grid-template-columns: 7rem 1fr; }
+  .w5-brand-list a { grid-column: 2; justify-self: start; }
+  .w5-answer-list { grid-template-columns: 1fr; }
+}
+
