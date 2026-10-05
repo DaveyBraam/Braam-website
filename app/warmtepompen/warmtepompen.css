@@ -84,6 +84,14 @@ body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: non
 .w5-vessels > div { display: grid; grid-template-columns: 8rem 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--rule); font-size: 1.125rem; }
 .w5-vessels dt { font-weight: 600; }
 .w5-vessels dd { color: var(--ink-soft); line-height: 1.5; }
+/* A small hint at the bottom of the first screen; it fades as soon as the page moves. */
+.w5-cue { position: absolute; z-index: 3; left: 50%; transform: translateX(-50%); bottom: calc(var(--w5-lift, 0px) + 22px); display: inline-flex; flex-direction: column; align-items: center; gap: 10px; font-size: .8125rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; color: var(--ink); text-decoration: none; text-shadow: 0 0 10px rgba(242, 245, 248, .95), 0 0 2px rgba(242, 245, 248, .9); }
+.w5-cue:hover { color: var(--ink); }
+.w5-cue[data-room="no"] { display: none; }
+.w5-cue i { order: 2; position: relative; width: 2px; height: 34px; overflow: hidden; border-radius: 1px; background: rgba(14, 22, 32, .25); }
+.w5-cue i::after { content: ""; position: absolute; left: 0; top: -45%; width: 2px; height: 45%; background: var(--blue); animation: w5-cue 2.4s cubic-bezier(.6, 0, .3, 1) infinite; }
+@keyframes w5-cue { 0% { top: -45%; } 75%, 100% { top: 100%; } }
+@media (prefers-reduced-motion: reduce) { .w5-cue i::after { animation: none; top: 30%; } }
 .w5-status { position: absolute; right: var(--g); bottom: 18px; z-index: 3; font-size: .875rem; color: var(--ink-soft); }
 
 /* ---------- the content ---------- */
@@ -164,8 +172,14 @@ body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: non
   .w5 h1 { font-size: clamp(2.3rem, 10.5vw, 2.9rem); }
   .w5 h2 { font-size: clamp(1.85rem, 8vw, 2.3rem); }
   /* The house in the upper part, the copy on paper below it. */
-  .w5-paper { background: linear-gradient(to top, rgba(242, 245, 248, .98) 0%, rgba(242, 245, 248, .95) 40%, rgba(242, 245, 248, .6) 50%, rgba(242, 245, 248, 0) 58%); }
+  .w5-paper { background: linear-gradient(to top, rgba(242, 245, 248, .98) 0%, rgba(242, 245, 248, .95) calc(40% + var(--w5-lift, 0px)), rgba(242, 245, 248, .6) calc(50% + var(--w5-lift, 0px)), rgba(242, 245, 248, 0) calc(58% + var(--w5-lift, 0px))); }
   .w5-copy, .w5-hero { left: 0; right: 0; top: auto; bottom: 0; width: auto; padding: 0 20px calc(22px + env(safe-area-inset-bottom)); }
+  /* The opening screen keeps its button and the scroll hint above the fold (the phone
+     number is in the bar at the top), and the paper under the copy lifts with it. */
+  .w5-hero { padding-bottom: calc(var(--w5-lift, 0px) + 50px + env(safe-area-inset-bottom)); }
+  .w5-hero .w5-phone { display: none; }
+  .w5-cue { flex-direction: row; gap: 12px; bottom: calc(var(--w5-lift, 0px) + 16px + env(safe-area-inset-bottom)); text-shadow: none; }
+  .w5-cue i { order: 0; height: 22px; }
   .w5-kicker { margin-bottom: 10px !important; font-size: .75rem; }
   .w5-intro { margin-top: 12px !important; font-size: 1.0625rem; }
   .w5-body { margin-top: 12px !important; font-size: 1.0625rem; }

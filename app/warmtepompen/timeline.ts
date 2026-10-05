@@ -31,7 +31,7 @@ export type Frame = {
 
 export const TRACK = 10.9;
 
-/** The evening lights, in the order they switch on: one layer each (public/warmtepomp-test-v3/licht-*.webp). */
+/** The evening lights, in the order they switch on: one layer each (public/warmtepompen/reis/licht-*.webp). */
 export const LIGHTS = ["buren", "woonkamer", "boven-links", "boven-rechts", "garage", "lamp-schuifpui", "lamp-links", "lamp-garage"] as const;
 export const FRAME = { width: 1600, height: 900 };
 
@@ -86,8 +86,10 @@ export function frameAt(rawT: number, mobile: boolean, vw: number, vh: number, r
   const E0 = m ? V(2.1, 0.75, 0.66, 0.5, 0.3) : V(1, 0.58, 0.5);
   const E1 = m ? V(2.15, 0.752, 0.665, 0.5, 0.3) : V(1.06, 0.6, 0.53);
   const E2 = m ? V(2.6, unit.fx, unit.fy, 0.5, up) : V(2.4, unit.fx, unit.fy, sx, 0.55);
-  const G1 = m ? V(1, marks.installation.fx + 0.025, marks.installation.fy, 0.5, up) : V(1, marks.installation.fx, marks.installation.fy, sx, 0.5);
-  const G2 = m ? V(1.25, marks.vessels.fx + 0.03, marks.vessels.fy, 0.5, up) : V(1.3, marks.vessels.fx + 0.02, marks.vessels.fy, sx, 0.52);
+  // Phones: the garage a little smaller and higher, so the whole installation stands
+  // above the copy instead of disappearing into the paper under it.
+  const G1 = m ? V(0.72, marks.installation.fx + 0.025, 0.56, 0.5, 0.3) : V(1, marks.installation.fx, marks.installation.fy, sx, 0.5);
+  const G2 = m ? V(0.9, marks.vessels.fx + 0.02, 0.56, 0.5, 0.3) : V(1.3, marks.vessels.fx + 0.02, marks.vessels.fy, sx, 0.52);
   const L0 = m ? V(1.15, marks.thermostat.fx - 0.06, 0.5, 0.5, up) : V(1.05, 0.62, 0.5, sx, 0.5);
   const L1 = m ? V(1.5, marks.thermostat.fx, marks.thermostat.fy, 0.5, up) : V(1.6, marks.thermostat.fx, marks.thermostat.fy, sx, 0.48);
   const F0 = m ? V(1, 0.6, 0.55, 0.5, 0.4) : V(1.04, 0.6, 0.52);
@@ -108,7 +110,7 @@ export function frameAt(rawT: number, mobile: boolean, vw: number, vh: number, r
   // sideways and grew just as the text came in.
   // Phones show a narrow strip of the garage: with the swap it pans right so the
   // boilervat and the hydraulic station beside it are both in view.
-  const GE = m ? V(1, 0.635, marks.installation.fy, 0.5, up) : G1;
+  const GE = m ? V(0.72, 0.57, 0.56, 0.5, 0.3) : G1;
   const gar = t < 4.5 ? G1 : t < 5.4 ? mixView(G1, GE, ease(4.5, 5.1, t)) : mixView(GE, G2, ease(5.4, 6.3, t));
   // The living room starts at its own covering framing for the same reason.
   const liv = mixView(L0, L1, ease(6.45, 7.8, t));

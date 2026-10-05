@@ -19,7 +19,7 @@ const anchors: Record<CopyId, number> = { hero: 0.2, werking: 2.0, hybride: 3.8,
 export function Journey() {
   const track = useRef<HTMLDivElement>(null), stage = useRef<HTMLDivElement>(null);
   const extPlate = useRef<HTMLDivElement>(null), garPlate = useRef<HTMLDivElement>(null), livPlate = useRef<HTMLDivElement>(null);
-  const morning = useRef<HTMLDivElement>(null), electric = useRef<HTMLImageElement>(null), evening = useRef<HTMLDivElement>(null), dark = useRef<HTMLImageElement>(null);
+  const cue = useRef<HTMLAnchorElement>(null), morning = useRef<HTMLDivElement>(null), electric = useRef<HTMLImageElement>(null), evening = useRef<HTMLDivElement>(null), dark = useRef<HTMLImageElement>(null);
   const reduced = useSyncExternalStore(subscribeMotion, restricted, () => false);
 
   const go = (t: number) => {
@@ -36,7 +36,7 @@ export function Journey() {
     const copies = Array.from(st.querySelectorAll<HTMLElement>("[data-copy]"));
     const lights = Array.from(st.querySelectorAll<HTMLImageElement>("[data-light]"));
     const mobileQuery = matchMedia("(max-width: 759px)");
-    let raf = 0, vw = 1, vh = 1, baseW = 1, baseH = 1, lastT = -1;
+    let raf = 0, vw = 1, vh = 1, baseW = 1, baseH = 1, lastT = -1, head = 0, lift = -1;
 
     // Decode every photograph up front, so none of them is unpacked (and stutters)
     // at the moment it first fades in.
@@ -45,11 +45,20 @@ export function Journey() {
       if (img.complete) decode(); else img.addEventListener("load", decode, { once: true });
     });
 
+    /** The scroll hint shows unless the opening copy runs down to the bottom of the
+        first screen (short laptop windows). */
+    const roomForCue = () => {
+      const c = cue.current, hero = st.querySelector<HTMLElement>(".w5-hero");
+      if (!c || !hero) return;
+      c.dataset.room = mobileQuery.matches || vh - head - (hero.offsetTop + hero.offsetHeight) > 60 ? "yes" : "no";
+    };
     const layout = () => {
       vw = st.clientWidth; vh = st.clientHeight;
       const cover = Math.max(vw / FRAME.width, vh / FRAME.height);
       baseW = FRAME.width * cover; baseH = FRAME.height * cover;
       st.style.setProperty("--w5-base-w", `${baseW}px`); st.style.setProperty("--w5-base-h", `${baseH}px`);
+      head = Math.max(0, el.getBoundingClientRect().top + scrollY);
+      roomForCue();
       lastT = -1;
     };
     /** Only touch a style when its value actually changes. */
@@ -65,9 +74,10 @@ export function Journey() {
       return r;
     };
     const apply = (f: Frame) => {
-      const ext = place("ext", f); place("gar", f); place("liv", f);
+      const ext = place("ext", f), gar = place("gar", f); place("liv", f);
       // A letterboxed house (the phone finale) fades into the paper around it.
       extPlate.current?.classList.toggle("w5-letterbox", ext.height < vh - 1);
+      garPlate.current?.classList.toggle("w5-letterbox", gar.height < vh - 1);
       // The same house through the day: the morning photo lies over the blue-hour
       // one in exactly the same frame; under it the evening deepens and each light
       // is its own layer, added on top of the photograph.
@@ -93,6 +103,15 @@ export function Journey() {
       const t = -el.getBoundingClientRect().top / Math.max(1, vh);
       if (t === lastT) return;
       apply(frameAt(t, mobileQuery.matches, vw, vh, reduced));
+      // At the top of the page the site header sits above the stage, so the stage's
+      // lowest part starts below the fold. Until the header has scrolled away, the
+      // opening copy and the scroll hint are lifted by what is still hidden.
+      const hidden = Math.round(Math.max(0, head - scrollY));
+      if (hidden !== lift) { lift = hidden; st.style.setProperty("--w5-lift", `${lift}px`); }
+      // The hint stays while the opening is on screen and fades as the journey starts.
+      const hint = 1 - Math.min(1, Math.max(0, (t - 0.25) / 0.3));
+      set(cue.current, "opacity", hint.toFixed(3));
+      set(cue.current, "visibility", hint > 0 ? "visible" : "hidden");
       lastT = t;
     };
     const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
@@ -103,6 +122,7 @@ export function Journey() {
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) wake(); }, { rootMargin: "10% 0px" });
     io.observe(el);
     layout(); addEventListener("scroll", wake, { passive: true }); addEventListener("resize", resize);
+    void document.fonts?.ready.then(roomForCue);
     const updaters = (window.__scrubUpdaters ??= []); updaters.push(now);
     wake();
     return () => {
@@ -146,6 +166,8 @@ export function Journey() {
           <ol className="w5-route" aria-label="Van advies tot onderhoud"><li>Advies</li><li>Installatie</li><li>Onderhoud</li></ol>
           <p className="w5-small">Eén eigen team. Ook na de installatie.</p>
         </section>
+
+        <a className="w5-cue" ref={cue} href="#ws-title-2" onClick={e => { e.preventDefault(); go(anchors.werking); }}><i aria-hidden="true" />Scroll naar beneden</a>
 
         <section className="w5-copy" data-copy="werking" aria-labelledby="ws-title-2">
           <h2 id="ws-title-2">Warmte van buiten.<br /><em>Comfort binnen.</em></h2>
