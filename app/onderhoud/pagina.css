@@ -1,0 +1,303 @@
+/* Onderhoud: de pagina onder de hero.
+
+   Doel: dezelfde inhoud, maar de klant ziet sneller waar hij is en wat de
+   volgende stap is. Vijf hoofdstukken in klantvolgorde, afwisselend op papier
+   en op een iets donkerder vlak, met een wijzer bovenin. Eén beweging in de
+   inhoud: de lijn langs de startstappen. Alles onder main.oh-pagina, zodat de
+   live pagina's niets merken. */
+
+.oh-pagina {
+  --oh-vlak: #e6edf2;
+  --oh-tekst: #2f4352;
+  --oh-kop: 72px;
+}
+
+/* De wijzer is op deze pagina het overzicht; de grote offerteknop in het
+   mobiele menu hoort bij een andere vraag (op verzoek van Davey weg). */
+body:has(main.oh-pagina) .mobile-offer { display: none; }
+
+/* ---- Hoofdstukwijzer ------------------------------------------------------ */
+
+.oh-pagina nav.oh-wijzer {
+  position: sticky;
+  top: var(--oh-kop);
+  z-index: 25;
+  display: block;
+  height: 54px;
+  margin: 0 0 -54px;
+  background: rgba(242, 245, 248, .94);
+  border-bottom: 1px solid var(--hair);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .3s cubic-bezier(.2, .75, .25, 1);
+}
+.oh-pagina nav.oh-wijzer.is-zichtbaar { opacity: 1; transform: none; pointer-events: auto; }
+.oh-wijzer ol {
+  display: flex;
+  gap: clamp(18px, 3vw, 44px);
+  height: 100%;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.oh-wijzer ol::-webkit-scrollbar { display: none; }
+.oh-wijzer li { flex: none; }
+.oh-pagina .oh-wijzer a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: var(--on-ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.oh-pagina .oh-wijzer a::after { display: none; }
+.oh-pagina .oh-wijzer a:hover,
+.oh-pagina .oh-wijzer a[aria-current] { color: var(--on-ink); }
+/* De voortgang binnen het hoofdstuk: een haarlijn onder het label. */
+.oh-wijzer a i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--lime);
+  transform: scaleX(var(--vul, 0));
+  transform-origin: left;
+  opacity: .28;
+}
+.oh-wijzer a[aria-current] i { opacity: 1; }
+
+.oh-pagina .oh-hoofdstuk { scroll-margin-top: calc(var(--oh-kop) + 40px); }
+.oh-pagina section.oh-vlak { background: var(--oh-vlak); }
+
+/* Leestekst iets donkerder dan de rest van de site: dit is een pagina om te
+   lezen en te vergelijken. */
+.oh-pagina .oh-hoofdstuk .split-heading > p,
+.oh-pagina .oh-hoofdstuk .check-list li { color: var(--oh-tekst); }
+
+/* ---- 1. Los of abonnement -------------------------------------------------- */
+
+.oh-keuze {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(32px, 4vw, 52px);
+}
+.oh-keuze article {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3vw, 40px);
+  background: var(--white);
+  border: 1px solid var(--hair);
+}
+.oh-keuze article.is-abonnement { border-top: 3px solid var(--lime); }
+.oh-pagina .oh-keuze h3 {
+  margin: 0;
+  color: var(--on-ink);
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.oh-pagina .oh-keuze article > p { margin: 14px 0 0; color: var(--oh-tekst); font-size: var(--t-body); line-height: 1.65; }
+.oh-keuze .check-list { margin-bottom: 28px; }
+.oh-pagina .oh-keuze-knop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+  min-height: 54px;
+  padding: 0 22px;
+  border: 1px solid var(--on-ink);
+  border-radius: 999px;
+  color: var(--on-ink);
+  font-size: 15px;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background-color .2s ease, color .2s ease;
+}
+.oh-pagina .oh-keuze-knop:hover { background: var(--on-ink); color: var(--white); }
+.oh-pagina .is-abonnement .oh-keuze-knop { background: var(--lime); border-color: var(--lime); color: var(--white); }
+.oh-pagina .is-abonnement .oh-keuze-knop:hover { background: #095a94; border-color: #095a94; }
+
+/* Een opmerking die ertoe doet staat in een rustig kader met een lijn ervoor. */
+.oh-pagina .oh-kader {
+  max-width: 820px;
+  margin: 28px 0 0;
+  padding: 18px 22px;
+  background: rgba(12, 112, 184, .06);
+  border-left: 3px solid var(--lime);
+  color: var(--oh-tekst);
+  font-size: var(--t-small);
+  line-height: 1.65;
+}
+.oh-pagina .oh-kader strong { color: var(--on-ink); }
+
+/* ---- Genummerde stappen (abonnement en verhuurders) ------------------------ */
+
+.oh-stappen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  margin: clamp(32px, 4vw, 48px) 0 clamp(44px, 5vw, 64px);
+  padding: 0;
+  list-style: none;
+}
+.oh-stappen li { padding-top: 18px; border-top: 1px solid var(--hair-strong); }
+.oh-stappen span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+}
+.oh-pagina .oh-stappen h3 { margin: 14px 0 0; color: var(--on-ink); font-size: var(--t-subhead); font-weight: 600; line-height: 1.25; }
+.oh-pagina .oh-stappen p { margin: 8px 0 0; color: var(--oh-tekst); font-size: var(--t-body); line-height: 1.6; }
+
+.oh-pagina .onderhoud-blok .oh-stappen li { border-top-color: rgba(255, 255, 255, .22); }
+.oh-pagina .onderhoud-blok .oh-stappen h3 { color: #fff; }
+.oh-pagina .onderhoud-blok .oh-stappen p { color: rgba(255, 255, 255, .74); }
+
+/* ---- 3. Zo start het: de tijdlijn ------------------------------------------ */
+
+.oh-start {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(40px, 7vw, 110px);
+  align-items: start;
+}
+.oh-start-kop { position: sticky; top: calc(var(--oh-kop) + 90px); }
+.oh-pagina .oh-start-kop h2 { max-width: none; margin: 0; font-size: clamp(2rem, 3.3vw, 3.25rem); overflow-wrap: break-word; }
+.oh-pagina .oh-start-kop > p:not(.oh-kader) { margin: 22px 0 0; color: var(--oh-tekst); font-size: var(--t-lead); line-height: 1.7; }
+
+.oh-tijdlijn {
+  --vul: 0;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* De rail en de lijn die meeloopt met het lezen. */
+.oh-tijdlijn::before,
+.oh-tijdlijn::after {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  background: var(--hair);
+}
+.oh-tijdlijn::after {
+  background: var(--lime);
+  transform: scaleY(var(--vul));
+  transform-origin: top;
+}
+.oh-tijdlijn li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  column-gap: 24px;
+  padding: 0 0 clamp(34px, 5vh, 52px);
+}
+.oh-tijdlijn li:last-child { padding-bottom: 0; }
+.oh-tijdlijn span {
+  position: relative;
+  z-index: 1;
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--hair-strong);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--on-ink-soft);
+  font-size: 16px;
+  font-weight: 700;
+  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
+}
+.oh-tijdlijn li.is-bereikt span { background: var(--lime); border-color: var(--lime); color: var(--white); }
+.oh-pagina .oh-tijdlijn h3 { margin: 9px 0 0; color: var(--on-ink); font-size: var(--t-subhead); font-weight: 600; line-height: 1.25; }
+.oh-pagina .oh-tijdlijn p { margin: 8px 0 0; max-width: 520px; color: var(--oh-tekst); font-size: var(--t-body); line-height: 1.65; }
+
+/* ---- 4. Ons team ------------------------------------------------------------ */
+
+.oh-team-lijst {
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(24px, 4vw, 56px);
+}
+.oh-pagina .oh-team-lijst li { font-size: var(--t-body); }
+.oh-pagina .oh-tussenkop { margin-top: clamp(64px, 8vw, 104px); }
+
+/* ---- 5. Aanvragen: de prijzen worden echte tikvlakken ---------------------- */
+
+.oh-pagina .onderhoud-prijzen-rij > a {
+  background: var(--white);
+  border: 1px solid var(--hair);
+  transition: border-color .2s ease, transform .3s cubic-bezier(.2, .75, .25, 1);
+}
+.oh-pagina .onderhoud-prijzen-rij > a:hover { border-color: var(--lime); transform: translateY(-3px); }
+
+/* ---- Telefoon ---------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .oh-keuze,
+  .oh-stappen,
+  .oh-start,
+  .oh-team-lijst { grid-template-columns: 1fr; }
+  .oh-start-kop { position: static; }
+  .oh-stappen li { display: grid; grid-template-columns: 34px 1fr; column-gap: 16px; padding-top: 16px; }
+  .oh-stappen span { grid-row: span 2; }
+  .oh-pagina .oh-stappen h3 { margin-top: 5px; }
+}
+
+@media (max-width: 760px) {
+  .oh-pagina nav.oh-wijzer { height: 48px; margin-bottom: -48px; }
+  .oh-wijzer ol { gap: 22px; }
+  .oh-pagina .oh-wijzer a { font-size: 14px; }
+
+  /* Leesbare maat op de telefoon: niets onder 15px in de lopende tekst. */
+  .oh-pagina .oh-hoofdstuk .split-heading > p,
+  .oh-pagina .oh-keuze article > p,
+  .oh-pagina .oh-stappen p,
+  .oh-pagina .oh-tijdlijn p,
+  .oh-pagina .onderhoud-blok .split-heading > p { font-size: 16px; line-height: 1.65; }
+  .oh-pagina .oh-hoofdstuk .check-list li { font-size: 15px; padding-top: 13px; padding-bottom: 13px; }
+  .oh-pagina .oh-kader { font-size: 15px; padding: 16px 18px; }
+  .oh-pagina .oh-keuze h3 { font-size: 24px; }
+  .oh-pagina .oh-stappen h3,
+  .oh-pagina .oh-tijdlijn h3 { font-size: 18px; }
+  .oh-keuze article { padding: 24px 20px; }
+  .oh-pagina .oh-keuze-knop { width: 100%; }
+  .oh-tijdlijn li { grid-template-columns: 44px 1fr; column-gap: 16px; padding-bottom: 32px; }
+
+  /* De keurmerken en de installatiekeuze onder elkaar in plaats van krap naast elkaar. */
+  .oh-pagina .cert-register { grid-template-columns: 1fr; }
+  .oh-pagina .cert-register p { font-size: 15px; }
+  .oh-pagina .cert-register-logo { height: 76px; }
+  .oh-pagina .abo-tabs { grid-template-columns: 1fr; }
+  .oh-pagina .abo-tab { min-height: 64px; border-right: 0; border-bottom: 1px solid var(--hair); }
+  .oh-pagina .abo-tab:last-child { border-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oh-pagina nav.oh-wijzer,
+  .oh-tijdlijn span,
+  .oh-pagina .oh-keuze-knop,
+  .oh-pagina .onderhoud-prijzen-rij > a { transition: none; }
+  /* Zonder beweging staat de lijn meteen helemaal getekend. */
+  .oh-tijdlijn::after { transform: none; }
+  .oh-tijdlijn li span { background: var(--lime); border-color: var(--lime); color: var(--white); }
+}
