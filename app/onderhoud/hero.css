@@ -1,12 +1,12 @@
-/* Onderhoud-hero. Warm en iets donkerder dan de rest van de site. De foto loopt tot de rand en vervloeit links in de
+/* Onderhoud-hero. Donkerblauw, in de huiskleuren (blauw, wit, donkerblauw, zwart). De foto loopt tot de rand en vervloeit links in de
    grond, zodat er geen kader ontstaat. Alleen transform en opacity bewegen. */
 
 .dienst section.oh-hero {
   padding-block: 0;
-  --oh-grond: #17120d;
-  --oh-inkt: #f4ece0;
-  --oh-inkt-zacht: #c4b6a4;
-  --oh-lijn: rgba(244, 236, 224, .16);
+  --oh-grond: #091521;
+  --oh-inkt: #eef3f9;
+  --oh-inkt-zacht: #a3b4c6;
+  --oh-lijn: rgba(255, 255, 255, .14);
   --oh-p: 0;
   position: relative;
   isolation: isolate;
@@ -46,11 +46,11 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(23, 18, 13, .28) 0%, transparent 22%, transparent 70%, rgba(23, 18, 13, .7) 100%);
+    linear-gradient(180deg, rgba(9, 21, 33, .28) 0%, transparent 22%, transparent 70%, rgba(9, 21, 33, .7) 100%);
   pointer-events: none;
 }
 
-/* Warm licht als eigen vlak: het lost trager op dan de foto
+/* Koel licht als eigen vlak: het lost trager op dan de foto
    beweegt, zodat het los van het beeld lijkt te hangen. */
 .oh-hero-licht {
   position: absolute;
@@ -59,7 +59,7 @@
   top: -18%;
   width: 52vw;
   height: 70%;
-  background: radial-gradient(closest-side, rgba(255, 196, 120, .30), rgba(255, 170, 90, .10) 55%, transparent 100%);
+  background: radial-gradient(closest-side, rgba(12, 112, 184, .22), rgba(12, 112, 184, .06) 55%, transparent 100%);
   mix-blend-mode: screen;
   opacity: calc(1 - var(--oh-p) * 1.4);
   transform: translate3d(0, calc(var(--oh-p) * -30%), 0);
@@ -101,7 +101,7 @@
 .oh-hero h1 em {
   display: block;
   margin-top: .18em;
-  color: #e9b877;
+  color: #7cc0f7;
   font-style: normal;
   font-weight: 500;
   font-size: .62em;
@@ -149,12 +149,12 @@
   font-size: 15px;
   transition: color .2s ease, transform .3s cubic-bezier(.2, .75, .25, 1);
 }
-.oh-hero-index a:hover { color: #e9b877; transform: translateX(6px); }
+.oh-hero-index a:hover { color: #7cc0f7; transform: translateX(6px); }
 .oh-hero-index strong { font-size: 18px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .oh-hero-index strong small { color: var(--oh-inkt-zacht); font-size: 12px; font-weight: 500; }
 .dienst .oh-hero .oh-hero-noot { margin: 12px 0 0; color: var(--oh-inkt-zacht); font-size: 12px; }
 
-.oh-hero a:focus-visible { outline: 2px solid #e9b877; outline-offset: 4px; }
+.oh-hero a:focus-visible { outline: 2px solid #7cc0f7; outline-offset: 4px; }
 
 @media (max-width: 760px) {
   .dienst section.oh-hero { display: block; min-height: 0; }

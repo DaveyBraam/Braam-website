@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
    toestel met een merklogo is geen bestaand product.
 
    Diepte komt uit drie vlakken die bij scrollen elk een eigen snelheid hebben:
-   de foto (traagst), een warme lichtsluier over de lucht, en de tekst. */
+   de foto (traagst), een koele lichtsluier over de lucht, en de tekst. */
 
 const installaties = [
   { naam: "Alleen een cv-ketel", prijs: "11,58", href: "/abonnement-aanvragen?abonnement=cv-comfort#aanvraagformulier" },
