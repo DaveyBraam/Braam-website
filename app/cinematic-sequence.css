@@ -1,21 +1,16 @@
-/* The existing four-scene film, with the quiet typography of the homepage. */
+/* The four-scene film playing behind the homepage's opening, with its quiet typography.
+   One screen high; nothing here follows the scroll. */
 .cinema-sequence {
-  --cinema-copy-opacity: 1;
-  --cinema-copy-y: 0px;
-  --cinema-work: 0;
-  --cinema-bridge: 0;
   --cinema-rule: rgba(238, 243, 249, .28);
   --cinema-muted: #c3ced8;
   position: relative;
-  height: 380svh;
   background: #03080b;
   color: #eef3f9;
   isolation: isolate;
 }
 
 .cinema-stage {
-  position: sticky;
-  top: 84px;
+  position: relative;
   height: calc(100svh - 84px);
   min-height: 560px;
   overflow: hidden;
@@ -24,7 +19,7 @@
 }
 
 .cinema-camera,
-.cinema-canvas,
+.cinema-video,
 .cinema-poster,
 .cinema-depth,
 .cinema-grade,
@@ -42,17 +37,18 @@
   object-fit: cover;
 }
 
-.cinema-canvas {
+.cinema-video {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  /* The poster underneath is the film's first frame; the film fades in over it
+     once it really plays, so a refused autoplay simply leaves the photograph. */
   opacity: 0;
-  /* No per-frame CSS filter: the footage already carries its colour grade. */
-  transform: translateZ(0);
-  backface-visibility: hidden;
+  transition: opacity .6s ease;
 }
 
-.cinema-canvas[data-ready="true"] { opacity: 1; }
+.cinema-sequence[data-playing="true"] .cinema-video { opacity: 1; }
 
 /* Light is shaped around the text; the picture itself keeps its natural colour. */
 .cinema-depth {
@@ -85,9 +81,6 @@
 
 .cinema-copy {
   max-width: 740px;
-  opacity: var(--cinema-copy-opacity);
-  transform: translate3d(0, var(--cinema-copy-y), 0);
-  will-change: opacity, transform;
 }
 
 .cinema-copy h1 {
@@ -206,7 +199,7 @@
 }
 
 @media (max-width: 960px) {
-  .cinema-stage { top: 72px; height: calc(100svh - 72px); }
+  .cinema-stage { height: calc(100svh - 72px); }
   .cinema-copy { max-width: 580px; }
   .cinema-story { display: none; }
   .cinema-footer { grid-template-columns: 1fr; gap: 20px; }
@@ -214,7 +207,6 @@
 }
 
 @media (max-width: 660px) {
-  .cinema-sequence { height: 360svh; }
   .cinema-stage { min-height: 540px; }
   .cinema-camera { inset: 0 0 auto; height: 58%; }
   .cinema-depth { background: linear-gradient(180deg, transparent 15%, rgba(3, 8, 11, .15) 30%, #03080b 65%); }
@@ -235,9 +227,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cinema-sequence { height: auto; }
-  .cinema-stage { position: relative; top: auto; }
-  .cinema-copy { opacity: 1; transform: none; }
+  .cinema-video { display: none; }
   .cinema-story, .cinema-route { display: none; }
 }
 

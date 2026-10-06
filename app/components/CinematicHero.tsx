@@ -7,328 +7,141 @@ import { useEffect, useRef, useState } from "react";
 // proof row; certification and trading years are facts a visitor can verify.
 const highlights = ["CO-gecertificeerd bedrijf", "STEK-gecertificeerde monteurs", "Sinds 2000"];
 
-// Four photographed moments of one visit, each locked to its own clip. The
-// camera moves, the scene never changes: every frame comes from that scene's
-// own footage, generated from that photo as the first frame.
+// Four moments of one visit. They play as one film behind the copy; the
+// caption and the chapter bars at the bottom follow the film.
 const scenes = [
   {
     dir: "01",
-    frames: 48,
     label: "Aankomst",
     title: "De monteur komt voorrijden.",
     note: "Gereedschap en materiaal staan klaar in de bus.",
   },
   {
     dir: "02",
-    frames: 48,
     label: "Het werk",
     title: "De warmtepomp wordt nagelopen.",
     note: "Metingen, afstellen en controleren wat er nodig is.",
   },
   {
     dir: "03",
-    frames: 48,
     label: "Uitleg",
     title: "Even laten zien hoe de thermostaat werkt.",
     note: "Zodat u er daarna zelf mee overweg kunt.",
   },
   {
     dir: "04",
-    frames: 48,
     label: "Afronding",
     title: "Klaar, en u weet waar u aan toe bent.",
     note: "Heeft u later een vraag, dan belt u gewoon.",
   },
 ];
 
-const TOTAL_SCENES = scenes.length;
-// Share of a scene's scroll segment spent dissolving into the next one. A hard
-// cut looks broken when you scrub backwards, so the seam is always a fade.
-const DISSOLVE = 0.12;
-
-const framePath = (dir: string, index: number) =>
-  `/home/hero/${dir}/frame_${String(index + 1).padStart(4, "0")}.jpg`;
+// One continuous film (public/home/film): the four scenes joined by 0.8 s
+// dissolves into a seamless loop of 13.8 s, played 12% faster than generated and
+// with a short handshake at the end. It plays on its own behind the copy;
+// nothing on this hero follows the scroll.
+const FILM = "/home/film/";
+const FILM_LENGTH = 13.834;
+/** Film time at which each scene takes over (halfway through its dissolve); the last
+    entry is where the first scene comes back. */
+const CHANGES = [0, 3.43, 7.218, 11.005, 13.505];
 
 const clamp01 = (value: number) => (value < 0 ? 0 : value > 1 ? 1 : value);
-const smoothstep = (value: number) => {
-  const t = clamp01(value);
-  return t * t * (3 - 2 * t);
-};
+const wrap = (time: number) => ((time % FILM_LENGTH) + FILM_LENGTH) % FILM_LENGTH;
 
-type Loaded = Array<Array<HTMLImageElement | undefined>>;
+/** Which scene is on screen at a moment of the film. */
+const sceneAt = (time: number) => {
+  const t = wrap(time);
+  for (let index = scenes.length - 1; index >= 0; index -= 1) if (t >= CHANGES[index] && t < CHANGES[index + 1]) return index;
+  return 0;
+};
+/** How far along its own stretch of the film a scene is (0 before, 1 after). */
+const chapterProgress = (time: number, index: number) =>
+  clamp01((wrap(time) - CHANGES[index]) / (CHANGES[index + 1] - CHANGES[index]));
 
 export function CinematicHero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [scene, setScene] = useState(0);
-  const [copyHidden, setCopyHidden] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const canvas = canvasRef.current;
-    if (!section || !canvas) return;
-
-    const context = canvas.getContext("2d", { alpha: false });
-    if (!context) return;
+    const video = videoRef.current;
+    if (!section || !video) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const narrow = window.matchMedia("(max-width: 660px)");
-    let variant = narrow.matches ? "m" : "";
-
-    let images: Loaded = scenes.map((item) => new Array(item.frames));
-    let frame = 0;
-    let eased = 0;
     let onScreen = true;
-    let disposed = false;
-    let generation = 0;
-    let lastKey = "";
+    let frame = 0;
 
-    const load = (sceneIndex: number, frameIndex: number) =>
-      new Promise<void>((resolve) => {
-        if (images[sceneIndex][frameIndex]) return resolve();
-        const image = new Image();
-        image.decoding = "async";
-        const keep = () => {
-          images[sceneIndex][frameIndex] = image;
-          resolve();
-        };
-        image.onload = () => {
-          // The frame is usable the moment it loads, so the queue moves on here.
-          // decode() is only a warm-up to keep the first paint off the main
-          // thread — and it must never be awaited: a browser leaves it pending
-          // while the page is hidden, which stalled the whole sequence after
-          // frame one for anyone opening the site in a background tab.
-          keep();
-          if (image.decode) image.decode().catch(() => {});
-        };
-        image.onerror = () => resolve();
-        image.src = framePath(variant + scenes[sceneIndex].dir, frameIndex);
+    const source = () => `${FILM}${narrow.matches ? "mobile" : "desktop"}-v2.mp4`;
+
+    // The chapter bars and caption follow the film's own clock.
+    const tick = () => {
+      frame = 0;
+      const time = video.currentTime;
+      scenes.forEach((_, index) => {
+        section.style.setProperty(`--cchapter-${index + 1}`, chapterProgress(time, index).toFixed(3));
       });
-
-    const loadQueue = async (queue: Array<[number, number]>, onBatch?: () => void) => {
-      // Crossing the breakpoint starts a new run. Without this the old run keeps
-      // pulling its own frame set alongside the new one, so a visitor who
-      // rotates their phone downloads both sets for nothing.
-      const run = generation;
-      let cursor = 0;
-      const worker = async () => {
-        while (!disposed && generation === run) {
-          const next = cursor;
-          cursor += 1;
-          if (next >= queue.length) return;
-          await load(queue[next][0], queue[next][1]);
-          if (onBatch && next % 12 === 11) onBatch();
-        }
-      };
-      await Promise.all(
-        Array.from({ length: Math.min(8, queue.length) }, worker),
-      );
-    };
-
-    // Cover-fit: fill the stage without ever letterboxing or squashing.
-    const paintImage = (image: HTMLImageElement, alpha: number) => {
-      const width = canvas.width;
-      const height = canvas.height;
-      const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
-      const drawWidth = image.naturalWidth * scale;
-      const drawHeight = image.naturalHeight * scale;
-      context.globalAlpha = alpha;
-      context.drawImage(image, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
-      context.globalAlpha = 1;
-    };
-
-    // Nearest already-decoded frame, so a not-yet-loaded frame shows its
-    // neighbour instead of flashing an empty canvas.
-    const nearest = (sceneIndex: number, frameIndex: number) => {
-      const bucket = images[sceneIndex];
-      if (bucket[frameIndex]) return bucket[frameIndex];
-      for (let step = 1; step < scenes[sceneIndex].frames; step += 1) {
-        if (bucket[frameIndex - step]) return bucket[frameIndex - step];
-        if (bucket[frameIndex + step]) return bucket[frameIndex + step];
-      }
-      return undefined;
-    };
-
-    // The frames are only as wide as the set they come from, so a backing store
-    // wider than that upscales without adding a single pixel of detail — while
-    // costing real paint time on every frame the scroll asks for. On a 1440px
-    // retina screen that was a 2880px canvas redrawing 4.7 megapixels per frame,
-    // which is what made the sticky stage judder against the scroll.
-    const sourceWidth = () => (variant === "m" ? 860 : 1600);
-
-    const resize = () => {
-      const ratio = Math.min(2, window.devicePixelRatio || 1);
-      const rect = canvas.getBoundingClientRect();
-      if (rect.width <= 0 || rect.height <= 0) return false;
-      const width = Math.max(1, Math.min(Math.round(rect.width * ratio), sourceWidth()));
-      const height = Math.max(1, Math.round((width * rect.height) / rect.width));
-      if (canvas.width === width && canvas.height === height) return false;
-      canvas.width = width;
-      canvas.height = height;
-      return true;
-    };
-
-    const readProgress = () => {
-      const rect = section.getBoundingClientRect();
-      const distance = Math.max(1, section.offsetHeight - window.innerHeight);
-      return clamp01(-rect.top / distance);
-    };
-
-    const paint = (progress: number, force = false) => {
-      const segment = 1 / TOTAL_SCENES;
-      const index = Math.min(TOTAL_SCENES - 1, Math.floor(progress / segment));
-      const local = clamp01((progress - index * segment) / segment);
-
-      const count = scenes[index].frames;
-      const current = Math.min(count - 1, Math.round(local * (count - 1)));
-
-      // The seam: hold the next scene on its own first frame and fade it in.
-      const hasNext = index < TOTAL_SCENES - 1;
-      const dissolve = hasNext ? clamp01((local - (1 - DISSOLVE)) / DISSOLVE) : 0;
-
-      const key = `${index}:${current}:${dissolve.toFixed(3)}`;
-      if (!force && key === lastKey) return;
-      lastKey = key;
-
-      const base = nearest(index, current);
-      if (base) {
-        paintImage(base, 1);
-        canvas.dataset.ready = "true";
-      }
-      if (dissolve > 0) {
-        const incoming = nearest(index + 1, 0);
-        if (incoming) paintImage(incoming, dissolve);
-      }
-
-      const copy = 1 - smoothstep((progress - 0.06) / 0.14);
-      section.style.setProperty("--cinema-copy-opacity", copy.toFixed(3));
-      section.style.setProperty("--cinema-copy-y", `${(progress * -22).toFixed(2)}px`);
-      section.style.setProperty("--cinema-work", progress.toFixed(3));
-      section.style.setProperty("--cinema-bridge", dissolve.toFixed(3));
-      scenes.forEach((_, position) => {
-        const from = position * segment;
-        section.style.setProperty(
-          `--cchapter-${position + 1}`,
-          clamp01((progress - from) / segment).toFixed(3),
-        );
-      });
-
-      const active = dissolve > 0.5 ? Math.min(TOTAL_SCENES - 1, index + 1) : index;
+      const active = sceneAt(time);
       setScene((value) => (value === active ? value : active));
-      const hidden = !narrow.matches && !reducedMotion.matches && copy < 0.3;
-      setCopyHidden((value) => (value === hidden ? value : hidden));
+      if (!video.paused) frame = window.requestAnimationFrame(tick);
     };
 
-    // The weight of the camera comes from Lenis now. Smoothing the progress a
-    // second time here put the canvas on its own clock, half a beat behind the
-    // page — which is exactly what read as juddering against the sticky stage.
-    const update = () => {
-      if (!onScreen || reducedMotion.matches) return;
-      eased = readProgress();
-      paint(eased);
-    };
-
-    // Lenis calls every registered updater in the same frame it moves the page.
-    // Without it (reduced motion, or the script failing) fall back to painting
-    // straight off the scroll event, which is coarser but never stale.
-    const register = () => {
-      window.__scrubUpdaters ??= [];
-      if (!window.__scrubUpdaters.includes(update)) window.__scrubUpdaters.push(update);
-    };
-    const unregister = () => {
-      const updaters = window.__scrubUpdaters;
-      if (!updaters) return;
-      const at = updaters.indexOf(update);
-      if (at >= 0) updaters.splice(at, 1);
-    };
-
-    const wake = () => {
-      if (frame || !onScreen || reducedMotion.matches) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        update();
+    const play = () => {
+      if (reducedMotion.matches || !onScreen || document.hidden) {
+        video.pause();
+        return;
+      }
+      if (video.getAttribute("src") !== source()) {
+        video.src = source();
+        video.load();
+      }
+      video.muted = true;
+      void video.play().catch(() => {
+        // Autoplay refused (power saving, data saver): the poster stays.
       });
     };
 
-    const stop = () => {
+    const onPlaying = () => {
+      section.dataset.playing = "true";
+      if (!frame) frame = window.requestAnimationFrame(tick);
+    };
+    const onPause = () => {
       if (frame) window.cancelAnimationFrame(frame);
       frame = 0;
     };
 
-    const onResize = () => {
-      if (resize()) paint(eased, true);
-      wake();
-    };
-
-    const boot = async () => {
-      resize();
-      // First frame first: the hero is painted before the rest streams in.
-      await load(0, 0);
-      if (disposed) return;
-      eased = reducedMotion.matches ? 0 : readProgress();
-      paint(eased, true);
-
-      const queue: Array<[number, number]> = [];
-      scenes.forEach((item, sceneIndex) => {
-        for (let index = 0; index < item.frames; index += 1) {
-          if (sceneIndex === 0 && index === 0) continue;
-          queue.push([sceneIndex, index]);
-        }
-      });
-      await loadQueue(queue, () => paint(eased, true));
-      if (!disposed) paint(eased, true);
-    };
-
-    void boot();
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        onScreen = entry.isIntersecting;
-        if (onScreen) wake();
-        else stop();
-      },
-      { rootMargin: "20% 0px" },
-    );
+    // Only play while the hero can be seen: no decoding for nobody further down the page.
+    const observer = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen) play();
+      else video.pause();
+    });
     observer.observe(section);
 
-    const onMotionChange = () => {
-      stop();
-      if (reducedMotion.matches) {
-        eased = 0;
-        paint(0, true);
-      } else {
-        wake();
-      }
+    const onVisibility = () => (document.hidden ? video.pause() : play());
+    const onVariant = () => {
+      if (video.getAttribute("src")) video.removeAttribute("src");
+      play();
     };
 
-    const onVariantChange = () => {
-      const next = narrow.matches ? "m" : "";
-      if (next === variant) return;
-      variant = next;
-      generation += 1;
-      images = scenes.map((item) => new Array(item.frames));
-      lastKey = "";
-      resize();
-      void boot();
-    };
-
-    register();
-    window.addEventListener("scroll", wake, { passive: true });
-    window.addEventListener("resize", onResize, { passive: true });
-    window.addEventListener("orientationchange", onResize, { passive: true });
-    reducedMotion.addEventListener("change", onMotionChange);
-    narrow.addEventListener("change", onVariantChange);
+    video.addEventListener("playing", onPlaying);
+    video.addEventListener("pause", onPause);
+    document.addEventListener("visibilitychange", onVisibility);
+    reducedMotion.addEventListener("change", play);
+    narrow.addEventListener("change", onVariant);
+    play();
 
     return () => {
-      disposed = true;
-      unregister();
-      stop();
+      onPause();
       observer.disconnect();
-      window.removeEventListener("scroll", wake);
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("orientationchange", onResize);
-      reducedMotion.removeEventListener("change", onMotionChange);
-      narrow.removeEventListener("change", onVariantChange);
+      video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("pause", onPause);
+      document.removeEventListener("visibilitychange", onVisibility);
+      reducedMotion.removeEventListener("change", play);
+      narrow.removeEventListener("change", onVariant);
+      video.pause();
     };
   }, []);
 
@@ -343,17 +156,17 @@ export function CinematicHero() {
       <div className="cinema-stage">
         <div className="cinema-camera" aria-hidden="true">
           <picture className="cinema-poster">
-            <source media="(max-width: 660px)" srcSet={framePath("m01", 0)} />
-            <img src={framePath("01", 0)} alt="" fetchPriority="high" />
+            <source media="(max-width: 660px)" srcSet={`${FILM}poster-mobile.jpg`} />
+            <img src={`${FILM}poster.jpg`} alt="" fetchPriority="high" />
           </picture>
-          <canvas className="cinema-canvas" ref={canvasRef} />
+          <video className="cinema-video" ref={videoRef} muted loop playsInline preload="auto" disablePictureInPicture tabIndex={-1} />
         </div>
         <div className="cinema-depth" aria-hidden="true" />
         <div className="cinema-grade" aria-hidden="true" />
         <div className="cinema-grain" aria-hidden="true" />
 
         <div className="shell cinema-content">
-          <div className="cinema-copy" inert={copyHidden || undefined}>
+          <div className="cinema-copy">
             <h1 id="home-cinematic-title">
               <span className="cinema-line">Dezelfde mensen die het installeren,</span>
               <span className="cinema-line">onderhouden het ook.</span>
