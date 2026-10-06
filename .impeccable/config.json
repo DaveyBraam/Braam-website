@@ -1,3 +1,18 @@
 {
-  "buildPath": "code"
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/aanvraag.css"
+        ],
+        "createdAt": "2026-10-06T15:28:30.018Z",
+        "reason": "Claude: info notes deliberately match the live, owner-approved /onderhoud .oh-kader style (app/onderhoud/pagina.css:136, border-left 3px var(--lime)) for site consistency"
+      }
+    ]
+  }
 }

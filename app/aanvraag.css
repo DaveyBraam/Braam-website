@@ -1,0 +1,737 @@
+/* Aanvraagpagina's: offerte, abonnement, eenmalig onderhoud, terugbellen en
+   bedankt. Eén opbouw in de huiskleuren (blauw, wit, donkerblauw, zwart): een
+   donkerblauwe kop zonder foto, daaronder papier met haarlijnen. Geen glas, geen schaduwen,
+   geen afgeronde kaarten. Alles hangt onder main.av, zodat de oude regels in
+   premium.css voor andere pagina's blijven werken. Alleen transform en
+   opacity bewegen. */
+
+.av {
+  --av-grond: #091521;
+  --av-op-grond: #eef3f9;
+  --av-op-grond-zacht: #a3b4c6;
+  --av-lijn-donker: rgba(255, 255, 255, .14);
+  --av-licht: #7cc0f7;
+  --av-blad: #ffffff;
+  --av-lijn: #d4dde3;
+  --av-lijn-sterk: #b9c7d2;
+  --av-tekst: #2f4352;
+  --av-zacht: #5a6d7b;
+  --av-blauw: var(--lime);
+  --av-blauw-diep: var(--lime-deep);
+  --av-wash: #e8f1f8;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Hetzelfde als op de dienstpagina's: de zwevende gloed, de korrel en de
+   halo om de voortgangsbalk horen niet in deze wereld. */
+body:has(main.av) .ambient-orb,
+body:has(main.av) .pointer-aura,
+body:has(main.av) .page-grain { display: none; }
+body:has(main.av) .scroll-progress { height: 2px; background: var(--lime); box-shadow: none; }
+
+/* Een veld dat focus krijgt (klikken, tab, "volgende" op de telefoon) mag
+   niet achter de sitekop of de stapstrook vallen. */
+html:has(main.av) { scroll-padding-top: 120px; }
+@media (max-width: 1040px) { html:has(main.av) { scroll-padding-top: 150px; } }
+
+/* De knop: effen verwijsblauw, geen verloop, geen halo, geen veeg. */
+.av .button-primary { background: var(--lime); border-color: transparent; box-shadow: none; }
+.av .button-primary:hover { background: var(--lime-deep); box-shadow: none; }
+.av .button::before { display: none; }
+
+/* ---- Kop ----------------------------------------------------------------- */
+
+.av-kop {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 6vw, 76px) 0 clamp(44px, 6vw, 72px);
+  background: linear-gradient(180deg, #0b1a28 0%, var(--av-grond) 100%);
+  color: var(--av-op-grond);
+}
+/* Eén koele lichtval rechtsboven in het logoblauw; geen beeld. */
+.av-kop::before {
+  content: "";
+  position: absolute;
+  right: -8%;
+  top: -40%;
+  width: 60vw;
+  height: 120%;
+  background: radial-gradient(closest-side, rgba(12, 112, 184, .30), rgba(12, 112, 184, .08) 60%, transparent 100%);
+  pointer-events: none;
+}
+.av-kop-raster {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: clamp(40px, 7vw, 120px);
+  align-items: end;
+}
+
+.av .av-kruimel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 28px;
+  color: var(--av-op-grond-zacht);
+  font-size: 12px;
+  font-weight: 600;
+}
+.av-kruimel > span { display: inline-flex; gap: 10px; }
+.av-kruimel a { color: var(--av-op-grond-zacht); text-decoration: none; }
+.av-kruimel a:hover { color: var(--av-op-grond); }
+.av-kruimel > span:last-child > span:last-child { color: var(--av-op-grond); }
+
+.av-kop h1 {
+  max-width: 13em;
+  margin: 0;
+  color: var(--av-op-grond);
+  font-size: clamp(40px, 4.4vw, 62px);
+  line-height: 1.02;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.av-kop h1 em {
+  display: block;
+  margin-top: .2em;
+  color: var(--av-licht);
+  font-style: normal;
+  font-weight: 500;
+  font-size: .6em;
+  letter-spacing: -.01em;
+}
+.av .av-intro {
+  max-width: 34em;
+  margin: 22px 0 0;
+  color: var(--av-op-grond-zacht);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.av .av-kop-label {
+  margin: 0 0 4px;
+  color: var(--av-op-grond-zacht);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.av-punten {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--av-lijn-donker);
+}
+.av-punten li {
+  position: relative;
+  padding: 12px 0 12px 26px;
+  border-bottom: 1px solid var(--av-lijn-donker);
+  color: var(--av-op-grond);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.av-punten li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 19px;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid var(--av-licht);
+  border-bottom: 2px solid var(--av-licht);
+  transform: rotate(-45deg);
+}
+.av-kop-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 36px;
+  margin-top: 22px;
+}
+.av-kop-contact a { display: grid; gap: 2px; color: var(--av-op-grond); text-decoration: none; }
+.av-kop-contact small { color: var(--av-op-grond-zacht); font-size: 12px; font-weight: 600; }
+.av-kop-contact strong { font-size: 17px; letter-spacing: .01em; overflow-wrap: anywhere; }
+.av-kop-contact a + a strong { font-size: 15px; font-weight: 600; }
+.av-kop-contact a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+.av-kop a:focus-visible { outline: 2px solid var(--av-licht); outline-offset: 4px; }
+
+/* ---- Werkvlak: formulier + route ----------------------------------------- */
+
+.av-werk {
+  padding: clamp(40px, 5vw, 64px) 0 clamp(72px, 8vw, 110px);
+  scroll-margin-top: 90px;
+}
+.av-werk-raster {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: start;
+}
+.av-formulier { min-width: 0; max-width: 820px; }
+
+/* Het formulier is één blad papier: wit, een haarlijn eromheen, de delen
+   gescheiden door haarlijnen. Alles wat premium.css er aan glas op legde
+   gaat eraf. */
+.av .subscription-application-form,
+.av .application-loading {
+  overflow: visible;
+  border: 1px solid var(--av-lijn);
+  border-radius: 0;
+  background: var(--av-blad);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.av .application-loading { min-height: 320px; padding: 40px; color: var(--av-zacht); }
+
+.av .form-section {
+  padding: clamp(28px, 4vw, 44px);
+  border-bottom: 1px solid var(--av-lijn);
+  scroll-margin-top: 110px;
+}
+.av .form-section-heading {
+  display: block;
+  margin-bottom: 26px;
+}
+/* Het stapnummer staat in de route; in het formulier zou het dubbel zijn. */
+.av .form-section-heading > span { display: none; }
+.av .form-section-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+.av .form-section-heading p {
+  max-width: 40em;
+  margin: 8px 0 0;
+  color: var(--av-zacht);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.av .plan-choice-heading { margin: 0 0 14px; }
+.av .plan-choice-heading h3 { margin: 0; color: var(--ink); font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.av .plan-choice-heading p { margin: 4px 0 0; color: var(--av-zacht); font-size: 14px; line-height: 1.55; }
+.av .plan-choice-heading-second { margin-top: 30px; }
+
+/* ---- Keuzes: overal hetzelfde vlakke tegeltje ---- */
+
+.av :is(.quote-service-grid, .installation-choice-form-grid, .coverage-choice-grid, .applicant-choice-grid, .plan-choice-grid, .payment-choice-grid) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice) {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 0 12px;
+  align-items: start;
+  min-height: 0;
+  padding: 16px 18px;
+  overflow: visible;
+  border: 1px solid var(--av-lijn-sterk);
+  border-radius: 4px;
+  background: var(--av-blad);
+  box-shadow: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice)::before,
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice)::after { display: none; }
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice):hover {
+  border-color: var(--av-blauw);
+  background: var(--av-blad);
+}
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice).is-selected {
+  border-color: var(--av-blauw);
+  background: var(--av-wash);
+  box-shadow: inset 0 0 0 1px var(--av-blauw);
+  color: var(--ink);
+}
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice):has(input:focus-visible) {
+  outline: 2px solid var(--av-blauw);
+  outline-offset: 2px;
+}
+.av :is(.quote-service-choice, .installation-choice-form, .coverage-choice, .applicant-choice, .plan-choice, .payment-choice) input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Het rondje: een ring, gevuld als hij gekozen is. */
+.av :is(.choice-radio, .applicant-radio) {
+  grid-row: 1 / span 4;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border: 1.5px solid #8ea3b3;
+  border-radius: 50%;
+  background: var(--av-blad);
+  box-shadow: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+/* De vulling is een binnenschaduw, geen dikkere rand: zo verspringt er
+   niets in de opmaak als het rondje gekozen wordt. */
+.av .is-selected :is(.choice-radio, .applicant-radio) {
+  border: 1.5px solid var(--av-blauw);
+  background: var(--av-blad);
+  box-shadow: inset 0 0 0 4.5px var(--av-blauw);
+}
+.av .payment-choice > span:first-of-type:not(:only-child) { grid-row: 1 / span 4; }
+
+.av :is(.quote-service-choice, .installation-choice-form, .applicant-choice, .payment-choice) strong,
+.av .coverage-choice-copy > span:first-child > strong,
+.av .plan-choice strong { color: var(--ink); font-size: 16px; line-height: 1.3; }
+.av :is(.quote-service-choice, .installation-choice-form, .applicant-choice, .payment-choice, .plan-choice) small,
+.av :is(.quote-service-choice, .installation-choice-form, .applicant-choice, .payment-choice, .plan-choice).is-selected small {
+  margin-top: 4px;
+  color: var(--av-zacht);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.av .coverage-choice-copy b,
+.av .coverage-choice.is-selected .coverage-choice-copy b {
+  padding: 3px 7px;
+  border-radius: 3px;
+  background: var(--av-wash);
+  color: var(--av-blauw-diep);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+.av .coverage-choice.is-selected .coverage-choice-copy b { background: var(--av-blad); }
+.av .coverage-monthly,
+.av .coverage-choice.is-selected .coverage-monthly { color: var(--av-zacht); }
+.av .coverage-monthly strong,
+.av .coverage-choice.is-selected .coverage-monthly strong { color: var(--ink); font-size: 26px; }
+.av .coverage-choice-copy > small,
+.av .coverage-choice-copy > p,
+.av .coverage-choice.is-selected .coverage-choice-copy > small,
+.av .coverage-choice.is-selected .coverage-choice-copy > p { color: var(--av-zacht); font-size: 14px; }
+.av .plan-choice p,
+.av .plan-choice.is-selected p { color: var(--av-zacht); font-size: 14px; }
+
+/* ---- Notities en vinkjes in het formulier ---- */
+
+.av :is(.installation-scope-note, .landlord-scope-warning, .landlord-form-note, .payment-security-note, .single-maintenance-confirmation, .subscription-understanding) {
+  margin: 18px 0 0;
+  padding: 14px 18px;
+  border: 0;
+  border-left: 3px solid var(--av-blauw);
+  border-radius: 0;
+  background: var(--av-wash);
+  box-shadow: none;
+  color: var(--av-tekst);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.av :is(.single-maintenance-confirmation, .subscription-understanding) small { color: var(--av-tekst); font-size: 14px; }
+.av .payment-choice-form { margin-top: 30px; padding: 0; border: 0; background: none; box-shadow: none; }
+.av .payment-choice-form h3 { margin: 0; color: var(--ink); font-size: 17px; }
+.av .payment-choice-form > div:first-child p { margin: 4px 0 14px; color: var(--av-zacht); font-size: 14px; }
+.av .field-hint { color: var(--av-zacht); font-size: 13px; }
+
+.av .ventilation-choice {
+  border: 1px solid var(--av-lijn-sterk);
+  border-radius: 4px;
+  background: var(--av-blad);
+  box-shadow: none;
+}
+.av .ventilation-check { background: var(--av-blauw); box-shadow: none; }
+.av .ventilation-choice input:checked + .ventilation-check { background: var(--av-blauw-diep); }
+.av .ventilation-choice strong { font-size: 15px; }
+.av .ventilation-choice small { color: var(--av-zacht); font-size: 13px; }
+
+/* ---- Velden ---- */
+
+.av .field-grid { gap: 20px 16px; }
+.av .field { gap: 7px; }
+.av .field > span {
+  color: var(--av-tekst);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.av .field > span b,
+.av .privacy-check small b { color: var(--av-blauw); }
+.av :is(.field input, .field select, .field textarea) {
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--av-lijn-sterk);
+  border-radius: 4px;
+  background: var(--av-blad);
+  box-shadow: none;
+  color: var(--ink);
+  font-size: 16px;
+  transition: border-color .2s ease;
+}
+.av .field textarea { min-height: 140px; padding-block: 13px; line-height: 1.55; }
+.av :is(.field input, .field textarea)::placeholder { color: #8a9cab; }
+.av :is(.field input, .field select, .field textarea):hover { border-color: #8ea3b3; }
+.av :is(.field input, .field select, .field textarea):focus {
+  border-color: var(--av-blauw);
+  background: var(--av-blad);
+  box-shadow: 0 0 0 3px rgba(12, 112, 184, .16);
+}
+
+/* ---- Versturen ---- */
+
+.av .form-submit-panel {
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--av-blad);
+  scroll-margin-top: 110px;
+}
+.av .privacy-check { grid-template-columns: 22px 1fr; gap: 12px; }
+.av .privacy-check > span {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border: 1.5px solid #8ea3b3;
+  border-radius: 3px;
+  background: var(--av-blad);
+}
+.av .privacy-check input:checked + span { border-color: var(--av-blauw); background: var(--av-blauw); }
+.av .privacy-check input:focus-visible + span { outline: 2px solid var(--av-blauw); outline-offset: 2px; }
+.av .privacy-check small { color: var(--av-tekst); font-size: 14px; line-height: 1.6; }
+.av .privacy-check small a { color: var(--av-blauw-diep); font-weight: 600; }
+.av .form-submit-button { width: auto; min-width: 280px; margin-top: 26px; box-shadow: none; }
+.av .form-smallprint {
+  max-width: 40em;
+  margin: 14px 0 0;
+  color: var(--av-zacht);
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.av .form-error {
+  border: 1px solid #d9a19c;
+  border-radius: 4px;
+  background: #fbeceb;
+  color: #7a1f1a;
+  font-size: 14px;
+}
+
+/* ---- De route ------------------------------------------------------------ */
+
+.av-route {
+  position: sticky;
+  top: 112px;
+  align-self: start;
+  --vul: 0;
+}
+.av-strook { display: none; }
+
+.av .av-route-kop {
+  margin: 0 0 14px;
+  color: var(--av-zacht);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.av-route-u,
+.av-route-braam {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* De lijn door de stippen: per stap een stukje naar de volgende stip,
+   grijs, en blauw zo ver als er al is ingevuld (--deel, 0 tot 1). */
+.av-stap { position: relative; --deel: 0; }
+.av-stap:not(:last-child)::before,
+.av-stap:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 17px;
+  width: 2px;
+  height: 100%;
+  background: var(--av-lijn);
+}
+.av-stap:not(:last-child)::after {
+  background: var(--av-blauw);
+  transform: scaleY(var(--deel));
+  transform-origin: top;
+  transition: transform .45s cubic-bezier(.2, .75, .25, 1);
+}
+
+/* Op de bedankpagina is de route vast: één doorlopende lijn. */
+.av-route-vast .av-route-u::before,
+.av-route-vast .av-route-u::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 17px;
+  bottom: 17px;
+  width: 2px;
+}
+.av-route-vast .av-route-u::after { transform-origin: top; }
+
+.av-stap button {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 2px 14px;
+  width: 100%;
+  padding: 7px 0;
+  border: 0;
+  background: none;
+  color: var(--av-zacht);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.av-stap-titel { font-size: 15px; font-weight: 500; line-height: 1.35; transition: color .2s ease; }
+.av-stap button:hover .av-stap-titel { color: var(--ink); }
+.av-stap small { grid-column: 2; color: var(--av-zacht); font-size: 13px; }
+.av-stap.is-actief .av-stap-titel { color: var(--ink); font-weight: 600; }
+.av-stap button:focus-visible { outline: 2px solid var(--av-blauw); outline-offset: 3px; }
+
+.av-stip {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border: 2px solid var(--av-lijn-sterk);
+  border-radius: 50%;
+  background: var(--paper);
+  transition: border-color .25s ease, background-color .25s ease;
+}
+.av-stap.is-actief .av-stip { border-color: var(--av-blauw); }
+.av-stap.is-klaar .av-stip { border-color: var(--av-blauw); background: var(--av-blauw); }
+.av-stap.is-klaar .av-stip::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 2.5px;
+  width: 6px;
+  height: 3.5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+
+.av .av-route-status {
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--av-lijn);
+  color: var(--av-tekst);
+  font-size: 14px;
+  font-weight: 600;
+}
+.av-route.is-klaar .av-route-status { color: var(--av-blauw-diep); }
+
+.av .av-route-overgang {
+  margin: 34px 0 10px;
+  color: var(--av-zacht);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.av-route-braam li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 14px;
+  padding: 7px 0;
+  color: var(--av-zacht);
+  font-size: 15px;
+  line-height: 1.35;
+}
+.av-route-braam .av-stip { border-style: dashed; }
+
+.av-daarna-los { display: none; }
+
+/* ---- Bedankt ------------------------------------------------------------- */
+
+.av-bedankt .av-kop { padding-bottom: clamp(56px, 8vw, 104px); }
+.av-bedankt .av-kop-raster { align-items: start; }
+.av-bedankt .av-acties {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 30px;
+  margin-top: 32px;
+}
+.av-bedankt .av-acties .button { box-shadow: none; }
+/* Dezelfde route, nu op de donkere grond: uw deel is gedaan, Braam is aan zet. */
+.av-bedankt .av-route-vast { padding-top: 6px; }
+.av-bedankt .av-route-vast .av-route-kop,
+.av-bedankt .av-route-vast .av-route-overgang { color: var(--av-op-grond-zacht); }
+.av-bedankt .av-route-vast .av-route-u::before { background: var(--av-lijn-donker); }
+.av-bedankt .av-route-vast .av-route-u::after { transform: scaleY(1); background: var(--av-licht); }
+.av-bedankt .av-route-vast li {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 2px 14px;
+  padding: 7px 0;
+  color: var(--av-op-grond-zacht);
+  font-size: 15px;
+  line-height: 1.35;
+}
+.av-bedankt .av-route-vast .av-stip { background: var(--av-grond); border-color: rgba(255, 255, 255, .34); }
+.av-bedankt .av-route-vast .is-klaar .av-stip { border-color: var(--av-licht); background: var(--av-licht); }
+.av-bedankt .av-route-vast .is-klaar .av-stip::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 2.5px;
+  width: 6px;
+  height: 3.5px;
+  border-left: 2px solid var(--av-grond);
+  border-bottom: 2px solid var(--av-grond);
+  transform: rotate(-45deg);
+}
+.av-bedankt .av-route-vast .is-actief { color: var(--av-op-grond); font-weight: 600; }
+.av-bedankt .av-route-vast .is-actief .av-stip { border-color: var(--av-licht); }
+.av-bedankt .av-route-vast .is-actief .av-stip::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--av-licht);
+  animation: av-puls 2.4s ease-in-out infinite;
+}
+.av-bedankt .av-route-vast li > span:last-child:not(.av-stip) { display: grid; gap: 2px; }
+.av-bedankt .av-route-vast li small { color: var(--av-op-grond-zacht); font-size: 13px; font-weight: 400; }
+/* Braams deel is nog niet gelopen: alleen de lijn, geen vulling. */
+.av-bedankt .av-route-vast .av-route-nu::after { transform: scaleY(0); }
+.av-bedankt .av-route-vast .av-route-overgang { margin-top: 22px; }
+@keyframes av-puls { 50% { opacity: .35; } }
+
+/* Papier onder de bedankkop. */
+.av-nog-iets { padding: clamp(44px, 6vw, 72px) 0; background: var(--paper); }
+.av-nog-iets-raster {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) auto;
+  gap: 20px clamp(32px, 5vw, 72px);
+  align-items: start;
+  padding-top: 26px;
+  border-top: 1px solid var(--av-lijn-sterk);
+}
+.av-nog-iets h2 { margin: 0; color: var(--ink); font-size: clamp(22px, 2.2vw, 28px); line-height: 1.2; letter-spacing: -.015em; }
+.av .av-nog-iets p { margin: 0; color: var(--av-tekst); font-size: 16px; line-height: 1.65; }
+.av-nog-iets-contact { display: grid; gap: 14px; }
+.av-nog-iets-contact a { display: grid; gap: 2px; color: var(--ink); text-decoration: none; }
+.av-nog-iets-contact small { color: var(--av-zacht); font-size: 12px; font-weight: 600; }
+.av-nog-iets-contact strong { color: var(--av-blauw-diep); font-size: 16px; }
+.av-nog-iets-contact a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Het oude successcherm in de formulieren (kort zichtbaar voor de doorverwijzing). */
+.av .application-success {
+  min-height: 0;
+  padding: clamp(32px, 5vw, 56px);
+  border: 1px solid var(--av-lijn);
+  border-radius: 0;
+  background: var(--av-blad);
+  box-shadow: none;
+  color: var(--ink);
+}
+.av .application-success h1 { color: var(--ink); font-size: clamp(32px, 4vw, 44px); }
+.av .application-success h1 em { color: var(--av-blauw-diep); }
+.av .application-success > p:not(.eyebrow) { color: var(--av-tekst); }
+.av .success-orbit { display: none; }
+
+/* ---- Smal ---------------------------------------------------------------- */
+
+@media (max-width: 1040px) {
+  .av-kop-raster { grid-template-columns: 1fr; align-items: start; gap: 36px; }
+  .av-kop h1 { max-width: none; }
+
+  .av-werk { padding-top: 0; }
+  .av-werk-raster { grid-template-columns: 1fr; gap: 0; }
+  .av-formulier { max-width: none; padding-top: 24px; }
+
+  /* De route wordt een strook die onder de sitekop blijft staan. */
+  .av-route {
+    order: -1;
+    top: var(--av-top, 64px);
+    z-index: 20;
+    margin: 0 calc(50% - 50vw);
+  }
+  .av-route-vol { display: none; }
+  .av-strook {
+    position: relative;
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    padding: 12px max(20px, calc(50vw - 380px)) 13px;
+    border: 0;
+    border-bottom: 1px solid var(--av-lijn);
+    background: rgba(242, 245, 248, .96);
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .av-strook span { overflow: hidden; font-size: 15px; white-space: nowrap; text-overflow: ellipsis; }
+  .av-strook b { margin-right: 6px; font-weight: 700; }
+  .av-strook small { color: var(--av-zacht); font-size: 13px; }
+  .av-route.is-klaar .av-strook small { color: var(--av-blauw-diep); font-weight: 600; }
+  .av-strook i {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--av-blauw);
+    transform: scaleX(var(--vul));
+    transform-origin: left;
+    transition: transform .5s cubic-bezier(.2, .75, .25, 1);
+  }
+
+  .av-daarna-los { display: block; margin-top: 36px; }
+  .av .av-daarna-los p {
+    margin: 0 0 8px;
+    color: var(--av-zacht);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .av-daarna-los ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--av-lijn); }
+  .av-daarna-los li { padding: 11px 0; border-bottom: 1px solid var(--av-lijn); color: var(--av-tekst); font-size: 15px; }
+}
+
+@media (max-width: 860px) {
+  .av-nog-iets-raster { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 660px) {
+  /* Formulier voorop: op de telefoon blijft van de zijkolom alleen het
+     contact over. "Nog geen opdracht" staat ook bij de verzendknop. */
+  .av-kop-label,
+  .av-punten { display: none; }
+  .av-kop-raster { gap: 0; }
+  .av-kop-contact { margin-top: 26px; }
+  .av-kop h1 { font-size: clamp(34px, 9.6vw, 44px); }
+  .av .av-intro { font-size: 16px; }
+  .av .av-kruimel { margin-bottom: 20px; }
+
+  .av-formulier { margin: 0 -8px; }
+  .av .subscription-application-form { border-inline: 0; }
+  .av .form-section,
+  .av .form-submit-panel { padding: 28px 20px; }
+  .av :is(.quote-service-grid, .installation-choice-form-grid, .coverage-choice-grid, .applicant-choice-grid, .plan-choice-grid, .payment-choice-grid),
+  .av .field-grid { grid-template-columns: 1fr; }
+  .av .field-wide { grid-column: auto; }
+  .av .form-submit-button { width: 100%; min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av-stap::after,
+  .av-strook i,
+  .av-stip,
+  .av :is(.choice-radio, .applicant-radio) { transition: none; }
+  .av-bedankt .av-route-vast .is-actief .av-stip::after { animation: none; }
+}
