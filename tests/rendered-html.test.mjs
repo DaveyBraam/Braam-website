@@ -50,7 +50,8 @@ test("renders real installation projects with honest work-stage labels", async (
   assert.equal(response.status, 200);
   const html = await response.text();
 
-  assert.match(html, /Installatiewerk[\s\S]*van dichtbij/i);
+  assert.match(html, /Dit werk hebben we zelf gemaakt/i);
+  assert.match(html, /Zo installeren wij/i);
   assert.match(html, /Tijdens montage/i);
   for (let image = 1; image <= 9; image += 1) {
     assert.match(html, new RegExp(`\\/projects\\/installaties\\/installatie-${String(image).padStart(2, "0")}\\.webp`, "i"));
