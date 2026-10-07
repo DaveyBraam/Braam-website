@@ -61,9 +61,12 @@ test("renders the professional knowledge overview with crawlable article link", 
   const response = await fetchRoute("/kennisbank");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /<h1[^>]*>[\s\S]*Praktische kennis voor uw woning/i);
+  assert.match(html, /<h1[^>]*>Kennisbank<\/h1>/i);
+  assert.match(html, /Wat ziet u\?/i);
+  assert.match(html, /Kunt u zelf doen/i);
+  assert.match(html, /href=["']tel:08009009["']/i);
   assert.match(html, /href=["']\/kennisbank\/cv-ketel-bijvullen["']/i);
-  assert.match(html, /Artikel in voorbereiding/i);
+  assert.match(html, /In voorbereiding/i);
 });
 
 test("renders article metadata, structured data and conversion links", async () => {
