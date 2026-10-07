@@ -1,0 +1,318 @@
+/* Over ons v2: donkerblauw en sfeervol, in de huiskleuren (blauw, wit,
+   donkerblauw, zwart; geen bruin). Foto's lopen tot de rand en vloeien weg in
+   het donkerblauw, zonder kaders of getekende lijnen. Tekst minstens 15px,
+   lopende tekst 18px. Alleen transform en opacity bewegen. */
+
+@property --intro {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.oo {
+  --oo-navy: #091521;
+  --oo-navy-hoog: #0d1f30;
+  --oo-diep: #050c14;
+  --oo-op: #eef3f9;
+  --oo-op-zacht: #b3c3d2;
+  --oo-licht: #7cc0f7;
+  --oo-spoor: rgba(124, 192, 247, .24);
+  --oo-haar: rgba(255, 255, 255, .13);
+  background: var(--oo-navy);
+  color: var(--oo-op);
+  font-size: 18px;
+}
+
+body:has(main.oo) .ambient-orb,
+body:has(main.oo) .pointer-aura,
+body:has(main.oo) .page-grain { display: none; }
+
+.oo a:focus-visible,
+.oo button:focus-visible {
+  outline: 3px solid var(--oo-licht);
+  outline-offset: 3px;
+}
+.oo h1, .oo h2, .oo h3 { color: var(--oo-op); letter-spacing: -.02em; }
+
+.oo-acties { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; margin-top: 32px; }
+.oo-bel { display: grid; gap: 2px; color: var(--oo-op); }
+.oo-bel small { color: var(--oo-op-zacht); font-size: 15px; }
+.oo-bel strong { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+.oo-bel:hover strong { color: var(--oo-licht); }
+
+/* ---- Kop -------------------------------------------------------------------- */
+
+.oo-kop {
+  --k: 0;
+  --h: max(600px, calc(100svh - 118px));
+  --bw: max(100%, calc(var(--h) * 1.5));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: var(--h);
+  background: var(--oo-navy);
+  animation: oo-intro 1.8s cubic-bezier(.3, .6, .2, 1) .25s both;
+}
+@keyframes oo-intro { from { --intro: 0; } to { --intro: 1; } }
+
+.oo-kop-scene { position: absolute; inset: 0; z-index: -1; }
+
+/* Het pand als vlak: de voordeur (--deur-x / --deur-y, ingesteld in Kop.tsx) staat rechts van het midden en
+   de linkerkant vervloeit in de avond, zodat de tekst op donker staat. */
+.oo-kop-beeld {
+  position: absolute;
+  top: 0;
+  left: calc(62% - var(--bw) * var(--deur-x));
+  width: var(--bw);
+  aspect-ratio: 3 / 2;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 20%);
+  transform: translate3d(0, calc(var(--k) * 9%), 0) scale(calc(1.05 - var(--k) * .04));
+  transform-origin: calc(var(--deur-x) * 100%) calc(var(--deur-y) * 100%);
+  will-change: transform;
+}
+.oo-kop-beeld img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.oo-deurlicht {
+  position: absolute;
+  left: calc(var(--deur-x) * 100%);
+  top: calc(var(--deur-y) * 100% - 8.5%);
+  width: 15%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(226, 242, 255, .62), rgba(124, 192, 247, .2) 55%, rgba(124, 192, 247, 0));
+  mix-blend-mode: screen;
+  opacity: var(--intro);
+  transform: translate(-50%, -50%);
+}
+
+/* De avondlucht als eigen vlak, iets trager dan de foto. */
+.oo-lucht {
+  position: absolute;
+  inset: -8% 0 0;
+  background:
+    linear-gradient(180deg, rgba(9, 21, 33, .96) 0%, rgba(9, 21, 33, .8) 18%, rgba(9, 21, 33, .38) 40%, rgba(9, 21, 33, .12) 56%, rgba(9, 21, 33, 0) 70%),
+    linear-gradient(90deg, rgba(9, 21, 33, .7) 0%, rgba(9, 21, 33, 0) 52%);
+  transform: translate3d(0, calc(var(--k) * -6%), 0);
+}
+/* De onderrand zakt vast weg in het donkerblauw, los van de bewegende vlakken. */
+.oo-kop-scene::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 34%;
+  background: linear-gradient(180deg, rgba(9, 21, 33, 0), rgba(9, 21, 33, .55) 45%, var(--oo-navy) 100%);
+}
+
+.oo-kop-tekst {
+  position: relative;
+  padding-top: clamp(48px, 11vh, 120px);
+  padding-bottom: 64px;
+  transform: translate3d(0, calc(var(--k) * -60px), 0);
+}
+.oo .oo-kruimel { display: flex; gap: 10px; margin: 0 0 24px; color: var(--oo-op-zacht); font-size: 15px; font-weight: 600; }
+.oo-kruimel a:hover { color: var(--oo-op); }
+.oo-kruimel span:last-child { color: var(--oo-op); }
+.oo h1 {
+  max-width: 9.5em;
+  margin: 0;
+  font-size: clamp(44px, 5.4vw, 78px);
+  font-weight: 700;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.oo .oo-lead { max-width: 27em; margin: 24px 0 0; color: var(--oo-op-zacht); font-size: 19px; line-height: 1.6; }
+.oo .oo-kop-onder {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  margin: 0;
+  color: var(--oo-op-zacht);
+  font-size: 15px;
+}
+
+/* ---- Wie we zijn ------------------------------------------------------------- */
+
+.oo-wie { padding: clamp(72px, 10vw, 136px) 0 clamp(64px, 8vw, 112px); background: var(--oo-navy); }
+.oo-wie-kop { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 28px clamp(40px, 7vw, 112px); align-items: start; }
+.oo-wie h2 { margin: 0; max-width: 11em; font-size: clamp(32px, 3.6vw, 52px); font-weight: 700; line-height: 1.06; text-wrap: balance; }
+.oo .oo-wie-lead { margin: 0; color: var(--oo-op); font-size: clamp(21px, 1.8vw, 25px); line-height: 1.5; }
+.oo-wie-raster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px clamp(28px, 4vw, 64px); margin-top: clamp(48px, 6vw, 80px); }
+.oo-wie-raster > div { padding-top: 22px; border-top: 1px solid var(--oo-haar); }
+.oo-wie h3 { margin: 0; color: var(--oo-licht); font-size: 17px; font-weight: 650; letter-spacing: 0; }
+.oo-wie-raster p { margin: 12px 0 0; color: var(--oo-op-zacht); font-size: 18px; line-height: 1.6; }
+
+/* ---- Van telefoontje tot onderhoud (de piek) ------------------------------------ */
+
+.oo-aanpak { position: relative; overflow-x: clip; background: var(--oo-navy); }
+.oo-aanpak h2 { margin: 0; max-width: 12em; font-size: clamp(32px, 3.4vw, 48px); font-weight: 700; line-height: 1.08; text-wrap: balance; }
+.oo-aanpak-vast { padding: clamp(64px, 9vw, 112px) 0; }
+.oo-aanpak-beelden { display: none; }
+
+/* Telefoon en zonder beweging: stappen onder elkaar, elk met een foto. */
+.oo-stappen { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 52px; }
+.oo-stap { display: grid; gap: 14px; }
+.oo-stap-foto { margin: 0 0 6px; aspect-ratio: 3 / 2; overflow: hidden; background: var(--oo-navy-hoog); }
+.oo-stap-foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.oo-stap-naam {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--oo-licht);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.oo-stap h3 { margin: 0; font-size: clamp(26px, 2.4vw, 34px); font-weight: 700; line-height: 1.12; }
+.oo-stap-inhoud p { max-width: 32em; margin: 12px 0 0; color: var(--oo-op-zacht); font-size: 18px; line-height: 1.6; }
+
+@media (min-width: 921px) {
+  .oo-stap { grid-template-columns: minmax(240px, 360px) minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: clamp(28px, 4vw, 56px); align-items: start; }
+  .oo-stap-foto { grid-row: 1 / span 2; margin: 0; }
+  .oo-stap-naam { align-self: end; }
+}
+
+/* Computer met beweging: het deel blijft staan. Rechts vloeit per stap de
+   volgende foto in beeld (zoals de kop: links weg in het donkerblauw); links
+   staat de lijst met stappen, de actieve klapt open. */
+@media (min-width: 921px) and (prefers-reduced-motion: no-preference) {
+  .oo-aanpak { height: calc(100svh + var(--n) * 60svh); }
+  .oo-aanpak-vast {
+    position: sticky;
+    top: 84px;
+    height: calc(100svh - 84px);
+    display: flex;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+  }
+  .oo-aanpak-beelden {
+    display: block;
+    position: absolute;
+    inset: 0 0 0 38%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 34%);
+  }
+  .oo-aanpak-beelden::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(9, 21, 33, .35) 0%, rgba(9, 21, 33, 0) 22%, rgba(9, 21, 33, 0) 72%, rgba(9, 21, 33, .55) 100%);
+  }
+  .oo-aanpak-beelden img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity .9s ease, transform 2.4s cubic-bezier(.2, .7, .2, 1);
+  }
+  .oo-aanpak-beelden img[data-actief] { opacity: 1; transform: scale(1); }
+  .oo-aanpak-raster { position: relative; width: min(1180px, calc(100% - 48px)); }
+  .oo-aanpak-tekst { max-width: 470px; }
+  .oo-stappen { gap: 0; margin-top: 36px; }
+  .oo-stap { display: block; padding: 13px 0 13px 22px; border-left: 2px solid var(--oo-haar); transition: border-color .35s ease; }
+  .oo-stap-foto { display: none; }
+  .oo-stap-naam { pointer-events: auto; color: var(--oo-op-zacht); font-size: 19px; cursor: pointer; transition: color .3s ease; }
+  .oo-stap-naam:hover { color: var(--oo-op); }
+  .oo-stap-inhoud { display: none; }
+  .oo-stap[data-actief] { border-left-color: var(--oo-licht); }
+  .oo-stap[data-actief] .oo-stap-naam { color: var(--oo-licht); font-size: 15px; }
+  .oo-stap[data-actief] .oo-stap-inhoud { display: block; animation: oo-in .6s ease both; }
+  .oo-stap[data-actief] h3 { margin-top: 8px; }
+}
+@keyframes oo-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---- Ruim 25 jaar --------------------------------------------------------------- */
+
+.oo-jaren { padding: clamp(88px, 13vh, 160px) 0; background: var(--oo-diep); border-top: 1px solid var(--oo-haar); }
+.oo-jaren-raster { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); align-items: center; }
+.oo .oo-jaren-getal {
+  margin: 0;
+  color: var(--oo-op);
+  font-size: clamp(120px, 17vw, 260px);
+  font-weight: 700;
+  line-height: .82;
+  letter-spacing: -.05em;
+  font-variant-numeric: lining-nums;
+}
+.oo-jaren-getal span { color: var(--oo-licht); }
+.oo-jaren h2 { margin: 0; max-width: 13em; font-size: clamp(30px, 3vw, 44px); font-weight: 700; line-height: 1.1; }
+.oo-jaren-tekst p { max-width: 33em; margin: 18px 0 0; color: var(--oo-op-zacht); font-size: 18px; line-height: 1.6; }
+
+/* ---- Vakmanschap ----------------------------------------------------------------- */
+
+.oo-vak { padding: clamp(72px, 10vw, 128px) 0; background: var(--oo-navy-hoog); border-top: 1px solid var(--oo-haar); }
+.oo-vak-raster { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 48px clamp(40px, 7vw, 112px); align-items: start; }
+.oo-vak h2 { margin: 0; font-size: clamp(32px, 3.4vw, 48px); font-weight: 700; line-height: 1.08; }
+.oo .oo-vak-kop { margin: 0; font-size: clamp(26px, 2.4vw, 34px); font-weight: 700; line-height: 1.12; }
+.oo-beloftes { margin-bottom: clamp(64px, 8vw, 104px); }
+.oo-beloftes ul { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px clamp(24px, 3vw, 48px); }
+.oo-beloftes li { padding-top: 20px; border-top: 2px solid var(--oo-licht); }
+.oo-beloftes h3 { margin: 0; font-size: 21px; font-weight: 650; line-height: 1.25; }
+.oo-beloftes p { margin: 10px 0 0; color: var(--oo-op-zacht); font-size: 17px; line-height: 1.6; }
+@media (max-width: 1020px) { .oo-beloftes ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.oo-vak-inkoop > p { max-width: 30em; margin: 20px 0 0; color: var(--oo-op-zacht); font-size: 18px; line-height: 1.6; }
+.oo-merken { margin: 32px 0 0; display: grid; gap: 20px; }
+.oo-merken div { padding-top: 16px; border-top: 1px solid var(--oo-haar); }
+.oo-merken dt { color: var(--oo-licht); font-size: 15px; font-weight: 600; }
+.oo-merken dd { margin: 6px 0 0; color: var(--oo-op); font-size: 19px; line-height: 1.45; }
+.oo .oo-vak-link { margin-top: 30px; font-weight: 600; }
+.oo-vak-link a { color: var(--oo-licht); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.oo-vak-link a:hover { text-decoration-thickness: 2px; }
+
+.oo-keurmerken { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.oo-keurmerken li {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  padding: 22px 0;
+  border-top: 1px solid var(--oo-haar);
+}
+.oo-keurmerken li:last-child { border-bottom: 1px solid var(--oo-haar); }
+.oo-logo { display: grid; place-items: center; height: 64px; padding: 10px 12px; border-radius: 3px; background: #ffffff; }
+.oo-logo img { max-width: 100%; max-height: 44px; object-fit: contain; }
+.oo-keurmerken h3 { margin: 0; font-size: 19px; font-weight: 650; line-height: 1.3; }
+.oo-keurmerken p { margin: 6px 0 0; color: var(--oo-op-zacht); font-size: 16px; line-height: 1.55; }
+
+/* ---- Slot --------------------------------------------------------------------------- */
+
+.oo-slot { padding: clamp(80px, 10vw, 128px) 0; background: linear-gradient(180deg, var(--oo-navy-hoog), var(--oo-navy)); border-top: 1px solid var(--oo-haar); }
+.oo-slot-raster { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: 48px clamp(40px, 7vw, 112px); align-items: end; }
+.oo-slot-tekst { position: relative; }
+.oo-slot h2 { margin: 0; max-width: 13em; font-size: clamp(34px, 3.8vw, 54px); font-weight: 700; line-height: 1.06; }
+.oo-slot-tekst > p { max-width: 32em; margin: 20px 0 0; color: var(--oo-op-zacht); font-size: 18px; line-height: 1.6; }
+.oo-adres { display: grid; gap: 4px; padding: 26px 0 0; border-top: 1px solid var(--oo-haar); font-style: normal; color: var(--oo-op); font-size: 18px; line-height: 1.5; }
+.oo-adres strong { margin-bottom: 6px; font-weight: 650; }
+.oo-adres-noot { margin-top: 12px; color: var(--oo-op-zacht); font-size: 16px; }
+
+/* ---- Telefoon ------------------------------------------------------------------------ */
+
+@media (max-width: 920px) {
+  .oo-wie-kop { grid-template-columns: 1fr; }
+  .oo-wie-raster { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .oo-kop { --h: 380px; --bw: calc(var(--h) * 1.5); min-height: 0; }
+  .oo-kop-scene { position: relative; height: var(--h); overflow: hidden; }
+  .oo-kop-beeld { left: calc(50% - var(--bw) * var(--deur-x)); -webkit-mask-image: none; mask-image: none; }
+  .oo-lucht {
+    background: linear-gradient(180deg, rgba(9, 21, 33, .55) 0%, rgba(9, 21, 33, .08) 34%, rgba(9, 21, 33, .1) 66%, var(--oo-navy) 100%);
+  }
+  .oo-kop-tekst { padding-top: 4px; padding-bottom: 56px; transform: none; }
+  .oo .oo-kop-onder { display: none; }
+  .oo-kop-tekst .oo-kruimel { display: none; }
+  .oo-acties .button { width: 100%; }
+  .oo-vak-raster, .oo-slot-raster, .oo-wie-kop, .oo-wie-raster, .oo-beloftes ul, .oo-jaren-raster { grid-template-columns: 1fr; }
+  .oo-keurmerken li { grid-template-columns: 92px minmax(0, 1fr); gap: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oo-kop { animation: none; --intro: 1; }
+}

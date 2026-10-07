@@ -58,6 +58,17 @@ test("renders real installation projects with honest work-stage labels", async (
   }
 });
 
+test("renders the about page with the company story and contact routes", async () => {
+  const response = await fetchRoute("/over-ons");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Sinds 2000 een vertrouwd bedrijf/i);
+  assert.match(html, /Ruim 25 jaar/i);
+  assert.match(html, /Van uw eerste telefoontje tot het onderhoud/i);
+  assert.match(html, /href=["']tel:\+31736222199["']/i);
+  assert.doesNotMatch(html, /noindex/i);
+});
+
 test("renders the professional knowledge overview with crawlable article link", async () => {
   const response = await fetchRoute("/kennisbank");
   assert.equal(response.status, 200);
