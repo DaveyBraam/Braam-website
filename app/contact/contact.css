@@ -1,0 +1,125 @@
+/* Contact v2: licht en zakelijk, mailen voorop. Huiskleuren: papier en wit,
+   donkerblauwe inkt, logoblauw als accent. Tekst minstens 15px, lopende tekst
+   18px, klikvlakken van minstens 48px. Geen formulier op deze pagina, alleen
+   doorverwijzen. De foto van het pand schuift rustig mee als de browser dat kan. */
+
+.ct {
+  --ct-navy: #091521;
+  --ct-papier: #f2f5f8;
+  --ct-wit: #ffffff;
+  --ct-inkt: #0f181f;
+  --ct-tekst: #2c3e4c;
+  --ct-zacht: #4a5d6e;
+  --ct-lijn: #d4dde3;
+  --ct-lijn-sterk: #a9bac7;
+  --ct-blauw: #0c70b8;
+  --ct-blauw-diep: #095a94;
+  --ct-tint: #e8f2fb;
+  background: var(--ct-papier);
+  color: var(--ct-inkt);
+  font-size: 18px;
+}
+
+body:has(main.ct) .ambient-orb,
+body:has(main.ct) .pointer-aura,
+body:has(main.ct) .page-grain { display: none; }
+html:has(main.ct) { scroll-padding-top: 100px; }
+
+.ct a:focus-visible {
+  outline: 3px solid var(--ct-blauw);
+  outline-offset: 3px;
+}
+.ct h1, .ct h2, .ct h3 { color: var(--ct-inkt); letter-spacing: -.02em; }
+.ct p a, .ct-werkgebied a { color: var(--ct-blauw); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.ct p a:hover { text-decoration-thickness: 2px; }
+
+/* ---- Kop ------------------------------------------------------------------- */
+
+.ct-kop { padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 6vw, 80px); background: linear-gradient(180deg, var(--ct-wit), var(--ct-papier)); }
+.ct-kop-raster { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, .55fr); gap: 40px clamp(40px, 6vw, 96px); align-items: end; }
+.ct .ct-kruimel { display: flex; gap: 10px; margin: 0 0 24px; color: var(--ct-zacht); font-size: 15px; font-weight: 600; }
+.ct-kruimel a:hover { color: var(--ct-blauw); }
+.ct-kruimel span:last-child { color: var(--ct-inkt); }
+.ct h1 { margin: 0; max-width: 12em; font-size: clamp(40px, 4.8vw, 66px); font-weight: 700; line-height: 1.04; text-wrap: balance; }
+.ct .ct-lead { max-width: 32em; margin: 20px 0 0; color: var(--ct-tekst); font-size: 19px; line-height: 1.6; }
+
+/* Drie keuzes direct onder de kop: twee formulieren, en anders gewoon mailen. */
+.ct-keuzes { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.ct-keuzes li { display: grid; }
+.ct-keuze {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 22px 22px 20px;
+  border: 1px solid var(--ct-lijn-sterk);
+  border-radius: 4px;
+  background: var(--ct-wit);
+  color: var(--ct-inkt);
+  transition: border-color .2s ease, transform .2s ease, background-color .2s ease;
+}
+.ct-keuze:hover { border-color: var(--ct-blauw); transform: translateY(-2px); }
+.ct-keuze--hoofd { border-color: var(--ct-navy); background: var(--ct-navy); color: var(--ct-wit); }
+.ct-keuze--hoofd:hover { border-color: var(--ct-blauw-diep); background: #0d2236; }
+.ct-keuze-voor { color: var(--ct-zacht); font-size: 15px; font-weight: 600; }
+.ct-keuze--hoofd .ct-keuze-voor { color: #b3c3d2; }
+.ct-keuze strong { font-size: clamp(21px, 1.8vw, 25px); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+.ct-keuze-actie { margin-top: 10px; color: var(--ct-blauw-diep); font-size: 16px; font-weight: 650; }
+.ct-keuze--hoofd .ct-keuze-actie { color: #7cc0f7; }
+.ct .ct-keuze-onder { margin: 14px 2px 0; color: var(--ct-zacht); font-size: 16px; line-height: 1.5; }
+.ct-tijden-kort { display: none; }
+.ct-kop a.ct-keuze--hoofd:focus-visible { outline-color: var(--ct-blauw); }
+
+.ct-tijden { padding: 24px 24px 26px; border-top: 3px solid var(--ct-navy); background: var(--ct-wit); box-shadow: 0 18px 40px -26px rgba(9, 21, 33, .4); }
+.ct-tijden p { margin: 0; color: var(--ct-tekst); font-size: 16px; line-height: 1.5; }
+.ct .ct-tijden-kop { color: var(--ct-zacht); font-size: 15px; font-weight: 600; }
+.ct .ct-tijden-uren { margin: 4px 0 12px; color: var(--ct-inkt); font-size: 30px; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+
+/* ---- Bellen ------------------------------------------------------------------------ */
+
+.ct-bellen { padding: clamp(56px, 7vw, 96px) 0; background: var(--ct-wit); border-top: 1px solid var(--ct-lijn); }
+.ct-bellen-raster { display: grid; grid-template-columns: minmax(0, .7fr) repeat(2, minmax(0, 1fr)); gap: 32px clamp(28px, 4vw, 64px); }
+.ct-bellen h2 { margin: 0; font-size: clamp(28px, 2.6vw, 38px); font-weight: 700; line-height: 1.1; }
+.ct-bellen-blok { padding-top: 18px; border-top: 2px solid var(--ct-navy); }
+.ct-bellen h3 { margin: 0; font-size: 20px; font-weight: 650; }
+.ct-bellen-blok p { margin: 10px 0 0; color: var(--ct-tekst); font-size: 17px; line-height: 1.6; }
+.ct-bellen-blok a[href^="tel"] { color: var(--ct-inkt); font-weight: 700; text-decoration: none; white-space: nowrap; }
+
+/* ---- Langskomen --------------------------------------------------------------------- */
+
+.ct-bezoek { background: var(--ct-papier); border-top: 1px solid var(--ct-lijn); }
+.ct-bezoek-beeld { height: clamp(260px, 42vh, 460px); overflow: hidden; }
+.ct-bezoek-beeld img { display: block; width: 100%; height: 118%; object-fit: cover; object-position: 50% 55%; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ct-bezoek-beeld img { animation: ct-schuif linear both; animation-timeline: view(); }
+    @keyframes ct-schuif { from { transform: translateY(-12%); } to { transform: translateY(0); } }
+  }
+}
+.ct-bezoek-raster { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px clamp(40px, 6vw, 96px); padding: clamp(48px, 6vw, 80px) 0 clamp(64px, 8vw, 104px); }
+.ct-bezoek h2 { margin: 0; font-size: clamp(28px, 2.8vw, 40px); font-weight: 700; line-height: 1.1; }
+.ct-bezoek address { display: grid; gap: 2px; margin-top: 20px; font-style: normal; font-size: 19px; line-height: 1.5; }
+.ct-bezoek address strong { font-weight: 650; }
+.ct-bezoek-tekst > p { max-width: 30em; margin: 16px 0 0; color: var(--ct-tekst); font-size: 17px; line-height: 1.6; }
+.ct-route { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; margin-top: 18px; padding: 0 20px; border: 1px solid var(--ct-navy); border-radius: 2px; color: var(--ct-navy); font-size: 16px; font-weight: 650; }
+.ct-route:hover { background: var(--ct-navy); color: var(--ct-wit); }
+.ct-werkgebied { padding-top: 18px; border-top: 1px solid var(--ct-lijn-sterk); }
+.ct-werkgebied h3 { margin: 0; font-size: 20px; font-weight: 650; }
+.ct-werkgebied > p { margin: 10px 0 0; color: var(--ct-tekst); font-size: 17px; line-height: 1.6; }
+.ct-werkgebied ul { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.ct-werkgebied li { padding: 8px 14px; border: 1px solid var(--ct-lijn); border-radius: 999px; background: var(--ct-wit); font-size: 16px; }
+.ct .ct-werkgebied-noot { margin-top: 18px; color: var(--ct-zacht); font-size: 16px; }
+
+/* ---- Kleinere schermen ------------------------------------------------------------------ */
+
+@media (max-width: 980px) {
+  .ct-keuzes { grid-template-columns: 1fr; }
+  .ct-tijden { display: none; }
+  .ct-tijden-kort { display: inline; color: var(--ct-inkt); font-weight: 600; }
+  .ct-kop-raster, .ct-bezoek-raster { grid-template-columns: 1fr; }
+  .ct-bellen-raster { grid-template-columns: 1fr 1fr; }
+  .ct-bellen h2 { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .ct-bellen-raster { grid-template-columns: 1fr; }
+}

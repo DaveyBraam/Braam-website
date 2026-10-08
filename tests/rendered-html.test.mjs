@@ -69,6 +69,19 @@ test("renders the about page with the company story and contact routes", async (
   assert.doesNotMatch(html, /noindex/i);
 });
 
+test("renders the contact page as referrals without a form", async () => {
+  const response = await fetchRoute("/contact");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Waarmee kunnen we u helpen/i);
+  assert.match(html, /href=["']\/offerte-aanvragen["']/i);
+  assert.match(html, /href=["']\/abonnement-aanvragen["']/i);
+  assert.match(html, /mailto:service@robbraam\.com/i);
+  assert.match(html, /mailto:planning@robbraam\.com/i);
+  assert.doesNotMatch(html, /<form|<textarea/i);
+  assert.doesNotMatch(html, /noindex/i);
+});
+
 test("renders the professional knowledge overview with crawlable article link", async () => {
   const response = await fetchRoute("/kennisbank");
   assert.equal(response.status, 200);
