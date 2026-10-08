@@ -15,7 +15,7 @@ import "./over-ons.css";
    beloven, merken zonder aantal noemen, keurmerkteksten zoals op /onderhoud. */
 
 export const metadata: Metadata = {
-  title: "Over Service & Montagebedrijf Rob Braam",
+  title: { absolute: "Over Service & Montagebedrijf Rob Braam" },
   description: "Gecertificeerd installatiebedrijf uit 's-Hertogenbosch, opgericht in 2000 door Rob Braam. Advies, installatie, onderhoud en service door ons eigen team.",
 };
 

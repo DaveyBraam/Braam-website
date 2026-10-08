@@ -4,7 +4,7 @@ import { AanvraagPagina } from "../components/aanvraag/AanvraagPagina";
 import { SubscriptionApplicationForm } from "../components/SubscriptionApplicationForm";
 
 export const metadata: Metadata = {
-  title: "Onderhoudsabonnement aanvragen | Rob Braam",
+  title: "Onderhoudsabonnement aanvragen",
   description: "Vraag onderhoud aan voor uw eigen woning of voor meerdere huurwoningen en panden.",
   robots: { index: false, follow: false },
 };

@@ -60,7 +60,7 @@ const thanksContent: Record<string, Bedankt> = {
 };
 
 export const metadata: Metadata = {
-  title: "Bedankt voor uw aanvraag | Rob Braam",
+  title: "Bedankt voor uw aanvraag",
   description: "Bedanktpagina na een aanvraag of terugbelverzoek bij Rob Braam.",
   robots: { index: false, follow: false },
 };

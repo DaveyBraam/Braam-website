@@ -37,8 +37,8 @@ const firaSans = Fira_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Braam Service & Montage — Premium concept",
-    template: "%s | Braam Service & Montage",
+    default: "Service & Montagebedrijf Rob Braam | Verwarming en installatie in 's-Hertogenbosch",
+    template: "%s | Rob Braam",
   },
   description:
     "Persoonlijk advies, installatie, onderhoud en service voor warmtepompen, cv-ketels, airco en elektra vanuit 's-Hertogenbosch in Noord-Brabant en aangrenzende delen van Gelderland.",

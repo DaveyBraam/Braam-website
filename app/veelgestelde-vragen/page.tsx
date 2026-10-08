@@ -5,7 +5,7 @@ import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "Veelgestelde vragen | Rob Braam",
+  title: "Veelgestelde vragen",
   description: "Antwoorden op veelgestelde vragen over offertes, warmtepompen, cv-ketels, airco, elektra, onderhoudsabonnementen en service.",
 };
 

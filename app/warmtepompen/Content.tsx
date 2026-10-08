@@ -14,7 +14,7 @@ const answers = [
 export function Content() {
   return <div className="w5-content" id="w5-inhoud">
     <section className="w5-benefits" aria-labelledby="w5-benefits-title">
-      <h2 id="w5-benefits-title">Minder gas gebruiken.<br /><em>Vooruit met uw woning.</em></h2>
+      <h2 id="w5-benefits-title">Slimmer verwarmen.<br /><em>Vooruit met uw woning.</em></h2>
       <div className="w5-benefit-list">
         <article><h3>Minder afhankelijk van gas</h3><p>Laat de warmtepomp uw woning verwarmen. Hybride met uw ketel als aanvulling, of volledig elektrisch voor verwarming én warm water.</p></article>
         <article><h3>Comfort dat bij u past</h3><p>Een warm huis begint bij een passende installatie. Wij stemmen het systeem af op uw woning, verwarming en warmwatergebruik.</p></article>

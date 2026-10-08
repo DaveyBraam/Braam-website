@@ -3,7 +3,7 @@ import { AanvraagPagina } from "../components/aanvraag/AanvraagPagina";
 import { SingleMaintenanceApplicationForm } from "../components/SingleMaintenanceApplicationForm";
 
 export const metadata: Metadata = {
-  title: "Eenmalige onderhoudsbeurt aanvragen | Rob Braam",
+  title: "Eenmalige onderhoudsbeurt aanvragen",
   description: "Vraag één losse onderhoudsbeurt aan voor uw cv-ketel, hybride installatie of volledig elektrische warmtepomp.",
   robots: { index: false, follow: false },
 };

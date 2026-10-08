@@ -178,7 +178,7 @@ export function Journey() {
         </section>
 
         <section className="w5-copy" data-copy="hybride" id="ws-scene-3" aria-labelledby="ws-title-3">
-          <h2 id="ws-title-3">Minder gas.<br /><em>Uw ketel blijft.</em></h2>
+          <h2 id="ws-title-3">Hybride.<br /><em>Uw ketel blijft.</em></h2>
           <p className="w5-body">De warmtepomp verwarmt. Uw cv-ketel helpt wanneer nodig en verzorgt het douchewater.</p>
           <p className="w5-keyline">Onze hybride opstelling kan later volledig elektrisch worden.</p>
           <div className="w5-actions"><a className="w5-link" href="#ws-scene-4" onClick={e => { e.preventDefault(); go(anchors.elektrisch); }}>Bekijk volledig elektrisch <span aria-hidden="true">→</span></a></div>

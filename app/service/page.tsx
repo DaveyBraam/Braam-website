@@ -5,7 +5,7 @@ import { PageHero } from "../components/PageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
-export const metadata: Metadata = { title: "Storing en service | Rob Braam", description: "Servicevragen en storingen voor cv-ketels en warmtepompen. Bel 073 622 2199 of mail service@robbraam.com." };
+export const metadata: Metadata = { title: "Storing en service", description: "Servicevragen en storingen voor cv-ketels en warmtepompen. Bel 073 622 2199 of mail service@robbraam.com." };
 
 export default function ServicePage() {
   return <><SiteHeader /><main>

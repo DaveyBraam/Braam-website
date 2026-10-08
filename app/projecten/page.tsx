@@ -13,7 +13,7 @@ import "./projecten.css";
    braam-premium-concept/scrollcraft/builds/projecten-v2/BRIEF.md */
 
 export const metadata: Metadata = {
-  title: "Projecten in de regio | Rob Braam",
+  title: "Projecten in de regio",
   description: "Bekijk echte warmtepomp-, cv-ketel- en installatieprojecten van Rob Braam in de regio rond 's-Hertogenbosch.",
 };
 

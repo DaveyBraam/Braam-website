@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: "/kennisbank",
     siteName: siteConfig.shortName,
-    title: "Kennisbank | Braam Service & Montage",
+    title: "Kennisbank | Rob Braam",
     description: "Praktische uitleg voor uw woning, gebaseerd op ervaring uit installatie, onderhoud en service.",
   },
 };

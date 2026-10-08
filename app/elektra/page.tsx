@@ -5,7 +5,7 @@ import { PageHero } from "../components/PageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
-export const metadata: Metadata = { title: "Elektra-installaties in de regio | Rob Braam", description: "Groepenkasten, uitbreidingen en elektrische aansluitingen voor warmtepomp en airco, vanuit 's-Hertogenbosch in Noord-Brabant en aangrenzende delen van Gelderland." };
+export const metadata: Metadata = { title: "Elektra-installaties in de regio", description: "Groepenkasten, uitbreidingen en elektrische aansluitingen voor warmtepomp en airco, vanuit 's-Hertogenbosch in Noord-Brabant en aangrenzende delen van Gelderland." };
 
 const werkzaamheden = [
   { titel: "Groepenkast", tekst: "Vervangen of uitbreiden als de bestaande verdeler niet meer past bij het gebruik in uw woning of bedrijf." },

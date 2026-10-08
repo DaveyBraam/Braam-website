@@ -4732,6 +4732,7 @@ label:has(input:focus-visible) {
     right: 12px;
     bottom: calc(10px + env(safe-area-inset-bottom));
     left: 12px;
+    margin: 0; /* the generic nav rule adds margin-right: 38px */
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;

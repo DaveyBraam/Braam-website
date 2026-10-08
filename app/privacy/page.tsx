@@ -4,7 +4,7 @@ import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "Privacyverklaring | Rob Braam",
+  title: "Privacyverklaring",
   description:
     "Lees hoe Service & Montagebedrijf Rob Braam persoonsgegevens gebruikt, beveiligt en bewaart.",
 };

@@ -177,13 +177,13 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
   .w5 h1 { font-size: clamp(2.3rem, 10.5vw, 2.9rem); }
   .w5 h2 { font-size: clamp(1.85rem, 8vw, 2.3rem); }
   /* The house in the upper part, the copy on paper below it. */
-  .w5-paper { background: linear-gradient(to top, rgba(242, 245, 248, .98) 0%, rgba(242, 245, 248, .95) calc(40% + var(--w5-lift, 0px)), rgba(242, 245, 248, .6) calc(50% + var(--w5-lift, 0px)), rgba(242, 245, 248, 0) calc(58% + var(--w5-lift, 0px))); }
-  .w5-copy, .w5-hero { left: 0; right: 0; top: auto; bottom: 0; width: auto; padding: 0 20px calc(22px + env(safe-area-inset-bottom)); }
-  /* The opening screen keeps its button and the scroll hint above the fold (the phone
-     number is in the menu), and the paper under the copy lifts with it. */
-  .w5-hero { padding-bottom: calc(var(--w5-lift, 0px) + 50px + env(safe-area-inset-bottom)); }
+  .w5-paper { background: linear-gradient(to top, rgba(242, 245, 248, .98) 0%, rgba(242, 245, 248, .95) calc(40% + var(--w5-lift, 0px) + var(--w5-bar, 0px)), rgba(242, 245, 248, .6) calc(50% + var(--w5-lift, 0px) + var(--w5-bar, 0px)), rgba(242, 245, 248, 0) calc(58% + var(--w5-lift, 0px) + var(--w5-bar, 0px))); }
+  .w5-copy, .w5-hero { left: 0; right: 0; top: auto; bottom: 0; width: auto; padding: 0 20px calc(22px + var(--w5-bar, 0px) + env(safe-area-inset-bottom)); }
+  /* The opening screen keeps its button (or, on small phones, the action bar) and the
+     scroll hint above the fold, and the paper under the copy lifts with it. */
+  .w5-hero { padding-bottom: calc(var(--w5-lift, 0px) + 50px + var(--w5-bar, 0px) + env(safe-area-inset-bottom)); }
   .w5-hero .w5-phone { display: none; }
-  .w5-cue { flex-direction: row; gap: 12px; bottom: calc(var(--w5-lift, 0px) + 16px + env(safe-area-inset-bottom)); text-shadow: none; }
+  .w5-cue { flex-direction: row; gap: 12px; bottom: calc(var(--w5-lift, 0px) + 16px + var(--w5-bar, 0px) + env(safe-area-inset-bottom)); text-shadow: none; }
   .w5-cue i { order: 0; height: 22px; }
   .w5-kicker { margin-bottom: 10px !important; font-size: .75rem; }
   .w5-intro { margin-top: 12px !important; font-size: 1.0625rem; }
@@ -194,6 +194,17 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
   .w5-copy .w5-button { width: 100%; justify-content: center; }
   .w5-vessels { margin-top: 12px !important; }
   .w5-vessels > div { grid-template-columns: 6.5rem 1fr; padding: 8px 0; font-size: 1rem; }
+}
+/* Small phones: the action bar (advies + bellen) is fixed at the bottom. It is the
+   journey's button there, so the copy rests above it and its own advice buttons go. */
+@media (max-width: 660px) {
+  .w5-stage { --w5-bar: 76px; }
+  /* The bar in this page's own hand: paper, a hairline, a flat blue button. */
+  .w5 + .mobile-action-bar { border: 1px solid rgba(14, 22, 32, .14); border-radius: 10px; background: rgba(242, 245, 248, .97); box-shadow: 0 8px 24px rgba(14, 22, 32, .12); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .w5 + .mobile-action-bar a { border-radius: 6px; font-weight: 600; font-size: 15px; }
+  .w5 + .mobile-action-bar a:first-child { background: #0c70b8; color: #fff; }
+  .w5 + .mobile-action-bar a:last-child { border: 1px solid rgba(14, 22, 32, .14); color: #0e1620; }
+  :is(.w5-hero, [data-copy="finale"]) .w5-actions { display: none; }
 }
 @media (max-width: 759px) {
   .w5-button { width: 100%; justify-content: center; }

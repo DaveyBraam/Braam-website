@@ -13,7 +13,7 @@ import "./pagina.css";
 
 /* De teksten zijn sinds de herziening van oktober 2026 ongewijzigd; alleen de
    volgorde volgt nu de klant: kiezen, abonnement, starten, team, aanvragen. */
-export const metadata: Metadata = { title: "Onderhoud: eenmalig of abonnement | Rob Braam", description: "Vergelijk eenmalig onderhoud met een onderhoudsabonnement voor cv-ketel, hybride combinatie of full-electric warmtepomp." };
+export const metadata: Metadata = { title: "Onderhoud: eenmalig of abonnement", description: "Vergelijk eenmalig onderhoud met een onderhoudsabonnement voor cv-ketel, hybride combinatie of full-electric warmtepomp." };
 
 /* Vier echte keurmerken met een echt logo. */
 const keurmerken = [

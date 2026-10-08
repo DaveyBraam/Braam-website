@@ -6,7 +6,7 @@ import { PageHero } from "../components/PageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
-export const metadata: Metadata = { title: "Airco installeren in de regio | Rob Braam", description: "Advies, installatie en service voor energiezuinige airconditioning vanuit 's-Hertogenbosch, in Noord-Brabant en aangrenzende delen van Gelderland." };
+export const metadata: Metadata = { title: "Airco installeren in de regio", description: "Advies, installatie en service voor energiezuinige airconditioning vanuit 's-Hertogenbosch, in Noord-Brabant en aangrenzende delen van Gelderland." };
 
 const onderdelen = [
   { titel: "Passend vermogen", tekst: "We stemmen het vermogen af op de ruimte, zonbelasting en de manier waarop u de airco wilt gebruiken." },

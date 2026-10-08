@@ -4,7 +4,7 @@ import { AanvraagPagina } from "../components/aanvraag/AanvraagPagina";
 import { CallbackRequestForm } from "../components/CallbackRequestForm";
 
 export const metadata: Metadata = {
-  title: "Bel mij terug | Rob Braam",
+  title: "Bel mij terug",
   description: "Laat Rob Braam u terugbellen over een offerte, onderhoud, servicevraag of afspraak.",
   robots: { index: false, follow: true },
 };

@@ -4,7 +4,7 @@ import { AanvraagPagina } from "../components/aanvraag/AanvraagPagina";
 import { QuoteRequestForm } from "../components/QuoteRequestForm";
 
 export const metadata: Metadata = {
-  title: "Offerte of advies aanvragen | Rob Braam",
+  title: "Offerte of advies aanvragen",
   description: "Vraag persoonlijk advies of een offerte aan voor een cv-ketel, warmtepomp, airco, elektra of onderhoud.",
   robots: { index: false, follow: true },
 };

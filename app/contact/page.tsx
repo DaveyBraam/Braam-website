@@ -15,7 +15,7 @@ import "./contact.css";
    onderhoudsabonnement heeft. */
 
 export const metadata: Metadata = {
-  title: "Contact | Rob Braam",
+  title: "Contact",
   description: "Contact met Rob Braam voor offerte, onderhoud, service of planning. Mail het juiste team of bel 073 622 2199.",
 };
 
