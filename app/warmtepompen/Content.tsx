@@ -58,7 +58,7 @@ export function Content() {
     <section className="w5-process" aria-labelledby="w5-process-title">
       <div className="w5-process-intro"><h2 id="w5-process-title">Uw warmtepomp.<br /><em>Onze verantwoordelijkheid.</em></h2><p>Van het eerste advies tot de service jaren later: u heeft één aanspreekpunt. Ons eigen team voert het werk uit, zonder onderaannemers. Wij zijn CO-gecertificeerd en onze monteurs zijn STEK-gecertificeerd.</p></div>
       <ol className="w5-steps">
-        <li><h3>Passend advies</h3><p>Binnen 48 uur nemen wij contact met u op. U krijgt advies over een passende opstelling en of overstappen zinvol is.</p></li>
+        <li><h3>Aanvraag en advies</h3><p>U stuurt uw aanvraag en wij krijgen hem direct binnen. Binnen 48 uur krijgt u reactie. Daarna adviseren we u over een passende opstelling en of overstappen zinvol is.</p></li>
         <li><h3>Een compleet voorstel</h3><p>U ziet welke toestellen en aanpassingen nodig zijn, inclusief aansluitingen en elektrawerk door onze eigen elektricien. Wij helpen u met de subsidieaanvraag.</p></li>
         <li><h3>Installatie en uitleg</h3><p>Reken op minimaal twee dagen. Ons eigen team plaatst de installatie, stelt haar in bedrijf en laat u zien hoe u de temperatuur regelt.</p></li>
         <li><h3>Onderhoud en service</h3><p>Ook daarna belt u ons. Wij onderhouden en verhelpen storingen aan de installatie die we zelf hebben geplaatst.</p></li>
@@ -84,7 +84,7 @@ export function Content() {
     <section className="w5-closing" aria-labelledby="w5-closing-title">
       <h2 id="w5-closing-title">Past een warmtepomp bij u?</h2>
       <div>
-        <p>Vertel ons over uw woning. Binnen 48 uur nemen wij contact met u op, en we denken met u mee van eerste advies tot jarenlang onderhoud.</p>
+        <p>Vertel ons over uw woning. Na uw aanvraag krijgt u binnen 48 uur reactie, en we denken met u mee van eerste advies tot jarenlang onderhoud.</p>
         <div className="w5-actions"><Link className="w5-button" href="/offerte-aanvragen?dienst=warmtepomp">Bespreek uw woning <span aria-hidden="true">↗</span></Link><a className="w5-phone" href="tel:+31736222199">073 622 2199</a></div>
         <p className="w5-contact"><a href="mailto:service@robbraam.com">service@robbraam.com</a><a href="mailto:planning@robbraam.com">planning@robbraam.com · onderhoud</a></p>
         <p className="w5-area">Vanuit ’s-Hertogenbosch, in Noord-Brabant en aangrenzende delen van Gelderland.</p>
