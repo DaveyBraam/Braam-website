@@ -4,6 +4,12 @@ import Image from "next/image";
 /* The copy of the earlier live page (app/warmtepompen-test/WarmtepompContent.tsx),
    set as a calm, light page below the scroll journey. */
 const brands = [["LG", "THERMA V R290 Monobloc", "/brand/lg-logo.svg", "https://www.lg.com/nl/warmtepomp/therma-v-r290-monobloc/"], ["Bosch", "Compress 5800i AW", "/brand/bosch-logo.png", "https://www.nefit-bosch.nl/ocs/compress-5800i-aw-21076799-p/"], ["Vaillant", "aroTHERM plus", "/brand/vaillant-logo.svg", "https://www.vaillant.nl/producten/arothermplus/"]];
+const factors = [
+  ["Vermogen", "5, 7, 9 of 11 kW, afgestemd op uw woning."],
+  ["Opstelling", "Hybride naast uw cv-ketel, of volledig elektrisch met boilervat."],
+  ["Elektra", "Aanpassingen in de groepenkast, door onze eigen elektricien."],
+  ["Plek en leidingen", "Waar de buitenunit komt en hoe ver die van de installatie staat."],
+];
 const answers = [
   ["Ook met radiatoren?", "Dat kan. De capaciteit en benodigde watertemperatuur moeten passen bij uw woning."],
   ["Ook bij vorst?", "Ja. Vermogen en rendement veranderen met de buitentemperatuur; de opstelling moet daarop passen."],
@@ -29,6 +35,16 @@ export function Content() {
       <figure className="w5-photo w5-photo-b"><Image unoptimized src="/projects/installaties/installatie-05.webp" alt="Door Rob Braam geïnstalleerde volledig elektrische binnenopstelling met LG-binnenunit, boilervat, buffervat en leidingwerk" width="960" height="1280" loading="lazy" /><figcaption><h3>Volledig elektrisch</h3><p>De warmtepomp verzorgt verwarming en warm water, met een apart boilervat en buffervat.</p></figcaption></figure>
     </section>
 
+    <section className="w5-price" id="w5-prijs" aria-labelledby="w5-price-title">
+      <div className="w5-price-intro"><h2 id="w5-price-title">Wat kost<br /><em>een warmtepomp?</em></h2><p>Een vanaf-prijs per opstelling, inclusief btw. Wat uw woning nodig heeft, ziet u terug in het voorstel.</p></div>
+      <div className="w5-care-plans w5-price-plans"><p className="w5-care-kind">Installatie · inclusief btw</p>
+        <div className="w5-plan"><h3>Hybride</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 4.995</strong><span className="w5-plan-period">naast uw cv-ketel</span></div>
+        <div className="w5-plan"><h3>Volledig elektrisch</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 5.995</strong><span className="w5-plan-period">zonder cv-ketel</span></div>
+        <div className="w5-price-factors"><h3>Wat bepaalt uw prijs</h3><dl>{factors.map(([term, text]) => <div key={term}><dt>{term}</dt><dd>{text}</dd></div>)}</dl></div>
+        <p className="w5-price-subsidy"><strong>Subsidie.</strong> Voor een warmtepomp in een bestaande woning is vaak ISDE-subsidie mogelijk. Wij helpen u met de aanvraag. <a href="https://www.rvo.nl/subsidies-financiering/isde" target="_blank" rel="noopener noreferrer">Bedragen en voorwaarden bij RVO<span className="sr-only"> (opent in een nieuw tabblad)</span></a>.</p>
+      </div>
+    </section>
+
     <section className="w5-quote" id="wp-offerte" aria-labelledby="w5-quote-title">
       <div className="w5-quote-intro"><h2 id="w5-quote-title">Uw informatie.<br /><em>Ons advies.</em></h2><p>Vertel ons wat u weet. Wij bespreken of de opstelling past en de overstap rendabel kan zijn.</p></div>
       <dl className="w5-signals">
@@ -36,21 +52,21 @@ export function Content() {
         <div><dt>Verwarming</dt><dd>Welke ketel, radiatoren of vloerverwarming heeft u?</dd></div>
         <div><dt>Isolatie</dt><dd>Wat weet u over dak, vloer, muren en glas?</dd></div>
       </dl>
-      <p className="w5-quote-followup">Ook warmwatergebruik, ruimte, leidingen en elektra tellen mee. Gegevens vragen we bij u na; we meten uw woning hiervoor niet na. Foto’s kunt u meesturen naar <a href="mailto:service@robbraam.com">service@robbraam.com</a>.</p>
+      <p className="w5-quote-followup">Ook warmwatergebruik, ruimte, leidingen en elektra tellen mee. Gegevens vragen we bij u na. Is een opname bij u thuis nodig, dan plannen we die apart. Foto’s kunt u meesturen naar <a href="mailto:service@robbraam.com">service@robbraam.com</a>.</p>
     </section>
 
     <section className="w5-process" aria-labelledby="w5-process-title">
-      <div className="w5-process-intro"><h2 id="w5-process-title">Uw warmtepomp.<br /><em>Onze verantwoordelijkheid.</em></h2><p>Van het eerste advies tot de service jaren later: u heeft één aanspreekpunt. Ons eigen team voert het werk uit, zonder onderaannemers.</p></div>
+      <div className="w5-process-intro"><h2 id="w5-process-title">Uw warmtepomp.<br /><em>Onze verantwoordelijkheid.</em></h2><p>Van het eerste advies tot de service jaren later: u heeft één aanspreekpunt. Ons eigen team voert het werk uit, zonder onderaannemers. Wij zijn CO-gecertificeerd en onze monteurs zijn STEK-gecertificeerd.</p></div>
       <ol className="w5-steps">
-        <li><h3>Passend advies</h3><p>U krijgt advies over een passende opstelling en of overstappen zinvol is.</p></li>
-        <li><h3>Een compleet voorstel</h3><p>U ziet welke toestellen en aanpassingen nodig zijn, inclusief aansluitingen en elektrawerk.</p></li>
-        <li><h3>Installatie en uitleg</h3><p>Ons eigen team plaatst de installatie, stelt haar af en laat u zien hoe u de temperatuur regelt.</p></li>
+        <li><h3>Passend advies</h3><p>Binnen 48 uur nemen wij contact met u op. U krijgt advies over een passende opstelling en of overstappen zinvol is.</p></li>
+        <li><h3>Een compleet voorstel</h3><p>U ziet welke toestellen en aanpassingen nodig zijn, inclusief aansluitingen en elektrawerk door onze eigen elektricien. Wij helpen u met de subsidieaanvraag.</p></li>
+        <li><h3>Installatie en uitleg</h3><p>Reken op minimaal twee dagen. Ons eigen team plaatst de installatie, stelt haar in bedrijf en laat u zien hoe u de temperatuur regelt.</p></li>
         <li><h3>Onderhoud en service</h3><p>Ook daarna belt u ons. Wij onderhouden en verhelpen storingen aan de installatie die we zelf hebben geplaatst.</p></li>
       </ol>
     </section>
 
     <section className="w5-care" id="ws-onderhoud" aria-labelledby="w5-care-title">
-      <div className="w5-care-intro"><h2 id="w5-care-title">Wij plaatsen het.<br /><em>Wij onderhouden het.</em></h2><p>Eén vertrouwd aanspreekpunt voor onderhoud en service. Met een abonnement krijgt uw installatie jaarlijks een controle.</p><p className="w5-fine">Levensduur hangt af van toestel, gebruik en onderhoud. Garantie en serviceafspraken staan in uw voorstel.</p></div>
+      <div className="w5-care-intro"><h2 id="w5-care-title">Wij plaatsen het.<br /><em>Wij onderhouden het.</em></h2><p>Eén vertrouwd aanspreekpunt voor onderhoud en service. Met een abonnement krijgt uw installatie jaarlijks een controle.</p><p className="w5-fine">Levensduur hangt af van toestel, gebruik en onderhoud. Op elk toestel zit fabrieksgarantie; wij registreren het toestel voor u. Garantie- en serviceafspraken staan in uw voorstel.</p></div>
       <div className="w5-care-plans"><p className="w5-care-kind">Comfort · jaarlijks onderhoud</p>
         <Link className="w5-plan" href="/abonnement-aanvragen?abonnement=hybride-comfort"><h3>Hybride</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 24,08</strong><span className="w5-plan-period">per maand · € 289 per jaar</span><span className="w5-plan-link">Bekijk abonnement <span aria-hidden="true">↗</span></span></Link>
         <Link className="w5-plan" href="/abonnement-aanvragen?abonnement=all-electric-comfort"><h3>Volledig elektrisch</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 19,92</strong><span className="w5-plan-period">per maand · € 239 per jaar</span><span className="w5-plan-link">Bekijk abonnement <span aria-hidden="true">↗</span></span></Link>
@@ -68,9 +84,10 @@ export function Content() {
     <section className="w5-closing" aria-labelledby="w5-closing-title">
       <h2 id="w5-closing-title">Past een warmtepomp bij u?</h2>
       <div>
-        <p>Vertel ons over uw woning. Wij denken met u mee, van eerste advies tot jarenlang onderhoud.</p>
+        <p>Vertel ons over uw woning. Binnen 48 uur nemen wij contact met u op, en we denken met u mee van eerste advies tot jarenlang onderhoud.</p>
         <div className="w5-actions"><Link className="w5-button" href="/offerte-aanvragen?dienst=warmtepomp">Bespreek uw woning <span aria-hidden="true">↗</span></Link><a className="w5-phone" href="tel:+31736222199">073 622 2199</a></div>
         <p className="w5-contact"><a href="mailto:service@robbraam.com">service@robbraam.com</a><a href="mailto:planning@robbraam.com">planning@robbraam.com · onderhoud</a></p>
+        <p className="w5-area">Vanuit ’s-Hertogenbosch, in Noord-Brabant en aangrenzende delen van Gelderland.</p>
       </div>
     </section>
   </div>;

@@ -91,6 +91,16 @@ een handdruk. Die vertelt de positionering in beeld en is bewust behouden.
 
   Eenmalig onderhoud €180 binnen 's-Hertogenbosch, €190 daarbuiten.
 
+- **Warmtepompinstallatie, vanaf-prijzen inclusief btw** (door de eigenaar opgegeven
+  op 8 oktober 2026): hybride vanaf €4.995, volledig elektrisch vanaf €5.995.
+- Braam **helpt mee met de ISDE-subsidieaanvraag**. Noem geen subsidiebedragen; die
+  veranderen jaarlijks, verwijs naar RVO.
+- **Reactie op een aanvraag binnen 48 uur.**
+- Installatie en in bedrijf stellen: **standaard minimaal 2 dagen**.
+- Alle merken geven **fabrieksgarantie**; de duur is niet bekend, noem dus geen termijn.
+  Braam **registreert de toestellen** voor de klant.
+- Warmtepompreviews: nog niet aanwezig, de eigenaar zorgt ervoor.
+
   (Hier stond eerder warmtepomp €325 en hybride €275. Dat weersprak de site en
   is door de eigenaar gecorrigeerd: de onderhoudspagina klopt.)
 - Certificering: het bedrijf is CO-gecertificeerd en heeft STEK-gecertificeerde

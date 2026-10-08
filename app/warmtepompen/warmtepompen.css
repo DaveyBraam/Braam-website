@@ -102,7 +102,7 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 .w5-content p { line-height: 1.65; }
 .w5-benefits { display: grid; grid-template-columns: 5fr 7fr; gap: 48px clamp(32px, 6vw, 96px); background: #fff; }
 .w5-benefit-list article { display: grid; grid-template-columns: minmax(0, 15rem) 1fr; gap: 24px; padding: 26px 0; border-top: 1px solid var(--rule); }
-.w5-benefit-list p, .w5-installations-heading p, .w5-quote-intro p, .w5-process-intro p, .w5-brands-heading p, .w5-answer-list p, .w5-photo figcaption p, .w5-steps p, .w5-signals dd, .w5-care-intro p { color: var(--ink-soft); font-size: 1.125rem; }
+.w5-benefit-list p, .w5-installations-heading p, .w5-quote-intro p, .w5-process-intro p, .w5-brands-heading p, .w5-answer-list p, .w5-photo figcaption p, .w5-steps p, .w5-signals dd, .w5-care-intro p, .w5-price-intro p { color: var(--ink-soft); font-size: 1.125rem; }
 .w5-benefit-next { grid-column: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding-top: 26px; border-top: 2px solid var(--blue); }
 .w5-benefit-next p { max-width: 54ch; font-size: 1.125rem; }
 
@@ -150,6 +150,18 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 .w5-care-terms { grid-column: 1 / -1; padding-top: 18px; font-size: 1rem; color: var(--ink-soft); }
 .w5-care-terms a { color: var(--blue-ink); }
 
+/* The price: the same plates as the maintenance plans, then what moves it, then the subsidy. */
+.w5-price { display: grid; grid-template-columns: 5fr 7fr; gap: 48px clamp(32px, 6vw, 96px); background: #fff; }
+.w5-price-intro p { margin-top: 22px; max-width: 42ch; }
+.w5-price-factors { grid-column: 1 / -1; padding-top: 30px; }
+.w5-price-factors dl { margin-top: 12px; }
+.w5-price-factors dl > div { display: grid; grid-template-columns: 11rem 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--rule); font-size: 1.0625rem; }
+.w5-price-factors dt { font-weight: 600; }
+.w5-price-factors dd { color: var(--ink-soft); line-height: 1.5; }
+.w5-price-subsidy { grid-column: 1 / -1; margin-top: 26px !important; padding-top: 22px; border-top: 2px solid var(--blue); font-size: 1.125rem; color: var(--ink-soft); }
+.w5-price-subsidy strong { color: var(--ink); }
+.w5-price-subsidy a { color: var(--blue-ink); }
+
 .w5-brands { display: grid; grid-template-columns: 5fr 7fr; gap: 40px clamp(32px, 6vw, 96px); background: #fff; }
 .w5-brands-heading p { margin-top: 22px; max-width: 42ch; }
 .w5-brand-list li { display: grid; grid-template-columns: 10rem 1fr auto; align-items: center; gap: 24px; padding: 22px 0; border-top: 1px solid var(--rule); font-size: 1.0625rem; }
@@ -168,6 +180,7 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 .w5-closing h2 { font-size: clamp(2.6rem, 5vw, 4.5rem); max-width: 12ch; }
 .w5-closing p { max-width: 44ch; font-size: 1.25rem; color: var(--ink-soft); }
 .w5-contact { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 30px !important; font-size: 1rem !important; }
+.w5-closing .w5-area { margin-top: 12px; font-size: 1rem; }
 
 
 /* ---------- the journey on phones, and on tablets held upright ----------
@@ -209,7 +222,8 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 @media (max-width: 759px) {
   .w5-button { width: 100%; justify-content: center; }
   .w5-content > section { padding: 64px 20px; }
-  .w5-benefits, .w5-quote, .w5-process-intro, .w5-care, .w5-brands, .w5-answers, .w5-closing { grid-template-columns: 1fr; }
+  .w5-benefits, .w5-quote, .w5-process-intro, .w5-care, .w5-price, .w5-brands, .w5-answers, .w5-closing { grid-template-columns: 1fr; }
+  .w5-price-factors dl > div { grid-template-columns: 1fr; gap: 4px; }
   .w5-benefit-list article { grid-template-columns: 1fr; gap: 8px; }
   .w5-benefit-next, .w5-quote-followup { grid-column: 1; }
   .w5-installations { grid-template-columns: 1fr; }
