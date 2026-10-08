@@ -5,8 +5,7 @@
    the living room, and back out as the day turns to evening and the lights in
    the house and the outdoor lamps come on one by one, exactly with the scroll.
 
-   Scroll position t (in viewport-heights) maps to a Frame that the page and the
-   3D scene both read, so the models stay glued to the photographs. A plate's
+   Scroll position t (in viewport-heights) maps to a Frame that the page reads. A plate's
    view is a zoom relative to "cover", the photo point (fx, fy) and the screen
    point it lands on (sx, sy). All photos share one 16:9 frame. */
 
@@ -22,8 +21,6 @@ export type Frame = {
   night: number;
   /** 0..1 per light, in the order they switch on (see LIGHTS) */
   lights: number[];
-  /** 3D layer opacity per photographed room */
-  scenes: { ext: number; gar: number; liv: number };
   /** 0 = hybride (ketel), 1 = volledig elektrisch (boilervat) */
   swap: number;
   copy: Record<CopyId, number>;
@@ -120,15 +117,6 @@ export function frameAt(rawT: number, mobile: boolean, vw: number, vh: number, r
   const extOpacity = t < 3.2 || t >= 7.95 ? 1 : 0;
   const garOpacity = t >= 2.6 && t < 6.9 ? garIn : 0;
   const livOpacity = t >= 6.45 && t < 8.35 ? livIn * (1 - livOut) : 0;
-  // Models fade a little ahead of their photograph: a dark product on a light wall
-  // would otherwise linger as a ghost over the next room.
-  const lead = (o: number) => Math.pow(o, 1.6);
-  const scenes = {
-    ext: lead(extOpacity * (1 - garOpacity) * (1 - livOpacity)),
-    gar: lead(garOpacity * (1 - livOpacity)),
-    liv: lead(livOpacity),
-  };
-
   const copy: Record<CopyId, number> = {
     hero: 1 - ease(0.7, 1.05, t),
     werking: windowed(t, 1.3, 2.75),
@@ -151,7 +139,6 @@ export function frameAt(rawT: number, mobile: boolean, vw: number, vh: number, r
     daylight: 1 - ease(8.55, 9.25, t),
     night: ease(9.05, 9.85, t),
     lights: [9.2, 9.36, 9.52, 9.66, 9.82, 9.98, 10.12, 10.26].map(start => ease(start, start + 0.22, t)),
-    scenes,
     swap: ease(4.5, 5.1, t),
     copy,
   };

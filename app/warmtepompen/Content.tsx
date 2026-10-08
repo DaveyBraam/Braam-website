@@ -60,7 +60,7 @@ export function Content() {
 
     <section className="w5-brands" aria-labelledby="w5-brands-title">
       <div className="w5-brands-heading"><h2 id="w5-brands-title">Gekozen om te blijven.</h2><p>We kiezen op kwaliteit en levensduur. Want het toestel dat we adviseren, onderhouden we later zelf. Uw woning en opstelling bepalen welk merk past.</p></div>
-      <ul className="w5-brand-list" aria-label="Gelijkwaardige warmtepompmerken">{brands.map(([brand, model, logo, url]) => <li key={brand}><span className="w5-brand-logo"><Image unoptimized src={logo} alt={brand} width="180" height="72" loading="lazy" /></span><strong>{model}</strong><a href={url} target="_blank" rel="noopener noreferrer" aria-label={`Bekijk ${model} bij ${brand} (opent in nieuw tabblad)`}>Bekijk bij {brand} <span aria-hidden="true">↗</span></a></li>)}</ul>
+      <ul className="w5-brand-list" aria-label="Gelijkwaardige warmtepompmerken">{brands.map(([brand, model, logo, url]) => <li key={brand}><span className="w5-brand-logo"><Image unoptimized src={logo} alt={brand} width="180" height="72" loading="lazy" /></span><strong>{model}</strong><a href={url} target="_blank" rel="noopener noreferrer">Bekijk bij {brand}<span className="sr-only"> (opent in een nieuw tabblad)</span> <span aria-hidden="true">↗</span></a></li>)}</ul>
     </section>
 
     <section className="w5-answers" aria-labelledby="w5-answers-title"><h2 id="w5-answers-title">Goed om te weten.</h2><div className="w5-answer-list">{answers.map(([question, answer]) => <article key={question}><h3>{question}</h3><p>{answer}</p></article>)}</div></section>
@@ -69,7 +69,7 @@ export function Content() {
       <h2 id="w5-closing-title">Past een warmtepomp bij u?</h2>
       <div>
         <p>Vertel ons over uw woning. Wij denken met u mee, van eerste advies tot jarenlang onderhoud.</p>
-        <div className="w5-actions"><Link className="w5-button" href="/offerte-aanvragen?dienst=warmtepomp">Bespreek uw woning ↗</Link><a className="w5-phone" href="tel:+31736222199">073 622 2199</a></div>
+        <div className="w5-actions"><Link className="w5-button" href="/offerte-aanvragen?dienst=warmtepomp">Bespreek uw woning <span aria-hidden="true">↗</span></Link><a className="w5-phone" href="tel:+31736222199">073 622 2199</a></div>
         <p className="w5-contact"><a href="mailto:service@robbraam.com">service@robbraam.com</a><a href="mailto:planning@robbraam.com">planning@robbraam.com · onderhoud</a></p>
       </div>
     </section>

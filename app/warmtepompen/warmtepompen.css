@@ -35,6 +35,10 @@
 /* The site header normally blurs whatever passes under it. Over a moving stage that
    blur is recomputed every frame; here it gets a plain, nearly opaque ground. */
 body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(245, 248, 251, .97); }
+/* The site-wide glow (orbs, pointer aura, grain) sits fixed above every section; like the
+   other service pages, this page goes without it. Over the stage it was also a blurred
+   layer recomposited on every scroll frame. */
+body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 
 /* ---------- controls ---------- */
 .w5-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 28px; }
@@ -92,7 +96,6 @@ body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: non
 .w5-cue i::after { content: ""; position: absolute; left: 0; top: -45%; width: 2px; height: 45%; background: var(--blue); animation: w5-cue 2.4s cubic-bezier(.6, 0, .3, 1) infinite; }
 @keyframes w5-cue { 0% { top: -45%; } 75%, 100% { top: 100%; } }
 @media (prefers-reduced-motion: reduce) { .w5-cue i::after { animation: none; top: 30%; } }
-.w5-status { position: absolute; right: var(--g); bottom: 18px; z-index: 3; font-size: .875rem; color: var(--ink-soft); }
 
 /* ---------- the content ---------- */
 .w5-content > section { padding: clamp(72px, 12vh, 140px) var(--g); border-top: 1px solid var(--rule); }
@@ -167,15 +170,17 @@ body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: non
 .w5-contact { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 30px !important; font-size: 1rem !important; }
 
 
-/* ---------- phones ---------- */
-@media (max-width: 759px) {
+/* ---------- the journey on phones, and on tablets held upright ----------
+   A portrait screen gets the phone composition: at the side, the copy column would be
+   too narrow and run over the photograph. Keep this query equal to PHONE in Journey.tsx. */
+@media (max-width: 759px), (max-width: 1199px) and (max-aspect-ratio: 4/5) {
   .w5 h1 { font-size: clamp(2.3rem, 10.5vw, 2.9rem); }
   .w5 h2 { font-size: clamp(1.85rem, 8vw, 2.3rem); }
   /* The house in the upper part, the copy on paper below it. */
   .w5-paper { background: linear-gradient(to top, rgba(242, 245, 248, .98) 0%, rgba(242, 245, 248, .95) calc(40% + var(--w5-lift, 0px)), rgba(242, 245, 248, .6) calc(50% + var(--w5-lift, 0px)), rgba(242, 245, 248, 0) calc(58% + var(--w5-lift, 0px))); }
   .w5-copy, .w5-hero { left: 0; right: 0; top: auto; bottom: 0; width: auto; padding: 0 20px calc(22px + env(safe-area-inset-bottom)); }
   /* The opening screen keeps its button and the scroll hint above the fold (the phone
-     number is in the bar at the top), and the paper under the copy lifts with it. */
+     number is in the menu), and the paper under the copy lifts with it. */
   .w5-hero { padding-bottom: calc(var(--w5-lift, 0px) + 50px + env(safe-area-inset-bottom)); }
   .w5-hero .w5-phone { display: none; }
   .w5-cue { flex-direction: row; gap: 12px; bottom: calc(var(--w5-lift, 0px) + 16px + env(safe-area-inset-bottom)); text-shadow: none; }
@@ -186,9 +191,12 @@ body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: non
   .w5-keyline { margin-top: 12px !important; padding-top: 10px; font-size: 1rem; }
   .w5-route, .w5-small { display: none; }
   .w5-actions { margin-top: 16px; }
-  .w5-button { width: 100%; justify-content: center; }
+  .w5-copy .w5-button { width: 100%; justify-content: center; }
   .w5-vessels { margin-top: 12px !important; }
   .w5-vessels > div { grid-template-columns: 6.5rem 1fr; padding: 8px 0; font-size: 1rem; }
+}
+@media (max-width: 759px) {
+  .w5-button { width: 100%; justify-content: center; }
   .w5-content > section { padding: 64px 20px; }
   .w5-benefits, .w5-quote, .w5-process-intro, .w5-care, .w5-brands, .w5-answers, .w5-closing { grid-template-columns: 1fr; }
   .w5-benefit-list article { grid-template-columns: 1fr; gap: 8px; }
@@ -198,7 +206,7 @@ body:has(.w5) .site-header { -webkit-backdrop-filter: none; backdrop-filter: non
   .w5-signals { grid-template-columns: 1fr; }
   .w5-signals > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
   .w5-signals > div { padding-bottom: 18px; }
-  .w5-steps { grid-template-columns: 1fr; padding-left: 30px; }
+  .w5 .w5-steps { grid-template-columns: 1fr; padding-left: 30px; }
   .w5-steps::before { top: 0; bottom: 0; left: 6px; right: auto; width: 2px; height: auto; }
   .w5-steps li { padding: 0 0 30px; }
   .w5-steps li::before { left: -30px; top: 4px; }

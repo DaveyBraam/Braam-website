@@ -13,6 +13,8 @@ const UNIT = { left: "65.3125%", top: "54.1667%", width: "25%", height: "25%" };
 const ELECTRIC = { left: "46.9792%", top: "5.9722%", width: "32.0052%", height: "90%" };
 const subscribeMotion = (callback: () => void) => { const m = matchMedia("(prefers-reduced-motion: reduce)"); m.addEventListener("change", callback); return () => m.removeEventListener("change", callback); };
 const restricted = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+/** Phones, and tablets held upright, get the stacked composition (same query as warmtepompen.css). */
+const PHONE = "(max-width: 759px), (max-width: 1199px) and (max-aspect-ratio: 4/5)";
 /** Where each chapter is fully readable, for links and keyboard focus. */
 const anchors: Record<CopyId, number> = { hero: 0.2, werking: 2.0, hybride: 3.8, elektrisch: 5.15, vaten: 6.2, regeling: 7.45, finale: 10.7 };
 
@@ -29,13 +31,13 @@ export function Journey() {
     else scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
   };
 
-  // The clock: scroll position → Frame → photographs, light layers, 3D and copy.
+  // The clock: scroll position → Frame → photographs, light layers and copy.
   useEffect(() => {
     const el = track.current, st = stage.current; if (!el || !st) return;
     const plates: Record<PlateId, { current: HTMLDivElement | null }> = { ext: extPlate, gar: garPlate, liv: livPlate };
     const copies = Array.from(st.querySelectorAll<HTMLElement>("[data-copy]"));
     const lights = Array.from(st.querySelectorAll<HTMLImageElement>("[data-light]"));
-    const mobileQuery = matchMedia("(max-width: 759px)");
+    const mobileQuery = matchMedia(PHONE);
     let raf = 0, vw = 1, vh = 1, baseW = 1, baseH = 1, lastT = -1, head = 0, lift = -1;
 
     // Decode every photograph up front, so none of them is unpacked (and stutters)
@@ -116,7 +118,7 @@ export function Journey() {
     };
     const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
     // Called by the smooth-scroll loop right after it moved the page: draw in this
-    // very frame, so photographs and models never trail the scroll.
+    // very frame, so the photographs never trail the scroll.
     const now = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; } tick(); };
     const resize = () => { layout(); wake(); };
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) wake(); }, { rootMargin: "10% 0px" });
