@@ -247,6 +247,25 @@ body:has(main.ck) .site-header { background: rgb(240 245 250 / .97); border-bott
 .ck-vergelijk h4 { font-size: 20px; font-weight: 700; }
 .ck-vergelijk p { color: var(--ck-inkt-zacht); }
 .ck-vergelijk .ck-tekstlink { margin-top: 8px; }
+
+/* Onder het scrollverhaal: niet alles wit. Onderhoud op donkerblauw (de zorg daarna),
+   naslag op het lichtblauw van de wand met witte bladen, slot weer op het diepste blauw. */
+.ck-daarna { background: var(--ck-nacht); color: var(--ck-op); }
+.ck-daarna h2 span { color: var(--ck-licht); }
+.ck-daarna-raster > div:first-child p, .ck-prijs-naam, .ck-prijs-jaar, .ck-prijs-bedrag small { color: var(--ck-op-zacht); }
+.ck-prijs, .ck-storing { border-color: rgb(169 189 208 / .22); }
+.ck-daarna .ck-knop { background: var(--ck-licht); color: var(--ck-nacht); box-shadow: none; }
+.ck-daarna .ck-knop:hover { background: #a6d4fa; }
+.ck-daarna .ck-tekstlink, .ck-storing a { color: var(--ck-licht); }
+.ck-daarna ::selection { background: var(--ck-licht); color: var(--ck-nacht); }
+.ck-daarna :is(a, button):focus-visible { outline-color: var(--ck-licht); }
+
+.ck-naslag { background: var(--ck-wand); border-top: 0; }
+.ck-naslag-bladen article { padding: clamp(28px, 3.4vw, 44px); border-radius: 16px; background: var(--ck-wit); box-shadow: 0 1px 0 rgb(15 34 54 / .04), 0 14px 34px rgb(15 34 54 / .07); }
+.ck-naslag-bladen { gap: clamp(20px, 2.4vw, 28px); }
+.ck-stappen li::before { background: var(--ck-blauw); border-color: var(--ck-blauw); color: var(--ck-wit); }
+.ck-stappen li:last-child, .ck-stappen { border-bottom: 0; }
+.ck-slot { background: var(--ck-nacht-diep); }
 .ck-merken { display: flex; flex-wrap: wrap; gap: 10px 36px; margin-top: 22px; font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
 .ck-klein { margin-top: 18px; font-size: 16px; color: var(--ck-inkt-zacht); }
 
@@ -305,7 +324,8 @@ body:has(main.ck) .site-header { background: rgb(240 245 250 / .97); border-bott
   .ck-metingen strong { font-size: 30px; }
 
   .ck-daarna-raster, .ck-slot-raster, .ck-naslag-raster { grid-template-columns: 1fr; }
-  .ck-prijs { padding-left: 0; padding-top: 28px; border-left: 0; border-top: 1px solid var(--ck-haar); }
+  .ck-prijs { padding-left: 0; padding-top: 28px; border-left: 0; border-top: 1px solid rgb(169 189 208 / .22); }
+  .ck-naslag-bladen article { padding: 24px 20px; border-radius: 14px; }
   .ck-naslag-index { position: static; }
   .ck-vergelijk { grid-template-columns: 1fr; }
   .ck-vergelijk > div { padding-right: 0; }
