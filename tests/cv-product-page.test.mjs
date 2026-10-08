@@ -12,12 +12,15 @@ async function render(path) {
   return response.text();
 }
 
-test('public cv route renders approved story, metadata and contact routes', async () => {
+test('public cv route renders the inspection round, metadata and contact routes', async () => {
   const html = await render('/cv-ketels');
-  assert.match(html, /id="product-story"/);
-  assert.match(html, /id="ps-title-4"/);
-  assert.match(html, /class="ps-aftercare"/);
-  assert.doesNotMatch(html, /id="cv-woning"|class="cvw-|id="cv-doorsnede"/);
+  assert.match(html, /class="ck-reis"/);
+  assert.match(html, /id="ck-gasleiding"/);
+  assert.match(html, /id="ck-rookgas"/);
+  assert.match(html, /De gasleiding\./);
+  assert.match(html, /Een onveilige installatie stellen we niet in bedrijf\./);
+  assert.match(html, /Wat we nalopen/);
+  assert.doesNotMatch(html, /id="product-story"/);
   assert.match(html, /name="robots"[^>]*content="index, follow"/);
   assert.match(html, /rel="canonical"[^>]*href="https:\/\/braam-premium-concept\.braam-site-installatie\.workers\.dev\/cv-ketels"/);
   for (const href of ['/offerte-aanvragen?dienst=cv-ketel', '/abonnement-aanvragen?abonnement=cv-comfort', 'tel:+31736222199']) {

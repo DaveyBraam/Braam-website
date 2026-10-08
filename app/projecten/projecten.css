@@ -141,89 +141,43 @@ html:has(main.pj) { scroll-padding-top: 100px; }
 /* ---- Werkwijze (de piek) ---------------------------------------------------- */
 
 .pj-werk {
-  --pj-t: 0;
-  --pj-print-h: min(64svh, 580px);
-  position: relative;
-  /* De foto's die nog moeten landen liggen rechts buiten beeld; clip (geen
-     hidden) zodat het vaste deel blijft werken. */
-  overflow-x: clip;
   background: var(--pj-wit);
   border-top: 1px solid var(--pj-lijn);
 }
-.pj-werk-raster { position: relative; }
 .pj-werk h2 { margin: 0; font-size: clamp(34px, 3.6vw, 50px); font-weight: 700; line-height: 1.05; }
 .pj .pj-werk-intro { max-width: 30em; margin: 14px 0 0; color: var(--pj-tekst); font-size: 18px; line-height: 1.55; }
-
-.pj-stappen { list-style: none; margin: 30px 0 0; padding: 0; }
+.pj-werk-vast { padding: clamp(56px, 8vw, 96px) 0; }
+.pj-stappen { list-style: none; margin: 36px 0 0; padding: 0; }
+.pj-stap { display: grid; gap: 24px; padding: clamp(32px, 5vw, 64px) 0; border-top: 1px solid var(--pj-lijn); }
+.pj-stap:first-child { border-top: 0; padding-top: 8px; }
+.pj-stap:last-child { padding-bottom: 0; }
 .pj-stap h3 { display: flex; align-items: baseline; gap: 14px; margin: 0; font-size: 24px; font-weight: 700; line-height: 1.2; }
 .pj-stap-nr { color: var(--pj-blauw); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 1ch; }
 .pj-stap-tekst p { max-width: 34em; margin: 8px 0 0; color: var(--pj-tekst); font-size: 18px; line-height: 1.55; }
-.pj .pj-stap-foto { margin-top: 8px; color: var(--pj-zacht); font-size: 15px; }
-.pj-stap-afdruk { margin: 0; overflow: hidden; background: var(--pj-lijn); box-shadow: var(--pj-schaduw); }
+.pj .pj-stap-foto { margin-top: 12px; color: var(--pj-zacht); font-size: 15px; }
+.pj-stap-afdruk { order: -1; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--pj-lijn); box-shadow: var(--pj-schaduw); }
 .pj-stap-afdruk img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-/* Telefoon en zonder beweging: stappen onder elkaar, elk met zijn foto. */
-.pj-werk-vast { padding: clamp(56px, 8vw, 96px) 0; }
-.pj-stap { display: grid; gap: 18px; padding: 28px 0; border-top: 1px solid var(--pj-lijn); }
-.pj-stap:first-child { border-top: 0; padding-top: 8px; }
-.pj-stap-afdruk { order: -1; aspect-ratio: 4 / 5; }
-
-/* Computer zonder beweging: foto en tekst naast elkaar per stap. */
 @media (min-width: 861px) {
-  .pj-stap { grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
-  .pj-stap-afdruk { aspect-ratio: 3 / 4; }
+  .pj-stap { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .pj-stap-afdruk { width: 100%; max-height: 640px; }
 }
 
-/* Computer met beweging: het deel blijft staan, de foto's vallen per stap op de stapel. */
-@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
-  .pj-werk { height: calc(100svh + var(--pj-n) * 62svh); }
-  .pj-werk-vast {
-    position: sticky;
-    top: 84px;
-    height: calc(100svh - 84px);
-    display: flex;
-    align-items: center;
-    padding: 0;
+/* Dezelfde rustige beeldverschuiving als de pandfoto op Contact. Het kader
+   bepaalt de scrollvoortgang; alle tekst en foto's blijven zonder JS zichtbaar. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .pj-stap-afdruk { view-timeline-name: --pj-foto; view-timeline-axis: block; }
+    .pj-stap-afdruk img {
+      height: 118%;
+      animation: pj-foto-schuif linear both;
+      animation-timeline: --pj-foto;
+    }
+    @keyframes pj-foto-schuif {
+      from { transform: translateY(-12%); }
+      to { transform: translateY(0); }
+    }
   }
-  .pj-werk-raster { padding-right: calc(var(--pj-print-h) * .75 + clamp(48px, 7vw, 120px)); }
-  .pj-stappen { margin-top: 24px; }
-  .pj-stap {
-    display: block;
-    padding: 16px 0 16px 22px;
-    border-top: 0;
-    border-left: 2px solid var(--pj-lijn);
-    transition: border-color .35s ease;
-  }
-  .pj-stap:first-child { padding-top: 16px; }
-  .pj-stap h3 { color: var(--pj-zacht); transition: color .35s ease; }
-  .pj-stap-tekst p { margin-top: 6px; font-size: 17px; }
-  .pj-stap .pj-stap-foto { display: none; }
-  .pj-stap[data-actief] { border-left-color: var(--pj-blauw); }
-  .pj-stap[data-actief] h3 { color: var(--pj-inkt); }
-  .pj-stap[data-actief] .pj-stap-foto { display: block; }
-
-  /* Elke foto landt rond het moment dat zijn stap aan de beurt is
-     (--in loopt van 0 naar 1) en blijft daarna op de stapel liggen. */
-  .pj-stap-afdruk {
-    --in: clamp(0, calc((var(--pj-t) - var(--i) + .8) * 2), 1);
-    position: absolute;
-    right: 0;
-    top: 50%;
-    height: var(--pj-print-h);
-    aspect-ratio: 3 / 4;
-    margin-top: calc(var(--pj-print-h) / -2);
-    opacity: clamp(0, calc(var(--in) * 2.5), 1);
-    transform:
-      translate3d(calc((1 - var(--in)) * 26%), calc((1 - var(--in)) * 18%), 0)
-      rotate(calc(var(--r) + (1 - var(--in)) * 7deg))
-      scale(calc(1 + (1 - var(--in)) * .04));
-    transform-origin: 70% 90%;
-    will-change: transform, opacity;
-  }
-  .pj-stap:nth-child(1) .pj-stap-afdruk { --r: -3.4deg; }
-  .pj-stap:nth-child(2) .pj-stap-afdruk { --r: 2.2deg; }
-  .pj-stap:nth-child(3) .pj-stap-afdruk { --r: -1.4deg; }
-  .pj-stap:nth-child(n + 4) .pj-stap-afdruk { --r: .6deg; }
 }
 
 /* ---- Fotoboek ----------------------------------------------------------------- */

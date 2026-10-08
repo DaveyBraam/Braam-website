@@ -1,0 +1,327 @@
+/* Cv-ketels: licht, met één donker moment. Huiskleuren blauw, wit,
+   donkerblauw en zwart; geel alleen voor gas. Tekst loopt in gewone
+   leesvolgorde naast het toestel, nooit eroverheen. Lopende tekst 18px.
+   Alleen transform, opacity en kleur bewegen. */
+
+body:has(main.ck) .ambient-orb,
+body:has(main.ck) .pointer-aura,
+body:has(main.ck) .page-grain,
+body:has(main.ck) .experience-layer,
+body:has(main.ck) .topline { display: none; }
+body:has(main.ck) .site-header { background: rgb(240 245 250 / .9); border-bottom: 1px solid #d5e0ea; backdrop-filter: blur(18px); }
+
+.ck {
+  --ck-wand: #e8eef4;
+  --ck-papier: #f5f8fb;
+  --ck-wit: #ffffff;
+  --ck-inkt: #0f2236;
+  --ck-inkt-zacht: #475d72;
+  --ck-blauw: #0c70b8;
+  --ck-blauw-diep: #095a94;
+  --ck-haar: #cbd8e4;
+  --ck-nacht: #0c1a28;
+  --ck-nacht-diep: #081320;
+  --ck-op: #eef3f9;
+  --ck-op-zacht: #a9bdd0;
+  --ck-licht: #7cc0f7;
+  --ck-gas: #f3c331;
+  --ck-balk: 84px;
+  /* Hoe lang een tekstblok stilstaat om te lezen, in scrollafstand. */
+  --ck-rust: 75svh;
+  --ck-gemak: cubic-bezier(.23, 1, .32, 1);
+  background: var(--ck-wand);
+  color: var(--ck-inkt);
+  font-size: 18px;
+  line-height: 1.6;
+  font-variant-numeric: lining-nums;
+}
+/* Reset zonder gewicht, zodat de klassen hieronder hun eigen witruimte houden. */
+:where(.ck) :where(h1, h2, h3, h4, p, dl, dd, ul, ol, figure) { margin: 0; }
+:where(.ck) :where(ul, ol) { padding: 0; list-style: none; }
+/* De onderstreepbalk uit de algemene nav-regels (globals.css) hoort niet bij deze lijsten;
+   de marges zetten .ck-lijst en .ck-naslag-index zelf. */
+.ck nav a::after { content: none; }
+.ck :is(h1, h2, h3, h4) { color: inherit; font-family: inherit; text-transform: none; letter-spacing: -.025em; text-wrap: balance; }
+.ck p { text-wrap: pretty; }
+.ck h2 span, .ck h1 span { display: block; color: var(--ck-blauw); }
+.ck ::selection { background: var(--ck-blauw); color: var(--ck-wit); }
+.ck :is(a, button, summary):focus-visible { outline: 3px solid var(--ck-blauw); outline-offset: 4px; border-radius: 3px; }
+
+.ck-rand { width: min(1240px, calc(100% - 2 * clamp(20px, 5vw, 64px))); margin-inline: auto; }
+
+/* Knoppen en links */
+.ck-acties { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 30px; }
+.ck-knop {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 26px;
+  border-radius: 999px; background: var(--ck-blauw); color: var(--ck-wit);
+  font-size: 17px; font-weight: 600; white-space: nowrap;
+  box-shadow: 0 10px 24px rgb(12 70 120 / .16);
+  transition: background-color .16s var(--ck-gemak), transform .12s var(--ck-gemak);
+}
+.ck-knop:hover { background: var(--ck-blauw-diep); }
+.ck-knop:active { transform: translateY(1px); }
+.ck-pijl { width: 19px; height: 19px; flex: none; }
+.ck-tekstlink { display: inline-flex; align-items: center; gap: 10px; color: var(--ck-blauw); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.ck-tekstlink:hover { color: var(--ck-blauw-diep); }
+.ck-bellijn { color: var(--ck-inkt); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.ck-bellijn:hover { color: var(--ck-blauw); }
+
+/* ---- De reis: vast podium met hoofdstukken ernaast ---------------------- */
+
+.ck-reis { position: relative; --ck-kop: 0; }
+.ck-podium { position: sticky; top: 0; z-index: 0; height: 100svh; overflow: hidden; background: var(--ck-wand); transition: background-color .45s ease-out; }
+.ck-reis[data-donker=true] .ck-podium { background: var(--ck-nacht); }
+.ck-scene { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease-out; }
+.ck-scene canvas { display: block; width: 100%; height: 100%; }
+.ck-reis[data-live=true] .ck-scene { opacity: 1; }
+.ck-poster {
+  position: absolute; left: 50%; top: calc(var(--ck-balk) + 2svh); width: auto; height: 52svh; max-width: none;
+  transform: translateX(-50%); mix-blend-mode: multiply; transition: opacity .6s ease-out;
+}
+.ck-reis[data-live=true] .ck-poster { opacity: 0; }
+.ck-reis[data-live=false][data-donker=true] .ck-poster { opacity: .22; mix-blend-mode: normal; }
+
+/* In de kop vloeit het leidingwerk weg in de wand onder de titel. */
+.ck-kopwaas {
+  position: absolute; inset: auto 0 0; height: 50svh; pointer-events: none;
+  background: linear-gradient(180deg, rgb(232 238 244 / 0), rgb(232 238 244 / .94) 12%, var(--ck-wand) 19%);
+  opacity: calc(1 - var(--ck-kop));
+}
+
+/* Labels in beeld, geplaatst door de scène. */
+.ck-labels { position: absolute; inset: 0; pointer-events: none; }
+.ck-labels span {
+  position: absolute; left: 0; top: 0; opacity: 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 10px 5px 8px; border-radius: 999px;
+  background: rgb(255 255 255 / .92); color: var(--ck-inkt);
+  font-size: 14px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+  box-shadow: 0 6px 16px rgb(15 34 54 / .12);
+  /* Verschuiving t.o.v. het ankerpunt; scene.ts zet die achter zijn eigen translate3d.
+     (Geen losse `translate`-eigenschap: die valt bij het bouwen weg.) */
+  --dx: -50%; --dy: 16px; will-change: transform, opacity;
+}
+.ck-labels span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ck-blauw); }
+.ck-labels .ck-label-laag { --dy: 50px; }
+.ck-labels [data-label=gas]::before { background: var(--ck-gas); }
+.ck-labels [data-label=radiator] { --dy: -50%; }
+.ck-labels .ck-label-gas { --dx: 18px; --dy: -50%; background: var(--ck-gas); color: #1d1600; }
+.ck-labels .ck-label-gas::before { background: #1d1600; }
+.ck-labels :is(.ck-label-rook, .ck-label-lucht, .ck-label-dak) { background: rgb(12 26 40 / .82); color: var(--ck-op); box-shadow: none; border: 1px solid rgb(124 192 247 / .35); }
+.ck-labels .ck-label-rook { --dx: 22px; --dy: -50%; }
+.ck-labels .ck-label-rook::before { background: var(--ck-op); }
+.ck-labels .ck-label-lucht { --dx: calc(-100% - 22px); --dy: -50%; }
+.ck-labels .ck-label-lucht::before { background: var(--ck-licht); }
+.ck-labels .ck-label-dak { --dy: calc(-100% - 8px); font-weight: 500; color: var(--ck-op-zacht); }
+.ck-labels .ck-label-dak::before { display: none; }
+
+/* De controlelijst: wat we nalopen, afgevinkt terwijl u leest. */
+.ck-lijst {
+  position: absolute; left: 0; right: 0; bottom: 22px; z-index: 3; width: max-content; margin-inline: auto;
+  display: flex; align-items: center; gap: 22px; padding: 10px 12px 10px 22px;
+  border-radius: 999px; background: rgb(255 255 255 / .9); color: var(--ck-inkt);
+  box-shadow: 0 10px 30px rgb(15 34 54 / .12); backdrop-filter: blur(12px);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .3s var(--ck-gemak), transform .3s var(--ck-gemak), background-color .45s ease-out, color .45s ease-out;
+  pointer-events: none;
+}
+.ck-lijst[data-zichtbaar=true] { opacity: 1; transform: none; pointer-events: auto; }
+.ck-lijst-titel { font-size: 14px; font-weight: 600; color: var(--ck-inkt-zacht); white-space: nowrap; }
+.ck-lijst ol { display: flex; gap: 4px; }
+.ck-lijst a {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px;
+  border-radius: 999px; font-size: 15px; font-weight: 500; white-space: nowrap; color: inherit;
+  transition: background-color .16s var(--ck-gemak);
+}
+.ck-lijst a:hover { background: rgb(12 112 184 / .08); }
+.ck-lijst i { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #9fb3c6; }
+.ck-lijst i svg, .ck-slot-lijst i svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ck-lijst [data-gezien=true] i { border-color: var(--ck-blauw); background: var(--ck-blauw); color: var(--ck-wit); }
+.ck-lijst [aria-current=step] a { background: rgb(12 112 184 / .1); font-weight: 600; }
+.ck-reis[data-donker=true] .ck-lijst { background: rgb(16 34 52 / .9); color: var(--ck-op); box-shadow: none; }
+.ck-reis[data-donker=true] .ck-lijst-titel { color: var(--ck-op-zacht); }
+.ck-reis[data-donker=true] .ck-lijst a:hover,
+.ck-reis[data-donker=true] .ck-lijst [aria-current=step] a { background: rgb(124 192 247 / .14); }
+.ck-reis[data-donker=true] .ck-lijst [data-gezien=true] i { border-color: var(--ck-licht); background: var(--ck-licht); color: var(--ck-nacht); }
+.ck-reis[data-donker=true] .ck-lijst a:focus-visible { outline-color: var(--ck-licht); }
+
+/* Hoofdstukken */
+.ck-hoofdstukken { position: relative; z-index: 1; margin-top: -100svh; }
+.ck-kop { position: relative; min-height: 100svh; display: grid; align-content: end; justify-items: center; padding: 0 20px 11svh; text-align: center; }
+.ck-kop h1 { font-size: clamp(50px, 5.6vw, 84px); line-height: .98; font-weight: 700; letter-spacing: -.035em; }
+.ck-kop h1 span { display: inline; }
+.ck-intro { max-width: 34ch; margin: 20px auto 0; color: var(--ck-inkt-zacht); font-size: 20px; line-height: 1.5; }
+.ck-kop .ck-acties { justify-content: center; margin-top: 28px; }
+@media (min-width: 760px) {
+  .ck-kop-tekst { opacity: max(0, calc(1 - var(--ck-kop) * 1.4)); transform: translateY(calc(var(--ck-kopy, 0px) - var(--ck-kop) * 18px)); will-change: opacity, transform; }
+}
+
+/* Elk tekstblok schuift binnen, blijft dan staan (sticky) terwijl de camera rust, en gaat pas
+   daarna verder. De lege ruimte erachter (::after) is de leestijd. */
+.ck-hst { position: relative; padding: 20svh clamp(20px, 6vw, 96px) 16svh; transition: color .45s ease-out; }
+.ck-hst::after { content: ""; display: block; height: var(--ck-rust); }
+.ck-tekst { position: sticky; top: var(--ck-vast, 25svh); width: min(500px, 100%); }
+.ck-hst[data-kant=rechts] .ck-tekst { margin-left: auto; }
+.ck-hst h2 { font-size: clamp(36px, 3.8vw, 54px); line-height: 1.04; font-weight: 700; }
+.ck-tekst > p { margin-top: 22px; }
+.ck-tekst > p + p { margin-top: 14px; }
+
+.ck-paren { margin-top: 28px; border-top: 1px solid var(--ck-haar); }
+.ck-paren > div { padding: 16px 0; border-bottom: 1px solid var(--ck-haar); }
+.ck-paren dt { font-weight: 700; }
+.ck-paren dd { margin: 2px 0 0; color: var(--ck-inkt-zacht); }
+
+.ck-meer { margin-top: 26px; border-top: 1px solid var(--ck-haar); border-bottom: 1px solid var(--ck-haar); }
+.ck-meer summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; cursor: pointer; font-weight: 600; list-style: none; }
+.ck-meer summary::-webkit-details-marker { display: none; }
+.ck-plus { width: 20px; height: 20px; flex: none; transition: transform .2s var(--ck-gemak); }
+.ck-meer[open] .ck-plus { transform: rotate(45deg); }
+.ck-meer > div { padding: 0 0 20px; color: var(--ck-inkt-zacht); }
+.ck-meer > div p + p, .ck-meer > div p + a { margin-top: 12px; }
+
+/* Het donkere deel: het licht is uit. */
+.ck-reis[data-donker=true] .ck-hst { color: var(--ck-op); }
+.ck-reis[data-donker=true] .ck-hst h2 span { color: var(--ck-licht); }
+.ck-reis[data-donker=true] .ck-hst :is(.ck-paren dd, .ck-meer > div, .ck-uitleg) { color: var(--ck-op-zacht); }
+.ck-reis[data-donker=true] .ck-hst :is(.ck-paren, .ck-paren > div, .ck-meer) { border-color: rgb(169 189 208 / .26); }
+.ck-reis[data-donker=true] .ck-hst :is(a, summary):focus-visible { outline-color: var(--ck-licht); }
+
+.ck-stilte .ck-tekst { width: min(560px, 100%); }
+.ck-stilte h2 { font-size: clamp(42px, 4.8vw, 72px); }
+.ck-stilte .ck-tekst > p { max-width: 34ch; font-size: 20px; color: var(--ck-op-zacht); }
+
+.ck-voorwaarde { margin-top: 28px; padding: 18px 22px; border-radius: 10px; background: rgb(124 192 247 / .1); box-shadow: inset 0 1px 0 rgb(255 255 255 / .06); }
+.ck-voorwaarde strong { display: block; font-size: 20px; line-height: 1.35; }
+.ck-voorwaarde p { margin-top: 6px; color: var(--ck-op-zacht); }
+.ck-uitleg { color: var(--ck-inkt-zacht); }
+.ck-keur { display: flex; align-items: center; gap: 16px; margin-top: 26px; }
+.ck-keur-logo { display: grid; place-items: center; padding: 8px 10px; border-radius: 8px; background: var(--ck-wit); }
+.ck-keur-logo img { width: 96px; height: auto; display: block; }
+.ck-keur p { font-weight: 600; line-height: 1.35; }
+.ck-keur p span { display: block; font-weight: 400; font-size: 15px; color: var(--ck-op-zacht); }
+
+/* Licht weer aan. */
+.ck-metingen { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 34px; margin-top: 28px; }
+.ck-metingen strong { display: block; font-size: 38px; line-height: 1; font-weight: 700; letter-spacing: -.02em; color: var(--ck-blauw); }
+.ck-metingen sub { font-size: .5em; vertical-align: -.1em; }
+.ck-metingen span { display: block; margin-top: 8px; font-size: 15px; color: var(--ck-inkt-zacht); }
+.ck-noot { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--ck-haar); color: var(--ck-inkt-zacht); }
+.ck-noot strong { color: var(--ck-inkt); }
+
+/* ---- Daarna, naslag en slot: gewone leesvlakken ------------------------- */
+
+.ck-daarna { position: relative; z-index: 2; padding: clamp(80px, 12vw, 150px) 0; background: var(--ck-wit); }
+.ck-daarna-raster { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(40px, 7vw, 110px); align-items: end; }
+.ck-daarna h2, .ck-naslag h2, .ck-slot h2 { font-size: clamp(38px, 4.1vw, 60px); line-height: 1.02; font-weight: 700; }
+.ck-daarna-raster > div:first-child p { max-width: 40ch; margin-top: 22px; color: var(--ck-inkt-zacht); font-size: 20px; line-height: 1.5; }
+.ck-prijs { padding-left: clamp(24px, 3vw, 44px); border-left: 1px solid var(--ck-haar); }
+.ck-prijs-naam { font-weight: 600; color: var(--ck-inkt-zacht); }
+.ck-prijs-bedrag { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; font-size: clamp(56px, 6vw, 84px); line-height: 1; font-weight: 700; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+.ck-prijs-bedrag small { font-size: 17px; font-weight: 500; letter-spacing: 0; color: var(--ck-inkt-zacht); }
+.ck-prijs-jaar { margin-top: 10px; color: var(--ck-inkt-zacht); }
+.ck-prijs .ck-acties { margin-top: 26px; }
+.ck-storing { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--ck-haar); }
+.ck-storing a { font-weight: 700; color: var(--ck-blauw); white-space: nowrap; }
+
+.ck-naslag { position: relative; z-index: 2; padding: clamp(80px, 11vw, 140px) 0; background: var(--ck-papier); border-top: 1px solid var(--ck-haar); }
+.ck-naslag-kop p { max-width: 44ch; margin-top: 20px; color: var(--ck-inkt-zacht); }
+.ck-naslag-raster { display: grid; grid-template-columns: 260px 1fr; gap: clamp(32px, 6vw, 96px); margin-top: clamp(48px, 7vw, 88px); align-items: start; }
+.ck-naslag-index { position: sticky; top: calc(var(--ck-balk) + 32px); display: grid; gap: 0; margin: 0; border-top: 1px solid var(--ck-haar); }
+.ck-naslag-index a { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 54px; border-bottom: 1px solid var(--ck-haar); font-size: 17px; font-weight: 500; }
+.ck-naslag-index a:hover { color: var(--ck-blauw); }
+.ck-naslag-index a:last-child { color: var(--ck-blauw); font-weight: 600; }
+.ck-naslag-bladen { display: grid; gap: clamp(56px, 7vw, 88px); }
+.ck-naslag-bladen article { scroll-margin-top: calc(var(--ck-balk) + 32px); }
+.ck-naslag-bladen h3 { font-size: clamp(28px, 2.6vw, 36px); line-height: 1.12; font-weight: 700; }
+.ck-naslag-bladen article > p { max-width: 62ch; margin-top: 16px; }
+.ck-naslag-bladen article > .ck-tekstlink { margin-top: 22px; }
+.ck-stappen { counter-reset: stap; margin-top: 24px; border-top: 1px solid var(--ck-haar); }
+.ck-stappen li { counter-increment: stap; display: grid; grid-template-columns: 56px 1fr; gap: 4px 12px; padding: 20px 0; border-bottom: 1px solid var(--ck-haar); }
+.ck-stappen li::before { content: counter(stap); grid-row: span 2; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--ck-wit); border: 1px solid var(--ck-haar); font-weight: 700; color: var(--ck-blauw); }
+.ck-stappen h4 { font-size: 19px; font-weight: 700; letter-spacing: -.01em; }
+.ck-stappen p { color: var(--ck-inkt-zacht); }
+.ck-vergelijk { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 24px; border-top: 1px solid var(--ck-haar); border-bottom: 1px solid var(--ck-haar); }
+.ck-vergelijk > div { display: grid; align-content: start; gap: 6px; padding: 22px 24px 22px 0; }
+.ck-vergelijk > div + div { padding-left: 24px; border-left: 1px solid var(--ck-haar); }
+.ck-vergelijk h4 { font-size: 20px; font-weight: 700; }
+.ck-vergelijk p { color: var(--ck-inkt-zacht); }
+.ck-vergelijk .ck-tekstlink { margin-top: 8px; }
+.ck-merken { display: flex; flex-wrap: wrap; gap: 10px 36px; margin-top: 22px; font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
+.ck-klein { margin-top: 18px; font-size: 16px; color: var(--ck-inkt-zacht); }
+
+.ck-slot { position: relative; z-index: 2; padding: clamp(80px, 11vw, 140px) 0; background: var(--ck-nacht); color: var(--ck-op); }
+.ck-slot ::selection { background: var(--ck-licht); color: var(--ck-nacht); }
+.ck-slot :is(a, button):focus-visible { outline-color: var(--ck-licht); }
+.ck-slot h2 span { color: var(--ck-licht); }
+.ck-slot-raster { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
+.ck-slot-lijst { padding: 30px 32px; border-radius: 14px; background: rgb(255 255 255 / .05); border: 1px solid rgb(169 189 208 / .2); }
+.ck-slot-lijst-titel { font-weight: 600; color: var(--ck-op-zacht); }
+.ck-slot-lijst ul { display: grid; margin-top: 14px; }
+.ck-slot-lijst li { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgb(169 189 208 / .16); font-size: 19px; }
+.ck-slot-lijst li:last-child { border-bottom: 0; }
+.ck-slot-lijst i { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--ck-licht); color: var(--ck-nacht); }
+.ck-slot-vraag > p { max-width: 42ch; margin-top: 22px; color: var(--ck-op-zacht); font-size: 20px; line-height: 1.5; }
+.ck-slot .ck-knop { background: var(--ck-licht); color: var(--ck-nacht); box-shadow: none; }
+.ck-slot .ck-knop:hover { background: #a6d4fa; }
+.ck-bel { display: grid; gap: 2px; color: var(--ck-op); }
+.ck-bel small { font-size: 15px; color: var(--ck-op-zacht); }
+.ck-bel strong { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+.ck-bel:hover strong { color: var(--ck-licht); }
+.ck-mail { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 30px; padding-top: 22px; border-top: 1px solid rgb(169 189 208 / .2); }
+.ck-mail a { color: var(--ck-op); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.ck-mail a span { color: var(--ck-op-zacht); }
+.ck-mail a:hover { color: var(--ck-licht); }
+
+/* ---- Telefoon: podium boven, tekst eronder ----------------------------- */
+
+@media (max-width: 1100px) {
+  .ck-lijst-titel { display: none; }
+  .ck-lijst { gap: 0; padding: 8px; }
+}
+
+@media (max-width: 759px) {
+  .ck { font-size: 17px; --ck-balk: 72px; --ck-rust: 38svh; }
+  .ck-podium { top: var(--ck-balk); z-index: 2; height: 40svh; box-shadow: 0 1px 0 rgb(15 34 54 / .08); }
+  .ck-hoofdstukken { margin-top: 0; }
+  .ck-kopwaas { display: none; }
+  .ck-poster { top: 2svh; height: 36svh; }
+  .ck-lijst { display: none; }
+  .ck-labels span { font-size: 12px; padding: 4px 8px 4px 7px; }
+  .ck-labels :is([data-label=aanvoer], [data-label=warm], [data-label=koud], [data-label=retour]) { display: none; }
+
+  .ck-kop { min-height: auto; padding: 30px 20px 64px; align-content: start; }
+  .ck-kop h1 { font-size: clamp(40px, 11vw, 52px); }
+  .ck-kop h1 span { display: block; }
+  .ck-intro { font-size: 18px; }
+  .ck-kop .ck-acties { flex-direction: column; gap: 16px; }
+
+  .ck-hst { padding: 48px 20px 72px; background: var(--ck-wand); transition: background-color .45s ease-out, color .45s ease-out; }
+  .ck-reis[data-donker=true] .ck-hst { background: var(--ck-nacht); }
+  .ck-hst h2, .ck-daarna h2, .ck-naslag h2, .ck-slot h2 { font-size: clamp(32px, 8.6vw, 40px); }
+  .ck-stilte h2 { font-size: clamp(34px, 9vw, 44px); }
+  .ck-stilte .ck-tekst > p { margin-left: 0; font-size: 18px; }
+  .ck-metingen { gap: 22px; }
+  .ck-metingen strong { font-size: 30px; }
+
+  .ck-daarna-raster, .ck-slot-raster, .ck-naslag-raster { grid-template-columns: 1fr; }
+  .ck-prijs { padding-left: 0; padding-top: 28px; border-left: 0; border-top: 1px solid var(--ck-haar); }
+  .ck-naslag-index { position: static; }
+  .ck-vergelijk { grid-template-columns: 1fr; }
+  .ck-vergelijk > div { padding-right: 0; }
+  .ck-vergelijk > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--ck-haar); }
+  .ck-slot-lijst { padding: 22px 20px; }
+  .ck-slot-lijst li { font-size: 17px; }
+  .ck-slot .ck-acties { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 759px) and (max-height: 700px) {
+  .ck-podium { height: 38svh; }
+  .ck-kop { padding-top: 22px; }
+  .ck-kop h1 { font-size: 38px; }
+  .ck-intro { margin-top: 14px; font-size: 17px; }
+  .ck-kop .ck-acties { margin-top: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ck-podium, .ck-hst, .ck-lijst, .ck-scene, .ck-poster { transition-duration: .01ms; }
+}
