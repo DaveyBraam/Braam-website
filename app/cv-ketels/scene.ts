@@ -50,12 +50,16 @@ const AS = new T.Vector2(.63, -.286); // as van de concentrische afvoer (x, z)
 export function createKetelScene(host: HTMLElement, opties: { klaar: () => void; mis: () => void; beweging: boolean }): KetelScene {
   const renderer = new T.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
   const smal = () => host.clientWidth < 760;
-  renderer.setPixelRatio(Math.min(devicePixelRatio, smal() ? 1.5 : 1.6));
+  // Resolutie bewust beperkt; zakt vanzelf verder als het toestel het niet bijhoudt (zie frame).
+  let dpr = Math.min(devicePixelRatio, 1.25);
+  renderer.setPixelRatio(dpr);
   renderer.outputColorSpace = T.SRGBColorSpace;
   renderer.toneMapping = T.NeutralToneMapping;
   renderer.toneMappingExposure = 1;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.PCFSoftShadowMap;
+  // De schaduw verandert alleen als het licht of de doorzichtigheid verandert, niet bij elke camerastap.
+  renderer.shadowMap.autoUpdate = false;
   host.appendChild(renderer.domElement);
 
   const scene = new T.Scene();
@@ -79,8 +83,8 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
   raam.target.position.set(.15, 3.95, -.1);
   raam.map = raamPatroon();
   raam.castShadow = true;
-  raam.shadow.mapSize.set(2048, 2048); raam.shadow.camera.near = .5; raam.shadow.camera.far = 20;
-  raam.shadow.bias = -.0001; raam.shadow.normalBias = .002; raam.shadow.radius = 4; raam.shadow.blurSamples = 10;
+  raam.shadow.mapSize.setScalar(smal() ? 1024 : 1536); raam.shadow.camera.near = .5; raam.shadow.camera.far = 20;
+  raam.shadow.bias = -.0001; raam.shadow.normalBias = .002; raam.shadow.radius = 4; raam.shadow.blurSamples = 6;
   scene.add(raam, raam.target);
   const raamBasis = raam.position.clone();
 
@@ -151,6 +155,7 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
   const nu: Staat = { ...doel };
   const nabij = (i: number) => Math.max(0, 1 - Math.abs(nu.stand - i) * 1.6);
   let geladen = false, zichtbaar = true, weg = false, raf = 0, vorige = 0, tijd = 0;
+  let schaduwSleutel = '', schaduwVersie = 0, frames = 0, trageTijd = 0, rennend = false;
   const kleurL = new T.Color(), kleurD = new T.Color();
   const punt = new T.Vector3(), positie = new T.Vector3(), a = new T.Vector3(), b = new T.Vector3(), p = new T.Vector3();
 
@@ -234,7 +239,22 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
       for (const m of radiatorMat) { const t = r < .999; if (m.transparent !== t) { m.transparent = t; m.needsUpdate = true; } m.opacity = r; }
     }
 
+    // Schaduw alleen opnieuw als iets dat haar bepaalt veranderd is (in het donker is het raam uit).
+    const sleutel = d > .98 ? 'donker' : `${nu.zon.toFixed(3)}|${radiator?.visible ? (radiatorMat[0]?.opacity ?? 1).toFixed(2) : 0}|${door > .002}|${schaduwVersie}`;
+    if (sleutel !== schaduwSleutel) { schaduwSleutel = sleutel; renderer.shadowMap.needsUpdate = true; }
     renderer.render(scene, camera);
+
+    // Trage frames achter elkaar: resolutie een stap omlaag (nooit onder 0,75).
+    if (dt > 0 && vorige) {
+      frames++; trageTijd += dt;
+      if (frames >= 24) {
+        if (trageTijd / frames > 24 && dpr > .75) {
+          dpr = Math.max(.75, dpr - .2);
+          renderer.setPixelRatio(dpr); renderer.setSize(host.clientWidth, host.clientHeight);
+        }
+        frames = 0; trageTijd = 0;
+      }
+    }
 
     // De leidinglabels delen één basislijn: de laagste leiding bepaalt de hoogte.
     let rijY = -Infinity;
@@ -252,9 +272,10 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
     });
 
     const rust = ['stand', 'donker', 'gas', 'rook', 'aan', 'zon'].every(k => Math.abs(nu[k as keyof Staat] - doel[k as keyof Staat]) < .0005);
-    if (!rust || (stromen && opties.beweging)) wek();
+    rennend = !rust || (stromen && opties.beweging);
+    if (rennend) wek();
   }
-  function wek() { if (!raf && !weg && zichtbaar && geladen) raf = requestAnimationFrame(frame); }
+  function wek() { if (!raf && !weg && zichtbaar && geladen) { if (!rennend) vorige = 0; raf = requestAnimationFrame(frame); } }
 
   const maat = new ResizeObserver(() => { if (!weg) { renderer.setSize(host.clientWidth, host.clientHeight); wek(); } });
   maat.observe(host);
@@ -283,7 +304,7 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
       }
     });
     scene.add(g.scene);
-    geladen = true; renderer.setSize(host.clientWidth, host.clientHeight); wek(); opties.klaar();
+    geladen = true; schaduwVersie++; renderer.setSize(host.clientWidth, host.clientHeight); wek(); opties.klaar();
 
     laad('/models/cv-fotoreferentie/radiator-fotoreferentie.glb', stop.signal).then(r => {
       if (weg) { ruimOp(r.scene); return; }
@@ -298,7 +319,7 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
         o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone();
         radiatorMat.push(...(Array.isArray(o.material) ? o.material : [o.material]));
       });
-      scene.add(radiator); wek();
+      scene.add(radiator); schaduwVersie++; wek();
     }).catch(() => { /* zonder radiator blijft de rest gewoon werken */ });
   }).catch(e => { if (!weg && (e as Error).name !== 'AbortError') opties.mis(); });
 

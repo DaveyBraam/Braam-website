@@ -8,7 +8,8 @@ body:has(main.ck) .pointer-aura,
 body:has(main.ck) .page-grain,
 body:has(main.ck) .experience-layer,
 body:has(main.ck) .topline { display: none; }
-body:has(main.ck) .site-header { background: rgb(240 245 250 / .9); border-bottom: 1px solid #d5e0ea; backdrop-filter: blur(18px); }
+/* Geen vervaging achter de kopbalk: boven een bewegend 3D-beeld moet die elk frame opnieuw. */
+body:has(main.ck) .site-header { background: rgb(240 245 250 / .97); border-bottom: 1px solid #d5e0ea; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
 .ck {
   --ck-wand: #e8eef4;
@@ -119,8 +120,8 @@ body:has(main.ck) .site-header { background: rgb(240 245 250 / .9); border-botto
 .ck-lijst {
   position: absolute; left: 0; right: 0; bottom: 22px; z-index: 3; width: max-content; margin-inline: auto;
   display: flex; align-items: center; gap: 22px; padding: 10px 12px 10px 22px;
-  border-radius: 999px; background: rgb(255 255 255 / .9); color: var(--ck-inkt);
-  box-shadow: 0 10px 30px rgb(15 34 54 / .12); backdrop-filter: blur(12px);
+  border-radius: 999px; background: rgb(255 255 255 / .97); color: var(--ck-inkt);
+  box-shadow: 0 10px 30px rgb(15 34 54 / .12);
   opacity: 0; transform: translateY(8px);
   transition: opacity .3s var(--ck-gemak), transform .3s var(--ck-gemak), background-color .45s ease-out, color .45s ease-out;
   pointer-events: none;
@@ -138,7 +139,7 @@ body:has(main.ck) .site-header { background: rgb(240 245 250 / .9); border-botto
 .ck-lijst i svg, .ck-slot-lijst i svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .ck-lijst [data-gezien=true] i { border-color: var(--ck-blauw); background: var(--ck-blauw); color: var(--ck-wit); }
 .ck-lijst [aria-current=step] a { background: rgb(12 112 184 / .1); font-weight: 600; }
-.ck-reis[data-donker=true] .ck-lijst { background: rgb(16 34 52 / .9); color: var(--ck-op); box-shadow: none; }
+.ck-reis[data-donker=true] .ck-lijst { background: rgb(16 34 52 / .97); color: var(--ck-op); box-shadow: none; }
 .ck-reis[data-donker=true] .ck-lijst-titel { color: var(--ck-op-zacht); }
 .ck-reis[data-donker=true] .ck-lijst a:hover,
 .ck-reis[data-donker=true] .ck-lijst [aria-current=step] a { background: rgb(124 192 247 / .14); }

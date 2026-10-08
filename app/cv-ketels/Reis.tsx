@@ -43,6 +43,7 @@ export function Reis({ children }: { children: ReactNode }) {
     const rook = el.querySelector<HTMLElement>('#ck-rookgas .ck-tekst');
     const terug = el.querySelector<HTMLElement>('#ck-oplevering .ck-tekst');
     const podium = el.querySelector<HTMLElement>('.ck-podium');
+    const kopTekst = el.querySelector<HTMLElement>('.ck-kop-tekst'), kopWaas = el.querySelector<HTMLElement>('.ck-kopwaas');
     // Waar elk tekstblok blijft staan om rustig te lezen (sticky top, in px).
     const vast = new Map<HTMLElement, number>();
     const lang = new Set<HTMLElement>();
@@ -99,8 +100,14 @@ export function Reis({ children }: { children: ReactNode }) {
       scene.current?.zet(s);
       // De kop blijft eerst staan en wijkt pas daarna.
       const kopRust = vh * .3;
-      el.style.setProperty('--ck-kopy', smal ? '0px' : `${Math.min(scrollY, kopRust).toFixed(1)}px`);
-      el.style.setProperty('--ck-kop', String(klem((scrollY - kopRust) / (vh * .22))));
+      // Alleen op de twee elementen die ze gebruiken: op de hele pagina kost elke scrollstap een volledige herberekening.
+      const kopy = smal ? '0px' : `${Math.min(scrollY, kopRust).toFixed(0)}px`;
+      const kop = klem((scrollY - kopRust) / (vh * .22)).toFixed(3);
+      for (const n of [kopTekst, kopWaas]) {
+        if (!n) continue;
+        if (n.style.getPropertyValue('--ck-kopy') !== kopy) n.style.setProperty('--ck-kopy', kopy);
+        if (n.style.getPropertyValue('--ck-kop') !== kop) n.style.setProperty('--ck-kop', kop);
+      }
       setDonker(isDonker);
 
       // Naast elkaar (niet op de telefoon): een tekst verschijnt als hij bijna stilstaat en vervaagt
@@ -113,7 +120,8 @@ export function Reis({ children }: { children: ReactNode }) {
           if (d > 0 && !lang.has(t)) zicht = 1 - glij((d - 90) / 260);
           else if (d < 0) zicht = 1 - glij((-d - 50) / 230);
         }
-        t.style.opacity = zicht > .999 ? '' : zicht.toFixed(3);
+        const o = zicht > .999 ? '' : zicht.toFixed(2);
+        if (t.style.opacity !== o) t.style.opacity = o;
       }
 
       let laatste = -1;
