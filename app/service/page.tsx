@@ -1,20 +1,112 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ContactCTA } from "../components/ContactCTA";
-import { PageHero } from "../components/PageHero";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import "./service.css";
 
-export const metadata: Metadata = { title: "Storing en service", description: "Servicevragen en storingen voor cv-ketels en warmtepompen. Bel 073 622 2199 of mail service@robbraam.com." };
+/* Storing en service (9 oktober 2026): de route voor wie nu een probleem heeft,
+   dus bellen voorop en mailen pas onderaan. Zelfde lichte, zakelijke opbouw als
+   /contact. Bereikbaarheid van de eigenaar: kantoor 8.00 tot 17.00; buiten
+   kantoortijd kunnen abonnees bellen bij een storing; zonder abonnement soms
+   hulp tegen een spoedtarief (bewust zonder bedrag). */
+
+export const metadata: Metadata = {
+  title: "Storing en service",
+  description: "Storing aan uw cv-ketel of warmtepomp? Bel 073 622 2199. Kantoor open van 8.00 tot 17.00; met een onderhoudsabonnement ook buiten kantoortijd.",
+};
+
+const meesturen = [
+  { titel: "Uw adres en telefoonnummer", tekst: "Dan weten we om welke installatie het gaat en hoe we u kunnen bereiken." },
+  { titel: "Merk, type en storingscode", tekst: "Deze gegevens staan meestal op het toestel of in het display." },
+  { titel: "Foto’s van het toestel en de situatie", tekst: "Een overzichtsfoto en een close-up van het display of de lekkage helpen ons bij de eerste beoordeling." },
+];
 
 export default function ServicePage() {
-  return <><SiteHeader /><main>
-    <PageHero eyebrow="Storing & service" title="Is er iets met uw installatie?" accent="Laat ons weten wat u ziet." intro="U hoeft zelf niet uit te zoeken wat er precies defect is. Stuur ons het merk, type, de storingscode en een paar duidelijke foto’s. Daarmee kan iemand uit ons serviceteam uw vraag sneller beoordelen." image="/about/planning-rob-braam.jpg" imageAlt="Telefonisch contact met Rob Braam" primaryLabel="Mail ons serviceteam" primaryHref="mailto:service@robbraam.com?subject=Servicevraag" badge="Rechtstreeks naar service" />
-    <section className="section service-contact-section reveal"><div className="shell"><div className="section-heading centered-heading"><p className="eyebrow"><span /> Kies wat bij uw vraag past</p><h2>Zo komt u bij de juiste collega terecht.</h2></div><div className="service-contact-grid"><a href="tel:+31736222199"><span className="service-contact-icon">!</span><small>Een storing die niet kan wachten</small><strong>Bel 073 622 2199</strong><p>Houd merk, type en de storingscode bij de hand als dat lukt.</p><b>Bel ons →</b></a><a href="mailto:service@robbraam.com?subject=Aanvraag%20werk%20of%20servicevraag"><span className="service-contact-icon">S</span><small>Aanvraag, storing of technische vraag</small><strong>service@robbraam.com</strong><p>Stuur uw adres, telefoonnummer, merk, type, foutcode of omschrijving en duidelijke foto&apos;s mee. Ook aanvragen voor werk gaan via service.</p><b>Mail ons serviceteam →</b></a><a href="mailto:planning@robbraam.com?subject=Afspraak%20plannen%20of%20wijzigen"><span className="service-contact-icon">P</span><small>Afspraak plannen of wijzigen</small><strong>planning@robbraam.com</strong><p>Voor het plannen, verzetten of annuleren van een afspraak nadat uw aanvraag is afgestemd.</p><b>Mail onze planning →</b></a></div><p className="service-subscription-link">Een abonnement vergelijken? <Link href="/onderhoud">Bekijk onderhoud en abonnementen <span aria-hidden="true">→</span></Link></p></div></section>
+  return (
+    <>
+      <SiteHeader />
+      <main className="sv">
+        <section className="sv-kop" aria-labelledby="sv-titel">
+          <div className="shell sv-kop-raster">
+            <div>
+              <p className="sv-kruimel"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Storing en service</span></p>
+              <h1 id="sv-titel">Storing? Bel ons direct.</h1>
+              <p className="sv-lead">U hoeft niet zelf uit te zoeken wat er kapot is. Bel ons, dan kijken we samen wat er nodig is.</p>
+              <a className="sv-bel" href="tel:+31736222199">
+                <span>Bel</span>
+                <strong>073 622 2199</strong>
+              </a>
+              <p className="sv-bel-tip">Houd het merk, het type en de storingscode bij de hand als dat lukt.</p>
+            </div>
+            <aside className="sv-tijden" aria-label="Bereikbaarheid">
+              <p className="sv-tijden-kop">Kantoor</p>
+              <p className="sv-tijden-uren">8.00 tot 17.00</p>
+              <p>Is het later? <a href="#buiten-kantoortijd">Zo helpen we u buiten kantoortijd</a>.</p>
+            </aside>
+          </div>
+        </section>
 
-    <section className="dark-story reveal"><div className="shell dark-story-grid"><div><p className="eyebrow eyebrow-light"><span /> Veilig handelen</p><h2>Ruikt u gas of vermoedt u koolmonoxide?</h2></div><div><p>Neem geen risico. Vermijd vonken en open vuur en ga naar buiten als dat veilig kan. Ruikt u gas? Bel gratis het Nationaal Storingsnummer gas en stroom op <strong>0800 9009</strong>. Dit nummer is dag en nacht bereikbaar. Bij direct gevaar belt u 112.</p><div className="emergency-actions"><a className="button button-primary" href="tel:08009009">Gaslucht: bel 0800 9009 <span aria-hidden="true">↗</span></a><a className="certificate-link" href="tel:112">Direct gevaar: bel 112 <span aria-hidden="true">↗</span></a></div></div></div></section>
+        <section className="sv-buiten" id="buiten-kantoortijd" aria-labelledby="sv-buiten-titel">
+          <div className="shell sv-buiten-raster">
+            <h2 id="sv-buiten-titel">Buiten kantoortijd.</h2>
+            <div className="sv-blok">
+              <h3>Met een onderhoudsabonnement</h3>
+              <p>Bel bij een storing ook buiten kantoortijd <a href="tel:+31736222199">073 622 2199</a>. Wij schakelen dan een storingsmonteur in.</p>
+              <p><Link href="/onderhoud">Over onze onderhoudsabonnementen</Link></p>
+            </div>
+            <div className="sv-blok">
+              <h3>Zonder abonnement</h3>
+              <p>Bel gerust. Soms kunnen we u ook buiten kantoortijd helpen; daarvoor geldt een spoedtarief. Lukt het die dag niet meer, dan bent u vanaf 8.00 uur weer welkom.</p>
+              <p><Link href="/kennisbank#wat-ziet-u">Kijk wat u zelf alvast kunt doen</Link></p>
+            </div>
+          </div>
+        </section>
 
-    <section className="section service-prep reveal"><div className="shell service-prep-grid"><div><p className="eyebrow"><span /> Hiermee kunnen we sneller beginnen</p><h2>Drie dingen die we graag ontvangen.</h2></div><ol><li><span>01</span><div><strong>Uw adres en telefoonnummer</strong><p>Dan weten we om welke installatie het gaat en hoe we u kunnen bereiken.</p></div></li><li><span>02</span><div><strong>Merk, type en storingscode</strong><p>Deze gegevens staan meestal op het toestel of in het display.</p></div></li><li><span>03</span><div><strong>Foto&apos;s van het toestel en de situatie</strong><p>Een overzichtsfoto en een close-up van het display of de lekkage helpen ons bij de eerste beoordeling.</p></div></li></ol></div></section>
-    <ContactCTA title="Wilt u een servicevraag doorgeven?" text="Mail naar service@robbraam.com. Voor een storing die niet kan wachten kunt u ons bellen op 073 622 2199." />
-  </main><SiteFooter /></>;
+        <section className="sv-gevaar" aria-labelledby="sv-gevaar-titel">
+          <div className="shell sv-gevaar-raster">
+            <h2 id="sv-gevaar-titel">Ruikt u gas of vermoedt u koolmonoxide?</h2>
+            <div>
+              <p>Neem geen risico. Vermijd vonken en open vuur en ga naar buiten als dat veilig kan. Ruikt u gas? Bel gratis het Nationaal Storingsnummer gas en stroom. Dit nummer is dag en nacht bereikbaar. Bij direct gevaar belt u 112.</p>
+              <div className="sv-gevaar-acties">
+                <a className="sv-gevaar-gas" href="tel:08009009">Gaslucht: bel 0800 9009</a>
+                <a className="sv-gevaar-112" href="tel:112">Direct gevaar: bel 112</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="sv-mail" aria-labelledby="sv-mail-titel">
+          <div className="shell sv-mail-raster">
+            <div>
+              <h2 id="sv-mail-titel">Niet dringend? Mail ons.</h2>
+              <p className="sv-mail-lead">Mail kunt u altijd sturen; we lezen hem tijdens kantoortijd.</p>
+              <ul className="sv-adressen">
+                <li>
+                  <a href="mailto:service@robbraam.com?subject=Servicevraag">
+                    <span>Storing, servicevraag of nieuw werk</span>
+                    <strong>service@robbraam.com</strong>
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:planning@robbraam.com?subject=Afspraak%20plannen%20of%20wijzigen">
+                    <span>Afspraak plannen, verzetten of annuleren</span>
+                    <strong>planning@robbraam.com</strong>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="sv-meesturen">
+              <h3>Hiermee kunnen we sneller beginnen</h3>
+              <ul>
+                {meesturen.map((punt) => (
+                  <li key={punt.titel}><strong>{punt.titel}</strong><p>{punt.tekst}</p></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
+  );
 }

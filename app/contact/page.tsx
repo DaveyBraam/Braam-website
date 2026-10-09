@@ -12,7 +12,8 @@ import "./contact.css";
 
    Tijden en storingsregeling komen van de eigenaar (7 oktober 2026): kantoor
    8.00 tot 17.00; buiten kantoortijd alleen bellen bij een storing als u een
-   onderhoudsabonnement heeft. */
+   onderhoudsabonnement heeft. Sinds 9 oktober: zonder abonnement soms hulp
+   tegen een spoedtarief, bewust zonder bedrag. */
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -78,8 +79,8 @@ export default function ContactPage() {
             </div>
             <div className="ct-bellen-blok">
               <h3>Storing buiten kantoortijd</h3>
-              <p>Heeft u een onderhoudsabonnement bij ons? Dan kunt u bij een storing ook buiten kantoortijd bellen op <a href="tel:+31736222199">073 622 2199</a>. Wij schakelen dan een storingsmonteur in.</p>
-              <p><Link href="/onderhoud">Over onze onderhoudsabonnementen</Link></p>
+              <p>Heeft u een onderhoudsabonnement bij ons? Dan kunt u bij een storing ook buiten kantoortijd bellen op <a href="tel:+31736222199">073 622 2199</a>. Wij schakelen dan een storingsmonteur in. Zonder abonnement kunt u ook bellen: soms kunnen we u dan helpen, tegen een spoedtarief.</p>
+              <p><Link href="/service">Alles over storingen</Link></p>
             </div>
           </div>
         </section>

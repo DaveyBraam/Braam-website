@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fira_Sans } from "next/font/google";
 import { Experience } from "./components/Experience";
+import { SiteMobileActionBar } from "./components/MobileActionBar";
 import { SmoothScroll } from "./components/SmoothScroll";
 import { siteConfig } from "./site-config";
 import "./globals.css";
@@ -43,9 +44,6 @@ export const metadata: Metadata = {
   description:
     "Persoonlijk advies, installatie, onderhoud en service voor warmtepompen, cv-ketels, airco en elektra vanuit 's-Hertogenbosch in Noord-Brabant en aangrenzende delen van Gelderland.",
   applicationName: siteConfig.shortName,
-  other: {
-    "codex-preview": "development",
-  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -85,6 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SmoothScroll />
         <Experience />
         {children}
+        <SiteMobileActionBar />
       </body>
     </html>
   );

@@ -2568,6 +2568,11 @@ main {
     transition-duration: 0.68s, 0.76s, 0.78s;
   }
 
+  /* The blur above is the entrance only. Without this the revealed section
+     kept its 4px blur for good, and /service and the FAQ were unreadable on
+     every phone (home.css had fixed it for the homepage alone). */
+  .experience-ready .reveal.is-visible { filter: none; }
+
   .experience-ready .reveal:not(.is-visible) .reveal-item {
     filter: blur(2px);
     transform: translate3d(0, 18px, 0) scale(0.985);
@@ -4737,26 +4742,32 @@ label:has(input:focus-visible) {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;
     padding: 7px;
-    border: 1px solid rgba(255,255,255,.18);
-    border-radius: 18px;
-    background: rgba(4, 13, 27, 0.9);
-    box-shadow: 0 18px 50px rgba(0,0,0,.34), inset 0 1px rgba(255,255,255,.12);
-    backdrop-filter: blur(18px) saturate(150%);
+    border-radius: 6px;
+    background: #0e1620;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
   }
 
+  /* One bar on every page: the handbook bar the homepage already used. The old
+     blue gradient put white text on #32a4f6 at 2.7:1. */
   .mobile-action-bar a {
     display: grid;
     place-items: center;
     min-height: 48px;
     padding: 0 16px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 820;
+    border-radius: 3px;
+    font-size: 15px;
+    font-weight: 600;
     text-align: center;
   }
 
-  .mobile-action-bar a:first-child { background: linear-gradient(145deg, #32a4f6, #0980d6); color: #fff; }
-  .mobile-action-bar a:last-child { border: 1px solid rgba(255,255,255,.15); color: #ddecf7; }
+  .mobile-action-bar a:first-child { background: #eef3f9; color: #0f181f; }
+  .mobile-action-bar a:first-child:hover { background: #d9e6ef; }
+  .mobile-action-bar a:last-child { border: 1px solid rgba(255,255,255,.22); color: #eef3f9; }
+  .mobile-action-bar a:last-child:hover { background: #243b4d; }
+  .mobile-action-bar a:only-child { border: 0; background: #eef3f9; color: #0f181f; }
+
+  /* The site-wide bar steps aside on pages that bring their own. */
+  body:has(.mobile-action-bar:not(.mobile-action-bar--algemeen)) .mobile-action-bar--algemeen { display: none; }
 }
 
 .world-hero.inspection-hero .hero-lead {

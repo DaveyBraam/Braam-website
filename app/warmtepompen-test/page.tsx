@@ -1,10 +1,5 @@
-import type { Metadata } from "next";
-import { WarmtepompPage } from "./WarmtepompPage";
+import { permanentRedirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Warmtepomp handboek — testpagina",
-  description: "Een passende warmtepomp, van advies en installatie tot onderhoud door het eigen team van Rob Braam.",
-  robots: { index: false, follow: false },
-};
-
-export default function WarmtepompTestPage() { return <WarmtepompPage preview />; }
+/* De testversie is uit de lucht (9 oktober 2026): hij liep achter op de echte
+   pagina, zonder de vanaf-prijzen. De code blijft staan als naslag. */
+export default function WarmtepompTestPage() { permanentRedirect("/warmtepompen"); }

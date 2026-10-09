@@ -28,10 +28,13 @@ test('public cv route renders the inspection round, metadata and contact routes'
   }
 });
 
-test('preserved concept is excluded from search indexing', async () => {
-  const html = await render('/concept-product/cv-ketels');
-  assert.match(html, /id="product-story"/);
-  assert.match(html, /name="robots"[^>]*content="noindex/);
+test('the retired concept sends visitors on to the live cv-ketel page', async () => {
+  const worker = await workerPromise;
+  const response = await worker.fetch(new Request('https://example.test/concept-product/cv-ketels'), {
+    ASSETS: { fetch: async () => new Response('Not found', { status: 404 }) },
+  }, { waitUntil() {}, passThroughOnException() {} });
+  assert.equal(response.status, 308);
+  assert.match(response.headers.get('location') ?? '', /\/cv-ketels$/);
 });
 
 test('the production artifact includes both models and fallback images', async () => {

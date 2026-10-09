@@ -92,6 +92,7 @@ export function SiteHeader() {
               </div>
             </details>
             <Link href="/onderhoud" onClick={closeMenus}>Onderhoud</Link>
+            <Link className="nav-storing" href="/service" onClick={closeMenus}><span className="nav-storing-label">Storing</span></Link>
             <Link href="/projecten" onClick={closeMenus}>Projecten</Link>
             <Link href="/kennisbank" onClick={closeMenus}>Kennisbank</Link>
             <Link href="/over-ons" onClick={closeMenus}>Over ons</Link>
@@ -105,7 +106,7 @@ export function SiteHeader() {
             key={pathname}
             ref={mobileMenuRef}
           >
-            <summary aria-label="Hoofdmenu" aria-controls="mobile-navigation">
+            <summary aria-label="Menu" aria-controls="mobile-navigation">
               <span className="mobile-menu-label">Menu</span>
               <svg className="mobile-menu-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <path className="menu-icon-open" d="M3 7h18M3 12h18M3 17h18" />
@@ -121,6 +122,7 @@ export function SiteHeader() {
                   </div>
                 </details>
                 <div className="mobile-menu-links">
+                  <Link className="nav-storing" href="/service" onClick={closeMenus} aria-current={pathname === "/service" ? "page" : undefined}><span className="nav-storing-label">Storing</span><MenuArrow /></Link>
                   {[
                     ["Onderhoud", "/onderhoud"],
                     ["Projecten", "/projecten"],

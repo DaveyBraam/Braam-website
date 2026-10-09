@@ -72,8 +72,17 @@
   .site-header :is(.desktop-nav a, .nav-dropdown > summary, .header-cta):focus-visible { outline: 2px solid #095a94; outline-offset: 3px; }
 }
 @media (min-width: 961px) and (max-width: 1100px) {
-  .site-header .desktop-nav { gap: 16px; margin-right: 16px; }
+  /* Seven items since Storing joined; keep every label on one line. */
+  .site-header .desktop-nav { gap: 13px; margin-right: 14px; }
   .site-header .desktop-nav > a,
-  .site-header .nav-dropdown > summary { font-size: .8125rem; }
-  .site-header .header-cta { padding-inline: 14px; }
+  .site-header .nav-dropdown > summary { font-size: .8125rem; white-space: nowrap; }
+  .site-header .header-cta { padding-inline: 14px; white-space: nowrap; }
+  .site-header .header-cta > span { display: none; }
+  .site-header .brand-image img { width: 168px; height: auto; }
 }
+
+/* Storing is one of the three routes, so it sits in both menus. The amber that
+   the layout reserves for urgency marks it with a dot; the word stays ink, since
+   amber text on white would not reach 4.5:1. */
+.nav-storing-label { display: inline-flex; align-items: center; gap: 8px; }
+.nav-storing-label::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: #c8781a; }

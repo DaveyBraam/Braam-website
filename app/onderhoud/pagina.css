@@ -168,6 +168,10 @@ body:has(main.oh-pagina) .mobile-offer { display: none; }
 .oh-pagina .onderhoud-blok .oh-stappen li { border-top-color: rgba(255, 255, 255, .22); }
 .oh-pagina .onderhoud-blok .oh-stappen h3 { color: #fff; }
 .oh-pagina .onderhoud-blok .oh-stappen p { color: rgba(255, 255, 255, .74); }
+/* On ink, --lime turns light blue (#7cc0f7); white on it was 2:1. Ink reads at 10:1. */
+.oh-pagina .onderhoud-blok .oh-stappen span,
+.oh-pagina .onderhoud-blok .werkwijze-noot .button-primary { color: #0e1620; }
+.oh-pagina .onderhoud-blok .werkwijze-noot .button-primary:hover { background: #a9d6fa; }
 
 /* ---- 3. Zo start het: de tijdlijn ------------------------------------------ */
 

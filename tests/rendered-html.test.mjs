@@ -19,7 +19,7 @@ async function fetchRoute(path, accept = "text/html") {
   );
 }
 
-test("renders development preview metadata", async () => {
+test("ships without the development preview marker", async () => {
   const response = await fetchRoute("/");
 
   assert.equal(response.status, 200);
@@ -27,7 +27,7 @@ test("renders development preview metadata", async () => {
     response.headers.get("content-type") ?? "",
     /^text\/html\b/i,
   );
-  assert.match(await response.text(), developmentPreviewMeta);
+  assert.doesNotMatch(await response.text(), developmentPreviewMeta);
 });
 
 test("renders conversion-focused homepage hero and maintenance proof", async () => {
@@ -154,4 +154,25 @@ test("publishes sitemap and robots routes", async () => {
   assert.match(await sitemapResponse.text(), /\/kennisbank\/cv-ketel-bijvullen/);
   assert.equal(robotsResponse.status, 200);
   assert.match(await robotsResponse.text(), /Sitemap: .*\/sitemap\.xml/i);
+});
+
+test("storing page puts calling before mailing and states the out-of-hours rule", async () => {
+  const response = await fetchRoute("/service");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
+  assert.ok(main.indexOf('href="tel:+31736222199"') < main.indexOf('href="mailto:'), "bellen staat boven mailen");
+  assert.match(main, /8\.00 tot 17\.00/);
+  assert.match(main, /spoedtarief/);
+  assert.match(main, /0800 9009/);
+});
+
+test("unknown pages get a real page with the three routes", async () => {
+  const response = await fetchRoute("/bestaat-niet");
+  assert.equal(response.status, 404);
+  const html = await response.text();
+  assert.match(html, /Deze pagina bestaat niet/);
+  assert.match(html, /href="tel:\+31736222199"/);
+  assert.match(html, /href="\/offerte-aanvragen"/);
+  assert.match(html, /href="\/onderhoud"/);
 });
