@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
+import { Turnstile } from "./aanvraag/Turnstile";
+import { verstuurAanvraag } from "./aanvraag/verstuur";
 
 type InstallationId = "cv-ketel" | "hybride" | "full-electric" | "onbekend";
 type FormStatus = "idle" | "sending" | "success" | "error";
@@ -38,18 +40,9 @@ export function SingleMaintenanceApplicationForm() {
     formData.set("Type installatie", selectedInstallation.title);
     formData.set("Gewenste afhandeling", "Eén losse onderhoudsafspraak laten beoordelen en inplannen");
     formData.set("_subject", `EENMALIG ONDERHOUD (GEEN ABONNEMENT) — ${selectedInstallation.title}`);
-    formData.set("_template", "table");
-    formData.set("_captcha", "false");
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/planning@robbraam.com", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      const result = await response.json().catch(() => null) as { success?: boolean | string; message?: string } | null;
-      const succeeded = response.ok && (result?.success === true || result?.success === "true");
-      if (!succeeded) throw new Error(result?.message || "De aanvraag kon niet worden verzonden.");
+      await verstuurAanvraag(formData, { formulier: "eenmalig", doel: "planning" });
       setStatus("success");
       window.location.assign(`/bedankt?type=onderhoud&dienst=${encodeURIComponent(installation)}`);
     } catch (error) {
@@ -114,7 +107,7 @@ export function SingleMaintenanceApplicationForm() {
         <label className="privacy-check single-maintenance-confirmation"><input type="checkbox" name="Bevestiging eenmalige aanvraag" value="Ja — één losse onderhoudsbeurt, geen abonnement" required /><span aria-hidden="true" /><small><strong>Ik vraag één eenmalige onderhoudsbeurt aan. Dit is geen abonnement.</strong> <b>*</b></small></label>
         <label className="privacy-check"><input type="checkbox" name="Privacyverklaring gelezen" value="Ja" required /><span aria-hidden="true" /><small>Ik heb de <Link href="/privacy">privacyverklaring</Link> gelezen en begrijp dat Braam mijn gegevens gebruikt om deze aanvraag te beoordelen en hierover contact met mij op te nemen. <b>*</b></small></label>
         {status === "error" && <p className="form-error" role="alert">{errorMessage} U kunt ook bellen via <a href="tel:+31736222199">073 622 2199</a>.</p>}
-        <button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Aanvraag wordt verzonden…" : "Vraag mijn losse onderhoudsbeurt aan"}<span aria-hidden="true">→</span></button>
+        <Turnstile /><button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Aanvraag wordt verzonden…" : "Vraag mijn losse onderhoudsbeurt aan"}<span aria-hidden="true">→</span></button>
         <p className="form-smallprint">We beoordelen eerst uw installatie, merk en woonplaats. Daarna neemt onze planning contact met u op. Met dit formulier ontstaat geen abonnement of jaarlijkse overeenkomst.</p>
       </div>
     </form>

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { Turnstile } from "./aanvraag/Turnstile";
+import { verstuurAanvraag } from "./aanvraag/verstuur";
 
 type ServiceId = "cv-ketel" | "warmtepomp" | "airco" | "elektra" | "onderhoud" | "anders";
 type FormStatus = "idle" | "sending" | "success" | "error";
@@ -46,18 +48,9 @@ export function QuoteRequestForm() {
     });
     formData.set("Bestemd voor", recipient);
     formData.set("_subject", service === "onderhoud" ? "Nieuwe onderhoudsaanvraag" : `Nieuwe offerteaanvraag: ${selectedService.title}`);
-    formData.set("_template", "table");
-    formData.set("_captcha", "false");
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${recipient}`, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      const result = await response.json().catch(() => null) as { success?: boolean | string; message?: string } | null;
-      const succeeded = response.ok && (result?.success === true || result?.success === "true");
-      if (!succeeded) throw new Error(result?.message || "De aanvraag kon niet worden verzonden.");
+      await verstuurAanvraag(formData, { formulier: "offerte", doel: service === "onderhoud" ? "planning" : "service" });
       setStatus("success");
       window.location.assign(`/bedankt?type=offerte&dienst=${encodeURIComponent(service)}`);
     } catch (error) {
@@ -85,6 +78,6 @@ export function QuoteRequestForm() {
 
     <section className="form-section"><div className="form-section-heading"><span>03</span><div><h2>Hoe kunnen we u bereiken?</h2><p>We gebruiken deze gegevens alleen om uw aanvraag te beoordelen en contact met u op te nemen.</p></div></div><div className="field-grid"><label className="field field-wide"><span>Naam <b>*</b></span><input type="text" name="Naam" autoComplete="name" required /></label><label className="field"><span>Postcode <b>*</b></span><input type="text" name="Postcode" autoComplete="postal-code" required /></label><label className="field"><span>Huisnummer</span><input type="text" name="Huisnummer" autoComplete="address-line2" /></label><label className="field"><span>E-mailadres <b>*</b></span><input type="email" name="email" autoComplete="email" required /></label><label className="field"><span>Telefoonnummer <b>*</b></span><input type="tel" name="Telefoonnummer" autoComplete="tel" required /></label></div></section>
 
-    <div className="form-submit-panel"><label className="privacy-check"><input type="checkbox" name="Privacyverklaring gelezen" value="Ja" required /><span aria-hidden="true" /><small>Ik heb de <Link href="/privacy">privacyverklaring</Link> gelezen en begrijp dat Braam mijn gegevens gebruikt om deze aanvraag te beoordelen en hierover contact met mij op te nemen. <b>*</b></small></label>{status === "error" && <p className="form-error" role="alert">{errorMessage} U kunt ook bellen via <a href="tel:+31736222199">073 622 2199</a>.</p>}<button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Aanvraag wordt verzonden…" : "Verstuur mijn aanvraag"}<span aria-hidden="true">→</span></button><p className="form-smallprint">Dit is een aanvraag en nog geen opdracht. We bekijken eerst uw gegevens en nemen daarna contact op over de vervolgstap.</p></div>
+    <div className="form-submit-panel"><label className="privacy-check"><input type="checkbox" name="Privacyverklaring gelezen" value="Ja" required /><span aria-hidden="true" /><small>Ik heb de <Link href="/privacy">privacyverklaring</Link> gelezen en begrijp dat Braam mijn gegevens gebruikt om deze aanvraag te beoordelen en hierover contact met mij op te nemen. <b>*</b></small></label>{status === "error" && <p className="form-error" role="alert">{errorMessage} U kunt ook bellen via <a href="tel:+31736222199">073 622 2199</a>.</p>}<Turnstile /><button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Aanvraag wordt verzonden…" : "Verstuur mijn aanvraag"}<span aria-hidden="true">→</span></button><p className="form-smallprint">Dit is een aanvraag en nog geen opdracht. We bekijken eerst uw gegevens en nemen daarna contact op over de vervolgstap.</p></div>
   </form>;
 }

@@ -735,3 +735,6 @@ html:has(main.av) { scroll-padding-top: 120px; }
   .av :is(.choice-radio, .applicant-radio) { transition: none; }
   .av-bedankt .av-route-vast .is-actief .av-stip::after { animation: none; }
 }
+
+/* Cloudflare Turnstile (spamcontrole): meestal onzichtbaar, anders een smal vak boven de knop. */
+.form-turnstile:not(:empty) { margin: 4px 0 14px; }

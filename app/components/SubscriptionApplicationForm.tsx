@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
+import { Turnstile } from "./aanvraag/Turnstile";
+import { verstuurAanvraag } from "./aanvraag/verstuur";
 import { useSearchParams } from "next/navigation";
 
 type PlanId = "cv-comfort" | "cv-comfort-plus" | "hybride-comfort" | "hybride-comfort-plus" | "all-electric-comfort" | "all-electric-comfort-plus" | "onbekend";
@@ -93,18 +95,9 @@ export function SubscriptionApplicationForm() {
     formData.set("Betaalvoorkeur", isLandlord ? "Te bespreken na beoordeling" : paymentFrequency === "maandelijks" ? "Maandelijks via automatische incasso" : "Eén keer per jaar");
     formData.set("Ventilatiebox mee schoonmaken", ventilation && canAddVentilation ? "Ja, € 37,50 extra per jaar" : "Nee");
     formData.set("_subject", isLandlord ? "Nieuwe onderhoudsaanvraag voor meerdere panden" : `Nieuwe abonnementaanvraag: ${selectedPlan.title}`);
-    formData.set("_template", "table");
-    formData.set("_captcha", "false");
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/planning@robbraam.com", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      const result = await response.json().catch(() => null) as { success?: boolean | string; message?: string } | null;
-      const succeeded = response.ok && (result?.success === true || result?.success === "true");
-      if (!succeeded) throw new Error(result?.message || "De aanvraag kon niet worden verzonden.");
+      await verstuurAanvraag(formData, { formulier: "abonnement", doel: "planning" });
       setStatus("success");
       window.location.assign(`/bedankt?type=abonnement&dienst=${encodeURIComponent(plan)}`);
     } catch (error) {
@@ -205,7 +198,7 @@ export function SubscriptionApplicationForm() {
         {!isLandlord && <label className="privacy-check subscription-understanding"><input type="checkbox" name="Doorlopende abonnementskosten begrepen" value="Ja" required /><span aria-hidden="true" /><small><strong>Ik begrijp hoe het abonnement werkt:</strong> Braam plant ieder jaar een controle. Het abonnement is een doorlopend servicepakket en geen betaling per bezoek. Als ik een geplande controle zelf uitstel of oversla, blijft het abonnement actief en blijven de abonnementskosten verschuldigd. <b>*</b></small></label>}
         <label className="privacy-check"><input type="checkbox" name="Privacyverklaring gelezen" value="Ja" required /><span aria-hidden="true" /><small>Ik heb de <Link href="/privacy">privacyverklaring</Link> gelezen en begrijp dat Braam mijn gegevens gebruikt om deze aanvraag te beoordelen en hierover contact met mij op te nemen. <b>*</b></small></label>
         {status === "error" && <p className="form-error" role="alert">{errorMessage} U kunt ook bellen via <a href="tel:+31736222199">073 622 2199</a>.</p>}
-        <button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Aanvraag wordt verzonden…" : "Verstuur mijn aanvraag"}<span aria-hidden="true">→</span></button>
+        <Turnstile /><button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Aanvraag wordt verzonden…" : "Verstuur mijn aanvraag"}<span aria-hidden="true">→</span></button>
         <p className="form-smallprint">{isLandlord ? "Met dit formulier vraagt u nog geen definitief contract aan. We bekijken eerst de panden en installaties en nemen daarna contact met u op." : "U sluit met dit formulier nog niet direct een abonnement af. We controleren eerst of het gekozen abonnement bij uw installatie en woonplaats past. Na onze bevestiging heeft u 14 dagen bedenktijd. Het eerste jaar loopt vast; daarna kunt u per maand opzeggen."}</p>
       </div>
     </form>

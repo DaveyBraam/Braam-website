@@ -42,3 +42,6 @@ npm-debug.log*
 tsconfig.tsbuildinfo
 yarn-debug.log*
 yarn-error.log*
+
+# Lokale secrets voor wrangler/miniflare
+.dev.vars*

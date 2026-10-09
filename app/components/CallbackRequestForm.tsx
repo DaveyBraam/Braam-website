@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { Turnstile } from "./aanvraag/Turnstile";
+import { verstuurAanvraag } from "./aanvraag/verstuur";
 
 type CallbackTopic = "werk" | "onderhoud" | "storing";
 type FormStatus = "idle" | "sending" | "error";
@@ -40,18 +42,9 @@ export function CallbackRequestForm() {
       if (value) formData.set(key, value);
     });
     formData.set("_subject", `Terugbelverzoek: ${selectedTopic.title}`);
-    formData.set("_template", "table");
-    formData.set("_captcha", "false");
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${recipient}`, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      const result = await response.json().catch(() => null) as { success?: boolean | string; message?: string } | null;
-      const succeeded = response.ok && (result?.success === true || result?.success === "true");
-      if (!succeeded) throw new Error(result?.message || "Het terugbelverzoek kon niet worden verzonden.");
+      await verstuurAanvraag(formData, { formulier: "terugbel", doel: topic === "onderhoud" ? "planning" : "service" });
       window.location.assign(`/bedankt?type=terugbellen&onderwerp=${encodeURIComponent(topic)}`);
     } catch (error) {
       setStatus("error");
@@ -90,7 +83,7 @@ export function CallbackRequestForm() {
       <div className="form-submit-panel">
         <label className="privacy-check"><input type="checkbox" name="Privacyverklaring gelezen" value="Ja" required /><span aria-hidden="true" /><small>Ik heb de <Link href="/privacy">privacyverklaring</Link> gelezen en begrijp dat Braam mijn gegevens gebruikt om mij terug te bellen. <b>*</b></small></label>
         {status === "error" && <p className="form-error" role="alert">{errorMessage} U kunt ook bellen via <a href="tel:+31736222199">073 622 2199</a>.</p>}
-        <button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Verzoek wordt verzonden…" : "Laat mij terugbellen"}<span aria-hidden="true">→</span></button>
+        <Turnstile /><button className="button button-primary form-submit-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Verzoek wordt verzonden…" : "Laat mij terugbellen"}<span aria-hidden="true">→</span></button>
         <p className="form-smallprint">Dit is geen opdracht. We gebruiken uw gegevens alleen om persoonlijk contact op te nemen over uw vraag.</p>
       </div>
     </form>
