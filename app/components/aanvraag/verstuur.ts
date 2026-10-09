@@ -9,6 +9,14 @@ const reserve = "Uw aanvraag kon niet worden verzonden. Probeer het over een paa
 export async function verstuurAanvraag(formData: FormData, opties: { formulier: Formulier; doel: "service" | "planning" }) {
   formData.set("formulier", opties.formulier);
   formData.set("doel", opties.doel);
+  // Turnstile zet zijn token pas na een paar tellen in het formulier; wacht daar kort op.
+  if (document.querySelector(".cf-turnstile") && !formData.get("cf-turnstile-response")) {
+    for (let i = 0; i < 16; i += 1) {
+      const token = document.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]')?.value;
+      if (token) { formData.set("cf-turnstile-response", token); break; }
+      await new Promise((klaar) => setTimeout(klaar, 250));
+    }
+  }
   let response: Response;
   try {
     response = await fetch("/api/aanvraag", { method: "POST", body: formData, headers: { Accept: "application/json" } });

@@ -24,4 +24,4 @@ export const kantoortijdenZin = "maandag tot en met donderdag van 8.00 tot 17.00
    openbaar; de geheime sleutel staat als TURNSTILE_SECRET bij de worker. Leeg
    laten zolang Turnstile nog niet is aangemaakt: dan tonen de formulieren geen
    controle en houdt alleen het verborgen veld robots tegen. */
-export const turnstileSiteKey = "";
+export const turnstileSiteKey = "0x4AAAAAAFSZXlN2foys8GtA";
