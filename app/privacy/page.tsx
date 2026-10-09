@@ -51,7 +51,7 @@ export default function PrivacyPage() {
                 <a href="#cookies">Cookies en website</a>
                 <a href="#rechten">Uw rechten</a>
               </nav>
-              <small>Laatst bijgewerkt<br /><strong>11 augustus 2026</strong></small>
+              <small>Laatst bijgewerkt<br /><strong>9 oktober 2026</strong></small>
             </aside>
 
             <article className="privacy-article">
@@ -108,7 +108,8 @@ export default function PrivacyPage() {
                 <p>Voor de uitvoering kunnen dienstverleners gegevens verwerken, bijvoorbeeld voor websitehosting en beveiliging, e-mail en IT, administratie en boekhouding. Ook kunnen we gegevens verstrekken als een wettelijke verplichting dat vereist.</p>
                 <div className="privacy-provider-note">
                   <strong>Over de aanvraagformulieren</strong>
-                  <p>Het offerteformulier en terugbelverzoeken over nieuw werk, storingen of technische vragen worden via FormSubmit doorgestuurd naar <a href="mailto:service@robbraam.com">service@robbraam.com</a>. Kiest u in het offerteformulier of terugbelformulier voor onderhoud, of gebruikt u het abonnementsformulier of het formulier voor een eenmalige onderhoudsbeurt, dan wordt de aanvraag doorgestuurd naar <a href="mailto:planning@robbraam.com">planning@robbraam.com</a>. FormSubmit verwerkt de ingevulde gegevens om het bericht per e-mail bij ons af te leveren. Lees ook de <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">privacyinformatie van FormSubmit <span aria-hidden="true">↗</span></a>.</p>
+                  <p>Wat u in een aanvraagformulier invult, verstuurt onze website rechtstreeks naar onze eigen zakelijke mailboxen bij Microsoft 365. Er zit geen andere doorstuurdienst tussen. Het offerteformulier en terugbelverzoeken over nieuw werk, storingen of technische vragen komen binnen bij <a href="mailto:service@robbraam.com">service@robbraam.com</a>. Kiest u in het offerteformulier of terugbelformulier voor onderhoud, of gebruikt u het abonnementsformulier of het formulier voor een eenmalige onderhoudsbeurt, dan komt de aanvraag binnen bij <a href="mailto:planning@robbraam.com">planning@robbraam.com</a>.</p>
+                  <p>Microsoft verwerkt deze e-mail voor ons als verwerker, net als onze andere zakelijke e-mail. Onze website draait bij Cloudflare; het formulier gaat via die website naar Microsoft 365.</p>
                 </div>
                 <p>Wanneer een technische dienstverlener gegevens buiten de Europese Economische Ruimte verwerkt, mag dat alleen met een geldige wettelijke basis en passende waarborgen volgens de AVG.</p>
               </section>
