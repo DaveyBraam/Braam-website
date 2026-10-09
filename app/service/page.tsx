@@ -2,17 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { kantoortijden } from "../site-config";
 import "./service.css";
 
 /* Storing en service (9 oktober 2026): de route voor wie nu een probleem heeft,
    dus bellen voorop en mailen pas onderaan. Zelfde lichte, zakelijke opbouw als
-   /contact. Bereikbaarheid van de eigenaar: kantoor 8.00 tot 17.00; buiten
+   /contact. Bereikbaarheid van de eigenaar: kantoor maandag t/m vrijdag 8.00 tot
+   17.00, vrijdag tot 14.00 (site-config); buiten
    kantoortijd kunnen abonnees bellen bij een storing; zonder abonnement soms
    hulp tegen een spoedtarief (bewust zonder bedrag). */
 
 export const metadata: Metadata = {
   title: "Storing en service",
-  description: "Storing aan uw cv-ketel of warmtepomp? Bel 073 622 2199. Kantoor open van 8.00 tot 17.00; met een onderhoudsabonnement ook buiten kantoortijd.",
+  description: "Storing aan uw cv-ketel of warmtepomp? Bel 073 622 2199. Kantoor open maandag t/m vrijdag, vrijdag tot 14.00; met een onderhoudsabonnement ook buiten kantoortijd.",
 };
 
 const meesturen = [
@@ -40,7 +42,9 @@ export default function ServicePage() {
             </div>
             <aside className="sv-tijden" aria-label="Bereikbaarheid">
               <p className="sv-tijden-kop">Kantoor</p>
-              <p className="sv-tijden-uren">8.00 tot 17.00</p>
+              <dl className="sv-tijden-lijst">
+                {kantoortijden.map((r) => <div key={r.dagen}><dt>{r.dagen}</dt><dd>{r.tijden}</dd></div>)}
+              </dl>
               <p>Is het later? <a href="#buiten-kantoortijd">Zo helpen we u buiten kantoortijd</a>.</p>
             </aside>
           </div>
@@ -56,7 +60,7 @@ export default function ServicePage() {
             </div>
             <div className="sv-blok">
               <h3>Zonder abonnement</h3>
-              <p>Bel gerust. Soms kunnen we u ook buiten kantoortijd helpen; daarvoor geldt een spoedtarief. Lukt het die dag niet meer, dan bent u vanaf 8.00 uur weer welkom.</p>
+              <p>Bel gerust. Soms kunnen we u ook buiten kantoortijd helpen; daarvoor geldt een spoedtarief. Lukt het die dag niet meer, dan bent u de eerstvolgende werkdag vanaf 8.00 uur weer welkom.</p>
               <p><Link href="/kennisbank#wat-ziet-u">Kijk wat u zelf alvast kunt doen</Link></p>
             </div>
           </div>

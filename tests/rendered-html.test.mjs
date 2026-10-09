@@ -162,7 +162,8 @@ test("storing page puts calling before mailing and states the out-of-hours rule"
   const html = await response.text();
   const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
   assert.ok(main.indexOf('href="tel:+31736222199"') < main.indexOf('href="mailto:'), "bellen staat boven mailen");
-  assert.match(main, /8\.00 tot 17\.00/);
+  assert.match(main, /Vrijdag/);
+  assert.match(main, /8\.00 – 14\.00/);
   assert.match(main, /spoedtarief/);
   assert.match(main, /0800 9009/);
 });

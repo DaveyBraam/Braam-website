@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { kantoortijden, kantoortijdenZin } from "../site-config";
 import "./contact.css";
 
 /* Contact (sinds 8 oktober 2026): licht en zakelijk, mailen voorop.
@@ -10,9 +11,10 @@ import "./contact.css";
    alleen waar het moet, en langskomen. Achtergrond:
    braam-premium-concept/scrollcraft/builds/contact-v2/BRIEF.md
 
-   Tijden en storingsregeling komen van de eigenaar (7 oktober 2026): kantoor
-   8.00 tot 17.00; buiten kantoortijd alleen bellen bij een storing als u een
-   onderhoudsabonnement heeft. Sinds 9 oktober: zonder abonnement soms hulp
+   Tijden en storingsregeling komen van de eigenaar (7 en 9 oktober 2026):
+   kantoor maandag t/m vrijdag, 8.00 tot 17.00 en vrijdag tot 14.00 (site-config);
+   buiten kantoortijd alleen bellen bij een storing als u een onderhoudsabonnement
+   heeft. Sinds 9 oktober: zonder abonnement soms hulp
    tegen een spoedtarief, bewust zonder bedrag. */
 
 export const metadata: Metadata = {
@@ -36,7 +38,9 @@ export default function ContactPage() {
             </div>
             <aside className="ct-tijden" aria-label="Bereikbaarheid">
               <p className="ct-tijden-kop">Kantoor</p>
-              <p className="ct-tijden-uren">8.00 tot 17.00</p>
+              <dl className="ct-tijden-lijst">
+                {kantoortijden.map((r) => <div key={r.dagen}><dt>{r.dagen}</dt><dd>{r.tijden}</dd></div>)}
+              </dl>
               <p>Mail kunt u altijd sturen; we lezen hem tijdens kantoortijd.</p>
             </aside>
           </div>
@@ -65,7 +69,7 @@ export default function ContactPage() {
                 </a>
               </li>
             </ul>
-            <p className="ct-keuze-onder">Heeft u al onderhoud bij ons en wilt u een afspraak plannen, verzetten of annuleren? Mail dan <a href="mailto:planning@robbraam.com?subject=Onderhoud%20of%20afspraak">planning@robbraam.com</a>. <span className="ct-tijden-kort">Kantoor open van 8.00 tot 17.00.</span></p>
+            <p className="ct-keuze-onder">Heeft u al onderhoud bij ons en wilt u een afspraak plannen, verzetten of annuleren? Mail dan <a href="mailto:planning@robbraam.com?subject=Onderhoud%20of%20afspraak">planning@robbraam.com</a>. <span className="ct-tijden-kort">Kantoor open {kantoortijdenZin}.</span></p>
           </div>
         </section>
 
@@ -74,7 +78,7 @@ export default function ContactPage() {
             <h2 id="ct-bellen-titel">Bellen kan ook.</h2>
             <div className="ct-bellen-blok">
               <h3>Tijdens kantoortijd</h3>
-              <p>Van 8.00 tot 17.00 bent u welkom op <a href="tel:+31736222199">073 622 2199</a>. Voor de meeste vragen is mailen sneller, omdat we uw gegevens dan meteen bij de hand hebben.</p>
+              <p>U bent {kantoortijdenZin} welkom op <a href="tel:+31736222199">073 622 2199</a>. Voor de meeste vragen is mailen sneller, omdat we uw gegevens dan meteen bij de hand hebben.</p>
               <p><Link href="/bel-mij-terug">Liever teruggebeld worden?</Link></p>
             </div>
             <div className="ct-bellen-blok">

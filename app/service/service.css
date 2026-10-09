@@ -61,7 +61,10 @@ html:has(main.sv) { scroll-padding-top: 100px; }
 .sv-tijden { padding: 24px 24px 26px; border-top: 3px solid var(--sv-navy); background: var(--sv-wit); box-shadow: 0 18px 40px -26px rgba(9, 21, 33, .4); }
 .sv-tijden p { margin: 0; color: var(--sv-tekst); font-size: 16px; line-height: 1.5; }
 .sv .sv-tijden-kop { color: var(--sv-zacht); font-size: 15px; font-weight: 600; }
-.sv .sv-tijden-uren { margin: 4px 0 12px; color: var(--sv-inkt); font-size: 30px; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.sv-tijden-lijst { margin: 10px 0 14px; padding: 0; }
+.sv-tijden-lijst > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--sv-lijn); }
+.sv-tijden-lijst dt { color: var(--sv-tekst); font-size: 16px; }
+.sv-tijden-lijst dd { margin: 0; color: var(--sv-inkt); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* ---- Buiten kantoortijd ------------------------------------------------------- */
 
