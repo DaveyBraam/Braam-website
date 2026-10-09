@@ -185,13 +185,14 @@ export default function CvKetels() {
                 <p>Jaarlijks een geplande controle. Bij onderhoud én storing zijn voorrijkosten en arbeidsloon inbegrepen. Met een abonnement heeft u toegang tot onze 24/7 storingsservice.</p>
                 <div className="ck-vergelijk">
                   <div><h4>Comfort</h4><p>Materiaal wordt apart berekend.</p><Link className="ck-tekstlink" href="/abonnement-aanvragen?abonnement=cv-comfort">Comfort aanvragen <Pijl /></Link></div>
-                  <div><h4>Comfort Plus</h4><p>Materiaal binnen de onderhoudsmantel inbegrepen.</p><Link className="ck-tekstlink" href="/onderhoud#abonnementen">Bekijk de voorwaarden <Pijl /></Link></div>
+                  <div><h4>Comfort Plus</h4><p>Materiaal binnen de onderhoudsmantel inbegrepen. Binnenkort beschikbaar; nu al op aanvraag voor ketels van maximaal 5 jaar oud.</p><Link className="ck-tekstlink" href="/abonnement-aanvragen?abonnement=cv-comfort-plus">Comfort Plus aanvragen <Pijl /></Link></div>
                 </div>
                 <Link className="ck-tekstlink" href="/eenmalig-onderhoud-aanvragen">Liever eenmalig onderhoud <Pijl /></Link>
               </article>
               <article id="ck-merken" aria-labelledby="ck-t-merken">
                 <h3 id="ck-t-merken">Past uw ketel bij onze service?</h3>
                 <p>Wij onderhouden Intergas, Remeha, Nefit en Vaillant, tot en met <strong>40 kW</strong>. Voor woningen en vergelijkbare kleinschalige panden.</p>
+                <p><strong>Let op:</strong> een Intergas-ketel onderhouden we wel, maar we plaatsen er geen nieuwe.</p>
                 <p className="ck-merken" aria-label="Merken voor onderhoud"><span>Intergas</span><span>Remeha</span><span>Nefit</span><span>Vaillant</span></p>
                 <p className="ck-klein">Collectieve ketelhuizen, cascadeopstellingen en grote bedrijfsinstallaties vallen buiten onze werkzaamheden. Vermeld bij uw aanvraag het merk, model en vermogen, als dat bekend is. Het afgebeelde toestel is van Vaillant.</p>
               </article>

@@ -11,7 +11,7 @@ const homeSubscriptionBenefits = [
   "Ieder jaar een geplande controle van uw installatie",
   "24/7 storingsservice",
   "Voorrijkosten en arbeidsloon inbegrepen binnen de abonnementsafspraken",
-  "Comfort: materiaal apart. Comfort Plus: materiaal binnen de onderhoudsmantel inbegrepen",
+  "Comfort: materiaal apart. Comfort Plus, binnenkort en nu al op aanvraag: materiaal binnen de onderhoudsmantel inbegrepen",
   "Jaarlijks of per maand betalen",
 ];
 
@@ -105,7 +105,7 @@ export default function Home() {
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor jaarlijks onderhoud aan uw cv-ketel.</p>
                 <strong><small>€</small>11,58</strong><em>Comfort vanaf, per maand</em>
                 <p className="home-annual-price">Jaarprijs € 139 · ook jaarlijks betalen mogelijk</p>
-                <p className="home-monthly-price">Comfort Plus: € 19,92 per maand</p>
+                <p className="home-monthly-price">Comfort Plus: binnenkort, nu al op aanvraag</p>
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk cv-ketelabonnementen →</b>
               </Link>
@@ -114,7 +114,7 @@ export default function Home() {
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor beide toestellen.</p>
                 <strong><small>€</small>24,08</strong><em>Comfort vanaf, per maand</em>
                 <p className="home-annual-price">Jaarprijs € 289 · ook jaarlijks betalen mogelijk</p>
-                <p className="home-monthly-price">Comfort Plus: € 35,75 per maand</p>
+                <p className="home-monthly-price">Comfort Plus: binnenkort, nu al op aanvraag</p>
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk hybride abonnementen →</b>
               </Link>
@@ -123,7 +123,7 @@ export default function Home() {
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor uw warmtepomp zonder cv-ketel.</p>
                 <strong><small>€</small>19,92</strong><em>Comfort vanaf, per maand</em>
                 <p className="home-annual-price">Jaarprijs € 239 · ook jaarlijks betalen mogelijk</p>
-                <p className="home-monthly-price">Comfort Plus: € 31,58 per maand</p>
+                <p className="home-monthly-price">Comfort Plus: binnenkort, nu al op aanvraag</p>
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk warmtepompabonnementen →</b>
               </Link>

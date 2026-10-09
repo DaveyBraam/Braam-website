@@ -83,6 +83,9 @@ export const subscriptions = [
     breakdownFeatures: comfortPlusBreakdownBenefits,
     featured: true,
     featuredLabel: "Materiaal inbegrepen",
+    /* Comfort Plus komt binnenkort; tot dan alleen op aanvraag, zonder prijs,
+       en alleen voor toestellen van maximaal 5 jaar oud (eigenaar, 9 okt 2026). */
+    opAanvraag: true,
   },
   {
     id: "hybride-comfort",
@@ -111,6 +114,9 @@ export const subscriptions = [
     breakdownFeatures: comfortPlusBreakdownBenefits,
     featured: true,
     featuredLabel: "Materiaal inbegrepen",
+    /* Comfort Plus komt binnenkort; tot dan alleen op aanvraag, zonder prijs,
+       en alleen voor toestellen van maximaal 5 jaar oud (eigenaar, 9 okt 2026). */
+    opAanvraag: true,
   },
   {
     id: "all-electric-comfort",
@@ -139,6 +145,9 @@ export const subscriptions = [
     breakdownFeatures: comfortPlusBreakdownBenefits,
     featured: true,
     featuredLabel: "Materiaal inbegrepen",
+    /* Comfort Plus komt binnenkort; tot dan alleen op aanvraag, zonder prijs,
+       en alleen voor toestellen van maximaal 5 jaar oud (eigenaar, 9 okt 2026). */
+    opAanvraag: true,
   },
 ];
 

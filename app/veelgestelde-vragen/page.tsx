@@ -40,7 +40,7 @@ const faqGroups = [
       },
       {
         question: "Met welke merken en vermogens werkt Braam?",
-        answer: "Voor cv-ketelonderhoud werken we uitsluitend met Intergas, Remeha, Nefit en Vaillant, tot en met 40 kW. Voor warmtepompen werken we standaard met LG, Bosch en Vaillant en met vermogens van 5, 7, 9 en 11 kW. Onderhoud aan andere warmtepompmerken beoordelen we op aanvraag. Grote bedrijfsunits, cascades en collectieve systemen vallen buiten onze werkzaamheden.",
+        answer: "Voor cv-ketelonderhoud werken we uitsluitend met Intergas, Remeha, Nefit en Vaillant, tot en met 40 kW. Intergas onderhouden we wel, maar een nieuwe Intergas-ketel plaatsen we niet. Voor warmtepompen werken we standaard met LG, Bosch en Vaillant en met vermogens van 5, 7, 9 en 11 kW. Onderhoud aan andere warmtepompmerken beoordelen we op aanvraag. Grote bedrijfsunits, cascades en collectieve systemen vallen buiten onze werkzaamheden.",
       },
       {
         question: "Kunnen LG- en Vaillant-warmtepompen verwarmen, warm water maken en koelen?",
@@ -67,7 +67,7 @@ const faqGroups = [
       },
       {
         question: "Welke onderhoudsabonnementen zijn er?",
-        answer: "Voor een cv-ketel kost Comfort € 11,58 en Comfort Plus € 19,92 per maand. Voor een hybride warmtepomp met cv-ketel kost Comfort € 24,08 en Comfort Plus € 35,75 per maand. Voor een all-electric warmtepomp kost Comfort € 19,92 en Comfort Plus € 31,58 per maand. De volledige jaarprijzen staan altijd bij de pakketten en alle bedragen zijn inclusief btw.",
+        answer: "Comfort kost voor een cv-ketel vanaf € 11,58, voor een hybride warmtepomp met cv-ketel vanaf € 24,08 en voor een volledig elektrische warmtepomp vanaf € 19,92 per maand. De volledige jaarprijzen staan bij de pakketten en alle bedragen zijn inclusief btw. Comfort Plus, met materiaal binnen de onderhoudsmantel, komt binnenkort. U kunt het nu al aanvragen voor toestellen van maximaal 5 jaar oud.",
       },
       {
         question: "Kan ik het abonnement per maand betalen?",
@@ -84,6 +84,10 @@ const faqGroups = [
       {
         question: "Wat als ik de jaarlijkse controle wil uitstellen of overslaan?",
         answer: "Een afspraak kan in overleg worden uitgesteld. Het abonnement blijft actief en de abonnementskosten blijven verschuldigd, omdat u betaalt voor een doorlopend servicepakket en niet voor één los onderhoudsbezoek.",
+      },
+      {
+        question: "Hoe lang loopt het abonnement en hoe zeg ik op?",
+        answer: "Het eerste jaar loopt het abonnement vast; daarna kunt u per maand opzeggen. Na onze bevestiging heeft u 14 dagen bedenktijd. Opzeggen doet u met een mail aan planning@robbraam.com.",
       },
       {
         question: "Wat betekenen geen voorrijkosten en geen arbeidsloon?",

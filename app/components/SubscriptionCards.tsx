@@ -87,8 +87,13 @@ export function SubscriptionCards() {
           {pakketten.map(({ data, verschil: eigen }) => (
             <article key={data.id}>
               <span>{data.title}</span>
-              <strong><small>€</small>{data.monthlyPrice}</strong>
-              <em>per maand · jaarprijs €&nbsp;{data.price},– incl. btw</em>
+              {"opAanvraag" in data && data.opAanvraag ? <>
+                <strong className="abo-op-aanvraag">Binnenkort</strong>
+                <em>Nu al op aanvraag, voor toestellen van maximaal 5 jaar oud</em>
+              </> : <>
+                <strong><small>€</small>{data.monthlyPrice}</strong>
+                <em>per maand · jaarprijs €&nbsp;{data.price},– incl. btw</em>
+              </>}
               <ul className="check-list">{eigen.map((punt) => <li key={punt}>{punt}</li>)}</ul>
               <Link className="text-link" href={`/abonnement-aanvragen?abonnement=${data.id}`}>
                 Vraag {data.title} aan <span aria-hidden="true">→</span>

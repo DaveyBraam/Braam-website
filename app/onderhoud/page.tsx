@@ -25,7 +25,7 @@ const keurmerken = [
 
 const abonnementStappen = [
   { titel: "Kijk naar uw installatie", tekst: "Alleen cv-ketel, cv-ketel met hybride warmtepomp, of een warmtepomp zonder cv-ketel." },
-  { titel: "Kies Comfort of Comfort Plus", tekst: "Vergelijk of materiaal apart wordt berekend of binnen de onderhoudsmantel valt." },
+  { titel: "Kies Comfort of Comfort Plus", tekst: "Vergelijk of materiaal apart wordt berekend of binnen de onderhoudsmantel valt. Comfort Plus komt binnenkort en is nu al op aanvraag." },
   { titel: "Vraag beoordeling aan", tekst: "Wij controleren merk, type, woonplaats en installatie voordat het contract ingaat." },
 ];
 
@@ -78,12 +78,12 @@ export default function OnderhoudPage() {
           </article>
           <article className="is-abonnement">
             <h3>Jaarlijks onderhoud met serviceafspraken</h3>
-            <p>Kies Comfort als materiaal apart mag worden berekend, of Comfort Plus met materiaal binnen de onderhoudsmantel.</p>
+            <p>Kies Comfort als materiaal apart mag worden berekend. Comfort Plus, met materiaal binnen de onderhoudsmantel, komt binnenkort en is nu al op aanvraag.</p>
             <ul className="check-list">
               <li>Onderhoud passend bij uw installatie</li>
               <li>24/7 storingsservice</li>
               <li>Voorrijkosten en arbeidsloon inbegrepen binnen de afspraken</li>
-              <li>Comfort of Comfort Plus, afgestemd op uw voorkeur</li>
+              <li>Comfort Plus binnenkort, nu al op aanvraag</li>
             </ul>
             <Link className="oh-keuze-knop" href="#abonnementen">Bekijk de abonnementen <span aria-hidden="true">↓</span></Link>
           </article>
@@ -139,8 +139,18 @@ export default function OnderhoudPage() {
             </ul>
             <dl className="keuze-feiten">
               <div><dt>Comfort</dt><dd>Materiaal wordt apart berekend</dd></div>
-              <div><dt>Comfort Plus</dt><dd>Materiaal binnen de onderhoudsmantel is inbegrepen</dd></div>
+              <div><dt>Comfort Plus</dt><dd>Materiaal binnen de onderhoudsmantel is inbegrepen. Binnenkort beschikbaar; nu al op aanvraag voor toestellen van maximaal 5 jaar oud</dd></div>
               <div><dt>Overig werk</dt><dd>Werk aan andere installaties of buiten de afspraken valt apart</dd></div>
+            </dl>
+          </article>
+          <article>
+            <h3>Looptijd en opzeggen.</h3>
+            <p>Zo weet u vooraf waar u aan toe bent.</p>
+            <dl className="keuze-feiten">
+              <div><dt>Eerste jaar</dt><dd>Het abonnement loopt het eerste jaar vast</dd></div>
+              <div><dt>Daarna</dt><dd>Maandelijks opzegbaar</dd></div>
+              <div><dt>Bedenktijd</dt><dd>14 dagen na onze bevestiging, zonder opgaaf van reden</dd></div>
+              <div><dt>Opzeggen</dt><dd>Mail naar <a href="mailto:planning@robbraam.com?subject=Abonnement%20opzeggen">planning@robbraam.com</a></dd></div>
             </dl>
           </article>
         </div>
@@ -199,7 +209,7 @@ export default function OnderhoudPage() {
       <div className="shell">
         <div className="section-heading split-heading">
           <div><h2>Kies de installatie<br />die bij u thuis staat.</h2></div>
-          <p>Na uw keuze opent het aanvraagformulier op een aparte pagina. Uw installatie staat daar alvast geselecteerd; vervolgens kiest u Comfort of Comfort Plus en vult u uw gegevens in.</p>
+          <p>Na uw keuze opent het aanvraagformulier op een aparte pagina. Uw installatie staat daar alvast geselecteerd; vervolgens kiest u Comfort, of Comfort Plus op aanvraag, en vult u uw gegevens in.</p>
         </div>
         <div className="onderhoud-prijzen onderhoud-prijzen-rij">
           <Link href="/abonnement-aanvragen?abonnement=cv-comfort#aanvraagformulier">

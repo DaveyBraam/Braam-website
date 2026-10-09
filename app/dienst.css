@@ -985,10 +985,14 @@ body:has(main.dienst) .scroll-progress {
 
 .dienst .afspraken-grid > article:first-child { padding-left: 0; }
 
-.dienst .afspraken-grid > article:last-child {
-  padding-right: 0;
-  border-left: 1px solid var(--hair);
-}
+.dienst .afspraken-grid > article:last-child { padding-right: 0; }
+.dienst .afspraken-grid > article + article { border-left: 1px solid var(--hair); }
+/* /onderhoud has a third column since 9 October: looptijd en opzeggen. */
+.dienst .afspraken-grid:has(> article:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dienst .afspraken-grid dd a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Comfort Plus on request: a word where the price would be. */
+.dienst .abo-verschil-grid > article > strong.abo-op-aanvraag { font-size: var(--t-title); }
 
 .dienst .afspraken-grid h3 {
   margin: 0 0 12px;
@@ -1062,9 +1066,11 @@ body:has(main.dienst) .scroll-progress {
   .dienst .jaarcontrole { grid-template-columns: 1fr; gap: 26px; }
   .dienst .jaarcontrole aside { padding-left: 0; border-left: 0; padding-top: 20px; border-top: 1px solid var(--hair); }
 
-  .dienst .afspraken-grid { grid-template-columns: 1fr; }
+  .dienst .afspraken-grid,
+  .dienst .afspraken-grid:has(> article:nth-child(3)) { grid-template-columns: 1fr; }
   .dienst .afspraken-grid > article { padding: 0 0 26px; }
-  .dienst .afspraken-grid > article:last-child { padding: 26px 0 0; border-left: 0; border-top: 1px solid var(--hair); }
+  .dienst .afspraken-grid > article + article { padding: 26px 0 0; border-left: 0; border-top: 1px solid var(--hair); }
+  .dienst .afspraken-grid > article + article:not(:last-child) { padding-bottom: 26px; }
 
   .dienst .onderhoud-prijzen-rij { grid-template-columns: 1fr; }
   .dienst .onderhoud-prijzen-rij > a:not(.text-link) { padding: 24px 0; border-left: 0 !important; border-top: 1px solid var(--hair); }
