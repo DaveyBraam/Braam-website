@@ -12,6 +12,15 @@
         ],
         "createdAt": "2026-10-06T15:28:30.018Z",
         "reason": "Claude: info notes deliberately match the live, owner-approved /onderhoud .oh-kader style (app/onderhoud/pagina.css:136, border-left 3px var(--lime)) for site consistency"
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "worker/aanvraag.ts"
+        ],
+        "createdAt": "2026-10-09T15:37:41.102Z",
+        "reason": "Claude: e-mail-HTML voor Outlook en andere mailprogramma's; webfonts laden daar niet, Arial is de veilige standaard (zelfde als ~/Braam-reviews/src/mail.js)"
       }
     ]
   }
