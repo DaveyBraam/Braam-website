@@ -117,21 +117,20 @@ test("renders current maintenance subscriptions with monthly and annual pricing"
   assert.equal(response.status, 200);
   const html = await response.text();
 
-  for (const monthlyPrice of ["11,58", "19,92", "24,08", "35,75", "31,58"]) {
-    assert.match(html, new RegExp(`€\\s*${monthlyPrice}`, "i"));
+  // Comfort, binnen en buiten 's-Hertogenbosch (eigenaar, 10 oktober 2026).
+  for (const monthlyPrice of ["11,58", "24,08", "19,92"]) assert.match(html, new RegExp(`€[\\s\\S]{0,20}${monthlyPrice}`, "i"));
+  for (const [binnen, buiten] of [["139", "150"], ["289", "300"], ["239", "250"]]) {
+    assert.match(html, new RegExp(`jaarprijs[\\s\\S]{0,20}${binnen}[\\s\\S]{0,60}buiten[\\s\\S]{0,40}${buiten}`, "i"));
   }
-  for (const annualPrice of ["139", "239", "289", "429", "379"]) {
-    assert.match(html, new RegExp(`Jaarprijs[\\s\\S]{0,80}${annualPrice}`, "i"));
-  }
+  // Losse controle cv-ketel.
+  assert.match(html, /124[\s\S]{0,60}buiten[\s\S]{0,40}135/);
+  // Comfort Plus is op aanvraag: geen oude Plus-prijzen meer.
+  for (const oud of ["35,75", "31,58", "429", "379"]) assert.doesNotMatch(html, new RegExp(oud));
+  assert.match(html, /Comfort Plus komt binnenkort/i);
   assert.match(html, /Welke installatie heeft u/i);
-  assert.match(html, /Comfort of Comfort Plus/i);
-  assert.match(html, /Cv-ketel/i);
-  assert.match(html, /warmtepomp/i);
-  assert.match(html, /Materiaal binnen de onderhoudsmantel inbegrepen/i);
-  assert.match(html, /Naar het aanvraagformulier/i);
+  assert.match(html, /Looptijd en opzeggen/i);
   assert.match(html, /href=["']\/abonnement-aanvragen\?abonnement=cv-comfort#aanvraagformulier["']/i);
   assert.match(html, /href=["']\/abonnement-aanvragen\?abonnement=hybride-comfort#aanvraagformulier["']/i);
-  assert.doesNotMatch(html, /Wat gebeurt er tijdens de jaarlijkse controle\?<\/h3>/i);
 });
 
 test("renders callback and thanks routes for low-commitment conversion tracking", async () => {

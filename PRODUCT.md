@@ -83,13 +83,17 @@ een handdruk. Die vertelt de positionering in beeld en is bewust behouden.
 
 **Bevestigd echt:**
 - De projectfoto's in de galerij zijn eigen uitgevoerde installaties.
-- De prijzen kloppen en zijn actueel. **De onderhoudspagina is leidend** en
-  deze bedragen gelden overal (Comfort, vanaf-prijzen):
-  - cv-ketel: €11,58 per maand, jaarprijs €139
-  - cv-ketel met hybride warmtepomp: €24,08 per maand, jaarprijs €289
-  - volledig elektrische warmtepomp: €19,92 per maand, jaarprijs €239
+- De prijzen kloppen en zijn actueel (eigenaar, 9 en 10 oktober 2026). Alles incl. btw.
+  Comfort-abonnement per jaar, binnen / buiten 's-Hertogenbosch (buiten: € 11 per jaar extra):
+  - cv-ketel: € 139 / € 150 (vanaf € 11,58 per maand)
+  - cv-ketel met hybride warmtepomp: € 289 / € 300 (vanaf € 24,08 per maand)
+  - volledig elektrische warmtepomp: € 239 / € 250 (vanaf € 19,92 per maand)
 
-  Eenmalig onderhoud €180 binnen 's-Hertogenbosch, €190 daarbuiten.
+  Losse controle cv-ketel: € 124 binnen 's-Hertogenbosch, € 135 daarbuiten. Andere
+  toestellen: prijs vooraf afgestemd. (Het oude eenmalige tarief € 180 / € 190 vervalt.)
+  Comfort Plus: binnenkort, nu alleen op aanvraag, zonder prijs, voor toestellen van
+  maximaal 5 jaar oud. Abonnement: eerste jaar vast, daarna maandelijks opzegbaar,
+  14 dagen bedenktijd, opzeggen per mail aan planning@.
 
 - **Warmtepompinstallatie, vanaf-prijzen inclusief btw** (door de eigenaar opgegeven
   op 8 oktober 2026): hybride vanaf €4.995, volledig elektrisch vanaf €5.995.

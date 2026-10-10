@@ -71,7 +71,8 @@ export default function OnderhoudPage() {
             <ul className="check-list">
               <li>Eén onderhoudsafspraak</li>
               <li>Geen jaarlijkse contractverplichting</li>
-              <li>Afspraak en kosten vooraf afgestemd</li>
+              <li>Cv-ketel: €&nbsp;124, buiten ’s-⁠Hertogenbosch €&nbsp;135</li>
+              <li>Voor andere toestellen stemmen we de prijs vooraf af</li>
               <li>Uw aanvraag komt herkenbaar bij planning binnen</li>
             </ul>
             <Link className="oh-keuze-knop" href="/eenmalig-onderhoud-aanvragen">Vraag een losse beurt aan <span aria-hidden="true">→</span></Link>
@@ -215,21 +216,21 @@ export default function OnderhoudPage() {
           <Link href="/abonnement-aanvragen?abonnement=cv-comfort#aanvraagformulier">
             <span>Alleen een cv-ketel</span>
             <strong><small>€</small>11,58</strong>
-            <em>Comfort vanaf, per maand · jaarprijs €&nbsp;139</em>
+            <em>Comfort vanaf, per maand · jaarprijs €&nbsp;139, buiten ’s-⁠Hertogenbosch €&nbsp;150</em>
             <p>Voor cv-ketels van Intergas, Remeha, Nefit en Vaillant.</p>
             <b>Naar cv-ketelabonnement <span aria-hidden="true">→</span></b>
           </Link>
           <Link href="/abonnement-aanvragen?abonnement=hybride-comfort#aanvraagformulier">
             <span>Cv-ketel + warmtepomp</span>
             <strong><small>€</small>24,08</strong>
-            <em>Comfort vanaf, per maand · jaarprijs €&nbsp;289</em>
+            <em>Comfort vanaf, per maand · jaarprijs €&nbsp;289, buiten ’s-⁠Hertogenbosch €&nbsp;300</em>
             <p>Voor een cv-ketel in combinatie met een hybride warmtepomp.</p>
             <b>Naar hybride abonnement <span aria-hidden="true">→</span></b>
           </Link>
           <Link href="/abonnement-aanvragen?abonnement=all-electric-comfort#aanvraagformulier">
             <span>Geen cv-ketel</span>
             <strong><small>€</small>19,92</strong>
-            <em>Comfort vanaf, per maand · jaarprijs €&nbsp;239</em>
+            <em>Comfort vanaf, per maand · jaarprijs €&nbsp;239, buiten ’s-⁠Hertogenbosch €&nbsp;250</em>
             <p>Voor een volledig elektrische warmtepomp zonder cv-ketel.</p>
             <b>Naar warmtepompabonnement <span aria-hidden="true">→</span></b>
           </Link>

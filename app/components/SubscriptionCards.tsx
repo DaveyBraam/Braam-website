@@ -92,7 +92,7 @@ export function SubscriptionCards() {
                 <em>Nu al op aanvraag, voor toestellen van maximaal 5 jaar oud</em>
               </> : <>
                 <strong><small>€</small>{data.monthlyPrice}</strong>
-                <em>per maand · jaarprijs €&nbsp;{data.price},– incl. btw</em>
+                <em>per maand · jaarprijs €&nbsp;{data.price},– incl. btw{"priceBuiten" in data && data.priceBuiten ? <>, buiten ’s-⁠Hertogenbosch €&nbsp;{data.priceBuiten},–</> : null}</em>
               </>}
               <ul className="check-list">{eigen.map((punt) => <li key={punt}>{punt}</li>)}</ul>
               <Link className="text-link" href={`/abonnement-aanvragen?abonnement=${data.id}`}>

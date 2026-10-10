@@ -10,7 +10,7 @@ type InstallationId = "cv-ketel" | "hybride" | "full-electric" | "onbekend";
 type FormStatus = "idle" | "sending" | "success" | "error";
 
 const installations: Array<{ id: InstallationId; title: string; description: string }> = [
-  { id: "cv-ketel", title: "Cv-ketel", description: "Voor Intergas, Remeha, Nefit of Vaillant." },
+  { id: "cv-ketel", title: "Cv-ketel", description: "Voor Intergas, Remeha, Nefit of Vaillant. € 124, buiten ’s-⁠Hertogenbosch € 135." },
   { id: "hybride", title: "Cv-ketel met hybride warmtepomp", description: "Voor een cv-ketel in combinatie met een hybride warmtepomp." },
   { id: "full-electric", title: "Volledig elektrische warmtepomp", description: "Voor een warmtepomp die de woning zonder cv-ketel verwarmt." },
   { id: "onbekend", title: "Ik weet het niet precies", description: "Vul merk en model in voor zover die bij u bekend zijn." },

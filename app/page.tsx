@@ -104,7 +104,7 @@ export default function Home() {
                 <span>Cv-ketel</span>
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor jaarlijks onderhoud aan uw cv-ketel.</p>
                 <strong><small>€</small>11,58</strong><em>Comfort vanaf, per maand</em>
-                <p className="home-annual-price">Jaarprijs € 139 · ook jaarlijks betalen mogelijk</p>
+                <p className="home-annual-price">Jaarprijs € 139 · buiten ’s-⁠Hertogenbosch € 150</p>
                 <p className="home-monthly-price">Comfort Plus: binnenkort, nu al op aanvraag</p>
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk cv-ketelabonnementen →</b>
@@ -113,7 +113,7 @@ export default function Home() {
                 <span>Hybride warmtepomp + cv-ketel</span>
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor beide toestellen.</p>
                 <strong><small>€</small>24,08</strong><em>Comfort vanaf, per maand</em>
-                <p className="home-annual-price">Jaarprijs € 289 · ook jaarlijks betalen mogelijk</p>
+                <p className="home-annual-price">Jaarprijs € 289 · buiten ’s-⁠Hertogenbosch € 300</p>
                 <p className="home-monthly-price">Comfort Plus: binnenkort, nu al op aanvraag</p>
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk hybride abonnementen →</b>
@@ -122,7 +122,7 @@ export default function Home() {
                 <span>All-electric warmtepomp</span>
                 <p className="home-plan-description">Kies Comfort of Comfort Plus voor uw warmtepomp zonder cv-ketel.</p>
                 <strong><small>€</small>19,92</strong><em>Comfort vanaf, per maand</em>
-                <p className="home-annual-price">Jaarprijs € 239 · ook jaarlijks betalen mogelijk</p>
+                <p className="home-annual-price">Jaarprijs € 239 · buiten ’s-⁠Hertogenbosch € 250</p>
                 <p className="home-monthly-price">Comfort Plus: binnenkort, nu al op aanvraag</p>
                 <ul className="home-plan-benefits">{homeSubscriptionBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
                 <b>Vergelijk warmtepompabonnementen →</b>

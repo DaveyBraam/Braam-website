@@ -70,7 +70,7 @@ export function Content() {
       <div className="w5-care-plans"><p className="w5-care-kind">Comfort · jaarlijks onderhoud</p>
         <Link className="w5-plan" href="/abonnement-aanvragen?abonnement=hybride-comfort"><h3>Hybride</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 24,08</strong><span className="w5-plan-period">per maand · € 289 per jaar</span><span className="w5-plan-link">Bekijk abonnement <span aria-hidden="true">↗</span></span></Link>
         <Link className="w5-plan" href="/abonnement-aanvragen?abonnement=all-electric-comfort"><h3>Volledig elektrisch</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 19,92</strong><span className="w5-plan-period">per maand · € 239 per jaar</span><span className="w5-plan-link">Bekijk abonnement <span aria-hidden="true">↗</span></span></Link>
-        <p className="w5-care-terms">24/7 storingsservice, arbeid en voorrijkosten binnen de abonnementsafspraken. Materialen worden bij Comfort apart berekend. <Link href="/onderhoud">Alle voorwaarden</Link>.</p>
+        <p className="w5-care-terms">24/7 storingsservice, arbeid en voorrijkosten binnen de abonnementsafspraken. Materialen worden bij Comfort apart berekend. Buiten ’s-⁠Hertogenbosch € 11 per jaar extra. <Link href="/onderhoud">Alle voorwaarden</Link>.</p>
       </div>
     </section>
 

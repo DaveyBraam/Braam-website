@@ -16,7 +16,7 @@ export default function SingleMaintenanceApplicationPage() {
       accent="Geen abonnement."
       intro="Met dit formulier vraagt u alleen een eenmalige onderhoudsbeurt aan. We controleren eerst uw installatie, merk en woonplaats; daarna nemen we contact met u op."
       puntenLabel="Eenmalig, zonder contract"
-      punten={["Eén losse onderhoudsbeurt", "Geen abonnement of jaarlijkse overeenkomst", "Merk en installatie worden vooraf beoordeeld", "Afspraak en kosten worden afgestemd"]}
+      punten={["Eén losse onderhoudsbeurt", "Geen abonnement of jaarlijkse overeenkomst", "Merk en installatie worden vooraf beoordeeld", "Cv-ketel: € 124, buiten ’s-⁠Hertogenbosch € 135"]}
       email="planning@robbraam.com"
       daarna={["Planning beoordeelt uw installatie, merk en woonplaats", "We nemen contact op en stemmen afspraak en kosten af"]}
     >

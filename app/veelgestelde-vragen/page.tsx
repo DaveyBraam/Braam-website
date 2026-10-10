@@ -63,15 +63,15 @@ const faqGroups = [
     items: [
       {
         question: "Wat is het verschil tussen eenmalig onderhoud en een abonnement?",
-        answer: "Bij een eenmalige beurt maakt u één onderhoudsafspraak zonder jaarlijkse overeenkomst. Met een abonnement legt u jaarlijks onderhoud en de afgesproken servicevoordelen voor het hele contractjaar vast.",
+        answer: "Bij een eenmalige beurt maakt u één onderhoudsafspraak zonder jaarlijkse overeenkomst. Een losse controle van een cv-ketel kost € 124, buiten ’s-⁠Hertogenbosch € 135. Met een abonnement legt u jaarlijks onderhoud en de afgesproken servicevoordelen voor het hele contractjaar vast. Bij een storing betaalt u dan geen arbeid en voorrijkosten.",
       },
       {
         question: "Welke onderhoudsabonnementen zijn er?",
-        answer: "Comfort kost voor een cv-ketel vanaf € 11,58, voor een hybride warmtepomp met cv-ketel vanaf € 24,08 en voor een volledig elektrische warmtepomp vanaf € 19,92 per maand. De volledige jaarprijzen staan bij de pakketten en alle bedragen zijn inclusief btw. Comfort Plus, met materiaal binnen de onderhoudsmantel, komt binnenkort. U kunt het nu al aanvragen voor toestellen van maximaal 5 jaar oud.",
+        answer: "Comfort kost voor een cv-ketel vanaf € 11,58, voor een hybride warmtepomp met cv-ketel vanaf € 24,08 en voor een volledig elektrische warmtepomp vanaf € 19,92 per maand. De jaarprijzen zijn € 139, € 289 en € 239; buiten ’s-⁠Hertogenbosch betaalt u € 11 per jaar extra. Alle bedragen zijn inclusief btw. Comfort Plus, met materiaal binnen de onderhoudsmantel, komt binnenkort. U kunt het nu al aanvragen voor toestellen van maximaal 5 jaar oud.",
       },
       {
         question: "Kan ik het abonnement per maand betalen?",
-        answer: "Ja. U kunt jaarlijks betalen of de jaarprijs in 12 termijnen via automatische incasso laten afschrijven. Het maandbedrag staat bij ieder abonnement: van gemiddeld € 11,58 voor Comfort cv-ketel tot € 35,75 voor Comfort Plus hybride. Na beoordeling ontvangt u eerst de bevestiging en incassomachtiging. Door afronding kan één termijn enkele centen afwijken.",
+        answer: "Ja. U kunt jaarlijks betalen of de jaarprijs in 12 termijnen via automatische incasso laten afschrijven. Het maandbedrag staat bij ieder abonnement: vanaf € 11,58 voor Comfort cv-ketel. Na beoordeling ontvangt u eerst de bevestiging en incassomachtiging. Door afronding kan één termijn enkele centen afwijken.",
       },
       {
         question: "Mogen bestaande klanten jaarlijks blijven betalen?",

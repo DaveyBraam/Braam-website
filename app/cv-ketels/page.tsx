@@ -148,7 +148,7 @@ export default function CvKetels() {
           <div className="ck-prijs">
             <p className="ck-prijs-naam">Comfort, cv-ketel</p>
             <p className="ck-prijs-bedrag"><small>vanaf €</small>11,58<small>per maand</small></p>
-            <p className="ck-prijs-jaar">€ 139 per jaar, jaarlijks onderhoud</p>
+            <p className="ck-prijs-jaar">€ 139 per jaar, buiten ’s-⁠Hertogenbosch € 150. Jaarlijks onderhoud.</p>
             <div className="ck-acties">
               <Link className="ck-knop" href="/abonnement-aanvragen?abonnement=cv-comfort">Onderhoud regelen <Pijl /></Link>
               <a className="ck-tekstlink" href="#ck-naslag">Wat is inbegrepen?</a>

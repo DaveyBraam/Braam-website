@@ -62,6 +62,7 @@ export const subscriptions = [
     title: "Comfort",
     price: "139",
     monthlyPrice: "11,58",
+    priceBuiten: "150",
     description: "Jaarlijks onderhoud en storingsservice voor uw cv-ketel. Materiaal wordt apart berekend.",
     maintenanceFeatures: [
       "Ieder jaar een geplande controle van uw cv-ketel",
@@ -93,6 +94,7 @@ export const subscriptions = [
     title: "Comfort",
     price: "289",
     monthlyPrice: "24,08",
+    priceBuiten: "300",
     description: "Jaarlijks onderhoud en storingsservice voor uw hybride warmtepomp en cv-ketel. Materiaal wordt apart berekend.",
     maintenanceFeatures: [
       "Ieder jaar een geplande controle van beide toestellen",
@@ -124,6 +126,7 @@ export const subscriptions = [
     title: "Comfort",
     price: "239",
     monthlyPrice: "19,92",
+    priceBuiten: "250",
     description: "Jaarlijks onderhoud en storingsservice voor uw all-electric warmtepomp. Materiaal wordt apart berekend.",
     maintenanceFeatures: [
       "Ieder jaar een geplande controle van uw warmtepomp",
