@@ -18,6 +18,8 @@ const rustig = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const geenAbonnement = () => () => {};
 const zuinig = () => Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
 
+/* Camerastand van de ketel in het donker (scene.ts, 'licht uit'): daar gaat het licht uit. */
+const KETEL = 2;
 const klem = (v: number) => Math.max(0, Math.min(1, v));
 const glij = (v: number) => { const t = klem(v); return t * t * (3 - 2 * t); };
 
@@ -38,8 +40,6 @@ export function Reis({ children }: { children: ReactNode }) {
     const delen = Array.from(el.querySelectorAll<HTMLElement>('[data-stand]'));
     const teksten = delen.map(d => d.querySelector<HTMLElement>('.ck-tekst'));
     const lijst = stappen.map(c => el.querySelector<HTMLElement>(`#${c.id}`));
-    const eersteDonker = el.querySelector<HTMLElement>('#ck-gasleiding .ck-tekst');
-    const gas = el.querySelector<HTMLElement>('#ck-gasleiding .ck-tekst');
     const rook = el.querySelector<HTMLElement>('#ck-rookgas .ck-tekst');
     const terug = el.querySelector<HTMLElement>('#ck-oplevering .ck-tekst');
     const podium = el.querySelector<HTMLElement>('.ck-podium');
@@ -73,15 +73,25 @@ export function Reis({ children }: { children: ReactNode }) {
 
       // De camera rust zolang een tekst stilstaat en beweegt alleen tussen twee teksten in.
       const punten = delen.map((d, i) => ({ y: afstand(teksten[i]), stand: Number(d.dataset.stand) }));
-      let stand = punten[0]?.stand ?? 0;
+      let stand = punten[0]?.stand ?? 0, lichtUit = false;
       for (let i = 0; i < punten.length - 1; i++) {
         const a = punten[i], b = punten[i + 1];
-        if (a.y <= .5 && b.y > .5) stand = a.stand + (b.stand - a.stand) * glij((0 - a.y) / (b.y - a.y) * 1.2 - .1);
-        else if (b.y <= .5) stand = b.stand;
+        if (a.y <= .5 && b.y > .5) {
+          const t = klem((0 - a.y) / (b.y - a.y));
+          if (b.stand - a.stand === 2) {
+            // Van uw woning naar de gasleiding in drie rustige stappen: in het licht naar de ketel,
+            // stilstaan terwijl het licht uitgaat, dan pas omlaag naar de gasleiding.
+            const ketel = a.stand + 1;
+            stand = t < .38 ? a.stand + glij(t / .38) : t < .62 ? ketel : ketel + glij((t - .62) / .38);
+            lichtUit = t >= .5;
+          } else stand = a.stand + (b.stand - a.stand) * glij(t * 1.2 - .1);
+        } else if (b.y <= .5) stand = b.stand;
       }
+      // Het licht is uit zodra de camera voorbij de ketelstand is (en blijft dat tot het einde van het verhaal).
+      if (stand > KETEL + .001) lichtUit = true;
 
       const ruimte = vh - ondergrens;
-      const uit = top(eersteDonker) < ondergrens + ruimte * .72;
+      const uit = lichtUit;
       const aanTerug = top(terug) < ondergrens + ruimte * .72;
       const isDonker = uit && !aanTerug;
       // Gas en stromen vullen zich terwijl hun tekst binnenkomt en zijn vol als die stilstaat.
@@ -93,7 +103,8 @@ export function Reis({ children }: { children: ReactNode }) {
       const s = staat.current;
       s.stand = stand;
       s.donker = isDonker ? 1 : 0;
-      s.gas = binnen(gas);
+      // De gasleiding vult zich terwijl de camera bij haar aankomt.
+      s.gas = glij((stand - (KETEL + .45)) / .55);
       s.rook = binnen(rook);
       s.aan = aanTerug ? 1 : 0;
       s.zon = klem(scrollY / vh);
