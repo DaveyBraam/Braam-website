@@ -63,6 +63,9 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 .w5-evening > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: fill; }
 .w5-dark { mix-blend-mode: multiply; opacity: 0; }
 .w5-light { mix-blend-mode: plus-lighter; opacity: 0; }
+/* De lichtlagen zijn gemaakt van het huis zonder buitenunit; zonder masker valt het lamplicht
+   dwars door de unit heen en lijkt hij doorzichtig. Het masker spaart de unit (kast en poten) uit. */
+.w5-light { -webkit-mask: url(/warmtepompen/reis/licht-masker-unit.png) 0 0 / 100% 100% no-repeat; mask: url(/warmtepompen/reis/licht-masker-unit.png) 0 0 / 100% 100% no-repeat; }
 @supports not (mix-blend-mode: plus-lighter) { .w5-light { mix-blend-mode: screen; } }
 .w5-letterbox { -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%); }
 .w5-morning { position: absolute; inset: 0; }
