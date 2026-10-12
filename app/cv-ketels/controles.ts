@@ -8,3 +8,6 @@ export const controles = [
   { id: 'ck-rookgas', kort: 'Lucht en rookgas', lang: 'Luchttoevoer en rookgasafvoer' },
   { id: 'ck-oplevering', kort: 'Oplevering', lang: 'Verbranding gemeten en vastgelegd' },
 ] as const;
+
+/* De stappen van het scrollverhaal (de lijst onder het podium): alleen controles met een eigen hoofdstuk. */
+export const stappen = controles.filter(c => ['ck-woning', 'ck-gasleiding', 'ck-rookgas'].includes(c.id));

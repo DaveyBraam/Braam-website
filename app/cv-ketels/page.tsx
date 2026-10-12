@@ -49,18 +49,8 @@ export default function CvKetels() {
           </div>
         </section>
 
-        <section className="ck-hst" id="ck-aansluitingen" data-stand="1" data-kant="rechts" aria-labelledby="ck-t-aansluitingen">
-          <div className="ck-tekst">
-            <h2 id="ck-t-aansluitingen">Elk detail. <span>Een functie.</span></h2>
-            <p>Wat onder de ketel zit, telt net zo hard. Verwarming, water en gas: we controleren het leidingwerk stuk voor stuk.</p>
-            <dl className="ck-paren">
-              <div><dt>Cv-aanvoer en retour</dt><dd>Warmte naar uw radiatoren. Water terug naar de ketel.</dd></div>
-              <div><dt>Warm en koud water</dt><dd>De verbinding met uw douche en kranen.</dd></div>
-            </dl>
-          </div>
-        </section>
 
-        <section className="ck-hst" id="ck-woning" data-stand="2" data-kant="rechts" aria-labelledby="ck-t-woning">
+        <section className="ck-hst" id="ck-woning" data-stand="1" data-kant="rechts" aria-labelledby="ck-t-woning">
           <div className="ck-tekst">
             <h2 id="ck-t-woning">Afgestemd op <span>uw woning.</span></h2>
             <p>We kijken naar uw huidige radiatoren, eventuele vloerverwarming en de regeling. Daar stemmen we uw cv-ketel op af.</p>
@@ -75,14 +65,8 @@ export default function CvKetels() {
           </div>
         </section>
 
-        <section className="ck-hst ck-stilte" data-stand="3" data-donker="1" data-kant="rechts" aria-labelledby="ck-t-stilte">
-          <div className="ck-tekst">
-            <h2 id="ck-t-stilte">Wat u niet ziet, <span>controleren wij.</span></h2>
-            <p>Het gas naar de ketel. De lucht die erin gaat en het rookgas dat eruit gaat.</p>
-          </div>
-        </section>
 
-        <section className="ck-hst ck-gas" id="ck-gasleiding" data-stand="4" data-kant="rechts" aria-labelledby="ck-t-gas">
+        <section className="ck-hst ck-gas" id="ck-gasleiding" data-stand="3" data-donker="1" data-kant="rechts" aria-labelledby="ck-t-gas">
           <div className="ck-tekst">
             <h2 id="ck-t-gas">De gasleiding. <span>Apart gecontroleerd.</span></h2>
             <dl className="ck-paren">
@@ -96,7 +80,7 @@ export default function CvKetels() {
           </div>
         </section>
 
-        <section className="ck-hst ck-rook" id="ck-rookgas" data-stand="5" data-kant="rechts" aria-labelledby="ck-t-rook">
+        <section className="ck-hst ck-rook" id="ck-rookgas" data-stand="4" data-kant="rechts" aria-labelledby="ck-t-rook">
           <div className="ck-tekst">
             <h2 id="ck-t-rook">Veiligheid. <span>In samenhang.</span></h2>
             <p>De ketel, luchttoevoer en rookgasafvoer vormen één installatie. Daarom kijken we verder dan het toestel: van de verbinding aan de ketel tot de doorvoer door het dak of de gevel.</p>
@@ -118,25 +102,6 @@ export default function CvKetels() {
           </div>
         </section>
 
-        <section className="ck-hst ck-terug" id="ck-oplevering" data-stand="6" data-kant="rechts" aria-labelledby="ck-t-oplevering">
-          <div className="ck-tekst">
-            <h2 id="ck-t-oplevering">Goed werk. <span>Vastgelegd.</span></h2>
-            <p>We controleren de werking, stellen de ketel af en meten de verbranding. U ontvangt een rapport met de resultaten, afwijkingen en ons advies.</p>
-            <ul className="ck-metingen" aria-label="Onder meer deze metingen voeren wij uit">
-              <li><strong>CO</strong><span>Koolmonoxide</span></li>
-              <li><strong>O<sub>2</sub></strong><span>Zuurstof</span></li>
-              <li><strong>°C</strong><span>Rookgastemperatuur</span></li>
-            </ul>
-            <p className="ck-noot"><strong>Voor ingebruikname.</strong> Werking, afstelling en rookgassen gecontroleerd. Metingen vastgelegd in het opleverings- en beproevingsrapport.</p>
-            <details className="ck-meer">
-              <summary>Certificering en vakbekwaamheid <Plus /></summary>
-              <div>
-                <p>Onze CO-certificering en registraties lopen via CO-Keur, volgens BRL 6000-25. Onze monteurs hebben hun Vakmanschap CO via Installatiewerk Nederland behaald.</p>
-                <a className="ck-tekstlink" href="https://www.volkshuisvestingnederland.nl/onderwerpen/verduurzamen-en-verbeteren/koolmonoxide-voorkomen" target="_blank" rel="noreferrer">Lees de officiële uitleg <Pijl /></a>
-              </div>
-            </details>
-          </div>
-        </section>
       </Reis>
 
       <section className="ck-daarna" aria-labelledby="ck-t-daarna">

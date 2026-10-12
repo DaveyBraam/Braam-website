@@ -31,12 +31,10 @@ type Stand = { doel: Vec; camera: Vec; schuif: number; mobielDoel?: Vec; mobiel?
    op negatieve z kijkt naar de wand; hogere x staat links in beeld. */
 const standen: Stand[] = [
   { doel: [.63, 3.33, -.3], camera: [.92, 3.78, -5.25], schuif: 0, mobielDoel: [.63, 3.78, -.3], mobiel: .95 }, // kop
-  { doel: [.63, 3.2, -.31], camera: [-.35, 3.62, -2.05], schuif: -.2, mobielDoel: [.63, 3.14, -.31], mobiel: 1.2 }, // aansluitingen
   { doel: [3.36, 3.4, -.2], camera: [3.9, 3.85, -3.05], schuif: -.2, mobiel: 1.1 }, // uw woning
-  { doel: [.63, 4.25, -.3], camera: [.25, 4.35, -5.8], schuif: -.2, mobiel: 1.05 }, // licht uit
+  { doel: [.63, 4.25, -.3], camera: [.25, 4.35, -5.8], schuif: -.2, mobiel: 1.05 }, // licht uit (alleen als tussenstand op weg naar de gasleiding)
   { doel: [.63, 3.22, -.31], camera: [-.25, 3.52, -1.8], schuif: -.2, mobielDoel: [.63, 3.2, -.31], mobiel: 1.25 }, // gasleiding
   { doel: [.63, 5.5, -.29], camera: [-.55, 4.62, -4.7], schuif: -.2, mobielDoel: [.63, 5.3, -.29], mobiel: 1.0 }, // lucht en rookgas
-  { doel: [.63, 3.92, -.4], camera: [-.2, 4.05, -3.0], schuif: -.2, mobielDoel: [.63, 3.9, -.4], mobiel: 1.15 }, // licht aan
 ];
 
 const LICHT = { wand: '#e8eef4', vloer: '#dfe7ef' };
@@ -137,10 +135,8 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
   const labelHost = host.parentElement;
   const label = (naam: string) => labelHost?.querySelector<HTMLElement>(`[data-label="${naam}"]`) ?? null;
   const labels: { el: HTMLElement | null; punt: T.Vector3; zicht: () => number; rij?: boolean }[] = [];
-  const leidingen: [string, number][] = [['aanvoer', .811], ['warm', .72], ['gas', .63], ['koud', .54], ['retour', .449]];
-  for (const [naam, x] of leidingen) labels.push({ el: label(naam), punt: new T.Vector3(x, 2.93, -.309), zicht: () => nabij(1) * (1 - nu.donker), rij: true });
-  labels.push({ el: label('radiator'), punt: new T.Vector3(3.25, 3.0, -.16), zicht: () => nabij(2) * (1 - nu.donker) });
-  labels.push({ el: label('gasleiding'), punt: new T.Vector3(.63, 3.06, -.309), zicht: () => nu.donker * T.MathUtils.smoothstep(nu.gas, .55, .9) * (1 - nabij(5)) });
+  labels.push({ el: label('radiator'), punt: new T.Vector3(3.25, 3.0, -.16), zicht: () => nabij(1) * (1 - nu.donker) });
+  labels.push({ el: label('gasleiding'), punt: new T.Vector3(.63, 3.06, -.309), zicht: () => nu.donker * T.MathUtils.smoothstep(nu.gas, .55, .9) * (1 - nabij(4)) });
   labels.push({ el: label('rookgas'), punt: new T.Vector3(AS.x, 6.22, AS.y), zicht: () => nu.donker * T.MathUtils.smoothstep(nu.rook, .35, .8) });
   labels.push({ el: label('lucht'), punt: new T.Vector3(AS.x, 5.2, AS.y), zicht: () => nu.donker * T.MathUtils.smoothstep(nu.rook, .45, .9) });
   labels.push({ el: label('dak'), punt: new T.Vector3(1.35, 5.79, -.45), zicht: () => nu.donker * T.MathUtils.smoothstep(nu.rook, .2, .6) });
@@ -234,7 +230,7 @@ export function createKetelScene(host: HTMLElement, opties: { klaar: () => void;
     rookgas.schaal(schaal * renderer.getPixelRatio()); lucht.schaal(schaal * renderer.getPixelRatio());
 
     if (radiator) {
-      const r = T.MathUtils.smoothstep(nu.stand, 1.15, 1.8);
+      const r = T.MathUtils.smoothstep(nu.stand, .3, .85);
       radiator.visible = r > .001;
       for (const m of radiatorMat) { const t = r < .999; if (m.transparent !== t) { m.transparent = t; m.needsUpdate = true; } m.opacity = r; }
     }

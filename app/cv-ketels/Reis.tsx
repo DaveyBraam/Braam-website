@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { KetelScene } from './scene';
-import { controles } from './controles';
+import { stappen } from './controles';
 
 /* Het vaste podium met de ketel, en de hoofdstukken die er in gewone
    leesvolgorde langs lopen. Elk hoofdstuk zegt met data-stand welke
@@ -37,8 +37,8 @@ export function Reis({ children }: { children: ReactNode }) {
     if (!el) return;
     const delen = Array.from(el.querySelectorAll<HTMLElement>('[data-stand]'));
     const teksten = delen.map(d => d.querySelector<HTMLElement>('.ck-tekst'));
-    const lijst = controles.map(c => el.querySelector<HTMLElement>(`#${c.id}`));
-    const eersteDonker = el.querySelector<HTMLElement>('.ck-stilte .ck-tekst');
+    const lijst = stappen.map(c => el.querySelector<HTMLElement>(`#${c.id}`));
+    const eersteDonker = el.querySelector<HTMLElement>('#ck-gasleiding .ck-tekst');
     const gas = el.querySelector<HTMLElement>('#ck-gasleiding .ck-tekst');
     const rook = el.querySelector<HTMLElement>('#ck-rookgas .ck-tekst');
     const terug = el.querySelector<HTMLElement>('#ck-oplevering .ck-tekst');
@@ -167,11 +167,6 @@ export function Reis({ children }: { children: ReactNode }) {
       <img className="ck-poster" src="/concept-3d/cv-ketels/installation-overview.webp" alt="" width="1000" height="1100" aria-hidden="true" />
       <div className="ck-kopwaas" aria-hidden="true" />
       <div className="ck-labels" aria-hidden="true">
-        <span data-label="aanvoer">Aanvoer cv</span>
-        <span data-label="warm" className="ck-label-laag">Warm water</span>
-        <span data-label="gas">Gas</span>
-        <span data-label="koud" className="ck-label-laag">Koud water</span>
-        <span data-label="retour">Retour cv</span>
         <span data-label="radiator">Uw radiator</span>
         <span data-label="gasleiding" className="ck-label-gas">Gasleiding</span>
         <span data-label="rookgas" className="ck-label-rook">Rookgas naar buiten</span>
@@ -181,7 +176,7 @@ export function Reis({ children }: { children: ReactNode }) {
       <nav className="ck-lijst" aria-label="Wat we nalopen" data-zichtbaar={huidig >= 0}>
         <span className="ck-lijst-titel">Wat we nalopen</span>
         <ol>
-          {controles.map((c, i) => <li key={c.id} data-gezien={i <= gezien} aria-current={i === huidig ? 'step' : undefined}>
+          {stappen.map((c, i) => <li key={c.id} data-gezien={i <= gezien} aria-current={i === huidig ? 'step' : undefined}>
             <a href={`#${c.id}`} onClick={e => { e.preventDefault(); spring(c.id); }} tabIndex={huidig >= 0 ? 0 : -1}>
               <i aria-hidden="true">{i <= gezien ? <svg viewBox="0 0 16 16"><path d="m3.5 8.3 3 3 6-6.6" /></svg> : null}</i>
               {c.kort}
