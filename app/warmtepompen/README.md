@@ -54,3 +54,11 @@ Higgsfield in totaal: circa 67 credits.
 ## Gecontroleerd
 - Desktop 1440×900 en telefoon 390×844 met schermafbeeldingen over de hele reis.
 - ESLint en TypeScript zonder meldingen.
+
+## Ingekort (12 oktober 2026)
+Op Daveys verzoek zijn "Twee vaten. Twee taken." en de woonkamer met de thermostaat uit het verhaal
+gehaald (TRACK 10,9 → 8,85). Na de wissel in de garage vloeit de garage over in het huis bij avond.
+De vanaf-prijzen staan nu in het verhaal: bij Hybride vanaf € 4.995, bij De ketel eruit vanaf € 5.995;
+tijdens de wissel rolt alleen het duizendtal van 4 naar 5 (nooit een tussenbedrag in beeld). Het
+prijsblok onder het verhaal (wat bepaalt uw prijs, subsidie) blijft. `woonkamer.webp` wordt niet meer
+geladen maar staat nog in `public/warmtepompen/reis/`.

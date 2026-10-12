@@ -84,10 +84,14 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
 .w5-small { margin-top: 14px !important; font-size: 1rem; color: var(--ink-soft); }
 .w5-body { margin-top: 20px !important; max-width: 38ch; font-size: 1.1875rem; line-height: 1.65; color: var(--ink-soft); }
 .w5-keyline { margin-top: 20px !important; padding-top: 14px; max-width: 34ch; border-top: 1px solid var(--rule); font-size: 1.0625rem; font-weight: 500; line-height: 1.5; }
-.w5-vessels { display: grid; margin-top: 22px !important; max-width: 32rem; }
-.w5-vessels > div { display: grid; grid-template-columns: 8rem 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--rule); font-size: 1.125rem; }
-.w5-vessels dt { font-weight: 600; }
-.w5-vessels dd { color: var(--ink-soft); line-height: 1.5; }
+.w5-prijs { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 18px !important; }
+.w5-prijs-van { font-size: 1rem; color: var(--ink-soft); }
+.w5-prijs strong { display: inline-flex; align-items: flex-start; white-space: pre; font-size: clamp(2.2rem, 3.2vw, 2.9rem); line-height: 1; font-weight: 700; letter-spacing: -.03em; color: var(--blue); font-variant-numeric: tabular-nums; }
+.w5-prijs-btw { flex-basis: 100%; font-size: .9375rem; color: var(--ink-soft); }
+/* Het duizendtal rolt van 4 naar 5 met de wissel in de garage (Journey.tsx). */
+.w5-rol { display: block; height: 1em; overflow: hidden; line-height: 1; }
+.w5-rol > span > span { display: block; height: 1em; line-height: 1; }
+.w5-rol > span { display: flex; flex-direction: column; will-change: transform; }
 /* A small hint at the bottom of the first screen; it fades as soon as the page moves. */
 .w5-cue { position: absolute; z-index: 3; left: 50%; transform: translateX(-50%); bottom: calc(var(--w5-lift, 0px) + 22px); display: inline-flex; flex-direction: column; align-items: center; gap: 10px; font-size: .8125rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; color: var(--ink); text-decoration: none; text-shadow: 0 0 10px rgba(242, 245, 248, .95), 0 0 2px rgba(242, 245, 248, .9); }
 .w5-cue:hover { color: var(--ink); }
@@ -205,9 +209,7 @@ body:has(.w5) :is(.ambient-orb, .pointer-aura, .page-grain) { display: none; }
   .w5-route, .w5-small { display: none; }
   .w5-actions { margin-top: 16px; }
   .w5-copy .w5-button { width: 100%; justify-content: center; }
-  .w5-vessels { margin-top: 12px !important; }
-  .w5-vessels > div { grid-template-columns: 6.5rem 1fr; padding: 8px 0; font-size: 1rem; }
-}
+    }
 /* Small phones: the action bar (advies + bellen) is fixed at the bottom. It is the
    journey's button there, so the copy rests above it and its own advice buttons go. */
 @media (max-width: 660px) {
