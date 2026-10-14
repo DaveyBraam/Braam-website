@@ -1,7 +1,7 @@
 # Elektra (versie 4): sfeer, overtuigende tekst en een lamp die aangaat
 
 Worktree `~/Desktop/Website v3/elektra-ontwerp` (branch `ontwerp-elektra`, vanaf origin/main
-dd29892). Lokaal: launch-config `braam-elektra`, poort 5238. Niet gecommit, niet live.
+dd29892). Lokaal: launch-config `braam-elektra`, poort 5238. Live sinds 14 oktober 2026 (7ea72ea).
 Brief: `scrollcraft/builds/elektra/BRIEF.md`.
 
 ## Opbouw
