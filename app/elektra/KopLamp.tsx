@@ -78,11 +78,11 @@ export function KopLamp({ advies, label, pijl }: { advies: string; label: string
       </div>
       <div className="el-kop-sluier" aria-hidden="true" />
       <div className="el-rand el-kop-tekst">
-        <h1 id="el-titel">Alles tegelijk aan. <span>Zonder erbij na te denken.</span></h1>
-        <p className="el-intro">&apos;s Avonds komt iedereen thuis. De kookplaat gaat aan, de wasmachine draait en de auto laadt. Goede elektra merkt u niet. Daar zorgt ons eigen team voor.</p>
+        <h1 id="el-titel">Ook voor elektra <span>kunt u bij ons terecht.</span></h1>
+        <p className="el-intro">Van werkzaamheden aan uw groepenkast tot een aparte groep voor uw airco of warmtepomp. Onze eigen elektricien verzorgt het voor u.</p>
         <div className="el-acties">
           <Link className="el-knop" href={advies}>{label} {pijl}</Link>
-          <a className="el-bellijn" href="tel:+31736222199">Of bel 073 622 2199</a>
+          <a className="el-bellijn" href="tel:+31736222199">Bel ons op 073 622 2199</a>
         </div>
       </div>
     </div>

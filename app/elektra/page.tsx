@@ -19,27 +19,27 @@ import './elektra.css';
 
 /* eslint-disable @next/next/no-img-element */
 export const metadata: Metadata = {
-  title: 'Elektra-installaties in de regio',
-  description: "Groepenkast vervangen of uitbreiden, een eigen groep voor inductie, laadpaal, warmtepomp of airco, en elektra bij verbouwing of renovatie. Door het eigen team van Rob Braam uit 's-Hertogenbosch.",
+  title: 'Ook voor elektra kunt u bij ons terecht',
+  description: "Ook voor elektrawerk kunt u terecht bij Rob Braam. Onze eigen elektricien verzorgt uw groepenkast en een aparte groep voor uw airco of warmtepomp als dat nodig is.",
   alternates: { canonical: '/elektra' },
 };
 
 const ADVIES = '/offerte-aanvragen?dienst=elektra';
-const LABEL = 'Bespreek uw elektra';
+const LABEL = 'Vraag naar de mogelijkheden';
 
 const DIENSTEN = [
-  ['Een groepenkast die weer past', 'Is uw kast oud, vol of te krap voor wat u nu gebruikt? We breiden hem uit of vervangen hem, passend bij uw huis en uw plannen.'],
-  ['Een eigen groep voor nieuwe apparatuur', 'Voor een inductiekookplaat, laadpaal, warmtepomp of airco. Met de juiste beveiliging, zodat alles tegelijk aan kan.'],
-  ['Elektra bij verbouwing of renovatie', 'We leggen de installatie aan of vernieuwen hem, afgestemd op de rest van het werk. Eén planning, één aanspreekpunt.'],
-  ['Eerlijk advies bij twijfel', 'Weet u niet of uw kast nog voldoet? We komen kijken en zeggen eerlijk wat nodig is. En wat niet.'],
+  ['Een aparte groep voor uw airco of warmtepomp', 'Plaatsen wij bij u een airco of warmtepomp en is daarvoor een aparte groep nodig? Dan verzorgt onze eigen elektricien die. We stemmen het elektrawerk af op de installatie.'],
+  ['Uw groepenkast uitbreiden of vervangen', 'Nieuwe apparatuur kan om een aanpassing van uw groepenkast vragen. We bekijken wat er al aanwezig is en bespreken welke aanpassing nodig is.'],
+  ['Elektrawerk in uw woning', 'Ook met andere elektrawerkzaamheden kunt u bij ons terecht. Vertel ons wat u wilt laten aanpassen, dan bekijken we samen de mogelijkheden.'],
+  ['Meedenken over uw aansluiting', 'Twijfelt u of uw elektrische installatie geschikt is voor uw plannen? We kijken met u mee en leggen uit wat er nodig is.'],
 ] as const;
 
 const VRAGEN = [
-  ['Is mijn groepenkast te oud?', 'Dat hangt af van de staat van de kast en van wat u wilt aansluiten. Oudere kasten hebben soms te weinig groepen of beveiliging voor wat er nu bijkomt. We komen kijken en adviseren wat nodig is.'],
-  ['Kan een laadpaal of inductiekookplaat op mijn huidige kast?', 'Vaak wel, soms is er meer nodig. Dat hangt af van uw aansluiting en de ruimte in de kast. We bekijken het samen met u.'],
-  ['Wat kost het?', 'Dat hangt af van het werk. Nadat we hebben gekeken, krijgt u een duidelijke offerte. Zo weet u vooraf waar u aan toe bent.'],
-  ['Doen jullie ook de hele installatie bij een verbouwing?', 'Ja. Bij een verbouwing of renovatie leggen we de elektrische installatie aan of vernieuwen we hem, en stemmen we het af met de rest van het werk.'],
-  ['Wat heeft u van mij nodig?', 'Een korte omschrijving van wat u wilt en, als het kan, een foto van uw groepenkast. Dan kunnen we gericht meedenken.'],
+  ['Kan ik ook alleen voor elektrawerk bij u terecht?', 'Ja, ook voor elektrawerkzaamheden kunt u contact met ons opnemen. U hoeft daarvoor geen airco of warmtepomp bij ons te laten plaatsen. Vertel ons wat u nodig heeft, dan bespreken we de mogelijkheden.'],
+  ['Verzorgt u ook een aparte groep voor mijn airco of warmtepomp?', 'Ja. Als wij een airco of warmtepomp installeren en daarvoor een aparte groep nodig is, verzorgt onze eigen elektricien die. U hoeft daar zelf geen andere elektricien voor te regelen.'],
+  ['Is er altijd een aparte groep nodig?', 'Dat hangt af van het toestel en uw bestaande elektrische installatie. We bekijken wat de aansluiting vraagt en bespreken met u of er een extra groep of een andere aanpassing nodig is.'],
+  ['Moet mijn groepenkast helemaal worden vervangen?', 'Dat is niet altijd nodig. We bekijken de staat van uw groepenkast en wat u wilt aansluiten. Daarna bespreken we of uitbreiden mogelijk is of vervangen nodig is.'],
+  ['Hoe kan ik elektrawerk aanvragen?', 'U kunt ons bellen, mailen of het aanvraagformulier invullen. Beschrijf kort uw plannen. Heeft u een foto van uw groepenkast, dan helpt die ons om uw situatie te bekijken.'],
 ] as const;
 
 function Pijl() {
@@ -58,21 +58,21 @@ export default function ElektraPage() {
 
       <div className="el-zeker">
         <ul className="el-rand">
-          <li><Vink />Elektricien in eigen team</li>
-          <li><Vink />Geen onderaannemers</li>
-          <li><Vink />Sinds 2000 in &apos;s-Hertogenbosch</li>
+          <li><Vink />Onze eigen elektricien</li>
+          <li><Vink />Elektrawerk en installatie afgestemd</li>
+          <li><Vink />Ook voor losse elektrawerkzaamheden</li>
         </ul>
       </div>
 
       <section className="el-verandert" aria-labelledby="el-t-verandert">
         <div className="el-rand el-verandert-raster">
           <div>
-            <h2 id="el-t-verandert">Uw huis verandert.</h2>
-            <p>Er komt een inductiekookplaat. Een laadpaal bij de oprit. Een warmtepomp, misschien een airco op zolder. Allemaal apparaten die stroom vragen, en vaak op hetzelfde moment.</p>
+            <h2 id="el-t-verandert">Een airco of warmtepomp in huis.</h2>
+            <p>Bij het plaatsen van een airco of warmtepomp hoort ook een passende elektrische aansluiting. Daarom bekijken we vooraf of uw groepenkast geschikt is en of er een aparte groep nodig is.</p>
           </div>
           <div>
-            <h2>Uw elektra <span>verandert mee.</span></h2>
-            <p>We kijken of uw groepenkast het aankan. Waar nodig breiden we uit of vervangen we hem, met een eigen groep voor wat veel vraagt. Zo kan alles tegelijk aan, veilig en zonder gedoe.</p>
+            <h2>Wij verzorgen <span>ook de elektra.</span></h2>
+            <p>Is er een aanpassing nodig? Onze eigen elektricien verzorgt het elektrawerk. Zo sluiten de werkzaamheden op elkaar aan en kunt u voor de installatie en de elektra bij ons terecht.</p>
           </div>
         </div>
       </section>
@@ -80,8 +80,8 @@ export default function ElektraPage() {
       {fotos.length > 0 && <section className="el-werkfotos" aria-labelledby="el-t-fotos">
         <div className="el-rand el-werkfotos-raster">
           <div className="el-werkfotos-tekst">
-            <h2 id="el-t-fotos">Ons elektrawerk. <span>Eigen werk, uit de praktijk.</span></h2>
-            <p>Groepenkasten die ons eigen team heeft geplaatst, gewoon bij klanten thuis in de meterkast.</p>
+            <h2 id="el-t-fotos">Elektrawerk <span>bij onze klanten.</span></h2>
+            <p>Een kijkje in de meterkast: hieronder ziet u groepenkasten die wij bij klanten hebben geplaatst.</p>
           </div>
           <div className="el-fotoraster">
             {fotos.map(f => <figure className="el-foto" key={f.src}>
@@ -94,7 +94,7 @@ export default function ElektraPage() {
 
       <section className="el-hulp" aria-labelledby="el-t-hulp">
         <div className="el-rand el-hulp-raster">
-          <h2 id="el-t-hulp">Waar kunnen we <span>u mee helpen?</span></h2>
+          <h2 id="el-t-hulp">Voor deze werkzaamheden <span>kunt u bij ons terecht.</span></h2>
           <ul className="el-hulp-lijst">
             {DIENSTEN.map(([kop, tekst]) => <li key={kop}>
               <h3>{kop}</h3>
@@ -106,27 +106,10 @@ export default function ElektraPage() {
 
       <Werkwijze />
 
-      <section className="el-team" aria-labelledby="el-t-team">
-        <div className="el-rand el-team-raster">
-          <figure className="el-team-foto">
-            <img src="/about/team-rob-braam.webp" alt="Monteurs van Rob Braam bij de bedrijfsbussen" width="1200" height="801" loading="lazy" decoding="async" />
-          </figure>
-          <div className="el-team-tekst">
-            <h2 id="el-t-team">Eén team. <span>Van advies tot oplevering.</span></h2>
-            <p>Dezelfde mensen geven het advies, doen het werk en staan er daarna voor u. Geen onderaannemers, één aanspreekpunt en één planning, ook als er naast de elektra een warmtepomp of airco komt.</p>
-            <p className="el-regio">Sinds 2000 vanuit &apos;s-Hertogenbosch, in Noord-Brabant en aangrenzende delen van Gelderland.</p>
-            <ul className="el-keur">
-              <li><img src="/certifications/installq.png" alt="" width="82" height="48" loading="lazy" /><span>Geregistreerd bij InstallQ</span></li>
-              <li><img src="/certifications/vca.png" alt="" width="84" height="48" loading="lazy" /><span>VCA-gecertificeerd</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
       <section className="el-samen" aria-labelledby="el-t-samen">
         <div className="el-rand el-samen-raster">
-          <h2 id="el-t-samen">Komt er een warmtepomp of airco?</h2>
-          <p>Dan regelen we de elektrische aansluiting mee. U hoeft geen tweede bedrijf te zoeken.</p>
+          <h2 id="el-t-samen">Meer weten over airco of warmtepompen?</h2>
+          <p>Bekijk de mogelijkheden voor uw woning. Het elektrawerk dat bij de plaatsing nodig is, nemen we mee in het advies.</p>
           <div className="el-samen-links">
             <Link href="/warmtepompen">Warmtepompen <Pijl /></Link>
             <Link href="/airco">Airco <Pijl /></Link>
@@ -136,7 +119,7 @@ export default function ElektraPage() {
 
       <section className="el-vragen" aria-labelledby="el-t-vragen">
         <div className="el-rand el-vragen-raster">
-          <h2 id="el-t-vragen">Vragen die we <span>vaak krijgen.</span></h2>
+          <h2 id="el-t-vragen">Uw vragen <span>over elektrawerk.</span></h2>
           <div className="el-vraag-lijst">
             {VRAGEN.map(([vraag, antwoord]) => <details key={vraag}>
               <summary>{vraag}<span className="el-plus" aria-hidden="true" /></summary>
@@ -149,13 +132,13 @@ export default function ElektraPage() {
       <section className="el-slot" aria-labelledby="el-t-slot">
         <div className="el-rand el-slot-raster">
           <div>
-            <h2 id="el-t-slot">Vertel wat u wilt. <span>Wij denken mee.</span></h2>
-            <p>Een korte omschrijving is genoeg. Een foto van uw groepenkast helpt ons om gericht mee te denken.</p>
+            <h2 id="el-t-slot">Elektrawerk nodig? <span>Neem gerust contact op.</span></h2>
+            <p>Of het nu gaat om een losse elektraklus of de aansluiting van een nieuwe installatie: vertel ons uw plannen. We bespreken graag wat we voor u kunnen doen.</p>
           </div>
           <div className="el-slot-acties">
             <Link className="el-knop el-knop-licht" href={ADVIES}>{LABEL} <Pijl /></Link>
-            <a className="el-bel" href="tel:+31736222199"><small>Of bel</small><strong>073 622 2199</strong></a>
-            <p className="el-mail">Liever mailen? <a href="mailto:service@robbraam.com">service@robbraam.com</a></p>
+            <a className="el-bel" href="tel:+31736222199"><small>Bel ons op</small><strong>073 622 2199</strong></a>
+            <p className="el-mail">U kunt ook mailen: <a href="mailto:service@robbraam.com">service@robbraam.com</a></p>
           </div>
         </div>
       </section>

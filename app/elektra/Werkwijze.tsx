@@ -2,10 +2,10 @@
 import { useEffect, useRef } from 'react';
 
 const STAPPEN = [
-  ['We komen kijken.', 'We bekijken uw groepenkast, uw aansluiting en wat u in huis gebruikt. En we vragen naar uw plannen: een warmtepomp, inductiekookplaat, laadpaal of een verbouwing.'],
-  ['U krijgt eerlijk advies.', 'U hoort wat nodig is en wat niet. Uitbreiden of vervangen, met vooraf een duidelijke offerte.'],
-  ['Ons eigen team voert het uit.', 'Geen onderaannemers. Onze elektricien en installatiemonteur stemmen het werk op elkaar af, met één planning.'],
-  ['Netjes opgeleverd.', 'We controleren de installatie, zetten de groepen duidelijk op de kast en lopen alles samen met u na.'],
+  ['U vertelt ons uw plannen.', 'Wilt u iets aan uw elektra laten aanpassen, of komt er een nieuwe airco of warmtepomp? Neem contact op en vertel wat u nodig heeft.'],
+  ['We bekijken wat nodig is.', 'We beoordelen uw bestaande aansluiting en groepenkast. Daarna bespreken we welk elektrawerk bij uw plannen hoort.'],
+  ['Onze eigen elektricien gaat aan de slag.', 'We spreken de werkzaamheden met u af. Hoort het elektrawerk bij een airco of warmtepomp, dan stemmen we het af met de plaatsing van het toestel.'],
+  ['We lopen het werk met u na.', 'Na de werkzaamheden leggen we uit wat er is aangepast. Heeft u nog vragen, dan kunt u bij ons terecht.'],
 ] as const;
 
 /** Vier stappen onder elkaar; een lijn langs de nummers loopt mee met het lezen. */
@@ -38,8 +38,8 @@ export function Werkwijze() {
   return <section className="el-werk" aria-labelledby="el-t-werk">
     <div className="el-rand el-werk-raster">
       <div className="el-werk-kop">
-        <h2 id="el-t-werk">Zo gaat het. <span>Rustig en duidelijk.</span></h2>
-        <p>Van de eerste vraag tot de oplevering weet u waar u aan toe bent.</p>
+        <h2 id="el-t-werk">Zo regelen we <span>uw elektrawerk.</span></h2>
+        <p>We bespreken uw wensen en stemmen de werkzaamheden met u af.</p>
       </div>
       <ol className="el-stappen" ref={ref}>
         {STAPPEN.map(([kop, tekst], i) => <li key={kop}>
