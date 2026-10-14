@@ -19,13 +19,16 @@ Brief: `scrollcraft/builds/elektra/BRIEF.md`.
 Zet de foto's in `public/elektra/` en voeg per foto één regel toe in `fotos.ts` (instructie staat
 bovenin dat bestand). De eerste foto wordt groot getoond.
 
-## Tekstwijziging — 14 oktober 2026 (lokale preview)
+## Tekstwijziging — 14 oktober 2026 (live)
 Op verzoek van Davey is de volledige teamsectie met foto verwijderd. De paginateksten
 zijn herschreven rond: ook voor elektrawerk kunt u bij ons terecht; onze eigen
 elektricien verzorgt een aparte groep als die nodig is bij de plaatsing van een
 airco of warmtepomp. Vormgeving, lampanimatie, werkfoto's en contactroutes behouden.
 Gerichte ESLint-controle geslaagd; nieuwe tekst en afwezigheid van de teamsectie
-gecontroleerd in de lokale browser. Deze tekstwijziging is nog niet gepubliceerd.
+gecontroleerd in de lokale browser. Live gepubliceerd als commit `ca15621`, Cloudflare-versie
+`b31caafd-7e89-44b4-8a3d-3eb14c3ab392`. Productiebuild, negen voorgeschreven
+cv-controles en artifactvalidatie geslaagd. Live HTML bevestigt de nieuwe opening,
+eigen elektricien, verwijderde teamsectie en behouden contactroute.
 
 ## Live zetten
 `app/elektra/` en `public/elektra/` gaan mee; verder niets. Publiceren volgens de deploy-notitie
