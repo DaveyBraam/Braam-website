@@ -1,0 +1,29 @@
+# Elektra (versie 4): sfeer, overtuigende tekst en een lamp die aangaat
+
+Worktree `~/Desktop/Website v3/elektra-ontwerp` (branch `ontwerp-elektra`, vanaf origin/main
+dd29892). Lokaal: launch-config `braam-elektra`, poort 5238. Niet gecommit, niet live.
+Brief: `scrollcraft/builds/elektra/BRIEF.md`.
+
+## Opbouw
+1. **Opening** (`KopLamp.tsx`): licht papier met kop, knop en telefoon; rechts een schemerkamer die
+   in het papier oplost. Bij binnenkomst zijn de lampen uit; tijdens het scrollen gaan de drie
+   glazen lampen één voor één aan (met spiegeling in het raam) en groeit het kamerlicht per lamp.
+   Tekst staat stil. Momenten in `START` in KopLamp.tsx. Beelden: `public/elektra/kamer-uit`,
+   `kamer-licht` (kamerlicht zonder lampen) en `lamp-1..3` (losse lampen met alfa), elk ook `-m`
+   voor de telefoon; sfeerbeeld zonder merk of mensen. Bron in `scrollcraft/builds/elektra/bron/`.
+2. Drie vinkjes. 3. Uw huis verandert / uw elektra verandert mee (licht, twee kolommen).
+4. Eigen foto's (`fotos.ts`, verschijnt pas als er foto's zijn).
+5. Diensten, werkwijze (`Werkwijze.tsx`), eigen team, warmtepomp/airco, vragen, donkerblauwe slotband.
+
+## Eigen foto's toevoegen
+Zet de foto's in `public/elektra/` en voeg per foto één regel toe in `fotos.ts` (instructie staat
+bovenin dat bestand). De eerste foto wordt groot getoond.
+
+## Te controleren door Davey
+- Nieuwe beloftes (uit v2): "vooraf een duidelijke offerte", "zetten de groepen duidelijk op de kast",
+  "elektra bij verbouwing of renovatie", de antwoorden bij de vragen.
+- Nieuwe teksten: de kop, de twee lampzinnen en de herschreven diensten.
+
+## Live zetten
+`app/elektra/` en `public/elektra/` gaan mee; verder niets. Publiceren volgens de deploy-notitie
+(vinext build, tests, push naar main, wrangler deploy --keep-vars).

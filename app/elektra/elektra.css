@@ -1,0 +1,247 @@
+/* Elektra: rustig, licht, verkopend. Zelfde wereld als /cv-ketels en /warmtepompen:
+   blauwgrijze wand, wit papier, donkerblauwe inkt, logoblauw als enige accent,
+   donkerblauwe slotband. Fira. Lopende tekst 18px. Alleen transform, opacity en
+   kleur bewegen. Licht van toon. Eén moment: in de opening gaan de lampen aan terwijl
+   u scrolt (KopLamp.tsx); de kamerfoto is sfeer, nooit onderwerp. Eigen foto's: fotos.ts. */
+
+body:has(main.el) .ambient-orb,
+body:has(main.el) .pointer-aura,
+body:has(main.el) .page-grain,
+body:has(main.el) .experience-layer,
+body:has(main.el) .topline { display: none; }
+body:has(main.el) .site-header { background: rgb(240 245 250 / .97); border-bottom: 1px solid #d5e0ea; backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+.el {
+  --el-wand: #e8eef4;
+  --el-papier: #f5f8fb;
+  --el-wit: #ffffff;
+  --el-inkt: #0f2236;
+  --el-inkt-zacht: #475d72;
+  --el-blauw: #0c70b8;
+  --el-blauw-diep: #095a94;
+  --el-haar: #cbd8e4;
+  --el-nacht: #0c1a28;
+  --el-op: #eef3f9;
+  --el-op-zacht: #a9bdd0;
+  --el-licht: #7cc0f7;
+  --el-balk: 84px;
+  --el-gemak: cubic-bezier(.23, 1, .32, 1);
+  background: var(--el-wand);
+  color: var(--el-inkt);
+  font-size: 18px;
+  line-height: 1.6;
+  font-variant-numeric: lining-nums;
+}
+:where(.el) :where(h1, h2, h3, p, ul, ol, figure, figcaption) { margin: 0; }
+:where(.el) :where(ul, ol) { padding: 0; list-style: none; }
+.el nav a::after { content: none; }
+.el :is(h1, h2, h3) { max-width: none; color: inherit; font-family: inherit; font-weight: 700; text-transform: none; letter-spacing: -.025em; text-wrap: balance; }
+.el :is(h1, h2, h3) span { display: block; color: var(--el-blauw); }
+.el h2 { font-size: clamp(36px, 3.7vw, 54px); line-height: 1.03; }
+.el p { text-wrap: pretty; }
+.el img { display: block; max-width: 100%; }
+.el ::selection { background: var(--el-blauw); color: var(--el-wit); }
+.el :is(a, button, summary):focus-visible { outline: 3px solid var(--el-blauw); outline-offset: 4px; border-radius: 3px; }
+
+.el-rand { width: min(1240px, calc(100% - 2 * clamp(20px, 5vw, 64px))); margin-inline: auto; }
+
+/* Knoppen en links */
+.el-acties { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 32px; }
+.el-knop {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 26px;
+  border-radius: 999px; background: var(--el-blauw); color: var(--el-wit);
+  font-size: 17px; font-weight: 600; white-space: nowrap; text-decoration: none;
+  box-shadow: 0 10px 24px rgb(12 70 120 / .16);
+  transition: background-color .16s var(--el-gemak), transform .12s var(--el-gemak);
+}
+.el-knop:hover { background: var(--el-blauw-diep); }
+.el-knop:active { transform: translateY(1px); }
+.el-pijl { width: 19px; height: 19px; flex: none; }
+.el-bellijn { color: var(--el-inkt); font-weight: 600; font-variant-numeric: tabular-nums; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.el-bellijn:hover { color: var(--el-blauw); }
+.el-vink { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--el-blauw); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+
+/* ---- Waar we mee helpen: stil, gewone lijst -------------------------------- */
+
+.el-hulp { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-papier); }
+.el-hulp-raster { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.el-hulp-lijst { border-top: 1px solid var(--el-inkt); }
+.el-hulp-lijst li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--el-haar); }
+.el-hulp-lijst h3 { font-size: 20px; line-height: 1.3; letter-spacing: -.01em; }
+.el-hulp-lijst p { color: var(--el-inkt-zacht); }
+
+/* ---- Opening: licht, de lampen gaan aan terwijl u scrolt ----------------- */
+
+.el-kop { position: relative; background: var(--el-papier); }
+.el-kop[data-live] { height: 200svh; }
+.el-kop-podium { position: relative; overflow: hidden; isolation: isolate; display: grid; align-items: center; min-height: calc(100svh - var(--el-balk) - 66px); }
+.el-kop[data-live] .el-kop-podium { position: sticky; top: var(--el-balk); height: calc(100svh - var(--el-balk)); min-height: 0; }
+.el-kop-kamer { position: absolute; inset: 0; z-index: -2; transform: scale(calc(1 + var(--el-p, 0) * .06)); transform-origin: 72% 28%; will-change: transform; }
+.el-kop-kamer img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; transform: scale(1.07); transform-origin: 20% 45%; }
+.el-kop-licht { opacity: var(--el-kamer, 0); }
+.el-kop-lamp-1 { opacity: var(--el-l1, 0); }
+.el-kop-lamp-2 { opacity: var(--el-l2, 0); }
+.el-kop-lamp-3 { opacity: var(--el-l3, 0); }
+.el-kop[data-stil] :is(.el-kop-licht, .el-kop-lamp) { opacity: 1; }
+/* Het papier loopt van links over in de kamer: de foto is sfeer, de tekst staat op licht. */
+.el-kop-sluier {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, var(--el-papier) 0%, var(--el-papier) 34%, rgb(245 248 251 / .9) 42%, rgb(245 248 251 / .5) 52%, rgb(245 248 251 / .12) 64%, rgb(245 248 251 / 0) 74%);
+}
+.el-kop-tekst { padding-block: 56px; }
+.el-kop h1 { max-width: 11.5em; font-size: clamp(50px, 5.2vw, 82px); line-height: .98; letter-spacing: -.04em; }
+.el-intro { max-width: 34ch; margin-top: 26px; color: var(--el-inkt-zacht); font-size: 20px; line-height: 1.55; }
+
+.el-zeker { background: var(--el-wit); border-block: 1px solid var(--el-haar); }
+.el-zeker ul { display: flex; flex-wrap: wrap; gap: 12px 40px; padding-block: 22px; }
+.el-zeker li { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; }
+
+/* ---- Uw huis verandert, uw elektra verandert mee ------------------------- */
+
+.el-verandert { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-wand); }
+.el-verandert-raster { display: grid; grid-template-columns: 1fr 1fr; }
+.el-verandert-raster > div:first-child { padding-right: clamp(40px, 5vw, 80px); }
+.el-verandert-raster > div + div { padding-left: clamp(40px, 5vw, 80px); border-left: 1px solid var(--el-haar); }
+.el .el-verandert h2 { font-size: clamp(38px, 4vw, 58px); line-height: 1.02; }
+.el-verandert p { max-width: 40ch; margin-top: 22px; color: var(--el-inkt-zacht); }
+
+/* ---- Eigen foto's (alleen als fotos.ts gevuld is) ----------------------- */
+
+.el-werkfotos { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-papier); }
+.el-werkfotos-raster { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.el-werkfotos-tekst { position: sticky; top: calc(var(--el-balk) + 48px); }
+.el-werkfotos-tekst p { max-width: 34ch; margin-top: 20px; color: var(--el-inkt-zacht); }
+.el-fotoraster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px) clamp(14px, 1.8vw, 24px); }
+.el-foto img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; box-shadow: 0 18px 40px rgb(15 34 54 / .1); }
+.el-foto figcaption { margin-top: 12px; color: var(--el-inkt-zacht); font-size: 15px; line-height: 1.45; }
+/* Tweede foto iets lager: een rustig ritme in plaats van een strak raster. */
+.el-foto:nth-child(2n) { margin-top: clamp(32px, 5vw, 72px); }
+
+/* ---- Zo gaat het: lijn die meeloopt -------------------------------------- */
+
+.el-werk { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-papier); border-top: 1px solid var(--el-haar); }
+.el-werk-raster { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.el-werk-kop { position: sticky; top: calc(var(--el-balk) + 48px); }
+.el-werk-kop p { max-width: 32ch; margin-top: 20px; color: var(--el-inkt-zacht); }
+.el-stappen { position: relative; --el-lijn: 1; }
+.el-stappen::before, .el-stappen::after { content: ''; position: absolute; left: 21px; top: 30px; bottom: 30px; width: 2px; margin-left: -1px; background: var(--el-haar); }
+.el-stappen::after { background: var(--el-blauw); transform: scaleY(var(--el-lijn)); transform-origin: top; }
+.el-stappen li { position: relative; z-index: 1; display: grid; grid-template-columns: 44px 1fr; gap: 26px; padding: 8px 0 56px; }
+.el-stappen li:last-child { padding-bottom: 8px; }
+.el-nr { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--el-blauw); background: var(--el-blauw); color: var(--el-wit); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; transition: background-color .35s var(--el-gemak), color .35s var(--el-gemak), border-color .35s var(--el-gemak); }
+.el-stappen[data-live] li:not([data-bereikt]) .el-nr { background: var(--el-papier); border-color: var(--el-haar); color: var(--el-inkt-zacht); }
+.el-stappen h3 { padding-top: 4px; font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; }
+.el-stappen p { max-width: 44ch; margin-top: 12px; color: var(--el-inkt-zacht); }
+
+/* ---- Eén team ------------------------------------------------------------ */
+
+.el-team { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-wand); }
+.el-team-raster { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(40px, 6vw, 88px); align-items: center; }
+.el-team-foto img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; box-shadow: 0 24px 48px rgb(15 34 54 / .12); }
+.el-team-tekst > p { margin-top: 22px; color: var(--el-inkt-zacht); }
+.el-team-tekst > .el-regio { margin-top: 14px; font-size: 16px; }
+.el-keur { display: flex; flex-wrap: wrap; gap: 18px 32px; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--el-haar); }
+.el-keur li { display: flex; align-items: center; gap: 14px; font-size: 15px; font-weight: 600; }
+.el-keur img { height: 40px; width: auto; mix-blend-mode: multiply; }
+
+/* ---- Warmtepomp of airco erbij ------------------------------------------- */
+
+.el-samen { padding: 56px 0; background: var(--el-wit); border-block: 1px solid var(--el-haar); }
+.el-samen-raster { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr) auto; gap: 20px 48px; align-items: center; }
+.el .el-samen h2 { font-size: clamp(26px, 2.3vw, 32px); line-height: 1.15; }
+.el-samen p { color: var(--el-inkt-zacht); }
+.el-samen-links { display: flex; gap: 12px; }
+.el-samen-links a { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 20px; border: 1px solid var(--el-inkt); border-radius: 999px; color: var(--el-inkt); font-size: 16px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background-color .16s var(--el-gemak), color .16s var(--el-gemak); }
+.el-samen-links a:hover { background: var(--el-inkt); color: var(--el-wit); }
+
+/* ---- Vragen ------------------------------------------------------------- */
+
+.el-vragen { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-papier); }
+.el-vragen-raster { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.el-vraag-lijst { border-top: 1px solid var(--el-inkt); }
+.el-vraag-lijst details { border-bottom: 1px solid var(--el-haar); }
+.el-vraag-lijst summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 68px; padding: 18px 0; font-size: 19px; font-weight: 600; line-height: 1.35; cursor: pointer; list-style: none; transition: color .16s var(--el-gemak); }
+.el-vraag-lijst summary::-webkit-details-marker { display: none; }
+.el-vraag-lijst summary:hover { color: var(--el-blauw); }
+.el-plus { position: relative; width: 16px; height: 16px; flex: none; }
+.el-plus::before, .el-plus::after { content: ''; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; border-radius: 1px; background: currentColor; transition: transform .25s var(--el-gemak); }
+.el-plus::after { transform: rotate(90deg); }
+.el-vraag-lijst details[open] .el-plus::after { transform: rotate(0deg); }
+.el-vraag-lijst details p { max-width: 58ch; padding: 0 0 24px; color: var(--el-inkt-zacht); }
+
+/* ---- Slot: donkerblauw, de pagina komt tot rust ------------------------- */
+
+.el-slot { padding: clamp(88px, 11vw, 140px) 0; background: var(--el-nacht); color: var(--el-op); }
+.el-slot ::selection { background: var(--el-licht); color: var(--el-nacht); }
+.el-slot :is(a, button):focus-visible { outline-color: var(--el-licht); }
+.el-slot-raster { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(40px, 6vw, 96px); align-items: end; }
+.el .el-slot h2 { font-size: clamp(40px, 4.3vw, 62px); line-height: 1.02; }
+.el-slot h2 span { color: var(--el-licht); }
+.el-slot-raster > div > p { max-width: 40ch; margin-top: 22px; color: var(--el-op-zacht); font-size: 19px; }
+.el-slot-acties { display: grid; justify-items: start; gap: 22px; }
+.el-knop-licht { background: var(--el-wit); color: var(--el-nacht); box-shadow: 0 10px 24px rgb(0 0 0 / .25); }
+.el-knop-licht:hover { background: #dbe8f4; }
+.el-bel { display: grid; gap: 2px; color: var(--el-op); text-decoration: none; }
+.el-bel small { font-size: 15px; color: var(--el-op-zacht); }
+.el-bel strong { font-size: 24px; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.el-bel:hover strong { color: var(--el-licht); }
+.el-mail { color: var(--el-op-zacht); font-size: 16px; }
+.el-mail a { color: var(--el-op); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.el-mail a:hover { color: var(--el-licht); }
+
+/* ---- Tablet en telefoon ------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .el-samen-raster { grid-template-columns: 1fr auto; }
+  .el-samen-raster p { grid-column: 1; }
+  .el-samen-links { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+@media (max-width: 899px) {
+  .el { font-size: 17px; --el-balk: 72px; }
+  .el-kop[data-live] { height: 190svh; }
+  /* Telefoon: de kamer boven, de tekst eronder op papier. */
+  .el-kop-podium { display: block; min-height: 0; }
+  .el-kop[data-live] .el-kop-podium { display: grid; grid-template-rows: minmax(0, 1fr) auto; align-items: stretch; }
+  .el-kop-kamer { position: relative; inset: auto; height: 42vw; min-height: 210px; transform-origin: 50% 30%; }
+  .el-kop[data-live] .el-kop-kamer { height: auto; min-height: 0; }
+  .el-kop-kamer img { object-position: 50% 35%; transform: none; }
+  .el-kop-sluier { display: none; }
+  .el-kop-kamer { -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent); }
+  .el-kop-tekst { padding-block: 4px 32px; }
+  .el-kop[data-live] .el-kop-tekst { padding-bottom: 92px; }
+  .el-kop h1 { font-size: clamp(36px, 9.6vw, 50px); }
+  .el-intro { font-size: 17px; margin-top: 14px; }
+  .el-acties { margin-top: 22px; gap: 12px 22px; }
+  .el-zeker ul { flex-direction: column; gap: 10px; padding-block: 20px; }
+  .el-zeker li { font-size: 16px; }
+  .el-verandert-raster { grid-template-columns: 1fr; }
+  .el-verandert-raster > div:first-child { padding: 0 0 40px; }
+  .el-verandert-raster > div + div { padding: 40px 0 0; border-left: 0; border-top: 1px solid var(--el-haar); }
+
+  .el h2 { font-size: clamp(32px, 8.6vw, 42px); }
+  .el-hulp-raster, .el-werk-raster, .el-team-raster, .el-vragen-raster, .el-slot-raster { grid-template-columns: 1fr; gap: 32px; }
+  .el-hulp-lijst li { grid-template-columns: 1fr; gap: 6px; padding: 22px 0; }
+  .el-hulp-lijst h3 { font-size: 19px; }
+
+  .el-werkfotos-raster { grid-template-columns: 1fr; gap: 32px; }
+  .el-werkfotos-tekst { position: static; }
+  .el-foto:nth-child(2n) { margin-top: 28px; }
+  .el-foto figcaption { font-size: 14px; }
+
+  .el-werk-kop { position: static; }
+  .el-stappen li { grid-template-columns: 40px 1fr; gap: 18px; padding-bottom: 40px; }
+  .el-nr { width: 40px; height: 40px; font-size: 16px; }
+  .el-stappen::before, .el-stappen::after { left: 19px; top: 28px; bottom: 28px; }
+
+  .el-samen-raster { grid-template-columns: 1fr; }
+  .el-samen-links { grid-column: 1; grid-row: auto; flex-wrap: wrap; }
+  .el-vraag-lijst summary { font-size: 17px; }
+  .el-slot { padding-bottom: 120px; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .el-nr, .el-stappen::after { transition: none !important; }
+}
