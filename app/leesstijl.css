@@ -1,0 +1,144 @@
+/* Leesstijl voor de naslagpagina's (veelgestelde vragen, privacyverklaring).
+   Dezelfde lichte, zakelijke wereld als /contact en /service: papier en wit,
+   donkerblauwe inkt, logoblauw alleen voor verwijzingen. Lopende tekst 17-18px,
+   nergens onder 15px, regels van hooguit 70 tekens, klikvlakken van minstens 48px. */
+
+.ls {
+  --ls-navy: #091521;
+  --ls-papier: #f2f5f8;
+  --ls-wit: #ffffff;
+  --ls-inkt: #0f181f;
+  --ls-tekst: #2c3e4c;
+  --ls-zacht: #4a5d6e;
+  --ls-lijn: #d4dde3;
+  --ls-lijn-sterk: #a9bac7;
+  --ls-blauw: #0c70b8;
+  --ls-blauw-diep: #095a94;
+  --ls-tint: #e8f2fb;
+  background: var(--ls-papier);
+  color: var(--ls-inkt);
+  font-size: 18px;
+}
+
+body:has(main.ls) .ambient-orb,
+body:has(main.ls) .pointer-aura,
+body:has(main.ls) .page-grain { display: none; }
+html:has(main.ls) { scroll-padding-top: 110px; }
+
+.ls a:focus-visible, .ls summary:focus-visible { outline: 3px solid var(--ls-blauw); outline-offset: 3px; }
+.ls h1, .ls h2, .ls h3 { color: var(--ls-inkt); letter-spacing: -.02em; }
+.ls p a, .ls li a { color: var(--ls-blauw-diep); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.ls p a:hover, .ls li a:hover { text-decoration-thickness: 2px; }
+
+/* globals.css zet elke nav op flex (en verbergt hem onder 960px); deze twee zijn gewone lijsten. */
+.ls nav.ls-index, .ls nav.ls-zijnav { display: block; gap: 0; margin: 0; }
+
+/* ---- Kop -------------------------------------------------------------------- */
+
+.ls-kop { padding: clamp(40px, 6vw, 80px) 0 clamp(44px, 5vw, 72px); background: linear-gradient(180deg, var(--ls-wit), var(--ls-papier)); border-bottom: 1px solid var(--ls-lijn); }
+.ls-kop-raster { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .6fr); gap: 36px clamp(40px, 6vw, 96px); align-items: end; }
+.ls .ls-kruimel { display: flex; gap: 10px; margin: 0 0 24px; color: var(--ls-zacht); font-size: 15px; font-weight: 600; }
+.ls .ls-kruimel a { display: inline-flex; align-items: center; min-height: 32px; color: inherit; text-decoration: none; }
+.ls-kruimel a:hover { color: var(--ls-blauw); }
+.ls-kruimel span { display: inline-flex; align-items: center; }
+.ls-kruimel span:last-child { color: var(--ls-inkt); }
+.ls h1 { margin: 0; max-width: 13em; font-size: clamp(40px, 4.8vw, 64px); font-weight: 700; line-height: 1.04; text-wrap: balance; }
+.ls .ls-lead { max-width: 34em; margin: 20px 0 0; color: var(--ls-tekst); font-size: 19px; line-height: 1.6; }
+
+.ls-index { padding: 22px 24px 24px; border-top: 3px solid var(--ls-navy); background: var(--ls-wit); box-shadow: 0 18px 40px -26px rgba(9, 21, 33, .4); }
+.ls .ls-index-kop { margin: 0 0 6px; color: var(--ls-zacht); font-size: 15px; font-weight: 600; }
+.ls-index ul { list-style: none; margin: 0; padding: 0; }
+.ls-index li { border-bottom: 1px solid var(--ls-lijn); }
+.ls-index li:last-child { border-bottom: 0; }
+.ls .ls-index li a { display: flex; align-items: center; min-height: 48px; color: var(--ls-inkt); font-size: 17px; font-weight: 600; text-decoration: none; }
+.ls .ls-index li a:hover { color: var(--ls-blauw-diep); }
+.ls .ls-kort li { padding: 10px 0; color: var(--ls-tekst); font-size: 16px; line-height: 1.5; }
+.ls-index > p:last-child { margin: 12px 0 0; font-size: 16px; }
+
+/* ---- Vragenblokken ------------------------------------------------------------ */
+
+.ls-blok { padding: clamp(52px, 6vw, 88px) 0; background: var(--ls-papier); }
+.ls-blok:nth-of-type(odd) { background: var(--ls-wit); }
+.ls-blok-raster { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 28px clamp(40px, 6vw, 96px); align-items: start; }
+.ls-blok-intro { position: sticky; top: 120px; }
+.ls-blok-intro h2 { margin: 0; font-size: clamp(28px, 2.6vw, 38px); font-weight: 700; line-height: 1.12; text-wrap: balance; }
+.ls-blok-intro p { max-width: 30em; margin: 14px 0 0; color: var(--ls-tekst); font-size: 17px; line-height: 1.6; }
+
+.ls-vragen { border-top: 2px solid var(--ls-navy); }
+.ls-vragen details { border-bottom: 1px solid var(--ls-lijn-sterk); }
+.ls-vragen summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; padding: 14px 0; cursor: pointer; list-style: none; font-size: 19px; font-weight: 600; line-height: 1.35; }
+.ls-vragen summary::-webkit-details-marker { display: none; }
+.ls-vragen summary:hover { color: var(--ls-blauw-diep); }
+.ls-vraag-teken { flex: none; color: var(--ls-blauw-diep); }
+.ls-vraag-plus { transition: opacity .2s ease; }
+.ls-vragen details[open] .ls-vraag-plus { opacity: 0; }
+.ls-vragen details p { max-width: 64ch; margin: 0 0 22px; color: var(--ls-tekst); font-size: 18px; line-height: 1.65; }
+
+/* ---- Lopende tekst (privacy) ----------------------------------------------------- */
+
+.ls-tekst-raster { display: grid; grid-template-columns: minmax(220px, .32fr) minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); align-items: start; }
+.ls-zijnav { position: sticky; top: 120px; }
+.ls-zijnav ul { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ls-navy); }
+.ls-zijnav li { border-bottom: 1px solid var(--ls-lijn); }
+.ls .ls-zijnav li a { display: flex; align-items: center; min-height: 44px; color: var(--ls-inkt); font-size: 16px; font-weight: 600; text-decoration: none; }
+.ls .ls-zijnav li a:hover { color: var(--ls-blauw-diep); }
+.ls .ls-datum { margin: 16px 0 0; color: var(--ls-zacht); font-size: 15px; line-height: 1.5; }
+.ls-datum strong { color: var(--ls-inkt); }
+
+.ls-artikel { max-width: 70ch; }
+.ls .ls-artikel-intro { margin: 0 0 8px; color: var(--ls-inkt); font-size: 20px; line-height: 1.6; }
+.ls-artikel section { padding-top: 36px; margin-top: 36px; border-top: 1px solid var(--ls-lijn); }
+.ls-artikel h2 { margin: 0 0 14px; font-size: clamp(24px, 2.2vw, 30px); font-weight: 700; line-height: 1.2; }
+.ls-artikel p, .ls-artikel li { color: var(--ls-tekst); font-size: 18px; line-height: 1.65; }
+.ls-artikel p { margin: 0 0 14px; }
+.ls-artikel ul { margin: 0 0 14px; padding-left: 1.2em; list-style: disc; }
+.ls-artikel li::marker { color: var(--ls-blauw-diep); }
+.ls-artikel li { margin-bottom: 6px; }
+.ls-artikel li strong, .ls-artikel p strong { color: var(--ls-inkt); }
+
+.ls-adres { display: grid; gap: 2px; margin-top: 16px; padding: 20px 22px; border: 1px solid var(--ls-lijn-sterk); border-radius: 4px; background: var(--ls-wit); font-size: 17px; line-height: 1.5; }
+.ls-adres strong { font-weight: 650; }
+.ls .ls-adres a { justify-self: start; color: var(--ls-blauw-diep); }
+
+.ls-doelen { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 6px 0 16px; }
+.ls-doelen > div { padding: 16px 0; border-bottom: 1px solid var(--ls-lijn); }
+.ls-doelen strong { font-size: 18px; font-weight: 650; }
+.ls .ls-doelen p { margin: 6px 0 0; font-size: 17px; }
+
+.ls-kader { margin: 6px 0 18px; padding: 22px 24px 8px; border-radius: 4px; background: var(--ls-tint); }
+.ls-kader > strong { display: block; margin-bottom: 8px; font-size: 18px; font-weight: 650; }
+
+/* ---- Slot ------------------------------------------------------------------------- */
+
+.ls-slot { padding: clamp(56px, 7vw, 96px) 0; background: var(--ls-navy); color: #eef3f9; }
+.ls-slot-raster { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 24px clamp(40px, 6vw, 96px); align-items: start; }
+.ls .ls-slot h2 { margin: 0; max-width: 14em; color: #fff; font-size: clamp(28px, 2.8vw, 40px); font-weight: 700; line-height: 1.1; text-wrap: balance; }
+.ls-slot p { max-width: 34em; margin: 0; color: #c9d5df; font-size: 18px; line-height: 1.6; }
+.ls-slot-acties { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.ls-knop { display: inline-flex; align-items: center; min-height: 52px; padding: 0 22px; border-radius: 3px; background: #eef3f9; color: var(--ls-inkt); font-size: 17px; font-weight: 650; transition: background-color .2s ease, border-color .2s ease; }
+.ls-knop:hover { background: #d9e6ef; }
+.ls-knop--licht { border: 1px solid rgba(255, 255, 255, .35); background: transparent; color: #fff; }
+.ls-knop--licht:hover { border-color: #fff; background: transparent; }
+.ls-slot a:focus-visible { outline-color: #7cc0f7; }
+
+/* ---- Kleinere schermen ------------------------------------------------------------ */
+
+@media (max-width: 980px) {
+  .ls-kop-raster, .ls-blok-raster, .ls-tekst-raster, .ls-slot-raster { grid-template-columns: 1fr; }
+  .ls-blok-intro, .ls-zijnav { position: static; }
+  .ls nav.ls-zijnav { display: none; }
+}
+
+@media (max-width: 660px) {
+  .ls { font-size: 17px; }
+  .ls h1 { font-size: clamp(34px, 9.5vw, 42px); }
+  .ls .ls-lead { font-size: 18px; }
+  .ls-vragen summary { font-size: 18px; }
+  .ls-vragen details p, .ls-artikel p, .ls-artikel li { font-size: 17px; }
+  .ls-doelen { grid-template-columns: 1fr; }
+  .ls-slot-acties a { flex: 1 1 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-vraag-plus, .ls-knop { transition: none; }
+}

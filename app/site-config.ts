@@ -25,3 +25,11 @@ export const kantoortijdenZin = "maandag tot en met donderdag van 8.00 tot 17.00
    laten zolang Turnstile nog niet is aangemaakt: dan tonen de formulieren geen
    controle en houdt alleen het verborgen veld robots tegen. */
 export const turnstileSiteKey = "0x4AAAAAAFSZXlN2foys8GtA";
+
+/* Reviews komen uit de review-app (~/Braam-reviews). Die geeft alleen reviews
+   die de beheerder heeft goedgekeurd en waarvoor de klant toestemming gaf, en
+   staat het ophalen alleen toe vanaf het adres in zijn SITE_ORIGIN. Gaat de site
+   naar robbraam.com, pas dan SITE_ORIGIN in de review-app aan. */
+export const reviewsApp = "https://braam-reviews.braam-site-installatie.workers.dev";
+export const reviewsFeed = `${reviewsApp}/api/publiek/reviews`;
+export const reviewSchrijven = `${reviewsApp}/ervaring`;

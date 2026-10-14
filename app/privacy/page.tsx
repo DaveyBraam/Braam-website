@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import "../leesstijl.css";
+
+/* Privacyverklaring (oktober 2026): van het oude premium-sjabloon (labels van
+   9px, links op 2,9:1) naar de lichte leesstijl van /contact en /service
+   (app/leesstijl.css). De tekst zelf is niet veranderd. */
 
 export const metadata: Metadata = {
   title: "Privacyverklaring",
@@ -9,61 +14,56 @@ export const metadata: Metadata = {
     "Lees hoe Service & Montagebedrijf Rob Braam persoonsgegevens gebruikt, beveiligt en bewaart.",
 };
 
+const inhoud = [
+  ["wie-zijn-wij", "Wie zijn wij?"],
+  ["gegevens", "Welke gegevens?"],
+  ["doelen", "Waarom gebruiken we ze?"],
+  ["delen", "Met wie delen we ze?"],
+  ["bewaren", "Hoe lang bewaren we ze?"],
+  ["cookies", "Cookies en website"],
+  ["beveiliging", "Beveiliging"],
+  ["rechten", "Uw rechten"],
+] as const;
+
 export default function PrivacyPage() {
   return (
     <>
       <SiteHeader />
-      <main className="privacy-page">
-        <section className="privacy-hero">
-          <div className="shell">
-            <div className="breadcrumb breadcrumb-dark">
-              <Link href="/">Home</Link><span>/</span><strong>Privacyverklaring</strong>
+      <main className="ls">
+        <section className="ls-kop" aria-labelledby="ls-titel">
+          <div className="shell ls-kop-raster">
+            <div>
+              <p className="ls-kruimel"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Privacyverklaring</span></p>
+              <h1 id="ls-titel">Privacy zonder kleine lettertjes.</h1>
+              <p className="ls-lead">We gebruiken alleen de gegevens die nodig zijn om uw vraag, aanvraag of opdracht goed af te handelen. Op deze pagina leest u welke gegevens dat zijn en welke keuzes en rechten u heeft.</p>
             </div>
-            <div className="privacy-hero-grid">
-              <div>
-                <p className="eyebrow eyebrow-light"><span /> Helder over uw gegevens</p>
-                <h1>Privacy zonder<br /><em>kleine lettertjes.</em></h1>
-                <p>We gebruiken alleen de gegevens die nodig zijn om uw vraag, aanvraag of opdracht goed af te handelen. Op deze pagina leest u welke gegevens dat zijn en welke keuzes en rechten u heeft.</p>
-              </div>
-              <aside className="privacy-hero-card" aria-label="Privacy in het kort">
-                <span className="privacy-card-label">In het kort</span>
-                <ul>
-                  <li><i>01</i><span>We verkopen uw persoonsgegevens niet.</span></li>
-                  <li><i>02</i><span>Een aanvraag zonder opdracht verwijderen we zodra die volledig is afgehandeld.</span></li>
-                  <li><i>03</i><span>U kunt altijd vragen welke gegevens we van u hebben.</span></li>
-                </ul>
-                <a href="mailto:service@robbraam.com?subject=Privacyvraag">Privacyvraag stellen <span aria-hidden="true">↗</span></a>
-              </aside>
-            </div>
+            <aside className="ls-index" aria-label="Privacy in het kort">
+              <p className="ls-index-kop">In het kort</p>
+              <ul className="ls-kort">
+                <li>We verkopen uw persoonsgegevens niet.</li>
+                <li>Een aanvraag zonder opdracht verwijderen we zodra die volledig is afgehandeld.</li>
+                <li>U kunt altijd vragen welke gegevens we van u hebben.</li>
+              </ul>
+              <p><a href="mailto:service@robbraam.com?subject=Privacyvraag">Privacyvraag stellen</a></p>
+            </aside>
           </div>
         </section>
 
-        <section className="privacy-content-section">
-          <div className="shell privacy-layout">
-            <aside className="privacy-index" aria-label="Inhoud privacyverklaring">
-              <span>Privacyverklaring</span>
-              <nav>
-                <a href="#wie-zijn-wij">Wie zijn wij?</a>
-                <a href="#gegevens">Welke gegevens?</a>
-                <a href="#doelen">Waarom gebruiken we ze?</a>
-                <a href="#delen">Met wie delen we ze?</a>
-                <a href="#bewaren">Hoe lang bewaren we ze?</a>
-                <a href="#cookies">Cookies en website</a>
-                <a href="#rechten">Uw rechten</a>
-              </nav>
-              <small>Laatst bijgewerkt<br /><strong>9 oktober 2026</strong></small>
-            </aside>
+        <section className="ls-blok ls-blok--tekst">
+          <div className="shell ls-tekst-raster">
+            <nav className="ls-zijnav" aria-label="Inhoud privacyverklaring">
+              <p className="ls-index-kop">Inhoud</p>
+              <ul>{inhoud.map(([id, titel]) => <li key={id}><a href={`#${id}`}>{titel}</a></li>)}</ul>
+              <p className="ls-datum">Laatst bijgewerkt<br /><strong>9 oktober 2026</strong></p>
+            </nav>
 
-            <article className="privacy-article">
-              <div className="privacy-intro">
-                <p>Deze privacyverklaring geldt voor de website en formulieren van Braam en voor contact met ons via e-mail, telefoon of op locatie.</p>
-              </div>
+            <article className="ls-artikel">
+              <p className="ls-artikel-intro">Deze privacyverklaring geldt voor de website en formulieren van Braam en voor contact met ons via e-mail, telefoon of op locatie.</p>
 
               <section id="wie-zijn-wij">
-                <span className="legal-number">01</span>
                 <h2>Wie is verantwoordelijk?</h2>
                 <p>Service & Montagebedrijf Rob Braam is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring.</p>
-                <div className="privacy-company-card">
+                <div className="ls-adres">
                   <strong>Service & Montagebedrijf Rob Braam</strong>
                   <span>Jacob van Wassenaerstraat 10</span>
                   <span>5224 GG &apos;s-Hertogenbosch</span>
@@ -74,7 +74,6 @@ export default function PrivacyPage() {
               </section>
 
               <section id="gegevens">
-                <span className="legal-number">02</span>
                 <h2>Welke gegevens verwerken we?</h2>
                 <p>Welke gegevens we verwerken hangt af van uw contact met ons. Het kan gaan om:</p>
                 <ul>
@@ -89,10 +88,9 @@ export default function PrivacyPage() {
               </section>
 
               <section id="doelen">
-                <span className="legal-number">03</span>
                 <h2>Waarom gebruiken we uw gegevens?</h2>
                 <p>We gebruiken persoonsgegevens alleen voor de volgende doelen en op een passende AVG-grondslag:</p>
-                <div className="privacy-purpose-grid">
+                <div className="ls-doelen">
                   <div><strong>Vraag of aanvraag</strong><p>Om uw bericht te beantwoorden, een afspraak of offerte voor te bereiden en uw onderhouds- of abonnementsaanvraag te beoordelen. Dit is nodig om op uw verzoek stappen te zetten vóór een eventuele overeenkomst.</p></div>
                   <div><strong>Opdracht en service</strong><p>Om werkzaamheden, onderhoud, garantie en service uit te voeren en hierover met u te communiceren.</p></div>
                   <div><strong>Administratie</strong><p>Om offertes, opdrachten, facturen en betalingen te verwerken en aan onze wettelijke administratieplicht te voldoen.</p></div>
@@ -102,11 +100,10 @@ export default function PrivacyPage() {
               </section>
 
               <section id="delen">
-                <span className="legal-number">04</span>
                 <h2>Met wie delen we gegevens?</h2>
                 <p>We delen persoonsgegevens niet voor handels- of advertentiedoeleinden en verkopen ze niet. Alleen medewerkers die de gegevens voor hun werk nodig hebben, krijgen toegang.</p>
                 <p>Voor de uitvoering kunnen dienstverleners gegevens verwerken, bijvoorbeeld voor websitehosting en beveiliging, e-mail en IT, administratie en boekhouding. Ook kunnen we gegevens verstrekken als een wettelijke verplichting dat vereist.</p>
-                <div className="privacy-provider-note">
+                <div className="ls-kader">
                   <strong>Over de aanvraagformulieren</strong>
                   <p>Wat u in een aanvraagformulier invult, verstuurt onze website rechtstreeks naar onze eigen zakelijke mailboxen bij Microsoft 365. Er zit geen andere doorstuurdienst tussen. Het offerteformulier en terugbelverzoeken over nieuw werk, storingen of technische vragen komen binnen bij <a href="mailto:service@robbraam.com">service@robbraam.com</a>. Kiest u in het offerteformulier of terugbelformulier voor onderhoud, of gebruikt u het abonnementsformulier of het formulier voor een eenmalige onderhoudsbeurt, dan komt de aanvraag binnen bij <a href="mailto:planning@robbraam.com">planning@robbraam.com</a>.</p>
                   <p>Heeft u een e-mailadres ingevuld, dan sturen we u vanuit dezelfde mailomgeving één bevestiging met een kopie van uw aanvraag. Microsoft verwerkt deze e-mail voor ons als verwerker, net als onze andere zakelijke e-mail. Onze website draait bij Cloudflare; het formulier gaat via die website naar Microsoft 365.</p>
@@ -116,7 +113,6 @@ export default function PrivacyPage() {
               </section>
 
               <section id="bewaren">
-                <span className="legal-number">05</span>
                 <h2>Hoe lang bewaren we gegevens?</h2>
                 <ul>
                   <li><strong>Aanvraag zonder opdracht:</strong> alleen totdat de aanvraag volledig is afgehandeld. Daarna verwijderen we de aanvraag.</li>
@@ -128,21 +124,18 @@ export default function PrivacyPage() {
               </section>
 
               <section id="cookies">
-                <span className="legal-number">06</span>
                 <h2>Cookies en websitegebruik</h2>
                 <p>Op dit moment gebruiken we geen marketingcookies, advertentiepixels of bezoekersprofielen. De website kan wel strikt noodzakelijke technische middelen gebruiken om pagina&apos;s veilig te laden en formulieren te laten werken.</p>
                 <p>Voegen we later bijvoorbeeld bezoekersstatistieken of marketingtechniek toe, dan passen we deze verklaring aan en vragen we vooraf toestemming wanneer dat wettelijk nodig is.</p>
               </section>
 
               <section id="beveiliging">
-                <span className="legal-number">07</span>
                 <h2>Hoe beveiligen we uw gegevens?</h2>
                 <p>We nemen passende technische en organisatorische maatregelen om persoonsgegevens te beschermen tegen verlies, onbevoegde toegang, misbruik of ongewenste wijziging. Toegang is beperkt tot de mensen en dienstverleners die de gegevens nodig hebben.</p>
                 <p>Denkt u dat persoonsgegevens toch niet goed zijn beveiligd? Meld dit dan zo snel mogelijk via <a href="mailto:service@robbraam.com?subject=Melding%20beveiliging%20persoonsgegevens">service@robbraam.com</a>.</p>
               </section>
 
               <section id="rechten">
-                <span className="legal-number">08</span>
                 <h2>Welke rechten heeft u?</h2>
                 <p>U kunt ons vragen om:</p>
                 <ul>
@@ -158,22 +151,28 @@ export default function PrivacyPage() {
               </section>
 
               <section id="besluitvorming">
-                <span className="legal-number">09</span>
                 <h2>Geen automatische besluiten</h2>
                 <p>We nemen geen besluiten met belangrijke gevolgen voor u die uitsluitend door een computer worden genomen. Een offerte, opdracht of abonnementsaanvraag wordt door een medewerker van Braam beoordeeld.</p>
               </section>
 
               <section id="wijzigingen">
-                <span className="legal-number">10</span>
                 <h2>Wijzigingen</h2>
                 <p>Onze werkwijze of de website kan veranderen. Daarom kunnen we deze privacyverklaring aanpassen. De meest recente versie staat altijd op deze pagina met de datum van de laatste wijziging.</p>
               </section>
 
-              <div className="privacy-contact-block">
-                <div><span>Privacy, juridische berichten en klachten</span><strong>We helpen u graag rechtstreeks.</strong></div>
-                <a className="button button-primary" href="mailto:service@robbraam.com?subject=Privacyvraag">Mail service@robbraam.com <span aria-hidden="true">↗</span></a>
-              </div>
             </article>
+          </div>
+        </section>
+
+        <section className="ls-slot" aria-labelledby="ls-slot-titel">
+          <div className="shell ls-slot-raster">
+            <h2 id="ls-slot-titel">Privacy, juridische berichten en klachten</h2>
+            <div>
+              <p>We helpen u graag rechtstreeks.</p>
+              <div className="ls-slot-acties">
+                <a className="ls-knop" href="mailto:service@robbraam.com?subject=Privacyvraag">Mail service@robbraam.com</a>
+              </div>
+            </div>
           </div>
         </section>
       </main>

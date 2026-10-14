@@ -176,3 +176,20 @@ test("unknown pages get a real page with the three routes", async () => {
   assert.match(html, /href="\/offerte-aanvragen"/);
   assert.match(html, /href="\/onderhoud"/);
 });
+
+test("faq and privacy use the reading style, faq carries FAQPage data", async () => {
+  const faq = await (await fetchRoute("/veelgestelde-vragen")).text();
+  assert.match(faq, /<main class="ls"/);
+  assert.match(faq, /"@type":"FAQPage"/);
+  assert.match(faq, /Hoe lang loopt het abonnement en hoe zeg ik op\?/);
+  const privacy = await (await fetchRoute("/privacy")).text();
+  assert.match(privacy, /<main class="ls"/);
+  assert.match(privacy, /Microsoft 365/);
+  assert.doesNotMatch(privacy, /legal-number|FormSubmit/);
+});
+
+test("reviews page exists and links to the review app", async () => {
+  const response = await fetchRoute("/reviews");
+  assert.equal(response.status, 200);
+  assert.match(await response.text(), /Wat klanten zeggen/);
+});

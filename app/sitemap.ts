@@ -16,6 +16,7 @@ const staticRoutes = [
   "/contact",
   "/privacy",
   "/kennisbank",
+  "/reviews",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

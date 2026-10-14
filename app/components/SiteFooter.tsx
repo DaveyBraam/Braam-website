@@ -23,7 +23,7 @@ export function SiteFooter() {
           <Link href="/service">Storing & service</Link>
           <Link href="/kennisbank">Kennisbank</Link>
           <Link href="/bel-mij-terug">Bel mij terug</Link>
-          <Link href="/projecten">Projecten</Link>
+          <Link href="/projecten">Projecten</Link><Link href="/reviews">Reviews</Link>
           <Link href="/veelgestelde-vragen">Veelgestelde vragen</Link>
           <Link href="/over-ons">Over ons</Link>
           <Link href="/privacy">Privacyverklaring</Link>

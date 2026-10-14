@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import { ContactCTA } from "../components/ContactCTA";
-import { PageHero } from "../components/PageHero";
+import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import "../leesstijl.css";
 
 export const metadata: Metadata = {
   title: "Veelgestelde vragen",
   description: "Antwoorden op veelgestelde vragen over offertes, warmtepompen, cv-ketels, airco, elektra, onderhoudsabonnementen en service.",
 };
+
+/* Veelgestelde vragen (oktober 2026): van het oude premium-sjabloon naar de
+   lichte leesstijl van /contact en /service (app/leesstijl.css). Teksten gelijk;
+   het groepslabel (vroeger een eyebrow) is nu het anker in de inhoudsopgave. */
 
 const faqGroups = [
   {
@@ -124,28 +128,75 @@ const faqGroups = [
   },
 ];
 
-export default function VeelgesteldeVragenPage() {
-  return <><SiteHeader /><main>
-    <PageHero eyebrow="Veelgestelde vragen" title="Eerst even rustig nalezen." accent="Daarna persoonlijk overleggen." intro="Hier vindt u korte antwoorden op vragen die klanten vaak stellen over advies, installatie, onderhoud en service. Staat uw vraag er niet bij? Dan helpen we u rechtstreeks verder." image="/about/planning-rob-braam.jpg" imageAlt="Medewerker van Rob Braam beantwoordt een klantvraag" primaryLabel="Offerte of vraag doorgeven" badge="Antwoord van ons eigen team" />
+const anker = (label: string) => label.toLowerCase().replace(/&/g, "en").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-    <div className="faq-page">
-      {faqGroups.map((group, groupIndex) => (
-        <section className="section faq-page-section reveal" key={group.eyebrow}>
-          <div className="shell faq-page-layout">
-            <div className="faq-page-intro"><p className="eyebrow"><span /> {group.eyebrow}</p><h2>{group.title}</h2><p>{group.intro}</p></div>
-            <div className="faq-accordion">
-              {group.items.map((item, itemIndex) => (
-                <details key={item.question}>
-                  <summary><span>{String(groupIndex + 1).padStart(2, "0")}.{itemIndex + 1}</span><strong>{item.question}</strong><i aria-hidden="true">+</i></summary>
-                  <p>{item.answer}</p>
-                </details>
-              ))}
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqGroups.flatMap((group) => group.items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  }))),
+};
+
+function Plus() {
+  return <svg className="ls-vraag-teken" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M5 12h14" /><path className="ls-vraag-plus" d="M12 5v14" /></svg>;
+}
+
+export default function VeelgesteldeVragenPage() {
+  return (
+    <>
+      <SiteHeader />
+      <main className="ls">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+        <section className="ls-kop" aria-labelledby="ls-titel">
+          <div className="shell ls-kop-raster">
+            <div>
+              <p className="ls-kruimel"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Veelgestelde vragen</span></p>
+              <h1 id="ls-titel">Veelgestelde vragen</h1>
+              <p className="ls-lead">Hier vindt u korte antwoorden op vragen die klanten vaak stellen over advies, installatie, onderhoud en service. Staat uw vraag er niet bij? Dan helpen we u rechtstreeks verder.</p>
+            </div>
+            <nav className="ls-index" aria-label="Onderwerpen">
+              <p className="ls-index-kop">Onderwerpen</p>
+              <ul>{faqGroups.map((group) => <li key={group.eyebrow}><a href={`#${anker(group.eyebrow)}`}>{group.eyebrow}</a></li>)}</ul>
+            </nav>
+          </div>
+        </section>
+
+        {faqGroups.map((group) => (
+          <section className="ls-blok" id={anker(group.eyebrow)} key={group.eyebrow} aria-labelledby={`${anker(group.eyebrow)}-titel`}>
+            <div className="shell ls-blok-raster">
+              <div className="ls-blok-intro">
+                <h2 id={`${anker(group.eyebrow)}-titel`}>{group.title}</h2>
+                <p>{group.intro}</p>
+              </div>
+              <div className="ls-vragen">
+                {group.items.map((item) => (
+                  <details key={item.question}>
+                    <summary><span>{item.question}</span><Plus /></summary>
+                    <p>{item.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        ))}
+
+        <section className="ls-slot" aria-labelledby="ls-slot-titel">
+          <div className="shell ls-slot-raster">
+            <h2 id="ls-slot-titel">Staat uw vraag er niet tussen?</h2>
+            <div>
+              <p>Stuur ons een korte omschrijving of bel even. Iemand uit ons eigen team kijkt met u mee en vertelt welke volgende stap logisch is.</p>
+              <div className="ls-slot-acties">
+                <a className="ls-knop" href="mailto:service@robbraam.com?subject=Vraag%20via%20de%20website">Mail service@robbraam.com</a>
+                <a className="ls-knop ls-knop--licht" href="tel:+31736222199">Bel 073 622 2199</a>
+              </div>
             </div>
           </div>
         </section>
-      ))}
-    </div>
-
-    <ContactCTA title="Staat uw vraag er niet tussen?" text="Stuur ons een korte omschrijving of bel even. Iemand uit ons eigen team kijkt met u mee en vertelt welke volgende stap logisch is." />
-  </main><SiteFooter /></>;
+      </main>
+      <SiteFooter />
+    </>
+  );
 }

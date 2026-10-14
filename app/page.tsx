@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CinematicHero } from "./components/CinematicHero";
 import { ContactCTA } from "./components/ContactCTA";
+import { HomeReviews } from "./components/KlantReviews";
 import { MobileActionBar } from "./components/MobileActionBar";
 import { ProjectGallery } from "./components/ProjectGallery";
 import { SiteFooter } from "./components/SiteFooter";
@@ -94,6 +95,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <HomeReviews />
 
         <section className="section home-subscriptions chapter-paper reveal">
           <div className="shell">
