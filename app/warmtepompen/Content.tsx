@@ -38,8 +38,8 @@ export function Content() {
     <section className="w5-price" id="w5-prijs" aria-labelledby="w5-price-title">
       <div className="w5-price-intro"><h2 id="w5-price-title">Wat kost<br /><em>een warmtepomp?</em></h2><p>Een vanaf-prijs per opstelling, inclusief btw. Wat uw woning nodig heeft, ziet u terug in het voorstel.</p></div>
       <div className="w5-care-plans w5-price-plans"><p className="w5-care-kind">Installatie · inclusief btw</p>
-        <div className="w5-plan"><h3>Hybride</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 4.995</strong><span className="w5-plan-period">naast uw cv-ketel</span></div>
-        <div className="w5-plan"><h3>Volledig elektrisch</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 5.995</strong><span className="w5-plan-period">zonder cv-ketel</span></div>
+        <div className="w5-plan"><h3>Hybride</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 6.995</strong><span className="w5-plan-period">naast uw cv-ketel</span></div>
+        <div className="w5-plan"><h3>Volledig elektrisch</h3><span className="w5-plan-from">vanaf</span><strong><small>€</small> 8.995</strong><span className="w5-plan-period">zonder cv-ketel</span></div>
         <div className="w5-price-factors"><h3>Wat bepaalt uw prijs</h3><dl>{factors.map(([term, text]) => <div key={term}><dt>{term}</dt><dd>{text}</dd></div>)}</dl></div>
         <p className="w5-price-subsidy"><strong>Subsidie.</strong> Voor een warmtepomp in een bestaande woning is vaak ISDE-subsidie mogelijk. Wij helpen u met de aanvraag. <a href="https://www.rvo.nl/subsidies-financiering/isde" target="_blank" rel="noopener noreferrer">Bedragen en voorwaarden bij RVO<span className="sr-only"> (opent in een nieuw tabblad)</span></a>.</p>
       </div>

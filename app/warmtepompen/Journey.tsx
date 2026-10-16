@@ -93,7 +93,7 @@ export function Journey() {
       });
       // Ketel out, boilervat and hydraulic station in: they fade in over the ketel.
       set(electric.current, "opacity", f.swap.toFixed(3));
-      // The price follows the swap: only the thousands digit rolls from 4 to 5, so no
+      // The price follows the swap: only the thousands digit rolls from 6 to 8, so no
       // in-between amount ever reads as a price.
       set(rol.current, "transform", `translate3d(0, ${(-50 * f.swap).toFixed(2)}%, 0)`);
       for (const c of copies) {
@@ -183,7 +183,7 @@ export function Journey() {
           <h2 id="ws-title-3">Hybride.<br /><em>Uw ketel blijft.</em></h2>
           <p className="w5-body">De warmtepomp verwarmt. Uw cv-ketel helpt wanneer nodig en verzorgt het douchewater.</p>
           <p className="w5-keyline">Onze hybride opstelling kan later volledig elektrisch worden.</p>
-          <p className="w5-prijs"><span className="w5-prijs-van">vanaf</span><strong>€ 4.995</strong><span className="w5-prijs-btw">inclusief btw, naast uw cv-ketel</span></p>
+          <p className="w5-prijs"><span className="w5-prijs-van">vanaf</span><strong>€ 6.995</strong><span className="w5-prijs-btw">inclusief btw, naast uw cv-ketel</span></p>
           <div className="w5-actions"><a className="w5-link" href="#ws-scene-4" onClick={e => { e.preventDefault(); go(anchors.elektrisch); }}>Bekijk volledig elektrisch <span aria-hidden="true">→</span></a></div>
         </section>
 
@@ -191,7 +191,7 @@ export function Journey() {
           <h2 id="ws-title-4">De ketel eruit.<br /><em>Het boilervat erin.</em></h2>
           <p className="w5-body">De warmtepomp verwarmt uw woning. Het hydraulisch station verdeelt de warmte over verwarming en warm water. Het grote boilervat bewaart warm tapwater. De buitenunit, control unit en het buffervat blijven.</p>
           <p className="w5-keyline">Wij beoordelen welke opstelling bij u past.</p>
-          <p className="w5-prijs"><span className="w5-prijs-van">vanaf</span><strong aria-label="€ 5.995">€ <span className="w5-rol" aria-hidden="true"><span ref={rol}><span>4</span><span>5</span></span></span>.995</strong><span className="w5-prijs-btw">inclusief btw, zonder cv-ketel</span></p>
+          <p className="w5-prijs"><span className="w5-prijs-van">vanaf</span><strong aria-label="€ 8.995">€ <span className="w5-rol" aria-hidden="true"><span ref={rol}><span>6</span><span>8</span></span></span>.995</strong><span className="w5-prijs-btw">inclusief btw, zonder cv-ketel</span></p>
           <div className="w5-actions"><a className="w5-link" href="#ws-scene-3" onClick={e => { e.preventDefault(); go(anchors.hybride); }}>Bekijk hybride <span aria-hidden="true">←</span></a><a className="w5-link" href="#w5-prijs">Wat bepaalt uw prijs <span aria-hidden="true">↓</span></a></div>
         </section>
 

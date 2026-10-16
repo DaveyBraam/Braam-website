@@ -96,7 +96,7 @@ een handdruk. Die vertelt de positionering in beeld en is bewust behouden.
   14 dagen bedenktijd, opzeggen per mail aan planning@.
 
 - **Warmtepompinstallatie, vanaf-prijzen inclusief btw** (door de eigenaar opgegeven
-  op 8 oktober 2026): hybride vanaf €4.995, volledig elektrisch vanaf €5.995.
+  op 8 oktober 2026, bijgewerkt 16 oktober 2026): hybride vanaf €6.995, volledig elektrisch vanaf €8.995.
 - Braam **helpt mee met de ISDE-subsidieaanvraag**. Noem geen subsidiebedragen; die
   veranderen jaarlijks, verwijs naar RVO.
 - **Reactie op een aanvraag binnen 48 uur.**
