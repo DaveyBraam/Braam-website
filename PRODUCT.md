@@ -96,10 +96,11 @@ een handdruk. Die vertelt de positionering in beeld en is bewust behouden.
   14 dagen bedenktijd, opzeggen per mail aan planning@.
 
 - **Warmtepompinstallatie, vanaf-prijzen inclusief btw** (door de eigenaar opgegeven
-  op 8 oktober 2026, bijgewerkt 16 oktober 2026): hybride vanaf €6.995, volledig elektrisch vanaf €8.995.
+  op 8 oktober 2026, bijgewerkt 16 oktober 2026): hybride vanaf €6.995, volledig elektrisch vanaf €8.995, beide inclusief btw (bevestigd 16 oktober).
 - Braam **helpt mee met de ISDE-subsidieaanvraag**. Noem geen subsidiebedragen; die
   veranderen jaarlijks, verwijs naar RVO.
-- **Reactie op een aanvraag binnen 48 uur.**
+- **Reactie op een aanvraag binnen 3 werkdagen** (eigenaar, 16 oktober 2026; was 48 uur, maar dat haalt een aanvraag op vrijdagmiddag niet).
+- Mechanische ventilatiebox mee laten schoonmaken: **€ 37,50 per jaar**, alleen samen met het onderhoud (eigenaar, 16 oktober 2026).
 - Installatie en in bedrijf stellen: **standaard minimaal 2 dagen**.
 - Alle merken geven **fabrieksgarantie**; de duur is niet bekend, noem dus geen termijn.
   Braam **registreert de toestellen** voor de klant.

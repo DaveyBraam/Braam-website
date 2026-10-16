@@ -52,7 +52,7 @@ test("an offerte goes to service@ with the customer as reply-to, and the custome
   assert.match(kantoor.body.message.body.content, /Ketel &lt;b&gt;lekt&lt;\/b&gt;/);
   assert.equal(klant.body.message.toRecipients[0].emailAddress.address, "gerda@example.nl");
   assert.equal(klant.body.message.replyTo[0].emailAddress.address, "service@robbraam.com");
-  assert.match(klant.body.message.body.content, /binnen 48 uur/);
+  assert.match(klant.body.message.body.content, /binnen 3 werkdagen/);
 });
 
 test("subscriptions always go to planning@, whatever the browser asks", async () => {

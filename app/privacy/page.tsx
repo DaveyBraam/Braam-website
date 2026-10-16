@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { reviewsApp } from "../site-config";
 import "../leesstijl.css";
 
 /* Privacyverklaring (oktober 2026): van het oude premium-sjabloon (labels van
@@ -20,6 +21,7 @@ const inhoud = [
   ["doelen", "Waarom gebruiken we ze?"],
   ["delen", "Met wie delen we ze?"],
   ["bewaren", "Hoe lang bewaren we ze?"],
+  ["reviews", "Reviews"],
   ["cookies", "Cookies en website"],
   ["beveiliging", "Beveiliging"],
   ["rechten", "Uw rechten"],
@@ -54,7 +56,7 @@ export default function PrivacyPage() {
             <nav className="ls-zijnav" aria-label="Inhoud privacyverklaring">
               <p className="ls-index-kop">Inhoud</p>
               <ul>{inhoud.map(([id, titel]) => <li key={id}><a href={`#${id}`}>{titel}</a></li>)}</ul>
-              <p className="ls-datum">Laatst bijgewerkt<br /><strong>9 oktober 2026</strong></p>
+              <p className="ls-datum">Laatst bijgewerkt<br /><strong>16 oktober 2026</strong></p>
             </nav>
 
             <article className="ls-artikel">
@@ -121,6 +123,18 @@ export default function PrivacyPage() {
                   <li><strong>Technische beveiligingsgegevens:</strong> niet langer dan nodig voor het functioneren en beveiligen van de website en systemen.</li>
                 </ul>
                 <p>Als gegevens voor meerdere doelen nodig zijn, geldt de langste noodzakelijke of wettelijk verplichte termijn.</p>
+              </section>
+
+              <section id="reviews">
+                <h2>Reviews</h2>
+                <p>Na een bezoek kunnen we u eenmalig per e-mail vragen hoe het ging. U kunt ook zonder uitnodiging uw ervaring delen via onze website. Daarvoor gebruiken we onze eigen reviewomgeving, die net als deze website bij Cloudflare draait. De uitnodiging versturen we via Microsoft 365.</p>
+                <ul>
+                  <li><strong>Bij een uitnodiging:</strong> uw voornaam en e-mailadres, en de postcode en het huisnummer van het bezoek. Die adresgegevens gebruiken we alleen intern, om uw beoordeling aan het juiste bezoek te koppelen. Uw e-mailadres gebruiken we alleen voor deze ene uitnodiging en wissen we na 45 dagen.</li>
+                  <li><strong>Uw beoordeling:</strong> het aantal sterren, uw toelichting en uw antwoorden. Wat u ons per onderdeel of over een vervelende ervaring vertelt, lezen alleen wij.</li>
+                  <li><strong>Als u om contact vraagt:</strong> uw telefoonnummer of e-mailadres, alleen daarvoor. We wissen die twee weken nadat uw vraag is afgehandeld, en uiterlijk na 90 dagen.</li>
+                </ul>
+                <p>Uw beoordeling komt alleen op onze website als u daar apart toestemming voor geeft en wij hem hebben nagekeken. Dan tonen we uw voornaam en woonplaats zoals u die zelf invult, of alleen uw woonplaats. Uw achternaam, adres en e-mailadres komen nooit op de website. We bewaren wanneer u toestemming gaf, zodat we dat kunnen laten zien.</p>
+                <p>Met de persoonlijke link uit uw e-mail kunt u uw toestemming op elk moment intrekken; dan verdwijnt de beoordeling direct van de website. Via dezelfde link kunt u ook alles laten verwijderen. U kunt ons daarvoor ook bellen op <a href="tel:+31736222199">073 622 2199</a>. Meer leest u in de <a href={`${reviewsApp}/privacy`} target="_blank" rel="noreferrer">privacyuitleg bij de reviews <span aria-hidden="true">↗</span></a>.</p>
               </section>
 
               <section id="cookies">

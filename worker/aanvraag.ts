@@ -146,7 +146,7 @@ function klantMail(naam: string, doel: Doel, velden: Array<[string, string]>) {
   const team = doel === "planning" ? "onze planning" : "ons serviceteam";
   const tekst = `${aanhef}
 
-Bedankt voor uw aanvraag. Hij is goed bij ${team} aangekomen. U hoort binnen 48 uur van ons.
+Bedankt voor uw aanvraag. Hij is goed bij ${team} aangekomen. U hoort binnen 3 werkdagen van ons.
 
 Heeft u een storing die niet kan wachten? Bel ons dan op ${TELEFOON}.
 Kantoor: maandag t/m donderdag 8.00-17.00, vrijdag 8.00-14.00.
@@ -165,7 +165,7 @@ Jacob van Wassenaerstraat 10, 's-Hertogenbosch · ${TELEFOON}`;
 <tr><td style="background:#0c70b8;height:8px;font-size:0;line-height:0;">&nbsp;</td></tr>
 <tr><td style="padding:28px 32px 4px;font-size:22px;font-weight:bold;line-height:1.3;">${esc(aanhef)}</td></tr>
 <tr><td style="padding:12px 32px 4px;font-size:16px;line-height:1.6;">
-<p style="margin:0 0 14px;">Bedankt voor uw aanvraag. Hij is goed bij ${team} aangekomen. <b>U hoort binnen 48 uur van ons.</b></p>
+<p style="margin:0 0 14px;">Bedankt voor uw aanvraag. Hij is goed bij ${team} aangekomen. <b>U hoort binnen 3 werkdagen van ons.</b></p>
 <p style="margin:0 0 14px;">Heeft u een storing die niet kan wachten? Bel ons dan op <a href="tel:+31736222199" style="color:#095a94;font-weight:bold;">${TELEFOON}</a>.<br><span style="color:#56636f;">Kantoor: maandag t/m donderdag 8.00–17.00, vrijdag 8.00–14.00.</span></p>
 <p style="margin:0 0 6px;">Wilt u nog iets aanvullen? Beantwoord dan deze mail.</p>
 </td></tr>
